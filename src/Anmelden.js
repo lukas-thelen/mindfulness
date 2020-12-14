@@ -23,9 +23,9 @@ export const Anmelden =(props)=>{
       const userData ={loggedIn:true, name:name, gender:gender, birthday:birthday}
       try {
         const jsonValue = JSON.stringify(userData)
-        //await AsyncStorage.setItem('userData', jsonValue)
+        await AsyncStorage.setItem('userData', jsonValue)
         changeUsername(name)
-        //props.changeLoggedIn(true)
+        props.changeLoggedIn(true)
       } catch (e) {
         console.log(e)
       }

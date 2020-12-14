@@ -36,7 +36,7 @@ export default function App() {
   const appContext ={
     username:username, 
     changeUsername:(name)=>{changeUsername(name)},
-    
+
   }
 
   const getData = async () => {
@@ -52,6 +52,12 @@ export default function App() {
       // error reading value
     }
   }
+
+  /* Noch nicht räddy!
+  appDictionary ={
+    1:<Tabnavigator style={styles.container}/>,
+    2:<Anmelden changeLoggedIn={changeLoggedIn}/>
+  }*/
 
   return (
     <AppContext.Provider value={appContext}>
