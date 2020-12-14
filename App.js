@@ -7,7 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {HomeScreen} from './src/Home.js';
 import {ProfilScreen} from './src/Profil.js';
-import {Anmelden} from './src/Anmelden.js'
+import {Anmelden} from './src/Anmelden.js';
+import {AppContext} from './src/context.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,10 +27,17 @@ const Tabnavigator = () =>{
 //App-Component
 export default function App() {
   const [loggedIn, changeLoggedIn] = useState(false);
+  const [username, changeUsername] =useState("")
   
   useEffect(()=>{
     getData()
   });
+
+  const appContext ={
+    username:username, 
+    changeUsername:(name)=>{changeUsername(name)},
+    
+  }
 
   const getData = async () => {
     try {
@@ -46,9 +54,11 @@ export default function App() {
   }
 
   return (
-    <View style={styles.pagewrap}>
-      {loggedIn ? <Tabnavigator style={styles.container}/> : <Anmelden changeLoggedIn={changeLoggedIn}/>}
-    </View>
+    <AppContext.Provider value={appContext}>
+      <View style={styles.pagewrap}>
+        {loggedIn ? <Tabnavigator style={styles.container}/> : <Anmelden changeLoggedIn={changeLoggedIn}/>}
+      </View>
+    </AppContext.Provider>
   );
 }
 

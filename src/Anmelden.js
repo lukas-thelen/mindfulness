@@ -3,7 +3,9 @@ import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } fr
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { useEffect } from 'react';
+
+import {AppContext} from './context.js';
+import { useContext } from 'react';
 
 
 export const Anmelden =(props)=>{
@@ -13,18 +15,23 @@ export const Anmelden =(props)=>{
     const [datepicker, showDatepicker] = useState(false)
     const [dateChanged, changeDateChanged] = useState(false)
 
+    const changeUsername = useContext(AppContext).changeUsername;
+    const username = useContext(AppContext).username;
+
+    // Nutzerinfos im AsyncStorage speichern
     const storeData = async () => {
       const userData ={loggedIn:true, name:name, gender:gender, birthday:birthday}
       try {
         const jsonValue = JSON.stringify(userData)
-        await AsyncStorage.setItem('userData', jsonValue)
-        props.changeLoggedIn(true)
-        console.log("erfolgreich")
+        //await AsyncStorage.setItem('userData', jsonValue)
+        changeUsername(name)
+        //props.changeLoggedIn(true)
       } catch (e) {
         console.log(e)
       }
     }
 
+    //Nutzerinformationen prüfen und überarbeiten
     const abschicken =()=>{
       if (name===""|| dateChanged===false || gender === ""){
         Alert.alert(
@@ -34,22 +41,15 @@ export const Anmelden =(props)=>{
           { cancelable: false }
         );
       }else{
-        //storeData()
+        storeData()
       }
     }
 
-    const data = [
-      {
-        label: 'männlich'
-       },
-       {
-        label: 'weiblich'
-       },
-       {
-         label: 'divers'
-       }
-      ];
 
+    const genderData = [
+      {label: 'männlich'},{label: 'weiblich'},{label: 'divers'}];
+
+    //Geburtstag bestätigen
     const handleConfirm = (selectedDate) => {
       changeBirthday(new Date(selectedDate))
       showDatepicker(false)
@@ -64,6 +64,7 @@ export const Anmelden =(props)=>{
     
     return(
       <View style={styles.pagewrap, styles.container}>
+        <Text>Hallo {username}</Text>
         <Text>Name:</Text>
         <TextInput 
             style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
@@ -90,12 +91,12 @@ export const Anmelden =(props)=>{
         <Text>Geschlecht:</Text>
         <RadioButtonRN
           boxStyle={styles.radio}
-          data={data}
+          data={genderData}
           selectedBtn={(e) => changeGender(e.label)}
         />
 
         <View style={styles.trennlinie}/>
-        
+
         <Button title={"zeige Daten"} onPress={() =>{test()}} ></Button>
         <Button title={"anmelden"} onPress={() =>{abschicken()}} ></Button>
       </View>
