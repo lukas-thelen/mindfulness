@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const HomeScreen = ()=> {
     const storeData = async () => {
         try {
-          await AsyncStorage.setItem('userData', null)
+          await AsyncStorage.removeItem('userData')
           console.log("erfolgreich")
         } catch (e) {
           console.log(e)
