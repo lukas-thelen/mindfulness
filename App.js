@@ -10,6 +10,7 @@ import {ProfilScreen} from './src/Profil.js';
 import {Anmelden} from './src/Anmelden.js';
 import {AppContext} from './src/context.js';
 import {AchtsamkeitsAbfrage} from './src/AchtsamkeitsAbfrage.js';
+import { Init } from './src/Init.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,36 +46,24 @@ export default function App() {
       const jsonValue = await AsyncStorage.getItem('userData')
       const userData=jsonValue != null ? JSON.parse(jsonValue) : null;
       if(userData.loggedIn){
-        console.log("shdfjahsgdafhsd")
         changeLoggedIn(true)
-        console.log("sdfgsdf")
+        changeUsername(userData.name)
+        console.log(userData)
       }
     } catch(e) {
       // error reading value
     }
   }
 
-  /* Noch nicht räddy!
-  appDictionary ={
-    1:<Tabnavigator style={styles.container}/>,
-    2:<Anmelden changeLoggedIn={changeLoggedIn}/>
-    3:<AchtsamkeitsAbfrage />
-  }*/
-
-  
   return (
-    
-    <View>
-    {/*
+
+
     <AppContext.Provider value={appContext}>
       <View style={styles.pagewrap}>
-        {loggedIn ? <Tabnavigator style={styles.container}/> : <Anmelden changeLoggedIn={changeLoggedIn}/>}
+        {loggedIn ? <Tabnavigator style={styles.container}/> : <Init changeLoggedIn={changeLoggedIn}/>}
       </View>
     </AppContext.Provider>
-    */}
 
-    <AchtsamkeitsAbfrage />
-    </View>
   );
 }
 

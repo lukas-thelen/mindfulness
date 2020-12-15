@@ -12,14 +12,9 @@ export const AchtsamkeitsAbfrage =(props)=>{
 
     // Nutzerinfos im AsyncStorage speichern
     const storeData = async () => {
-      const userData ={mindfulnessLevelData:mindfulnessLevelData}
-      try {
-        const jsonValue = JSON.stringify(userData)
-        await AsyncStorage.setItem('levelData', jsonValue)
-        //props.changeLoggedIn(true) 
-      } catch (e) {
-        console.log(e)
-      }
+      const userData = props.userData;
+      userData.mindfulnessLevelData = mindfulnessLevelData;
+      props.changeUserData(userData)
     }
 
     //Nutzerinformationen prüfen und überarbeiten
@@ -33,6 +28,7 @@ export const AchtsamkeitsAbfrage =(props)=>{
         );
       }else{
         storeData()
+        props.finishInit()
       }
     }
 
@@ -43,12 +39,13 @@ export const AchtsamkeitsAbfrage =(props)=>{
     // Überprüft Eingabe  
     const test = () =>{
         console.log(mindfulnessLevelData)
+        console.log(props.userData)
     }
     
     return(
       <View style={styles.pagewrap, styles.container}>
         
-        <Text>Wie gut kennst du dich mit Achtsamkeitstechniken aus?:</Text>
+        <Text>Wie gut kennst du dich mit Achtsamkeitstechniken aus?</Text>
         <RadioButtonRN
           boxStyle={styles.radio}
           data={mindfulnessLevel}
@@ -69,6 +66,8 @@ const styles = StyleSheet.create({
       flex: 1,
       width: '100%',
       backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
       
     },
     pagewrap:{
