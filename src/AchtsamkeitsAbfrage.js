@@ -7,7 +7,7 @@ import {AppContext} from './context.js';
 import { useContext } from 'react';
 
 
-export const Achtsamkeitsabfrage =(props)=>{
+export const AchtsamkeitsAbfrage =(props)=>{
     const [mindfulnessLevelData, changeMindfulnessLevel] = useState("")
 
     // Nutzerinfos im AsyncStorage speichern
@@ -15,8 +15,8 @@ export const Achtsamkeitsabfrage =(props)=>{
       const userData ={mindfulnessLevelData:mindfulnessLevelData}
       try {
         const jsonValue = JSON.stringify(userData)
-        await AsyncStorage.setItem('userData', jsonValue)
-        props.changeLoggedIn(true)
+        await AsyncStorage.setItem('levelData', jsonValue)
+        //props.changeLoggedIn(true) 
       } catch (e) {
         console.log(e)
       }
@@ -27,7 +27,7 @@ export const Achtsamkeitsabfrage =(props)=>{
       if (mindfulnessLevelData === ""){
         Alert.alert(
           'Unvollständig',
-          'Bitte fülle alle Felder aus!',
+          'Bitte wähle dein Level!',
           [{ text: 'OK'}],
           { cancelable: false }
         );
@@ -69,8 +69,7 @@ const styles = StyleSheet.create({
       flex: 1,
       width: '100%',
       backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+      
     },
     pagewrap:{
       width: '100%',

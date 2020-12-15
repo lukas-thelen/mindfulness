@@ -9,6 +9,7 @@ import {HomeScreen} from './src/Home.js';
 import {ProfilScreen} from './src/Profil.js';
 import {Anmelden} from './src/Anmelden.js';
 import {AppContext} from './src/context.js';
+import {AchtsamkeitsAbfrage} from './src/AchtsamkeitsAbfrage.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,14 +58,23 @@ export default function App() {
   appDictionary ={
     1:<Tabnavigator style={styles.container}/>,
     2:<Anmelden changeLoggedIn={changeLoggedIn}/>
+    3:<AchtsamkeitsAbfrage />
   }*/
 
+  
   return (
+    
+    <View>
+    {/*
     <AppContext.Provider value={appContext}>
       <View style={styles.pagewrap}>
         {loggedIn ? <Tabnavigator style={styles.container}/> : <Anmelden changeLoggedIn={changeLoggedIn}/>}
       </View>
     </AppContext.Provider>
+    */}
+
+    <AchtsamkeitsAbfrage />
+    </View>
   );
 }
 
