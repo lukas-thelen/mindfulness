@@ -20,15 +20,23 @@ export const Anmelden =(props)=>{
 
     // Nutzerinfos im AsyncStorage speichern
     const storeData = async () => {
-      const userData ={loggedIn:true, name:name, gender:gender, birthday:birthday}
+      const userData = props.userData;
+      userData.loggedIn=true;
+      userData.name = name;
+      userData.gender = gender;
+      userData.birthday = birthday;
+
+      /*
       try {
         const jsonValue = JSON.stringify(userData)
         await AsyncStorage.setItem('userData', jsonValue)
-        changeUsername(name)
-        props.changeLoggedIn(true)
       } catch (e) {
         console.log(e)
       }
+      */
+      changeUsername(name)
+      props.changeInitPages('AchtsamkeitsAbfrage')
+      props.changeUserData(userData)
     }
 
     //Nutzerinformationen prüfen und überarbeiten
