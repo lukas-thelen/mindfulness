@@ -28,7 +28,7 @@ export const AchtsamkeitsAbfrage =(props)=>{
         );
       }else{
         storeData()
-        props.finishInit()
+        props.changeInitPages('StressSkala')
       }
     }
 

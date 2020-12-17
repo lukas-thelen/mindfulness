@@ -7,7 +7,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {HomeScreen} from './src/Home.js';
 import {ProfilScreen} from './src/Profil.js';
+import {Registrieren} from './src/Registrieren.js';
 import {Anmelden} from './src/Anmelden.js';
+import {StartBildschirm} from './src/InitBildschirm.js';
 import {AppContext} from './src/context.js';
 import {AchtsamkeitsAbfrage} from './src/AchtsamkeitsAbfrage.js';
 import { Init } from './src/Init.js';
@@ -30,6 +32,9 @@ const Tabnavigator = () =>{
 export default function App() {
   const [loggedIn, changeLoggedIn] = useState(false);
   const [username, changeUsername] =useState("")
+  const [appData, changeAppData] = useState({})
+  const [userData,changeUserData] = useState({})
+  const [currentUser, changeCurrentUser] = useState("")
   
   useEffect(()=>{
     getData()
@@ -38,17 +43,40 @@ export default function App() {
   const appContext ={
     username:username, 
     changeUsername:(name)=>{changeUsername(name)},
+    
+    userData:userData,
+    changeUserData:(x) =>{changeUserData(x)},
+
+    appData:appData,
+    changeAppData:(x) =>{changeAppData(x)},
+
+    currentUser:currentUser,
+    changeCurrentUser:(x) =>{changeCurrentUser(x)},
 
   }
 
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('userData')
-      const userData=jsonValue != null ? JSON.parse(jsonValue) : null;
+      const userDataV = await AsyncStorage.getItem('userData')
+      const appDataV = await AsyncStorage.getItem('appData')
+      const currentUserV = await AsyncStorage.getItem('currentUser')
+      changeAppData(JSON.parse(appDataV))
+      changeUserData(JSON.parse(userDataV))
+      changeCurrentUser(currentUserV)
       if(userData.loggedIn){
         changeLoggedIn(true)
         changeUsername(userData.name)
         console.log(userData)
+      }
+      console.log(appDataV)
+        console.log(userDataV)
+        console.log(currentUserV)
+
+      if(length(currentUser) > 0){
+        changeUserData(appData[currentUser])
+        console.log(appData)
+        console.log(userData)
+        console.log(currentUser)
       }
     } catch(e) {
       // error reading value

@@ -1,7 +1,7 @@
 AppData = {
     nutzer1:{
         id: asdfasdfasdf,
-        nutzerdaten:{
+        data:{
             name:20,
             geburtsdatum: new Date()
         },

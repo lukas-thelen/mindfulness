@@ -2,38 +2,39 @@ import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import {AppContext} from './context.js';
 import { useContext } from 'react';
 
-export const Anmelden = (props) => {
+export const StressSkala = (props) =>{
+    const [stressData, changeStressData] = useState("")
 
+    //Nutzerinformationen prüfen und überarbeiten
+    const abschicken =()=>{
+        if (stressData === ""){
+          /*Alert.alert(
+            'Unvollständig',
+            'Bitte wähle dein Level!',
+            [{ text: 'OK'}],
+            { cancelable: false }
+            ); */
+            props.finishInit()
 
-
+        }else{
+          props.finishInit()
+        }
+      }
+    const weiter = () =>{
+        console.log("Weiter")
+    }
     return(
 
         <View style={styles.pagewrap, styles.container}>
-        
-        <Text>E-Mail Adresse</Text>
-        <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changeName(text)}></TextInput>
-
-        <View style={styles.trennlinie}/>
-
-
-        <Text>Passwort</Text>
-        <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changeName(text)}></TextInput>
-
-        <View style={styles.trennlinie}/>
-
-
-        <Button title={"Anmelden"} onPress={() =>{props.finishInit()}} ></Button>
-        <Button title={"Zurück"} onPress={() =>{props.changeInitPages('StartBildschirm')}} ></Button>
-      </View>
+            <Text>Lass uns ein Stress-Tagebuch führen</Text>
+            <Button title={"zeige Daten"} onPress={() =>{test()}} ></Button>
+            <Button title={"Weiter"} onPress={() =>{weiter()}} ></Button>
+            <Button title={"Abschicken"} onPress={() =>{abschicken()}} ></Button>
+        </View>
     )
 }
 

@@ -7,33 +7,21 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {AppContext} from './context.js';
 import { useContext } from 'react';
 
-export const Anmelden = (props) => {
-
-
+export const StartBildschirm = (props) =>{
+   
 
     return(
-
         <View style={styles.pagewrap, styles.container}>
         
-        <Text>E-Mail Adresse</Text>
-        <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changeName(text)}></TextInput>
+        <Text>App-Name</Text>
 
         <View style={styles.trennlinie}/>
 
 
-        <Text>Passwort</Text>
-        <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changeName(text)}></TextInput>
-
-        <View style={styles.trennlinie}/>
-
-
-        <Button title={"Anmelden"} onPress={() =>{props.finishInit()}} ></Button>
-        <Button title={"Zurück"} onPress={() =>{props.changeInitPages('StartBildschirm')}} ></Button>
+        <Button title={"Anmelden"} onPress={() =>{props.changeInitPages('Anmelden')}} ></Button>
+        <Button title={"Registrieren"} onPress={() =>{props.changeInitPages('Registrieren')}} ></Button>
       </View>
+
     )
 }
 
@@ -45,6 +33,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+      
     },
     pagewrap:{
       width: '100%',
