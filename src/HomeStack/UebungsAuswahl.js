@@ -12,7 +12,7 @@ export const UebungsAuswahl =({navigation, route})=>{
             </TouchableOpacity>    
         )
     }
-    const kursIndex = kurse.findIndex(item => item.id === route.params.kursIndex) 
+    const kursIndex = kurse.findIndex(item => item.id === route.params.kurs) 
 
     return (
         <View>

@@ -7,7 +7,7 @@ import {kurse} from "../Kursdaten/Kursdatei.js"
 export const KursAuswahl =({navigation})=>{
     const renderItem =({item})=>{
         return(
-            <TouchableOpacity style={styles.KursItem} onPress={()=>{navigation.navigate("Wähle eine Übung!", {kursIndex:item.id})}}>
+            <TouchableOpacity style={styles.KursItem} onPress={()=>{navigation.navigate("Wähle eine Übung!", {kurs:item.id})}}>
                 <Text>{item.Name}</Text>
             </TouchableOpacity>    
         )

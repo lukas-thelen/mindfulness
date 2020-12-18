@@ -10,7 +10,7 @@ export const AlleUebungen=({navigation})=>{
             <TouchableOpacity style={styles.KursItem} onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:item.KursIndex, uebung:item.id })}}>
                 <Text>{item.Name}</Text>
                 <Text>Kurs: {kurse[item.KursIndex].Name}</Text>
-            </TouchableOpacity>    
+            </TouchableOpacity>
         )
     }
     const atemuebungen = uebungen.filter(item=>item.Kategorie==="Atemübung")
