@@ -22,7 +22,7 @@ const HomeRoot = ({navigation})=>{
       console.log("erfolgreich")
     } catch (e) {
       console.log(e)
-    }
+      }
   }
 
   const goToKursAuswahl =()=>{
