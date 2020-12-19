@@ -38,7 +38,7 @@ export const Registrieren =(props)=>{
 
     //Nutzerinformationen prüfen und überarbeiten
     const abschicken =()=>{
-      if (eMail === "" || name===""|| dateChanged===false || gender === ""){
+      if (eMail === "" || password === "" || name===""|| dateChanged===false || gender === ""){
         Alert.alert(
           'Unvollständig',
           'Bitte fülle alle Felder aus!',

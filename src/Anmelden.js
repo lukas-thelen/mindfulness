@@ -8,8 +8,47 @@ import {AppContext} from './context.js';
 import { useContext } from 'react';
 
 export const Anmelden = (props) => {
+  const appData = useContext(AppContext).appData
+  const [eMailInput, changeEMailInput] = useState("")
+  const [passwordInput, changePasswordInput] = useState("")
 
 
+   //Nutzerinformationen prüfen und überarbeiten
+   const checkInput =()=>{
+    if (eMailInput === "" || passwordInput === ""){
+      Alert.alert(
+        'Unvollständig',
+        'Bitte fülle alle Felder aus!',
+        [{ text: 'OK'}],
+        { cancelable: false }
+      );
+    }else{
+      for (var nutzer in appData) {
+        const checkUser =appData[nutzer]
+        console.log("email", eMailInput)
+        console.log("passwort", passwordInput)
+        console.log("checkUser", checkUser.data.eMail )
+        console.log("checkPasswort", checkUser.data.password )
+        if(eMailInput === checkUser.data.eMail || passwordInput === checkUser.data.password){
+            console.log("LockedIn")
+        /*
+            const currentUser = nutzer
+          if(currentUser){
+            const userData = checkUser
+            changeUserData(userData)
+            changeCurrentUser(currentUser)
+            changeUsername(userData.data.name)
+            changeLoggedIn(true)
+          }
+          */
+
+        }
+
+        }
+        console.log(appData[nutzer])
+      }
+      }
+    
 
     return(
 
@@ -18,7 +57,7 @@ export const Anmelden = (props) => {
         <Text>E-Mail Adresse</Text>
         <TextInput 
             style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changeName(text)}></TextInput>
+            onChangeText={text =>changeEMailInput(text)}></TextInput>
 
         <View style={styles.trennlinie}/>
 
@@ -26,12 +65,12 @@ export const Anmelden = (props) => {
         <Text>Passwort</Text>
         <TextInput 
             style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changeName(text)}></TextInput>
+            onChangeText={text => changePasswordInput(text)}></TextInput>
 
         <View style={styles.trennlinie}/>
 
 
-        <Button title={"Anmelden"} onPress={() =>{props.finishInit()}} ></Button>
+        <Button title={"Anmelden"} onPress={() =>{checkInput()}} ></Button>
         <Button title={"Zurück"} onPress={() =>{props.changeInitPages('StartBildschirm')}} ></Button>
       </View>
     )
