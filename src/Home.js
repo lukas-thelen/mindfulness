@@ -8,6 +8,9 @@ import { useContext } from 'react';
 export const HomeScreen = ()=> {
   const username = useContext(AppContext).username;
   const changeLoggedIn = useContext(AppContext).changeLoggedIn
+  const appData = useContext(AppContext).appData
+  const userData = useContext(AppContext).userData
+  const currentUser = useContext(AppContext).currentUser
     const storeData = async () => {
         try {
           await AsyncStorage.removeItem('currentUser')
@@ -22,6 +25,14 @@ export const HomeScreen = ()=> {
         <View style={styles.container}>
             <Text>Hallo {username}</Text> 
             <Button title={"abmelden"} onPress={() =>{storeData()}} ></Button>
+            <Button title={"test"} onPress={()=>{
+                        console.log("appData")
+                        console.log(appData)
+                        console.log("UserData")
+                        console.log(userData)
+                        console.log("CurrentUser")
+                        console.log(currentUser)
+            }}/>
         </View>
     )
 }

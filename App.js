@@ -39,10 +39,8 @@ export default function App() {
   
   useEffect(()=>{
     //changeUserData("Hallo")
-    if (isLoading){
-      getData()
-    }
-  });
+    getData()
+  },[]);
 
   const appContext ={
     username:username, 
@@ -63,32 +61,22 @@ export default function App() {
   }
 
   const getData = async () => {
+    console.log("gestartet")
     try {
       const appDataV = await AsyncStorage.getItem('appData')
       const currentUserV = await AsyncStorage.getItem('currentUser')
-      changeUserData("hä1")
       if (appDataV != null){
-        changeAppData(JSON.parse(appDataV))
-        changeCurrentUser(currentUserV)
-        console.log(currentUser)
-        changeUserData("hä2")
-        if(currentUser){
-          console.log("bist du hier?")
-          changeUserData("hä3")
+        const appDataTemp = JSON.parse(appDataV)
+        const currentUserTemp = currentUserV
+        changeAppData(appDataTemp)
+        if(currentUserTemp){
+          const userDataTemp = appDataTemp[currentUserTemp]
+          changeUserData(userDataTemp)
+          changeCurrentUser(currentUserTemp)
+          changeUsername(userDataTemp.data.name)
           changeLoggedIn(true)
-          console.log(JSON.stringify(appData))
-          console.log(JSON.stringify(appData[currentUser]))
-          const userDataTemp = appData[currentUser]
-          console.log(userDataTemp)
-          changeUserData("hä4")
-
-          changeUsername(userData.name)
-          console.log(userData)
-          //console.log("username:",username)
         }
       }
-
-
     } catch(e) {
       console.log(e)
     }
