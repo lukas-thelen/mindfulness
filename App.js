@@ -33,11 +33,15 @@ export default function App() {
   const [loggedIn, changeLoggedIn] = useState(false);
   const [username, changeUsername] =useState("")
   const [appData, changeAppData] = useState({})
-  const [userData,changeUserData] = useState({})
+  const [userData, changeUserData] = useState({});
   const [currentUser, changeCurrentUser] = useState("")
+  const [isLoading, changeIsLoading] = useState(true)
   
   useEffect(()=>{
-    getData()
+    //changeUserData("Hallo")
+    if (isLoading){
+      getData()
+    }
   });
 
   const appContext ={
@@ -46,6 +50,9 @@ export default function App() {
     
     userData:userData,
     changeUserData:(x) =>{changeUserData(x)},
+
+    loggedIn:loggedIn,
+    changeLoggedIn:(x) =>{changeLoggedIn(x)},
 
     appData:appData,
     changeAppData:(x) =>{changeAppData(x)},
@@ -57,30 +64,36 @@ export default function App() {
 
   const getData = async () => {
     try {
-      const userDataV = await AsyncStorage.getItem('userData')
       const appDataV = await AsyncStorage.getItem('appData')
       const currentUserV = await AsyncStorage.getItem('currentUser')
-      changeAppData(JSON.parse(appDataV))
-      changeUserData(JSON.parse(userDataV))
-      changeCurrentUser(currentUserV)
-      if(userData.loggedIn){
-        changeLoggedIn(true)
-        changeUsername(userData.name)
-        console.log(userData)
-      }
-      console.log(appDataV)
-        console.log(userDataV)
-        console.log(currentUserV)
-
-      if(length(currentUser) > 0){
-        changeUserData(appData[currentUser])
-        console.log(appData)
-        console.log(userData)
+      changeUserData("hä1")
+      if (appDataV != null){
+        changeAppData(JSON.parse(appDataV))
+        changeCurrentUser(currentUserV)
         console.log(currentUser)
+        changeUserData("hä2")
+        if(currentUser){
+          console.log("bist du hier?")
+          changeUserData("hä3")
+          changeLoggedIn(true)
+          console.log(JSON.stringify(appData))
+          console.log(JSON.stringify(appData[currentUser]))
+          const userDataTemp = appData[currentUser]
+          console.log(userDataTemp)
+          changeUserData("hä4")
+
+          changeUsername(userData.name)
+          console.log(userData)
+          //console.log("username:",username)
+        }
       }
+
+
     } catch(e) {
-      // error reading value
+      console.log(e)
     }
+
+    changeIsLoading(false)
   }
 
   return (

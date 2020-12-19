@@ -7,9 +7,11 @@ import { useContext } from 'react';
 
 export const HomeScreen = ()=> {
   const username = useContext(AppContext).username;
+  const changeLoggedIn = useContext(AppContext).changeLoggedIn
     const storeData = async () => {
         try {
-          await AsyncStorage.removeItem('userData')
+          await AsyncStorage.removeItem('currentUser')
+          changeLoggedIn(false)
           console.log("erfolgreich")
         } catch (e) {
           console.log(e)

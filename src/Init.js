@@ -21,11 +21,11 @@ export const Init =(props)=>{
 
     const finishInit =async() => {
         try {
-           appData[userData.name] = {}
-            appData[userData.name].data = userData
+           appData[userData.eMail] = {}
+            appData[userData.eMail].data = userData
             const jsonValue = JSON.stringify(appData)
             await AsyncStorage.setItem('appData', jsonValue)
-            await AsyncStorage.setItem('currentUser', userData.name)
+            await AsyncStorage.setItem('currentUser', userData.eMail)
           } catch (e) {
             console.log(e)
           }

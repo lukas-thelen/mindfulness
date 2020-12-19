@@ -38,7 +38,7 @@ export const Registrieren =(props)=>{
 
     //Nutzerinformationen prüfen und überarbeiten
     const abschicken =()=>{
-      if (name===""|| dateChanged===false || gender === ""){
+      if (eMail === "" || name===""|| dateChanged===false || gender === ""){
         Alert.alert(
           'Unvollständig',
           'Bitte fülle alle Felder aus!',
@@ -77,6 +77,7 @@ export const Registrieren =(props)=>{
 
 
         <View style={styles.trennlinie}/>
+
 
         <Text>Geburtsdatum:</Text>
         <TouchableOpacity onPress={()=>{showDatepicker(true)}}>{dateChanged ?
