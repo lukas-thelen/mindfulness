@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
+import { Audio } from 'expo-av';
 
 import {kurse} from "../Kursdaten/Kursdatei.js"
 
@@ -8,10 +9,66 @@ export const AudioPlayer =({navigation, route})=>{
     const uebung=route.params.uebungsIndex
     const sprecher=route.params.sprecherIndex
     const dauer=route.params.dauerIndex
+
+    const soundObject = new Audio.Sound(); 
+
+    async function play() {
+
+        try { 
+            await soundObject.loadAsync(require(".\\assets\\Atem1K3.mp3")); 
+            await soundObject.playAsync(); // Your sound is playing!
+            }
+            catch(e) {
+                console.log(e)
+            }
+        }
+
+    play()
+
     return(
         <View>
             <Text>Ordnername: {kurse[kurs].Ordnername}</Text>
-            <Text>Dateiname: {kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname }</Text>
+            <Text>Dateiname: {kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname}</Text>
+        </View>
+    );
+}
+
+    /*const [isPlaying, setIsPlaying] = useState(false);
+
+    const playFile = (file) => {
+        try {
+            // play the mp3-file 
+            SoundPlayer.playSoundFile(file, "mp3")
+            isPlaying => setIsPlaying(true)
+        } catch (e) {
+            console.log(`cannot play the sound file`, e)
+        }
+      }
+
+      const pause = () => {
+        if (isPlaying) {
+            // pause the mp3-file
+            SoundPlayer.pause()
+            isPlaying => setIsPlaying(false)
+        } 
+      }
+
+      const stop = () => {
+        if (isPlaying) {
+            // stop the mp3-file
+            SoundPlayer.stop()
+            isPlaying => setIsPlaying(false)
+        } 
+      }
+
+      playFile(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname)
+
+      return(
+        <View>
+            <Text>Ordnername: {kurse[kurs].Ordnername}</Text>
+            <Text>Dateiname: {kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname}</Text>
+            <Button title={isPlaying ? "Pause" : "Play"} onPress={isPlaying ? SoundPlayer.pause() : SoundPlayer.play()}></Button>
+            <Button title={"Stop"} onPress={SoundPlayer.stop()}></Button>
         </View>
     )
-}
+    */

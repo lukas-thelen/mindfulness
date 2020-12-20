@@ -35,7 +35,7 @@ export const kurse =[
                     {
                         Sprecher:"Klaus",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"Atem1K3.mp3"}
+                            {Dauer:3, Dateiname:"atem1k3.mp3"}
                         ]
                     },
                     {
