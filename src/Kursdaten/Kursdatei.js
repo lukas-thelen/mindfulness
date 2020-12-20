@@ -35,7 +35,8 @@ export const kurse =[
                     {
                         Sprecher:"Klaus",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"atem1k3.mp3"}
+                            {Dauer:3, Dateiname: require(".\\assets\\Atem1K3.mp3")} 
+                            // muss hier wenn die Dateien im assets Ordner sind als "require" Returnwert sein, für den Audio-Player
                         ]
                     },
                     {

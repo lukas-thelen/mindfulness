@@ -15,7 +15,7 @@ export const AudioPlayer =({navigation, route})=>{
     async function play() {
 
         try { 
-            await soundObject.loadAsync(require(".\\assets\\Atem1K3.mp3")); 
+            await soundObject.loadAsync(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname); 
             await soundObject.playAsync(); // Your sound is playing!
             }
             catch(e) {
@@ -33,42 +33,3 @@ export const AudioPlayer =({navigation, route})=>{
     );
 }
 
-    /*const [isPlaying, setIsPlaying] = useState(false);
-
-    const playFile = (file) => {
-        try {
-            // play the mp3-file 
-            SoundPlayer.playSoundFile(file, "mp3")
-            isPlaying => setIsPlaying(true)
-        } catch (e) {
-            console.log(`cannot play the sound file`, e)
-        }
-      }
-
-      const pause = () => {
-        if (isPlaying) {
-            // pause the mp3-file
-            SoundPlayer.pause()
-            isPlaying => setIsPlaying(false)
-        } 
-      }
-
-      const stop = () => {
-        if (isPlaying) {
-            // stop the mp3-file
-            SoundPlayer.stop()
-            isPlaying => setIsPlaying(false)
-        } 
-      }
-
-      playFile(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname)
-
-      return(
-        <View>
-            <Text>Ordnername: {kurse[kurs].Ordnername}</Text>
-            <Text>Dateiname: {kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname}</Text>
-            <Button title={isPlaying ? "Pause" : "Play"} onPress={isPlaying ? SoundPlayer.pause() : SoundPlayer.play()}></Button>
-            <Button title={"Stop"} onPress={SoundPlayer.stop()}></Button>
-        </View>
-    )
-    */
