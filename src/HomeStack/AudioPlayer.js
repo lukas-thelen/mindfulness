@@ -15,20 +15,21 @@ export const AudioPlayer =({navigation, route})=>{
     async function play() {
 
         try { 
-            await soundObject.loadAsync(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname); 
-            await soundObject.playAsync(); // Your sound is playing!
+            await soundObject.loadAsync(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateipfad)
+            await soundObject.playAsync() // Your sound is playing!
             }
             catch(e) {
                 console.log(e)
             }
         }
-
+       
     play()
 
     return(
         <View>
             <Text>Ordnername: {kurse[kurs].Ordnername}</Text>
             <Text>Dateiname: {kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname}</Text>
+            <Button title='Stop' onPress={() => soundObject.stopAsync()}></Button>
         </View>
     );
 }

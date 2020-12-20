@@ -13,14 +13,16 @@ export const kurse =[
                     {
                         Sprecher:"Der Weihnachtsmann",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"EinführungW3.mp3"}
+                            {Dauer:3, Dateiname:"EinführungW3.mp3", Dateipfad: require(".\\assets\\Atem1K3.mp3")}
+                            // Audiodateien in den Assets-Ordner packen und hier den Dateipfad via require spezifizieren. Require akzeptiert nur 
+                            // static Strings also daher bitte einfach nur den Namen der Audiodatei anpassen
                         ]
                     },
                     {
                         Sprecher:"Das Christkind",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"EinführungC3.mp3"},
-                            {Dauer:7, Dateiname:"EinführungC7.mp3"}
+                            {Dauer:3, Dateiname:"EinführungC3.mp3", Dateipfad: require(".\\assets\\Atem1K3.mp3")},
+                            {Dauer:7, Dateiname:"EinführungC7.mp3", Dateipfad: require(".\\assets\\Atem1K3.mp3")}
                         ]
                     },
                     //mehr Sprecher
@@ -35,16 +37,15 @@ export const kurse =[
                     {
                         Sprecher:"Klaus",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname: require(".\\assets\\Atem1K3.mp3")} 
-                            // muss hier wenn die Dateien im assets Ordner sind als "require" Returnwert sein, für den Audio-Player
+                            {Dauer:3, Dateiname:"Atem1K3.mp3", Dateipfad: require(".\\assets\\Atem1K3.mp3")} 
                         ]
                     },
                     {
                         Sprecher:"Claudia",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"Atem1C3.mp3"},
-                            {Dauer:7, Dateiname:"Atem1C7mp3"},
-                            {Dauer:13, Dateiname:"Atem1C13.mp3"},
+                            {Dauer:3, Dateiname:"Atem1C3.mp3", Dateipfad: require(".\\assets\\Atem1K3.mp3")},
+                            {Dauer:7, Dateiname:"Atem1C7mp3", Dateipfad: require(".\\assets\\Atem1K3.mp3")},
+                            {Dauer:13, Dateiname:"Atem1C13.mp3", Dateipfad: require(".\\assets\\Atem1K3.mp3")}
                         ]
                     },
                     //mehr Sprecher
