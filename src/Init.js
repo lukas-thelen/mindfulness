@@ -15,6 +15,7 @@ import { useContext } from 'react';
 export const Init =(props)=>{
     const [initPages, changeInitPages] = useState('StartBildschirm');
     const [userData, changeUserData] = useState({});
+    const [progressData, changeProgressData] = useState({});
     const appData = useContext(AppContext).appData;
     const changeCurrentUser = useContext(AppContext).changeCurrentUser;
 
@@ -23,6 +24,7 @@ export const Init =(props)=>{
         try {
            appData[userData.eMail] = {}
             appData[userData.eMail].data = userData
+            appData[userData.eMail].progress = progressData
             const jsonValue = JSON.stringify(appData)
             await AsyncStorage.setItem('appData', jsonValue)
             await AsyncStorage.setItem('currentUser', userData.eMail)
@@ -35,8 +37,8 @@ export const Init =(props)=>{
       StartBildschirm: <StartBildschirm changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,
         Anmelden: <Anmelden changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,
         Registrieren: <Registrieren changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,
-        AchtsamkeitsAbfrage: <AchtsamkeitsAbfrage changeInitPages={changeInitPages} changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,
-        StressSkala: <StressSkala finishInit={finishInit} changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,
+        AchtsamkeitsAbfrage: <AchtsamkeitsAbfrage changeInitPages={changeInitPages} changeInitPages= {changeInitPages} progressData = {progressData} changeProgressData = {changeProgressData}/>,
+        StressSkala: <StressSkala finishInit={finishInit} changeInitPages= {changeInitPages} progressData = {progressData} changeProgressData = {changeProgressData}/>,
 
     }
     return (

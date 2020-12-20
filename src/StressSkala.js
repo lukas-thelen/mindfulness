@@ -8,6 +8,17 @@ import { useContext } from 'react';
 
 export const StressSkala = (props) =>{
     const [stressData, changeStressData] = useState("")
+    const fragen = ["Wie oft warst Du im letzten Monat aufgewühlt, weil etwas unerwartet passiert ist?",
+                    "Wie oft hattest Du im letzten Monat das Gefühl, nicht in der Lage zu sein, die wichtigen Dinge in Deinem Leben kontrollieren zu können?"
+                  ]
+
+    // Nutzerinfos im AsyncStorage speichern
+    const storeData = async () => {
+      const progressData = props.progressData;
+      progressData.stressData = stressData;
+      props.changeProgressData(progressData)
+    }
+
 
     //Nutzerinformationen prüfen und überarbeiten
     const abschicken =()=>{

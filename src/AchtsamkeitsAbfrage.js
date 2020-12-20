@@ -12,9 +12,9 @@ export const AchtsamkeitsAbfrage =(props)=>{
 
     // Nutzerinfos im AsyncStorage speichern
     const storeData = async () => {
-      const userData = props.userData;
-      userData.mindfulnessLevelData = mindfulnessLevelData;
-      props.changeUserData(userData)
+      const progressData = props.progressData;
+      progressData.mindfulnessLevelData = mindfulnessLevelData;
+      props.changeProgressData(progressData)
     }
 
     //Nutzerinformationen prüfen und überarbeiten

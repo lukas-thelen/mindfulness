@@ -11,6 +11,10 @@ export const Anmelden = (props) => {
   const appData = useContext(AppContext).appData
   const [eMailInput, changeEMailInput] = useState("")
   const [passwordInput, changePasswordInput] = useState("")
+  const changeUsername = useContext(AppContext).changeUsername;
+  const changeUserData = useContext(AppContext).changeUserData;
+  const changeCurrentUser = useContext(AppContext).changeCurrentUser;
+  const changeLoggedIn = useContext(AppContext).changeLoggedIn;
 
 
    //Nutzerinformationen prüfen und überarbeiten
@@ -29,27 +33,34 @@ export const Anmelden = (props) => {
         console.log("passwort", passwordInput)
         console.log("checkUser", checkUser.data.eMail )
         console.log("checkPasswort", checkUser.data.password )
-        if(eMailInput === checkUser.data.eMail || passwordInput === checkUser.data.password){
+        if(eMailInput === checkUser.data.eMail && passwordInput === checkUser.data.password){
             console.log("LockedIn")
-        /*
-            const currentUser = nutzer
-          if(currentUser){
-            const userData = checkUser
-            changeUserData(userData)
-            changeCurrentUser(currentUser)
-            changeUsername(userData.data.name)
-            changeLoggedIn(true)
-          }
-          */
 
-        }
+            const currentUser = nutzer
+            if(currentUser){
+              changeUserData(checkUser)
+              changeCurrentUser(currentUser)
+              changeUsername(checkUser.data.name)
+              changeLoggedIn(true)
+              return true
+            }
+
+
+        } /*else{
+          Alert.alert(
+            'Wir konnten die Anmeldedaten nicht finden.',
+            'Bitte versuche es noch einmal',
+            [{ text: 'OK'}],
+            { cancelable: false }
+          );
+        }*/
 
         }
         console.log(appData[nutzer])
       }
       }
     
-
+      
     return(
 
         <View style={styles.pagewrap, styles.container}>

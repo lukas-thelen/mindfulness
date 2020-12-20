@@ -38,7 +38,6 @@ export default function App() {
   const [isLoading, changeIsLoading] = useState(true)
   
   useEffect(()=>{
-    //changeUserData("Hallo")
     getData()
   },[]);
 
