@@ -17,7 +17,7 @@ export const AchtsamkeitsAbfrage =(props)=>{
       props.changeProgressData(progressData)
     }
 
-    //Nutzerinformationen prüfen und überarbeiten
+    //Nutzerinformationen prüfen 
     const abschicken =()=>{
       if (mindfulnessLevelData === ""){
         Alert.alert(

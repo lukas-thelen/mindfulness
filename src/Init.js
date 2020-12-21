@@ -20,6 +20,7 @@ export const Init =(props)=>{
     const changeCurrentUser = useContext(AppContext).changeCurrentUser;
 
 
+    // erstellt die Objekt-Struktur
     const finishInit =async() => {
         try {
            appData[userData.eMail] = {}
@@ -33,6 +34,8 @@ export const Init =(props)=>{
           }
           props.changeLoggedIn(true)
     }
+
+    // Navigation zwischen Initpages
     const initDict = {
       StartBildschirm: <StartBildschirm changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,
         Anmelden: <Anmelden changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,

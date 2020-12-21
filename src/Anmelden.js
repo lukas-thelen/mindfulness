@@ -16,16 +16,32 @@ export const Anmelden = (props) => {
   const changeCurrentUser = useContext(AppContext).changeCurrentUser;
   const changeLoggedIn = useContext(AppContext).changeLoggedIn;
 
+  // Überprüft, ob appData leer ist (noch kein Eintrag)
+  const checkObjectEmpty = (obj) => {
+      for(var prop in obj) {
+          if(obj.hasOwnProperty(prop))
+              return false;
+      }
+  
+      return true;
+  }
 
-   //Nutzerinformationen prüfen und überarbeiten
+   //Nutzerinformationen prüfen 
    const checkInput =()=>{
-    if ((typeof appData) === "object" ){
+
+    // Überprüft, ob appData leer ist (noch kein Eintrag)
+    const empty = checkObjectEmpty(appData)
+    if (empty){
       Alert.alert(
         'Bisher liegen uns keine Anmeldedaten vor.',
         'Bitte registriere dich!',
+
+        // Wenn bisher keine Anmelde-Daten da sind kann der Nutzer damit direkt zum Registrierungsprozess kommen
         [{ text: 'Registrieren', onPress: () => props.changeInitPages('Registrieren') }],
         { cancelable: false }
       );
+
+      // Überpüft, ob bisher keine Eingabe gemacht wurde
     }else if (eMailInput === "" || passwordInput === "") {
       Alert.alert(
         'Unvollständig',
@@ -34,16 +50,21 @@ export const Anmelden = (props) => {
         { cancelable: false }
       );
     }  else{
+      const currentUser = ""
+
+      // Geht alle Nutzer durch
       for (var nutzer in appData) {
         const checkUser =appData[nutzer]
         console.log("email", eMailInput)
         console.log("passwort", passwordInput)
         console.log("checkUser", checkUser.data.eMail )
         console.log("checkPasswort", checkUser.data.password )
-        if(eMailInput === checkUser.data.eMail && passwordInput === checkUser.data.password){
-            console.log("LockedIn")
 
+        // Überpüft, ob Eingabe des Nutzers und Anmelde-Daten übereinstimmen
+        if(eMailInput === checkUser.data.eMail && passwordInput === checkUser.data.password){
             const currentUser = nutzer
+
+            // Setzt Daten auf den aktuellen Nutzer
             if(currentUser){
               changeUserData(checkUser)
               changeCurrentUser(currentUser)
@@ -51,9 +72,10 @@ export const Anmelden = (props) => {
               changeLoggedIn(true)
               return true
             }
-
-
-        } else if (eMailInput != checkUser.data.eMail || passwordInput != checkUser.data.password) {
+        }
+      }
+          //Überpüft, ob es nicht die Anmeldetdaten gibt
+        if (currentUser === "") {
           Alert.alert(
             'Wir konnten die Anmeldedaten nicht finden.',
             'Bitte versuche es noch einmal.',
@@ -62,8 +84,7 @@ export const Anmelden = (props) => {
           );
         }
 
-        }
-        console.log(appData[nutzer])
+        
       }
       }
     

@@ -8,8 +8,10 @@ import { useContext } from 'react';
 
 export const StressSkala = (props) =>{
     const [stressData, changeStressData] = useState("")
+
+    //Die perceived Stress Skala Fragen, auf die mit frage und number zugegriffen wird die aktuelle Frage ist gleichquestions[number]
     const [number, changeNumber] = useState(0)
-    const fragen = ["Wie oft warst Du im letzten Monat aufgewühlt, weil etwas unerwartet passiert ist?",
+    const questions = ["Wie oft warst Du im letzten Monat aufgewühlt, weil etwas unerwartet passiert ist?",
                     "Wie oft hattest Du im letzten Monat das Gefühl, nicht in der Lage zu sein, die wichtigen Dinge in Deinem Leben kontrollieren zu können?",
                     "Wie oft hast DU dich im letzten Monat nervös und gestresst gefühlt?",
                     "Wie oft warst Du im letzten Monat zuversichtlich, dass Du fähig bist, ihre persönlichen Probleme zu ubewältigen?",
@@ -20,7 +22,9 @@ export const StressSkala = (props) =>{
                     "Wie oft hast Du dich im letzten Monat über Dinge gegeärgert, über die Du keine Kontrolle hattest?",
                     "Wie oft hattest Du im letzten Monat das Gefühl, dass sich so viele Schwierigkeiten angehäufthaben, dass Du diese nicht überwinden konntest?",
                   ]
-      const [question, changeQuestion] = useState(fragen[number])
+
+      // Variablen für den dynamischen Button (von "Nächste Frage" --> Abschicken)
+      const [question, changeQuestion] = useState(questions[number])
       const [buttonValue, changeButtonValue] = useState("Nächste Frage")
 
 
@@ -32,8 +36,8 @@ export const StressSkala = (props) =>{
     }
 
 
-    //Nutzerinformationen prüfen und überarbeiten
-    const abschicken =()=>{
+    //Nutzereingabe prüfen
+    const checkInput =()=>{
         if (stressData === ""){
           /*Alert.alert(
             'Unvollständig',
@@ -41,19 +45,17 @@ export const StressSkala = (props) =>{
             [{ text: 'OK'}],
             { cancelable: false }
             ); */
-            props.finishInit()
-
-        }else{
-          props.finishInit()
-        }
       }
+    }
+    
+    // Setzt die nächste Frage, sollte es die letzte Frage in questions sein, beendet sie die Umfrage und beendet Init
     const weiter = () =>{
         if (buttonValue === "Abschicken"){
           props.finishInit()
         } else {
           const currentNumber = number +1
           changeNumber(currentNumber)
-          changeQuestion(fragen[number])
+          changeQuestion(questions[number])
             if (number === 9){
               changeButtonValue("Abschicken")
         }
@@ -69,8 +71,8 @@ export const StressSkala = (props) =>{
             <Button title={"Abschicken"} onPress={() =>{abschicken()}} ></Button>
         </View>
     )
-}
 
+}
 //Styles
 const styles = StyleSheet.create({
     container: {
