@@ -19,14 +19,21 @@ export const Anmelden = (props) => {
 
    //Nutzerinformationen prüfen und überarbeiten
    const checkInput =()=>{
-    if (eMailInput === "" || passwordInput === ""){
+    if ((typeof appData) === "object" ){
+      Alert.alert(
+        'Bisher liegen uns keine Anmeldedaten vor.',
+        'Bitte registriere dich!',
+        [{ text: 'Registrieren', onPress: () => props.changeInitPages('Registrieren') }],
+        { cancelable: false }
+      );
+    }else if (eMailInput === "" || passwordInput === "") {
       Alert.alert(
         'Unvollständig',
         'Bitte fülle alle Felder aus!',
         [{ text: 'OK'}],
         { cancelable: false }
       );
-    }else{
+    }  else{
       for (var nutzer in appData) {
         const checkUser =appData[nutzer]
         console.log("email", eMailInput)
@@ -46,14 +53,14 @@ export const Anmelden = (props) => {
             }
 
 
-        } /*else{
+        } else if (eMailInput != checkUser.data.eMail || passwordInput != checkUser.data.password) {
           Alert.alert(
             'Wir konnten die Anmeldedaten nicht finden.',
-            'Bitte versuche es noch einmal',
+            'Bitte versuche es noch einmal.',
             [{ text: 'OK'}],
             { cancelable: false }
           );
-        }*/
+        }
 
         }
         console.log(appData[nutzer])
