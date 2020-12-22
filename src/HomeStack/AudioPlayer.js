@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
+import {AppContext} from './context.js';
+import { useContext } from 'react';
 
 import {kurse} from "../Kursdaten/Kursdatei.js"
 
@@ -16,13 +18,13 @@ export const AudioPlayer =({navigation, route})=>{
 
         try { 
             await soundObject.loadAsync(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateipfad)
-            await soundObject.playAsync() // Your sound is playing!
+            await soundObject.playAsync() 
             }
             catch(e) {
                 console.log(e)
             }
         }
-       
+        
     play()
 
     return(
