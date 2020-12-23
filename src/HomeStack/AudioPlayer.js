@@ -14,6 +14,7 @@ export const AudioPlayer =({navigation, route})=>{
     const dauer=route.params.dauerIndex
 
     const gehoerteUebungen = useContext(AppContext).gehoerteUebungen;
+    const changeGehoerteUebungen = useContext(AppContext).changeGehoerteUebungen;
 
     const soundObject = new Audio.Sound(); 
 
@@ -32,6 +33,7 @@ export const AudioPlayer =({navigation, route})=>{
 
     function addGehoerteUebung() {
         gehoerteUebungen.push(kurse[kurs].Uebungen[uebung].id)
+        changeGehoerteUebungen(gehoerteUebungen)
         console.log(gehoerteUebungen)
     }
 

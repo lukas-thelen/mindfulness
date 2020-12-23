@@ -31,7 +31,7 @@ const Tabnavigator = () =>{
 export default function App() {
   const [loggedIn, changeLoggedIn] = useState(false);
   const [username, changeUsername] =useState("")
-  var gehoerteUebungen = []
+  const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
 
   useEffect(()=>{
     getData()
@@ -41,6 +41,7 @@ export default function App() {
     username:username, 
     changeUsername:(name)=>{changeUsername(name)},
     gehoerteUebungen: gehoerteUebungen,
+    changeGehoerteUebungen: (x)=>{changeGehoerteUebungen(x)}
 
   }
 
