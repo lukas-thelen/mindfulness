@@ -11,7 +11,7 @@ export const AlleUebungen=({navigation})=>{
     const renderItem =({item})=>{
         return(
             <TouchableOpacity style={styles.KursItem} onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:item.KursIndex, uebung:item.id })}}>
-                {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>Kurs: {item.Name}</Text> : <Text >Kurs: {item.Name}</Text>}
+                {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>{item.Name}</Text> : <Text >{item.Name}</Text>}
                 {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>Kurs: {kurse[item.KursIndex].Name}</Text> : <Text >Kurs: {kurse[item.KursIndex].Name}</Text>}
             </TouchableOpacity>
         )
@@ -20,14 +20,9 @@ export const AlleUebungen=({navigation})=>{
     const mindfulness = uebungen.filter(item=>item.Kategorie==="Mindfulness")
     const gehoerteUebungen = useContext(AppContext).gehoerteUebungen;
 
-    function uebungBereitsGehoert (uebung_id) {
-        console.log(gehoerteUebungen.indexOf(uebung_id) > -1)
-        return (gehoerteUebungen.indexOf(uebung_id) > -1);
-    }
-
     return(
         <View>
-            <Text>Atemübungen {gehoerteUebungen[gehoerteUebungen.length-1]}</Text>
+            <Text>Atemübungen</Text>
             <FlatList
                 data={atemuebungen}
                 keyExtractor={item=>item.id}

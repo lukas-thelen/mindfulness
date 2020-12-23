@@ -70,6 +70,7 @@ export const Anmelden = (props) => {
               changeCurrentUser(currentUser)
               changeUsername(checkUser.data.name)
               changeLoggedIn(true)
+              AsyncStorage.setItem('currentUser', currentUser)
               return true
             }
         }

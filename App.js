@@ -72,11 +72,14 @@ export default function App() {
       if (appDataV != null){
         const appDataTemp = JSON.parse(appDataV)
         const currentUserTemp = currentUserV
+        console.log(currentUserTemp)
         changeAppData(appDataTemp)
         if(currentUserTemp){
           const userDataTemp = appDataTemp[currentUserTemp]
+          const gehoerteUebungenTemp = userDataTemp.gehoerteUebungen
           changeUserData(userDataTemp)
           changeCurrentUser(currentUserTemp)
+          changeGehoerteUebungen(gehoerteUebungenTemp)
           changeUsername(userDataTemp.data.name)
           changeLoggedIn(true)
         }

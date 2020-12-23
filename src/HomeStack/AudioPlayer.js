@@ -18,6 +18,9 @@ export const AudioPlayer =({navigation, route})=>{
 
     const gehoerteUebungen = useContext(AppContext).gehoerteUebungen;
     const changeGehoerteUebungen = useContext(AppContext).changeGehoerteUebungen;
+    const appData = useContext(AppContext).appData
+    const changeAppData = useContext(AppContext).changeAppData
+    const currentUser = useContext(AppContext).currentUser
     const [isPlaying, changeIsPlaying] = useState(true)
 
      
@@ -56,10 +59,14 @@ export const AudioPlayer =({navigation, route})=>{
             }
         }
 
-    function addGehoerteUebung() {
+    async function addGehoerteUebung() {
         if (!gehoerteUebungen.includes(kurse[kurs].Uebungen[uebung].id)){
             gehoerteUebungen.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungen)
+            appData[currentUser].gehoerteUebungen=gehoerteUebungen
+            changeAppData(appData)
+            const jsonValue = JSON.stringify(appData)
+            await AsyncStorage.setItem('appData', jsonValue)
             console.log(gehoerteUebungen)
         }
     }
