@@ -13,7 +13,7 @@ export const kurse =[
                     {
                         Sprecher:"Der Weihnachtsmann",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"Atem1K3.mp3", Dateipfad: require("../../assets/Atem1K3.mp3")}
+                            {Dauer:3, Dateiname:"Atem1K3.mp3", Dateipfad: require("../../assets/KlingeltonMando.mp3")}
                             // Audiodateien in den Assets-Ordner packen und hier den Dateipfad via "require" spezifizieren. Require akzeptiert nur 
                             // static Strings also daher bitte einfach nur den Namen der Audiodatei anpassen
                         ]
