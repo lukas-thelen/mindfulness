@@ -7,7 +7,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {HomeScreen} from './src/Home.js';
 import {ProfilScreen} from './src/Profil.js';
+import {Registrieren} from './src/Registrieren.js';
 import {Anmelden} from './src/Anmelden.js';
+import {StartBildschirm} from './src/InitBildschirm.js';
 import {AppContext} from './src/context.js';
 import {AchtsamkeitsAbfrage} from './src/AchtsamkeitsAbfrage.js';
 import { Init } from './src/Init.js';
@@ -31,32 +33,59 @@ const Tabnavigator = () =>{
 export default function App() {
   const [loggedIn, changeLoggedIn] = useState(false);
   const [username, changeUsername] =useState("")
+  const [appData, changeAppData] = useState({})
+  const [userData, changeUserData] = useState({});
+  const [currentUser, changeCurrentUser] = useState("")
+  const [isLoading, changeIsLoading] = useState(true)
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
 
   useEffect(()=>{
     getData()
-  });
+  },[]);
 
   const appContext ={
     username:username, 
     changeUsername:(name)=>{changeUsername(name)},
+    
+    userData:userData,
+    changeUserData:(x) =>{changeUserData(x)},
+
+    loggedIn:loggedIn,
+    changeLoggedIn:(x) =>{changeLoggedIn(x)},
+
+    appData:appData,
+    changeAppData:(x) =>{changeAppData(x)},
+
+    currentUser:currentUser,
+    changeCurrentUser:(x) =>{changeCurrentUser(x)},
+
     gehoerteUebungen: gehoerteUebungen,
     changeGehoerteUebungen: (x)=>{changeGehoerteUebungen(x)}
 
   }
 
   const getData = async () => {
+    console.log("gestartet")
     try {
-      const jsonValue = await AsyncStorage.getItem('userData')
-      const userData=jsonValue != null ? JSON.parse(jsonValue) : null;
-      if(userData.loggedIn){
-        changeLoggedIn(true)
-        changeUsername(userData.name)
-        console.log(userData)
+      const appDataV = await AsyncStorage.getItem('appData')
+      const currentUserV = await AsyncStorage.getItem('currentUser')
+      if (appDataV != null){
+        const appDataTemp = JSON.parse(appDataV)
+        const currentUserTemp = currentUserV
+        changeAppData(appDataTemp)
+        if(currentUserTemp){
+          const userDataTemp = appDataTemp[currentUserTemp]
+          changeUserData(userDataTemp)
+          changeCurrentUser(currentUserTemp)
+          changeUsername(userDataTemp.data.name)
+          changeLoggedIn(true)
+        }
       }
     } catch(e) {
-      // error reading value
+      console.log(e)
     }
+
+    changeIsLoading(false)
   }
 
   return (

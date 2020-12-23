@@ -40,8 +40,29 @@ const HomeRoot = ({navigation})=>{
 
 export const HomeScreen = ()=> {
   const username = useContext(AppContext).username;
-
-
+  const changeLoggedIn = useContext(AppContext).changeLoggedIn
+  const appData = useContext(AppContext).appData
+  const userData = useContext(AppContext).userData
+  const currentUser = useContext(AppContext).currentUser
+  
+  const test = ()=>{
+                        console.log("appData")
+                        console.log(appData)
+                        console.log("UserData")
+                        console.log(userData)
+                        console.log("CurrentUser")
+                        console.log(currentUser)
+            }
+    const storeData = async () => {
+        try {
+          await AsyncStorage.removeItem('currentUser')
+          changeLoggedIn(false)
+          console.log("erfolgreich")
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    
     return(
         <HomeStack.Navigator>
           <HomeStack.Screen name="Home" component={HomeRoot}/>
