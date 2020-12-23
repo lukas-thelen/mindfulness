@@ -14,6 +14,8 @@ import { Init } from './src/Init.js';
 
 const Tab = createBottomTabNavigator();
 
+
+
 const Tabnavigator = () =>{
   return(
     <NavigationContainer>
@@ -25,12 +27,12 @@ const Tabnavigator = () =>{
   );
 }
 
-
 //App-Component
 export default function App() {
   const [loggedIn, changeLoggedIn] = useState(false);
   const [username, changeUsername] =useState("")
-  
+  const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
+
   useEffect(()=>{
     getData()
   });
@@ -38,6 +40,8 @@ export default function App() {
   const appContext ={
     username:username, 
     changeUsername:(name)=>{changeUsername(name)},
+    gehoerteUebungen: gehoerteUebungen,
+    changeGehoerteUebungen: (x)=>{changeGehoerteUebungen(x)}
 
   }
 
