@@ -16,6 +16,8 @@ import { Init } from './src/Init.js';
 
 const Tab = createBottomTabNavigator();
 
+
+
 const Tabnavigator = () =>{
   return(
     <NavigationContainer>
@@ -27,7 +29,6 @@ const Tabnavigator = () =>{
   );
 }
 
-
 //App-Component
 export default function App() {
   const [loggedIn, changeLoggedIn] = useState(false);
@@ -36,7 +37,8 @@ export default function App() {
   const [userData, changeUserData] = useState({});
   const [currentUser, changeCurrentUser] = useState("")
   const [isLoading, changeIsLoading] = useState(true)
-  
+  const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
+
   useEffect(()=>{
     getData()
   },[]);
@@ -56,6 +58,9 @@ export default function App() {
 
     currentUser:currentUser,
     changeCurrentUser:(x) =>{changeCurrentUser(x)},
+
+    gehoerteUebungen: gehoerteUebungen,
+    changeGehoerteUebungen: (x)=>{changeGehoerteUebungen(x)}
 
   }
 
