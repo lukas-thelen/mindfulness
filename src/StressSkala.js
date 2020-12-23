@@ -36,8 +36,9 @@ export const StressSkala = (props) =>{
     // Nutzerinfos im AsyncStorage speichern
     const storeData = async () => {
       const progressData = props.progressData;
-      progressData.stressData = stressData;
+      progressData.stressData = calculatedStressLevel;
       props.changeProgressData(progressData)
+      props.finishInit()
     }
 
     const test = () =>{
@@ -67,28 +68,27 @@ export const StressSkala = (props) =>{
 
     //Kalkulation des Stresslevels    
     const calculateStress =()=>{
-      if (buttonValue != "Abschicken"){
-          if (number === 0 || number === 1 || number === 2 || number === 5 || number === 8 || number === 9){
-                console.log("Erste if mit number= ",number)
-                const currentStress = calculatedStressLevel + skala.indexOf(stressData)+1;
-                addStress(currentStress);
-                console.log("Currentstress: ",currentStress)
-              } else{
-              if (number === 3 || number === 4 || number === 6 || number === 7){
-                console.log("Zweite if mit number= ",number)
-                const currentStress = calculatedStressLevel + (skala.indexOf(stressData)-5)*(-1);
-                addStress(currentStress);
-                console.log("Currentstress: ",currentStress)
-              }
-          }
+        if (number === 0 || number === 1 || number === 2 || number === 5 || number === 8 || number === 9){
+              console.log("Erste if mit number= ",number)
+              const currentStress = calculatedStressLevel + skala.indexOf(stressData)+1;
+              addStress(currentStress);
+              console.log("Currentstress: ",currentStress)
+            } else{
+            if (number === 3 || number === 4 || number === 6 || number === 7){
+              console.log("Zweite if mit number= ",number)
+              const currentStress = calculatedStressLevel + (skala.indexOf(stressData)-5)*(-1);
+              addStress(currentStress);
+              console.log("Currentstress: ",currentStress)
+            }
         }
-      }
+        weiter()
+       }
 
     
     // Setzt die nächste Frage, sollte es die letzte Frage in questions sein, beendet sie die Umfrage und beendet Init
     const weiter = () =>{
         if (buttonValue === "Abschicken"){
-          props.finishInit()
+          storeData()
         } else {
           const currentNumber = number +1
           changeNumber(currentNumber)
@@ -110,7 +110,7 @@ export const StressSkala = (props) =>{
               selectedBtn={(e) => changeStressData(e.label)}
             />
             <Button title={"zeige Daten"} onPress={() =>{test()}} ></Button>
-            <Button title={buttonValue} onPress={() =>{calculateStress(),weiter()}} ></Button>
+            <Button title={buttonValue} onPress={() =>{calculateStress()}} ></Button>
 
         </View>
     )

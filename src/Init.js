@@ -18,20 +18,24 @@ export const Init =(props)=>{
     const [progressData, changeProgressData] = useState({});
     const appData = useContext(AppContext).appData;
     const changeCurrentUser = useContext(AppContext).changeCurrentUser;
+    const changeUserDataContext = useContext(AppContext).changeUserData;
+    const changeAppData = useContext(AppContext).changeAppData;
 
 
     // erstellt die Objekt-Struktur
     const finishInit =async() => {
         try {
-           appData[userData.eMail] = {}
+            appData[userData.eMail] = {}
             appData[userData.eMail].data = userData
             appData[userData.eMail].progress = progressData
+            changeUserDataContext(appData[userData.eMail])
+            changeCurrentUser(userData.eMail)
             const jsonValue = JSON.stringify(appData)
             await AsyncStorage.setItem('appData', jsonValue)
             await AsyncStorage.setItem('currentUser', userData.eMail)
-          } catch (e) {
-            console.log(e)
-          }
+            } catch (e) {
+              console.log(e)
+            }
           props.changeLoggedIn(true)
     }
 
@@ -41,7 +45,7 @@ export const Init =(props)=>{
         Anmelden: <Anmelden changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,
         Registrieren: <Registrieren changeInitPages= {changeInitPages} userData = {userData} changeUserData = {changeUserData}/>,
         AchtsamkeitsAbfrage: <AchtsamkeitsAbfrage changeInitPages={changeInitPages} changeInitPages= {changeInitPages} progressData = {progressData} changeProgressData = {changeProgressData}/>,
-        StressSkala: <StressSkala finishInit={finishInit} changeInitPages= {changeInitPages} progressData = {progressData} changeProgressData = {changeProgressData}/>,
+        StressSkala: <StressSkala finishInit={finishInit} changeInitPages= {changeInitPages} userData={userData}  progressData = {progressData} changeProgressData = {changeProgressData}/>,
 
     }
     return (
