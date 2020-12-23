@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -11,8 +11,8 @@ export const AlleUebungen=({navigation})=>{
     const renderItem =({item})=>{
         return(
             <TouchableOpacity style={styles.KursItem} onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:item.KursIndex, uebung:item.id })}}>
-                {uebungBereitsGehoert(item.id) ? <Text style={{color: "grey"}}>Kurs: {item.Name}</Text> : <Text >Kurs: {item.Name}</Text>}
-                {uebungBereitsGehoert(item.id) ? <Text style={{color: "grey"}}>Kurs: {kurse[item.KursIndex].Name}</Text> : <Text >Kurs: {kurse[item.KursIndex].Name}</Text>}
+                {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>Kurs: {item.Name}</Text> : <Text >Kurs: {item.Name}</Text>}
+                {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>Kurs: {kurse[item.KursIndex].Name}</Text> : <Text >Kurs: {kurse[item.KursIndex].Name}</Text>}
             </TouchableOpacity>
         )
     }
@@ -27,7 +27,7 @@ export const AlleUebungen=({navigation})=>{
 
     return(
         <View>
-            <Text>Atemübungen</Text>
+            <Text>Atemübungen {gehoerteUebungen[gehoerteUebungen.length-1]}</Text>
             <FlatList
                 data={atemuebungen}
                 keyExtractor={item=>item.id}

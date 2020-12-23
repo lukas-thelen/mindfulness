@@ -6,6 +6,7 @@ import {AppContext} from "../context.js";
 import { useContext } from 'react';
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react/cjs/react.development';
 
 export const AudioPlayer =({navigation, route})=>{
     const kurs=route.params.kursIndex
@@ -15,21 +16,25 @@ export const AudioPlayer =({navigation, route})=>{
 
     const gehoerteUebungen = useContext(AppContext).gehoerteUebungen;
     const changeGehoerteUebungen = useContext(AppContext).changeGehoerteUebungen;
+    const [isPlaying, changeIsPlaying] = useState(true)
+    const [playedTime, changePlayedTime] = useState(0)
 
     const soundObject = new Audio.Sound(); 
 
-    async function play() {
+    useEffect(()=>{
+        play(0)
+    },[])
+
+    async function play(time) {
 
         try { 
             await soundObject.loadAsync(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateipfad)
-            await soundObject.playAsync() 
+            await soundObject.setStatusAsync({shouldPlay:true, positionMillis:playedTime});
             }
             catch(e) {
                 console.log(e)
             }
         }
-        
-    play()
 
     function addGehoerteUebung() {
         gehoerteUebungen.push(kurse[kurs].Uebungen[uebung].id)
@@ -43,7 +48,7 @@ export const AudioPlayer =({navigation, route})=>{
         <View>
             <Text>Ordnername: {kurse[kurs].Ordnername}</Text>
             <Text>Dateiname: {kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname}</Text>
-            <Button title='Stop' onPress={() => soundObject.stopAsync()}></Button>
+            {isPlaying ? <Button title='Pause' onPress={async () => {changePlayedTime(await soundObject.getStatusAsync()); await soundObject.pauseAsync(); changeIsPlaying(false)}}></Button> : <Button title='Play' onPress={async() => {await play(playedTime); changeIsPlaying(true)}}></Button>}
         </View>
     );
 
