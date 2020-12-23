@@ -7,109 +7,113 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {AppContext} from './context.js';
 import { useContext } from 'react';
 
+export const Anmelden = (props) => {
+  const appData = useContext(AppContext).appData
+  const [eMailInput, changeEMailInput] = useState("")
+  const [passwordInput, changePasswordInput] = useState("")
+  const changeUsername = useContext(AppContext).changeUsername;
+  const changeUserData = useContext(AppContext).changeUserData;
+  const changeCurrentUser = useContext(AppContext).changeCurrentUser;
+  const changeLoggedIn = useContext(AppContext).changeLoggedIn;
 
-export const Anmelden =(props)=>{
-    const [name, changeName] = useState("")
-    const [birthday, changeBirthday] = useState(new Date())
-    const [gender, changeGender] = useState("")
-    const [datepicker, showDatepicker] = useState(false)
-    const [dateChanged, changeDateChanged] = useState(false)
-
-    const changeUsername = useContext(AppContext).changeUsername;
-    const username = useContext(AppContext).username;
-
-    // Nutzerinfos im AsyncStorage speichern
-    const storeData = async () => {
-      const userData = props.userData;
-      userData.loggedIn=true;
-      userData.name = name;
-      userData.gender = gender;
-      userData.birthday = birthday;
-
-      /*
-      try {
-        const jsonValue = JSON.stringify(userData)
-        await AsyncStorage.setItem('userData', jsonValue)
-      } catch (e) {
-        console.log(e)
+  // Überprüft, ob appData leer ist (noch kein Eintrag)
+  const checkObjectEmpty = (obj) => {
+      for(var prop in obj) {
+          if(obj.hasOwnProperty(prop))
+              return false;
       }
-      */
-      changeUsername(name)
-      props.changeInitPages('AchtsamkeitsAbfrage')
-      props.changeUserData(userData)
-    }
+  
+      return true;
+  }
 
-    //Nutzerinformationen prüfen und überarbeiten
-    const abschicken =()=>{
-      if (name===""|| dateChanged===false || gender === ""){
-        Alert.alert(
-          'Unvollständig',
-          'Bitte fülle alle Felder aus!',
-          [{ text: 'OK'}],
-          { cancelable: false }
-        );
-      }else{
-        storeData()
+   //Nutzerinformationen prüfen 
+   const checkInput =()=>{
+
+    // Überprüft, ob appData leer ist (noch kein Eintrag)
+    const empty = checkObjectEmpty(appData)
+    if (empty){
+      Alert.alert(
+        'Bisher liegen uns keine Anmeldedaten vor.',
+        'Bitte registriere dich!',
+
+        // Wenn bisher keine Anmelde-Daten da sind kann der Nutzer damit direkt zum Registrierungsprozess kommen
+        [{ text: 'Registrieren', onPress: () => props.changeInitPages('Registrieren') }],
+        { cancelable: false }
+      );
+
+      // Überpüft, ob bisher keine Eingabe gemacht wurde
+    }else if (eMailInput === "" || passwordInput === "") {
+      Alert.alert(
+        'Unvollständig',
+        'Bitte fülle alle Felder aus!',
+        [{ text: 'OK'}],
+        { cancelable: false }
+      );
+    }  else{
+      const currentUser = ""
+
+      // Geht alle Nutzer durch
+      for (var nutzer in appData) {
+        const checkUser =appData[nutzer]
+        console.log("email", eMailInput)
+        console.log("passwort", passwordInput)
+        console.log("checkUser", checkUser.data.eMail )
+        console.log("checkPasswort", checkUser.data.password )
+
+        // Überpüft, ob Eingabe des Nutzers und Anmelde-Daten übereinstimmen
+        if(eMailInput === checkUser.data.eMail && passwordInput === checkUser.data.password){
+            const currentUser = nutzer
+
+            // Setzt Daten auf den aktuellen Nutzer
+            if(currentUser){
+              changeUserData(checkUser)
+              changeCurrentUser(currentUser)
+              changeUsername(checkUser.data.name)
+              changeLoggedIn(true)
+              return true
+            }
+        }
       }
-    }
+          //Überpüft, ob es nicht die Anmeldetdaten gibt
+        if (currentUser === "") {
+          Alert.alert(
+            'Wir konnten die Anmeldedaten nicht finden.',
+            'Bitte versuche es noch einmal.',
+            [{ text: 'OK'}],
+            { cancelable: false }
+          );
+        }
 
-
-    const genderData = [
-      {label: 'männlich'},{label: 'weiblich'},{label: 'divers'}];
-
-    //Geburtstag bestätigen
-    const handleConfirm = (selectedDate) => {
-      changeBirthday(new Date(selectedDate))
-      showDatepicker(false)
-      changeDateChanged(true)
-    };
-
-    const test = () =>{
-        console.log(name)
-        console.log(birthday)
-        console.log(gender)
-    }
+        
+      }
+      }
     
+      
     return(
-      <View style={styles.pagewrap, styles.container}>
-        <Text>Hallo {username}</Text>
-        <Text>Name:</Text>
+
+        <View style={styles.pagewrap, styles.container}>
+        
+        <Text>E-Mail Adresse</Text>
         <TextInput 
             style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changeName(text)}></TextInput>
+            onChangeText={text =>changeEMailInput(text)}></TextInput>
 
         <View style={styles.trennlinie}/>
 
-        <Text>Geburtsdatum:</Text>
-        <TouchableOpacity onPress={()=>{showDatepicker(true)}}>{dateChanged ?
-          <Text>{birthday.getDate()}.{birthday.getMonth()+1}.{birthday.getFullYear()}</Text>:
-          <Text>hier eingeben</Text>}
-        </TouchableOpacity>
-        <DateTimePickerModal
-          value={birthday}
-          isVisible={datepicker}
-          display="spinner"
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={showDatepicker}
-        />
+
+        <Text>Passwort</Text>
+        <TextInput 
+            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            onChangeText={text => changePasswordInput(text)}></TextInput>
 
         <View style={styles.trennlinie}/>
 
-        <Text>Geschlecht:</Text>
-        <RadioButtonRN
-          boxStyle={styles.radio}
-          data={genderData}
-          selectedBtn={(e) => changeGender(e.label)}
-        />
 
-        <View style={styles.trennlinie}/>
-
-        <Button title={"zeige Daten"} onPress={() =>{test()}} ></Button>
-        <Button title={"anmelden"} onPress={() =>{abschicken()}} ></Button>
+        <Button title={"Anmelden"} onPress={() =>{checkInput()}} ></Button>
+        <Button title={"Zurück"} onPress={() =>{props.changeInitPages('StartBildschirm')}} ></Button>
       </View>
     )
-  }
+}
 
 //Styles
 const styles = StyleSheet.create({
