@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import {uebungen} from "../Kursdaten/Uebungsliste.js"
@@ -15,6 +16,11 @@ export const AlleUebungen=({navigation})=>{
     }
     const atemuebungen = uebungen.filter(item=>item.Kategorie==="Atemübung")
     const mindfulness = uebungen.filter(item=>item.Kategorie==="Mindfulness")
+
+    function uebungBereitsGehoert (uebung_id) {
+        return (uebung_id.indexOf(uebung_id) > -1);
+    }
+
     return(
         <View>
             <Text>Atemübungen</Text>
