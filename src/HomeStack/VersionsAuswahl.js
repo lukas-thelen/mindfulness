@@ -7,6 +7,14 @@ import {kurse} from "../Kursdaten/Kursdatei.js"
 export const VersionsAuswahl =({navigation, route})=>{
     const [sprecher, changeSprecher] = useState("")
     const [dauer, changeDauer] = useState(0)
+
+    /*useEffect(()=>{
+        return(()=>{
+        changeSprecher("");
+        changeDauer(0)
+        })
+    },[])*/
+
     const renderSprecher =({item})=>{
         return(
             <TouchableOpacity style={item.Sprecher===sprecher ? styles.SelectedItem : styles.SprecherItem} onPress={()=>{changeSprecher(item.Sprecher)}}>
@@ -26,12 +34,14 @@ export const VersionsAuswahl =({navigation, route})=>{
 
     const abspielen=()=>{
         if(sprecher!=""&&dauerIndex()!=-1){
-            navigation.navigate("AudioPlayer", {kursIndex:kursIndex, uebungsIndex:uebungsIndex, sprecherIndex:sprecherIndex, dauerIndex:dauerIndex(),})
+            navigation.navigate("AudioPlayer", {kursIndex:kursIndex, uebungsIndex:uebungsIndex, sprecherIndex:sprecherIndex, dauerIndex:dauerIndex()})
         }
+        changeSprecher("");
+        changeDauer(0)
     }
 
     const kursIndex = route.params.kursIndex
-    const uebungsIndex = kurse[kursIndex].Uebungen.findIndex(item => item.id === route.params.uebung)
+    const uebungsIndex = route.params.uebungsIndex
     const sprecherIndex = kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher.findIndex(item => item.Sprecher === sprecher)
     const dauerIndex =()=>{
          return kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher[sprecherIndex].VersionenNachDauer.findIndex(item => item.Dauer === dauer)

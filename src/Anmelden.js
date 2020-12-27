@@ -15,6 +15,7 @@ export const Anmelden = (props) => {
   const changeUserData = useContext(AppContext).changeUserData;
   const changeCurrentUser = useContext(AppContext).changeCurrentUser;
   const changeLoggedIn = useContext(AppContext).changeLoggedIn;
+  const changeGehoerteUebungen = useContext(AppContext).changeGehoerteUebungen;
 
   // Überprüft, ob appData leer ist (noch kein Eintrag)
   const checkObjectEmpty = (obj) => {
@@ -70,6 +71,7 @@ export const Anmelden = (props) => {
               changeCurrentUser(currentUser)
               changeUsername(checkUser.data.name)
               changeLoggedIn(true)
+              changeGehoerteUebungen(checkUser.gehoerteUebungen)
               AsyncStorage.setItem('currentUser', currentUser)
               return true
             }

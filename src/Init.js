@@ -20,6 +20,7 @@ export const Init =(props)=>{
     const changeCurrentUser = useContext(AppContext).changeCurrentUser;
     const changeUserDataContext = useContext(AppContext).changeUserData;
     const changeAppData = useContext(AppContext).changeAppData;
+    const changeGehoerteUebungen = useContext(AppContext).changeGehoerteUebungen;
 
 
     // erstellt die Objekt-Struktur
@@ -28,8 +29,11 @@ export const Init =(props)=>{
             appData[userData.eMail] = {}
             appData[userData.eMail].data = userData
             appData[userData.eMail].progress = progressData
+            appData[userData.eMail].gehoerteUebungen = []
             changeUserDataContext(appData[userData.eMail])
             changeCurrentUser(userData.eMail)
+            changeAppData(appData)
+            changeGehoerteUebungen([])
             const jsonValue = JSON.stringify(appData)
             await AsyncStorage.setItem('appData', jsonValue)
             await AsyncStorage.setItem('currentUser', userData.eMail)

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useContext } from 'react';
-import { useEffect } from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
 import { AppContext } from '../context.js';
 
@@ -8,9 +7,9 @@ import {kurse} from "../Kursdaten/Kursdatei.js"
 
 export const UebungsAuswahl =({navigation, route})=>{
     const gehoerteUebungen = useContext(AppContext).gehoerteUebungen
-    const renderItem =({item})=>{
+    const renderItem =({item, index})=>{
         return(
-            <TouchableOpacity style={styles.UebungsItem} onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:kursIndex, uebung:item.id})}}>
+            <TouchableOpacity style={styles.UebungsItem} onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:kursIndex, uebungsIndex:index})}}>
                 {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>{item.Name}</Text> : <Text >{item.Name}</Text>}
             </TouchableOpacity>    
         )

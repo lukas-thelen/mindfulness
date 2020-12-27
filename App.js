@@ -39,31 +39,27 @@ export default function App() {
   const [isLoading, changeIsLoading] = useState(true)
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
 
+  //wird einmalig beim ersten rendern des Components ausgeführt
   useEffect(()=>{
     getData()
   },[]);
 
   const appContext ={
-    username:username, 
-    changeUsername:(name)=>{changeUsername(name)},
+    username, changeUsername,
     
-    userData:userData,
-    changeUserData:(x) =>{changeUserData(x)},
+    userData, changeUserData,
 
-    loggedIn:loggedIn,
-    changeLoggedIn:(x) =>{changeLoggedIn(x)},
+    loggedIn, changeLoggedIn,
 
-    appData:appData,
-    changeAppData:(x) =>{changeAppData(x)},
+    appData, changeAppData,
 
-    currentUser:currentUser,
-    changeCurrentUser:(x) =>{changeCurrentUser(x)},
+    currentUser, changeCurrentUser,
 
-    gehoerteUebungen: gehoerteUebungen,
-    changeGehoerteUebungen: (x)=>{changeGehoerteUebungen(x)}
+    gehoerteUebungen, changeGehoerteUebungen
 
   }
 
+  //lädt Daten aus dem AsyncStorage und setzt die entsprechenden Werte im Kontext ein
   const getData = async () => {
     console.log("gestartet")
     try {
@@ -91,9 +87,8 @@ export default function App() {
     changeIsLoading(false)
   }
 
+  //Wrap für gesamte App - cond. Rendering für angemeldet/nicht angemeldet
   return (
-
-
     <AppContext.Provider value={appContext}>
       <View style={styles.pagewrap}>
         {loggedIn ? <Tabnavigator style={styles.container}/> : <Init changeLoggedIn={changeLoggedIn}/>}
