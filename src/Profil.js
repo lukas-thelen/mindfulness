@@ -6,12 +6,12 @@ import { AppContext } from './context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const ProfilScreen = ()=> {
-    const username = useContext(AppContext).username;
-    const appData = useContext(AppContext).appData
-    const userData = useContext(AppContext).userData
-    const currentUser = useContext(AppContext).currentUser
-    const changeLoggedIn = useContext(AppContext).changeLoggedIn
-    const changeCurrentUser = useContext(AppContext).changeCurrentUser
+    const {username} = useContext(AppContext);
+    const {appData} = useContext(AppContext)
+    const {userData} = useContext(AppContext)
+    const {currentUser} = useContext(AppContext)
+    const {changeLoggedIn} = useContext(AppContext)
+    const {changeCurrentUser} = useContext(AppContext)
     const logout = async () => {
         try {
           await AsyncStorage.removeItem('currentUser')

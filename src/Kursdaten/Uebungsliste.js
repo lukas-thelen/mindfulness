@@ -8,6 +8,7 @@ const uebungsListe =()=>{
         for(var j=0;j<kurse[i].Uebungen.length;j++){
             uebung=kurse[i].Uebungen[j]
             uebung.KursIndex=i
+            uebung.UebungsIndex=j
             uebungenTemp.push(uebung)
         }
     }
