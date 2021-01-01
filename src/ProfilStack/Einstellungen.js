@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
-import DateTimePickerModal from "react-native-modal-datetime-picker"; 
+import DateTimePickerModal from "@react-native-community/datetimepicker"; 
 import { FlatList } from 'react-native-gesture-handler';
 
 export const Einstellungen = () => {
@@ -21,14 +21,10 @@ const [anzahl, changeAnzahl]=useState(1)
 const {appData, userData, changeAppData, changeUserData} = useContext(AppContext)
 
     useEffect(()=>{
-        console.log(userData)
         console.log(userData.data.notificationTimes)
         if(userData.data.notificationTimes){
-            console.log("Hallo2")
             var temp = []
-            console.log()
-            for (y = 0; y < userData.data.notificationTimes.length; y++){
-                console.log(userData.data.notificationTimes[y])
+            for (var y = 0; y < userData.data.notificationTimes.length; y++){
                 temp.push(new Date(userData.data.notificationTimes[y]))
             }
             changeTimes(temp)
@@ -39,7 +35,6 @@ const {appData, userData, changeAppData, changeUserData} = useContext(AppContext
     },[])
 
     const storeData = async ()=>{
-        console.log("in Steuern")
         userData.data.notifications=notifications
         userData.data.notificationTimes=times
         changeUserData(userData)
@@ -67,16 +62,17 @@ const {appData, userData, changeAppData, changeUserData} = useContext(AppContext
 
     }
 
-    const handleConfirm =(zeit, index)=>{
+    const handleConfirm =(zeit)=>{
+        showTimepicker(!timepicker)
         const timesTemp=[...times]
         timesTemp[indexTime]=zeit
         changeTimes(timesTemp)
-        showTimepicker(false)
+        console.log(zeit)
+
     }
 
     const renderUhrzeit = ({item, index}) =>{
         if(item!=null){
-            console.log(item)
             var minutes = item.getMinutes()
             if (minutes<10){
                 minutes="0"+minutes.toString()
@@ -88,22 +84,20 @@ const {appData, userData, changeAppData, changeUserData} = useContext(AppContext
                 <TouchableOpacity onPress={()=>{showTimepicker(true); changeIndexTime(index)}}>
                     <Text>{item!=null ? item.getHours().toString()+":"+minutes+" Uhr":"hier eingeben"}</Text>
                 </TouchableOpacity>
-                <DateTimePickerModal
-                    date = {initTime}
-                    isVisible={timepicker}
+                {timepicker && <DateTimePickerModal
+                    value = {times[index]>0? times[index]:initTime}
                     is24Hour={true}
                     display="spinner"
                     mode="time"
-                    onConfirm={(value)=>{handleConfirm(value)}}
-                    onCancel={showTimepicker}
-                />
+                    onChange={(event, value)=>handleConfirm(value)}              
+                />}
                 </View>
         )
     }
 
     return (
         <View style ={{flex:1}}>
-            <Text>Ich bin deine Einstellungen!</Text>
+            <Text>Ich bin deine Einstellungen!{timepicker?"True":"False"}</Text>
             <View style= {styles.reihe}>
                 <Text>Erinnerungen</Text>
                 <Switch onValueChange={()=>{changeNotifications(!notifications)}} value={notifications}/>
