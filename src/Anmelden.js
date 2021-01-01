@@ -51,35 +51,20 @@ export const Anmelden = (props) => {
         { cancelable: false }
       );
     }  else{
-      const currentUser = ""
+      var currentUser = ""
 
       // Geht alle Nutzer durch
-      for (var nutzer in appData) {
-        const checkUser =appData[nutzer]
-        console.log("email", eMailInput)
-        console.log("passwort", passwordInput)
-        console.log("checkUser", checkUser.data.eMail )
-        console.log("checkPasswort", checkUser.data.password )
-
-        // Überpüft, ob Eingabe des Nutzers und Anmelde-Daten übereinstimmen
-        if(eMailInput === checkUser.data.eMail && passwordInput === checkUser.data.password){
-            const currentUser = nutzer
-
-            // Setzt Daten auf den aktuellen Nutzer
-            if(currentUser){
-              console.log("Hat User gefunden")
-              changeUserData(checkUser)
-              changeCurrentUser(currentUser)
-              changeUsername(checkUser.data.name)
-              changeLoggedIn(true)
-              changeGehoerteUebungen(checkUser.gehoerteUebungen)
-              AsyncStorage.setItem('currentUser', currentUser)
-              return true
-            }
-        }
-      }
-          //Überpüft, ob es nicht die Anmeldetdaten gibt
-        if (currentUser === "") {
+      if(appData[eMailInput] && eMailInput === appData[eMailInput].data.eMail && passwordInput === appData[eMailInput].data.password){
+        currentUser = appData[eMailInput].data.eMail
+        console.log("Hat User gefunden")
+        changeUserData(appData[eMailInput])
+        changeCurrentUser(currentUser)
+        changeUsername(appData[eMailInput].data.name)
+        changeLoggedIn(true)
+        changeGehoerteUebungen(appData[eMailInput].gehoerteUebungen)
+        AsyncStorage.setItem('currentUser', currentUser)
+        return true
+      }else{
           Alert.alert(
             'Wir konnten die Anmeldedaten nicht finden.',
             'Bitte versuche es noch einmal.',

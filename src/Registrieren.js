@@ -18,7 +18,7 @@ export const Registrieren =(props)=>{
     const [dateChanged, changeDateChanged] = useState(false)
 
     const changeUsername = useContext(AppContext).changeUsername;
-    const username = useContext(AppContext).username;
+    const {username, appData} = useContext(AppContext);
 
     // Nutzerinfos im AsyncStorage speichern
     const storeData = async () => {
@@ -43,6 +43,22 @@ export const Registrieren =(props)=>{
           'Unvollständig',
           'Bitte fülle alle Felder aus!',
           [{ text: 'OK'}],
+          { cancelable: false }
+        );
+      }else if(password.length<5){
+        Alert.alert(
+          'Zu unsicher!',
+          'Dein Passwort muss mehr als 5 Zeichen haben!',
+
+          [{ text: 'Ok'}],
+          { cancelable: false }
+        );
+      }else if(appData[eMail]){
+        Alert.alert(
+          'E-Mail-Adresse bereits vergeben',
+          'Unter dieser Adresse besteht bereits ein Konto. Versuche dich damit anzumelden!',
+
+          [{ text: 'zum Anmelden', onPress: () => props.changeInitPages('Anmelden') }, {text:"ok"}],
           { cancelable: false }
         );
       }else{

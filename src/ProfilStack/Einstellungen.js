@@ -21,7 +21,6 @@ const [anzahl, changeAnzahl]=useState(1)
 const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCurrentUser} = useContext(AppContext)
 
     useEffect(()=>{
-        console.log(userData.data.notificationTimes)
         if(userData.data.notificationTimes){
             var temp = []
             for (var y = 0; y < userData.data.notificationTimes.length; y++){
@@ -40,7 +39,6 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
           await AsyncStorage.removeItem('currentUser')
           changeLoggedIn(false)
           changeCurrentUser("")
-          console.log("erfolgreich")
         } catch (e) {
           console.log(e)
         }
@@ -79,8 +77,6 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
         const timesTemp=[...times]
         timesTemp[indexTime]=zeit
         changeTimes(timesTemp)
-        console.log(zeit)
-
     }
 
     const renderUhrzeit = ({item, index}) =>{
@@ -118,6 +114,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
             {notifications&& <View style= {styles.reihe}>
                 <Text>Anzahl</Text>
                 <TextInput 
+                    value={""+anzahl}
                     style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
                     keyboardType={'numeric'} onChangeText={number => onChangeAnzahl(number)}>
                 </TextInput>

@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from 'react';
 
 export const KontoInfos = () => {
     const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCurrentUser} = useContext(AppContext)
-    const [eMail, changeEmail] = useState("")
+    const [eMail, changeEMail] = useState("")
     const [altesPasswort, changeAltesPasswort] = useState("")
     const [neuesPasswort, changeNeuesPasswort] = useState("")
     const [neuesPasswort2, changeNeuesPasswort2] = useState("")
@@ -51,7 +51,7 @@ export const KontoInfos = () => {
         changeAppData(appDataTemp)
         const jsonvalue=JSON.stringify(appDataTemp)
         await AsyncStorage.setItem('appData', jsonvalue)
-
+        changeEMail("")
     }
 
     // Ändert das Passwort des Nutzers nach Eingabe des Alten und zweifacher Eingabe des (identisch) Neuen
@@ -60,24 +60,34 @@ export const KontoInfos = () => {
         if (altesPasswort === userData.data.password){
             
             if (neuesPasswort === neuesPasswort2){
-                userData.data.passwort=neuesPasswort
-                changeUserData(userData)
-                appDataTemp[userData.data.eMail]=userData
-                changeAppData(appDataTemp)
-                const jsonvalue=JSON.stringify(appDataTemp)
-                await AsyncStorage.setItem('appData', jsonvalue)
+                if(neuesPasswort.length>5){
+                    userData.data.password=neuesPasswort
+                    changeUserData(userData)
+                    appDataTemp[userData.data.eMail]=userData
+                    changeAppData(appDataTemp)
+                    const jsonvalue=JSON.stringify(appDataTemp)
+                    await AsyncStorage.setItem('appData', jsonvalue)
 
-                changeAltesPasswort("")
-                changeNeuesPasswort("")
-                changeNeuesPasswort2("")
+                    changeAltesPasswort("")
+                    changeNeuesPasswort("")
+                    changeNeuesPasswort2("")
 
-                Alert.alert(
-                    'Passwort wurde geändert.',
-                    '',
+                    Alert.alert(
+                        'Passwort wurde geändert.',
+                        '',
 
-                    [{ text: 'Ok'}],
-                    { cancelable: false }
-                  );
+                        [{ text: 'Ok'}],
+                        { cancelable: false }
+                    );
+                }else{
+                    Alert.alert(
+                        'Zu unsicher!',
+                        'Dein Passwort muss mehr als 5 Zeichen haben!',
+    
+                        [{ text: 'Ok'}],
+                        { cancelable: false }
+                      );
+                }
             } else {
 
                 Alert.alert(
@@ -109,7 +119,7 @@ export const KontoInfos = () => {
             <View style = {styles.reihe}>
             <Text>Neue E-Mail</Text>
                 <TextInput style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-                            onChangeText={eMail => changeEmail(eMail)}></TextInput>
+                            onChangeText={eMail => changeEMail(eMail)} value={eMail}></TextInput>
             </View>
 
             <Button title="Bestätigen" onPress={()=>eMailBestätigen()}></Button>
@@ -120,19 +130,19 @@ export const KontoInfos = () => {
             <View style = {styles.reihe}>
                 <Text>Altes Passwort</Text>
                 <TextInput style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-                            onChangeText={passwort => changeAltesPasswort(passwort)}></TextInput>
+                            onChangeText={passwort => changeAltesPasswort(passwort)} value={altesPasswort}></TextInput>
             </View>
 
             <View style = {styles.reihe}>
                 <Text>Neues Passwort:</Text>
                 <TextInput style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-                            onChangeText={passwort => changeNeuesPasswort(passwort)}></TextInput>
+                            onChangeText={passwort => changeNeuesPasswort(passwort)} value={neuesPasswort}></TextInput>
             </View>
 
             <View style = {styles.reihe}>
                 <Text>Neues Passwort bestätigen:</Text>
                 <TextInput style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-                            onChangeText={passwort => changeNeuesPasswort2(passwort)}></TextInput>
+                            onChangeText={passwort => changeNeuesPasswort2(passwort)} value={neuesPasswort2}></TextInput>
             </View>
 
 
