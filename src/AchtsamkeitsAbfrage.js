@@ -55,7 +55,8 @@ export const AchtsamkeitsAbfrage =(props)=>{
         <View style={styles.trennlinie}/>
 
         <Button title={"zeige Daten"} onPress={() =>{test()}} ></Button>
-        <Button title={"anmelden"} onPress={() =>{abschicken()}} ></Button>
+        <Button title={"Weiter"} onPress={() =>{abschicken()}} ></Button>
+
       </View>
     )
   }
