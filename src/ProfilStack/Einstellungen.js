@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from 'react';
 import DateTimePickerModal from "@react-native-community/datetimepicker"; 
 import { FlatList } from 'react-native-gesture-handler';
 
-export const Einstellungen = () => {
+export const Einstellungen = ({navigation}) => {
 const initTime = new Date()
 initTime.setHours(18)
 initTime.setMinutes(0)
@@ -18,7 +18,7 @@ const [times, changeTimes] = useState([initTime]);
 const [indexTime, changeIndexTime] = useState(0)
 const [anzahl, changeAnzahl]=useState(1)
 
-const {appData, userData, changeAppData, changeUserData} = useContext(AppContext)
+const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCurrentUser} = useContext(AppContext)
 
     useEffect(()=>{
         console.log(userData.data.notificationTimes)
@@ -33,6 +33,18 @@ const {appData, userData, changeAppData, changeUserData} = useContext(AppContext
 
         }
     },[])
+
+
+    const logout = async () => {
+        try {
+          await AsyncStorage.removeItem('currentUser')
+          changeLoggedIn(false)
+          changeCurrentUser("")
+          console.log("erfolgreich")
+        } catch (e) {
+          console.log(e)
+        }
+      }
 
     const storeData = async ()=>{
         userData.data.notifications=notifications
@@ -119,6 +131,11 @@ const {appData, userData, changeAppData, changeUserData} = useContext(AppContext
                 ></FlatList>}
 
                 <Button title="Speichern" onPress={()=>storeData()}></Button>
+                <Button title="Konto-Einstellungen" onPress={()=>navigation.navigate("Konto-Informationen")}></Button>
+                <Button title="Informationen über die App" onPress={()=>navigation.navigate("Informationen über die App")}></Button>
+                <TouchableOpacity onPress={() => logout() }> 
+                    <Text>Abmelden</Text>
+                </TouchableOpacity>
             
         </View>
     )

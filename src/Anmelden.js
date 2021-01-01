@@ -67,6 +67,7 @@ export const Anmelden = (props) => {
 
             // Setzt Daten auf den aktuellen Nutzer
             if(currentUser){
+              console.log("Hat User gefunden")
               changeUserData(checkUser)
               changeCurrentUser(currentUser)
               changeUsername(checkUser.data.name)
