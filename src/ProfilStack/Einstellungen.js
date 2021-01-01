@@ -115,6 +115,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                 <Text>Anzahl</Text>
                 <TextInput 
                     defaultValue={""+anzahl}
+
                     style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
                     keyboardType={'numeric'} onChangeText={number => onChangeAnzahl(number)}>
                 </TextInput>
