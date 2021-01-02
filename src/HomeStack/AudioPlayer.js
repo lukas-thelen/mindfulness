@@ -21,9 +21,13 @@ export const AudioPlayer =({navigation, route})=>{
     const uebung=route.params.uebungsIndex
     const sprecher=route.params.sprecherIndex
     const dauer=route.params.dauerIndex
+    const dauerInMinuten=kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dauer
 
-    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser} = useContext(AppContext)
+    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser, userData, changeUserData} = useContext(AppContext)
     var gehoerteUebungenTemp = [...gehoerteUebungen]
+    const userDataTemp={...userData}
+
+    const today=new Date()
     
     //spielt beim Öffnen die Audio-Datei ab
     useEffect(()=>{
@@ -68,11 +72,27 @@ export const AudioPlayer =({navigation, route})=>{
         if (!gehoerteUebungenTemp.includes(kurse[kurs].Uebungen[uebung].id) || !gehoerteUebungenTemp[0]){
             gehoerteUebungenTemp.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungenTemp)
+            userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
             appData[currentUser].gehoerteUebungen=gehoerteUebungenTemp
-            changeAppData(appData)
-            const jsonValue = JSON.stringify(appData)
-            await AsyncStorage.setItem('appData', jsonValue)
         }
+        if(!userDataTemp.journal[today.toDateString()]){
+            userDataTemp.journal[today.toDateString()]={}
+            userDataTemp.journal[today.toDateString()].meditations=1
+            userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+        }else{
+            if(userDataTemp.journal[today.toDateString()].meditations){
+                userDataTemp.journal[today.toDateString()].meditations=userDataTemp.journal[today.toDateString()].meditations+1
+                userDataTemp.journal[today.toDateString()].meditationMinutes=userDataTemp.journal[today.toDateString()].meditationMinutes+dauerInMinuten
+            }else{
+                userDataTemp.journal[today.toDateString()].meditations=1
+                userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+            }
+        }
+        changeUserData(userDataTemp)
+        appData[currentUser].journal=userDataTemp.journal
+        changeAppData(appData)
+        const jsonValue = JSON.stringify(appData)
+        await AsyncStorage.setItem('appData', jsonValue)
     }
 
     //Button, um nächste Übung zu starten

@@ -20,6 +20,7 @@ const [anzahl, changeAnzahl]=useState(1)
 
 const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCurrentUser} = useContext(AppContext)
 
+
     useEffect(()=>{
         if(userData.data.notificationTimes){
             var temp = []

@@ -30,6 +30,7 @@ export const Init =(props)=>{
             appData[userData.eMail].data = userData
             appData[userData.eMail].progress = progressData
             appData[userData.eMail].gehoerteUebungen = []
+            appData[userData.eMail].journal ={}
             changeUserDataContext(appData[userData.eMail])
             changeCurrentUser(userData.eMail)
             changeAppData(appData)

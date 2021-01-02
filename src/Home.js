@@ -13,6 +13,9 @@ import { AudioPlayer } from './HomeStack/AudioPlayer.js';
 import {AlleUebungen} from "./HomeStack/AlleUebungen.js"
 import { kurse } from './Kursdaten/Kursdatei.js';
 import { render } from 'react-dom';
+import { Journal } from './HomeStack/Journal.js';
+import { JournalTag } from './HomeStack/JournalTag.js';
+import { StressSkalaMonthly } from './HomeStack/StressSkalaMonthly.js';
 
 const HomeStack = createStackNavigator();
 
@@ -52,6 +55,7 @@ const HomeRoot = ({navigation})=>{
       <Text>Hallo {username}</Text> 
       <Button title={"Meine Kurse"} onPress={() =>{navigation.navigate('Meine Kurse')}} ></Button>
       <Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
+      <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
     </View>
   )
 }
@@ -72,6 +76,9 @@ export const HomeScreen = ()=> {
           <HomeStack.Screen name="Wähle eine Version" component={VersionsAuswahl}/>
           <HomeStack.Screen name="AudioPlayer" component={AudioPlayer}/>
           <HomeStack.Screen name="Alle Übungen" component={AlleUebungen}/>
+          <HomeStack.Screen name="Journal" component={Journal}/>
+          <HomeStack.Screen name="individueller Tag" component={JournalTag}/>
+          <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly}/>
         </HomeStack.Navigator>
     )
 }
