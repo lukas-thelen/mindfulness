@@ -45,7 +45,7 @@ export const Journal = ({navigation}) => {
         }
         //bis hier
         const dateOfDay = new Date()
-        dateOfDay.setDate(date+(index-(today.getDay()-1)%7)+(weekchange*7))
+        dateOfDay.setDate(date+((index+1)%7)-today.getDay()+(weekchange*7))
         const millis = dateOfDay.getTime()
         return(
             <TouchableOpacity style={userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].journalChanged?styles.tagEdited:styles.tag} onPress={()=>{navigation.navigate("individueller Tag", {date:millis})}}>
