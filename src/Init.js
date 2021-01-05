@@ -31,6 +31,21 @@ export const Init =(props)=>{
             appData[userData.eMail].progress = progressData
             appData[userData.eMail].gehoerteUebungen = []
             appData[userData.eMail].journal ={}
+            appData[userData.eMail].benchmarks ={
+              meditations: 0,
+              meditationMinutes:0,
+              meditationsEarly:0,
+              meditationsLate:0,
+              meditationsNight:0,
+              allMeditations:0,
+              infoScreen: 0,
+              cancelCounter:0,
+              repeat3: [],
+              puzzles:0,
+              streak:0,
+              benchmarks10: 0,
+              benchmarksReached: []
+            }
             changeUserDataContext(appData[userData.eMail])
             changeCurrentUser(userData.eMail)
             changeAppData(appData)
