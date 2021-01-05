@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react/cjs/react.development';
+import { benchmarks, checkBenchmarks } from '../benchmarks.js';
 
 const soundObject = new Audio.Sound();
 
@@ -73,6 +74,50 @@ export const AudioPlayer =({navigation, route})=>{
             const jsonValue = JSON.stringify(appData)
             await AsyncStorage.setItem('appData', jsonValue)
         }
+
+        if(!userDataTemp.journal[today.toDateString()]){
+            userDataTemp.journal[today.toDateString()]={}
+            userDataTemp.journal[today.toDateString()].meditations=1
+            userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+        }else{
+            if(userDataTemp.journal[today.toDateString()].meditations){
+                userDataTemp.journal[today.toDateString()].meditations=userDataTemp.journal[today.toDateString()].meditations+1
+                userDataTemp.journal[today.toDateString()].meditationMinutes=userDataTemp.journal[today.toDateString()].meditationMinutes+dauerInMinuten
+            }else{
+                userDataTemp.journal[today.toDateString()].meditations=1
+                userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+            }
+        }
+        if (!userDataTemp.benchmarks){
+            userDataTemp.benchmarks = {
+                meditations: 0,
+                meditationMinutes:0,
+                meditationsEarly:0,
+                meditationsLate:0,
+                meditationsNight:0,
+                allMeditations:0,
+                infoScreen: 0,
+                cancelCounter:0,
+                repeat3: [],
+                puzzles:0,
+                streak:0,
+                benchmarks10: 0,
+                benchmarksReached: []
+              }
+        }
+        userDataTemp.benchmarks.meditations += 1;
+        userDataTemp.benchmarks.meditationMinutes+= dauerInMinuten;
+
+        const currentlyReached = checkBenchmarks(userDataTemp)
+        if (currentlyReached >= 0){
+            userDataTemp.benchmarks.benchmarksReached += currentlyReached
+        }
+
+        changeUserData(userDataTemp)
+        appData[currentUser].journal=userDataTemp.journal
+        changeAppData(appData)
+        const jsonValue = JSON.stringify(appData)
+        await AsyncStorage.setItem('appData', jsonValue)
     }
 
     //Button, um nächste Übung zu starten

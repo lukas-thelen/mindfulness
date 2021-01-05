@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import { Button, StyleSheet, Text, View, Modal } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,13 +19,25 @@ const Tab = createBottomTabNavigator();
 
 
 const Tabnavigator = () =>{
+  const {newBenchmark, changeNewBenchmark} = useContext(AppContext)
   return(
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Profil" component={ProfilScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <View style = { {height: "100%", width: "100%"}}>
+      <View style = { {height: "100%", width: "100%"}}>
+        <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={newBenchmark===""}
+              >
+                <Text>Test</Text>
+          </Modal>
+        </View>
+        <NavigationContainer>
+          <Tab.Navigator>
+            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Profil" component={ProfilScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+    </View>
   );
 }
 
@@ -38,6 +50,7 @@ export default function App() {
   const [currentUser, changeCurrentUser] = useState("")
   const [isLoading, changeIsLoading] = useState(true)
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
+  const [newBenchmark, changeNewBenchmark] = useState("")
 
   //wird einmalig beim ersten rendern des Components ausgeführt
   useEffect(()=>{
@@ -55,7 +68,9 @@ export default function App() {
 
     currentUser, changeCurrentUser,
 
-    gehoerteUebungen, changeGehoerteUebungen
+    gehoerteUebungen, changeGehoerteUebungen,
+
+    newBenchmark, changeNewBenchmark
 
   }
 
