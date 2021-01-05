@@ -64,6 +64,5 @@ export const checkBenchmarks = (userData) => {
             }
         }
     }
-    console.log(currentlyReached)
     return currentlyReached
 }

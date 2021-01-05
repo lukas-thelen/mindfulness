@@ -24,7 +24,7 @@ export const AudioPlayer =({navigation, route})=>{
     const dauer=route.params.dauerIndex
     const dauerInMinuten=kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dauer
 
-    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser, userData, changeUserData} = useContext(AppContext)
+    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser, userData, changeUserData, changeNewBenchmark} = useContext(AppContext)
     var gehoerteUebungenTemp = [...gehoerteUebungen]
     const userDataTemp={...userData}
 
@@ -99,7 +99,7 @@ export const AudioPlayer =({navigation, route})=>{
                 allMeditations:0,
                 infoScreen: 0,
                 cancelCounter:0,
-                repeat3: [],
+                maxRepeats: 0,
                 puzzles:0,
                 streak:0,
                 benchmarks10: 0,
@@ -110,8 +110,9 @@ export const AudioPlayer =({navigation, route})=>{
         userDataTemp.benchmarks.meditationMinutes+= dauerInMinuten;
 
         const currentlyReached = checkBenchmarks(userDataTemp)
-        if (currentlyReached >= 0){
+        if (currentlyReached.length > 0){
             userDataTemp.benchmarks.benchmarksReached += currentlyReached
+            changeNewBenchmark(currentlyReached)
         }
 
         changeUserData(userDataTemp)

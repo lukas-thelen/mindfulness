@@ -13,6 +13,7 @@ import {StartBildschirm} from './src/InitBildschirm.js';
 import {AppContext} from './src/context.js';
 import {AchtsamkeitsAbfrage} from './src/AchtsamkeitsAbfrage.js';
 import { Init } from './src/Init.js';
+import { benchmarks } from './src/benchmarks.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,17 +21,22 @@ const Tab = createBottomTabNavigator();
 
 const Tabnavigator = () =>{
   const {newBenchmark, changeNewBenchmark} = useContext(AppContext)
+  const newBenchmarkTemp =[...newBenchmark]
   return(
     <View style = { {height: "100%", width: "100%"}}>
-      <View style = { {height: "100%", width: "100%"}}>
         <Modal
                   animationType="slide"
                   transparent={true}
-                  visible={newBenchmark===""}
+                  visible={newBenchmark.length>0}
               >
-                <Text>Test</Text>
+                <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={{fontSize:30}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].title}</Text>
+                    <Text style={{fontSize:15}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].description}</Text>
+                    <Button title={"weiter"} onPress={()=>{newBenchmarkTemp.shift();changeNewBenchmark(newBenchmarkTemp)}}></Button>
+                </View>
+                </View>
           </Modal>
-        </View>
         <NavigationContainer>
           <Tab.Navigator>
             <Tab.Screen name="Home" component={HomeScreen} />
@@ -50,7 +56,7 @@ export default function App() {
   const [currentUser, changeCurrentUser] = useState("")
   const [isLoading, changeIsLoading] = useState(true)
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
-  const [newBenchmark, changeNewBenchmark] = useState("")
+  const [newBenchmark, changeNewBenchmark] = useState(["Ü1"])
 
   //wird einmalig beim ersten rendern des Components ausgeführt
   useEffect(()=>{
@@ -125,5 +131,27 @@ const styles = StyleSheet.create({
   pagewrap:{
     width: '100%',
     height: '100%'
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalView: {
+    margin: 20,
+    width:"80%",
+    height:"80%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
 });

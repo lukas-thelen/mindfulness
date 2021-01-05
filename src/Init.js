@@ -40,7 +40,7 @@ export const Init =(props)=>{
               allMeditations:0,
               infoScreen: 0,
               cancelCounter:0,
-              repeat3: [],
+              maxRepeats: 0,
               puzzles:0,
               streak:0,
               benchmarks10: 0,
