@@ -7,7 +7,25 @@ import { useContext, useEffect } from 'react';
 import { benchmarks } from '../benchmarks.js';
 
 export const Erfolge = () => {
-    const {userData} = useContext(AppContext)
+    const {userData, changeNewBenchmark, changeUserData, changeAppData, appData, currentUser} = useContext(AppContext)
+    const userDataTemp={...userData}
+
+    useEffect(()=>{
+        check10()
+    },[])
+
+    const check10 =async()=>{
+        if(userData.benchmarks.benchmarks10===0&&userData.benchmarks.benchmarksReached.length>=1){
+            userDataTemp.benchmarks.benchmarks10=1
+            userDataTemp.benchmarks.benchmarksReached=userDataTemp.benchmarks.benchmarksReached.concat(["xErfolge"])
+            changeNewBenchmark(["xErfolge"])
+            changeUserData(userDataTemp)
+            appData[currentUser]=userDataTemp
+            changeAppData(appData)
+            const jsonValue = JSON.stringify(appData)
+            await AsyncStorage.setItem('appData', jsonValue)
+        }
+    }
 
     const benchmarkArray = () =>{
         const array = []
@@ -18,7 +36,6 @@ export const Erfolge = () => {
             array.push(benchmarks[benchmark])
 
         } 
-        console.log(array)
         return array
     }
 

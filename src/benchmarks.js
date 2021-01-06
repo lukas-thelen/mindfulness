@@ -120,6 +120,12 @@ export const benchmarks = {
         description: "Schalte 10 Erfolge frei!",
         var: "benchmarks10",
     },
+    R3:{
+        title: "Übung mach den Meister!",
+        goal: 3,
+        description: "Wiederhole die selbe Übung 3 mal!",
+        var: "maxRepeats",
+    }
 
 }
 
@@ -131,9 +137,6 @@ export const checkBenchmarks = (userData) => {
                 currentlyReached.push(benchmark)
             }
         }
-    }
-    if ((userData.benchmarks.benchmarksReached.length +currentlyReached.length) ==){
-
     }
     return currentlyReached
 }

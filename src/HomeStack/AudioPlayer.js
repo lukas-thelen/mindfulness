@@ -85,13 +85,17 @@ export const AudioPlayer =({navigation, route})=>{
             gehoerteUebungenTemp.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungenTemp)
             userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
-            appData[currentUser].gehoerteUebungen=gehoerteUebungenTemp
 
             // Benchmark Anzahl verschiedener Übungen
             userDataTemp.benchmarks.xMeditations = userDataTemp.gehoerteUebungen.length
-
-
         }
+        //kann später weg
+        if(!userDataTemp.alleGehoertenUebungen){
+            userDataTemp.alleGehoertenUebungen=[]
+        }
+        //bis hier
+        userDataTemp.alleGehoertenUebungen.push(kurse[kurs].Uebungen[uebung].id)
+        
         if(!userDataTemp.journal[today.toDateString()]){
             userDataTemp.journal[today.toDateString()]={}
             userDataTemp.journal[today.toDateString()].meditations=1
@@ -126,15 +130,19 @@ export const AudioPlayer =({navigation, route})=>{
         userDataTemp.benchmarks.meditationMinutes+= dauerInMinuten;
 
         // Zeit-Abhängige Benchmarks
-       if ( kriegeZeit(10) > new Date()){
+        if ( kriegeZeit(10) > new Date()){
             userDataTemp.benchmarks.meditationsEarly += dauerInMinuten
-       } 
-       if ( kriegeZeit(20) < new Date()){
+        } 
+        if ( kriegeZeit(20) < new Date()){
             userDataTemp.benchmarks.meditationsLate += dauerInMinuten
         } 
         if ( kriegeZeit(23) < new Date()){
             userDataTemp.benchmarks.meditationsNight += dauerInMinuten
-       } 
+        } 
+        const filter = userDataTemp.alleGehoertenUebungen.filter(word=>word===kurse[kurs].Uebungen[uebung].id)
+        if(filter.length>userDataTemp.benchmarks.maxRepeats){
+            userDataTemp.benchmarks.maxRepeats=filter.length
+        }
 
 
        // Überprüfen, ob neuer Benchmark erreicht und, wenn ja --> Einfügen in userDataTemp
@@ -145,7 +153,7 @@ export const AudioPlayer =({navigation, route})=>{
         }
 
         changeUserData(userDataTemp)
-        appData[currentUser].journal=userDataTemp.journal
+        appData[currentUser]=userDataTemp
         changeAppData(appData)
         const jsonValue = JSON.stringify(appData)
         await AsyncStorage.setItem('appData', jsonValue)
