@@ -108,10 +108,9 @@ export const AudioPlayer =({navigation, route})=>{
         }
         userDataTemp.benchmarks.meditations += 1;
         userDataTemp.benchmarks.meditationMinutes+= dauerInMinuten;
-
         const currentlyReached = checkBenchmarks(userDataTemp)
         if (currentlyReached.length > 0){
-            userDataTemp.benchmarks.benchmarksReached += currentlyReached
+            userDataTemp.benchmarks.benchmarksReached=userDataTemp.benchmarks.benchmarksReached.concat(currentlyReached)
             changeNewBenchmark(currentlyReached)
         }
 

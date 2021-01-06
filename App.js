@@ -56,7 +56,7 @@ export default function App() {
   const [currentUser, changeCurrentUser] = useState("")
   const [isLoading, changeIsLoading] = useState(true)
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
-  const [newBenchmark, changeNewBenchmark] = useState(["Ü1"])
+  const [newBenchmark, changeNewBenchmark] = useState([])
 
   //wird einmalig beim ersten rendern des Components ausgeführt
   useEffect(()=>{
