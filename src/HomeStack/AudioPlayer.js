@@ -5,6 +5,7 @@ import { Audio } from 'expo-av';
 import {AppContext} from "../context.js"; 
 import { useContext } from 'react';
 import {kurse} from "../Kursdaten/Kursdatei.js"
+import {uebungen} from "../Kursdaten/Uebungsliste.js"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react/cjs/react.development';
 import { benchmarks, checkBenchmarks } from '../benchmarks.js';
@@ -49,6 +50,16 @@ export const AudioPlayer =({navigation, route})=>{
         }
     },[])
 
+
+    // Zeit-Abhängige Benchmarks: Zeit setzen
+    const kriegeZeit=(zeit) => {
+        const date = new Date()
+        date.setHours(zeit +1)
+        date.setMinutes(0)
+        return date
+    }
+
+
     //wenn die Audio zu Ende gespielt hat, wird der Modal Component eingeblendet
     const endOfAudio =(playbackStatus)=>{
         if (playbackStatus.didJustFinish){
@@ -75,6 +86,11 @@ export const AudioPlayer =({navigation, route})=>{
             changeGehoerteUebungen(gehoerteUebungenTemp)
             userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
             appData[currentUser].gehoerteUebungen=gehoerteUebungenTemp
+
+            // Benchmark Anzahl verschiedener Übungen
+            userDataTemp.benchmarks.xMeditations = userDataTemp.gehoerteUebungen.length
+
+
         }
         if(!userDataTemp.journal[today.toDateString()]){
             userDataTemp.journal[today.toDateString()]={}
@@ -108,6 +124,20 @@ export const AudioPlayer =({navigation, route})=>{
         }
         userDataTemp.benchmarks.meditations += 1;
         userDataTemp.benchmarks.meditationMinutes+= dauerInMinuten;
+
+        // Zeit-Abhängige Benchmarks
+       if ( kriegeZeit(10) > new Date()){
+            userDataTemp.benchmarks.meditationsEarly += dauerInMinuten
+       } 
+       if ( kriegeZeit(20) < new Date()){
+            userDataTemp.benchmarks.meditationsLate += dauerInMinuten
+        } 
+        if ( kriegeZeit(23) < new Date()){
+            userDataTemp.benchmarks.meditationsNight += dauerInMinuten
+       } 
+
+
+       // Überprüfen, ob neuer Benchmark erreicht und, wenn ja --> Einfügen in userDataTemp
         const currentlyReached = checkBenchmarks(userDataTemp)
         if (currentlyReached.length > 0){
             userDataTemp.benchmarks.benchmarksReached=userDataTemp.benchmarks.benchmarksReached.concat(currentlyReached)

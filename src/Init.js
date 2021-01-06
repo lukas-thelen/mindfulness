@@ -37,6 +37,7 @@ export const Init =(props)=>{
               meditationsEarly:0,
               meditationsLate:0,
               meditationsNight:0,
+              xMeditations:0,
               allMeditations:0,
               infoScreen: 0,
               cancelCounter:0,
