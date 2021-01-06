@@ -14,6 +14,7 @@ import {AppContext} from './src/context.js';
 import {AchtsamkeitsAbfrage} from './src/AchtsamkeitsAbfrage.js';
 import { Init } from './src/Init.js';
 import { benchmarks } from './src/benchmarks.js';
+import { FreundeScreen } from './src/Freunde.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +39,8 @@ const Tabnavigator = () =>{
                 </View>
           </Modal>
         <NavigationContainer>
-          <Tab.Navigator>
+          <Tab.Navigator initialRouteName="Home">
+            <Tab.Screen name="Freunde" component={FreundeScreen} />
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Profil" component={ProfilScreen} />
           </Tab.Navigator>

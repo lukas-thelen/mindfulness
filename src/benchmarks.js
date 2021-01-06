@@ -65,6 +65,24 @@ export const benchmarks = {
         description: "Übe mindestens 60 Minuten!",
         var: "meditationMinutes",
     },
+    M120: {
+        title: "Die Zeit rennnt!",
+        goal: 120,
+        description: "Übe mindestens 2 Stunden!",
+        var: "meditationMinutes",
+    },
+    M480: {
+        title: "Selfcare Experte!",
+        goal: 480,
+        description: "Übe mindestens 8 Stunden!",
+        var: "meditationMinutes",
+    },
+    M999: {
+        title: "Timelord",
+        goal: 999,
+        description: "Übe mindestens 999 Minuten!",
+        var: "meditationMinutes",
+    },
     S7: {
         title: "Was ist schon eine Woche?",
         goal: 7,

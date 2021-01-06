@@ -143,6 +143,13 @@ export const AudioPlayer =({navigation, route})=>{
         if(filter.length>userDataTemp.benchmarks.maxRepeats){
             userDataTemp.benchmarks.maxRepeats=filter.length
         }
+        const yesterday = new Date()
+        yesterday.setDate(yesterday.getDate()-1)
+        if(userDataTemp.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations){
+            userDataTemp.benchmarks.streak+=1
+        }else{
+            userDataTemp.benchmarks.streak=1
+        }
 
 
        // Überprüfen, ob neuer Benchmark erreicht und, wenn ja --> Einfügen in userDataTemp
