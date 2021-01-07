@@ -95,11 +95,13 @@ export const AudioPlayer =({navigation, route})=>{
         }
         //bis hier
         userDataTemp.alleGehoertenUebungen.push(kurse[kurs].Uebungen[uebung].id)
-        
+        var firstAtDay = false
+
         if(!userDataTemp.journal[today.toDateString()]){
             userDataTemp.journal[today.toDateString()]={}
             userDataTemp.journal[today.toDateString()].meditations=1
             userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+            firstAtDay = true
         }else{
             if(userDataTemp.journal[today.toDateString()].meditations){
                 userDataTemp.journal[today.toDateString()].meditations=userDataTemp.journal[today.toDateString()].meditations+1
@@ -107,6 +109,7 @@ export const AudioPlayer =({navigation, route})=>{
             }else{
                 userDataTemp.journal[today.toDateString()].meditations=1
                 userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+                firstAtDay = true
             }
         }
         if (!userDataTemp.benchmarks){
@@ -143,14 +146,18 @@ export const AudioPlayer =({navigation, route})=>{
         if(filter.length>userDataTemp.benchmarks.maxRepeats){
             userDataTemp.benchmarks.maxRepeats=filter.length
         }
+
+        // Streak berechnen und checken
         const yesterday = new Date()
         yesterday.setDate(yesterday.getDate()-1)
-        if(
-            userDataTemp.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations&&
-            !(userDataTemp.journal[today.toDateString()]&&userDataTemp.journal[today.toDateString()].meditations)
-        ){
+        console.log(userDataTemp.journal[yesterday.toDateString()])
+        console.log(userDataTemp.journal[yesterday.toDateString()].meditations)
+        console.log(!(userDataTemp.journal[today.toDateString()]&&userDataTemp.journal[today.toDateString()].meditations))
+        
+        if(userDataTemp.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations&&firstAtDay){
+            console.log("steak +1")
             userDataTemp.benchmarks.streak+=1
-        }else{
+        }else if (firstAtDay){
             userDataTemp.benchmarks.streak=1
         }
 

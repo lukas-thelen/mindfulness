@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, View, Modal } from 'react-native';
+import { Button, StyleSheet, Text, View, Modal,Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import * as Linking from 'expo-linking';
 import {HomeScreen} from './src/Home.js';
 import {ProfilScreen} from './src/Profil.js';
 import {AppContext} from './src/context.js';
@@ -16,8 +16,48 @@ const Tab = createBottomTabNavigator();
 
 
 const Tabnavigator = () =>{
-  const {newBenchmark, changeNewBenchmark} = useContext(AppContext)
+  const {newBenchmark, changeNewBenchmark, userData, changeAppData,changeUserData, appData,currentUser} = useContext(AppContext)
   const newBenchmarkTemp =[...newBenchmark]
+  const userDataTemp = {...userData}
+
+
+  useEffect(()=>{
+    
+    Linking.addEventListener('url', (url)=>{
+      let { path, queryParams } = Linking.parse(url.url)
+      console.log("EventListener")
+      handleUrl(queryParams)
+    })
+    waitForLink()
+  },[])
+
+  const waitForLink= async()=>{
+    const myUrl = await Linking.getInitialURL()
+    let { path, queryParams } = Linking.parse(myUrl)
+    console.log("Wait for link")
+    handleUrl(queryParams)
+  }
+
+  const handleUrl= async(queryParams)=>{
+    if(!userDataTemp.friends){
+      userDataTemp.friends = {friends:{}}
+    }
+    if(queryParams.type === "friendRequest"){
+      console.log("QUERy")
+      console.log(queryParams.eMail)
+      if(!userDataTemp.friends.friends[queryParams.eMail]){
+        userDataTemp.friends.friends[queryParams.eMail] = {name: queryParams.name}
+      }
+
+    }
+    changeUserData(userDataTemp)
+        appData[userDataTemp.data.eMail]=userDataTemp
+        changeAppData(appData)
+        const jsonvalue=JSON.stringify(appData)
+        await AsyncStorage.setItem('appData', jsonvalue) 
+  }
+
+
   return(
     <View style = { {height: "100%", width: "100%"}}>
         <Modal

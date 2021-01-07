@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { useContext } from 'react/cjs/react.development';
+import { useContext, useEffect } from 'react/cjs/react.development';
 import { AppContext } from './context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -15,24 +15,29 @@ const ProfilStack = createStackNavigator();
 
 
 export const ProfilRoot = ({navigation})=> {
-    const {username} = useContext(AppContext);
-    const {appData} = useContext(AppContext)
-    const {userData} = useContext(AppContext)
-    const {currentUser} = useContext(AppContext)
-    const {changeLoggedIn} = useContext(AppContext)
-    const {changeCurrentUser} = useContext(AppContext)
+    const {username, appData, userData, changeAppData, changeUserData, currentUser} = useContext(AppContext);
+    const userDataTemp = {...userData}
 
-    const checkStreak=(userDataT)=>{
-      const userDataTemp={...userData}
+
+    useEffect(()=>{
+      checkStreak()
+    },[])
+
+    const checkStreak=async()=>{
       const today=new Date()
       const yesterday=new Date()
       yesterday.setDate(yesterday.getDate()-1)
-      if(!(userData.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations)){
-        if(!(userData.journal[today.toDateString()]&&userDataTemp.journal[today.toDateString()].meditations)){
+      if(!(userData.journal[today.toDateString()]&&userDataTemp.journal[today.toDateString()].meditations)){
+        if(!(userData.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations)){
+        
           userDataTemp.benchmarks.streak=0
+          changeUserData(userData)
+          appData[userData.data.eMail]=userData
+          changeAppData(appData)
+          const jsonvalue=JSON.stringify(appData)
+          await AsyncStorage.setItem('appData', jsonvalue)
         }
       }
-      return userDataTemp
     }
     
       const test = ()=>{
@@ -47,6 +52,7 @@ export const ProfilRoot = ({navigation})=> {
     return(
         <View style={styles.container}>
             <Text>Hallo {username}</Text>
+            <Text>Streak {userData.benchmarks.streak}</Text>
             <Button title="test" onPress={()=>{test()}}></Button>
             <Button title="Einstellungen" onPress={()=>navigation.navigate("Einstellungen")}></Button> 
             <Button title="Statistiken" onPress={()=>navigation.navigate("Statistiken")}></Button> 
