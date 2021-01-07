@@ -22,6 +22,19 @@ export const ProfilRoot = ({navigation})=> {
     const {changeLoggedIn} = useContext(AppContext)
     const {changeCurrentUser} = useContext(AppContext)
 
+    const checkStreak=(userDataT)=>{
+      const userDataTemp={...userData}
+      const today=new Date()
+      const yesterday=new Date()
+      yesterday.setDate(yesterday.getDate()-1)
+      if(!(userData.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations)){
+        if(!(userData.journal[today.toDateString()]&&userDataTemp.journal[today.toDateString()].meditations)){
+          userDataTemp.benchmarks.streak=0
+        }
+      }
+      return userDataTemp
+    }
+    
       const test = ()=>{
         console.log("appData")
         console.log(appData)

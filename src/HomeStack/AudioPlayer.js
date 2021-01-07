@@ -145,7 +145,10 @@ export const AudioPlayer =({navigation, route})=>{
         }
         const yesterday = new Date()
         yesterday.setDate(yesterday.getDate()-1)
-        if(userDataTemp.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations){
+        if(
+            userDataTemp.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations&&
+            !(userDataTemp.journal[today.toDateString()]&&userDataTemp.journal[today.toDateString()].meditations)
+        ){
             userDataTemp.benchmarks.streak+=1
         }else{
             userDataTemp.benchmarks.streak=1

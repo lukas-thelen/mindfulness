@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect, useContext} from 'react';
 import { Button, StyleSheet, Text, View, Modal } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -7,11 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {HomeScreen} from './src/Home.js';
 import {ProfilScreen} from './src/Profil.js';
-import {Registrieren} from './src/Registrieren.js';
-import {Anmelden} from './src/Anmelden.js';
-import {StartBildschirm} from './src/InitBildschirm.js';
 import {AppContext} from './src/context.js';
-import {AchtsamkeitsAbfrage} from './src/AchtsamkeitsAbfrage.js';
 import { Init } from './src/Init.js';
 import { benchmarks } from './src/benchmarks.js';
 import { FreundeScreen } from './src/Freunde.js';
@@ -106,7 +101,6 @@ export default function App() {
     } catch(e) {
       console.log(e)
     }
-
     changeIsLoading(false)
   }
 

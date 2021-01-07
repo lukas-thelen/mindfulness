@@ -30,7 +30,6 @@ export const Erfolge = () => {
     const benchmarkArray = () =>{
         const array = []
         for (benchmark in benchmarks) {
-            console.log(benchmark)
             benchmarks[benchmark].reached = userData.benchmarks.benchmarksReached.includes(benchmark)
             benchmarks[benchmark].key = benchmark
             array.push(benchmarks[benchmark])
@@ -41,7 +40,6 @@ export const Erfolge = () => {
 
     const renderBenchmark = ({item}) => {
         const percent = ((userData.benchmarks[item.var]/item.goal)*100).toString() + "%"
-        console.log(percent)
         return(
             <View style = {{flex:1, padding:10, margin:10, backgroundColor: "white"}}>
                 <Text style = {item.reached?{color: "black"}:{color:"grey"}}>{item.title}</Text>
@@ -55,7 +53,6 @@ export const Erfolge = () => {
 
     return (
         <View>
-            <Text>Ich bin deine Erfolge!</Text>
             <FlatList
                     numColumns={2}
                     data={benchmarkArray()}
