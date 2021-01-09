@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Button, StyleSheet, Text, View, Modal,Alert } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Linking from 'expo-linking';
@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator();
 
 
 
-const Tabnavigator = () =>{
+export const Tabnavigator = () =>{
   const {newBenchmark, changeNewBenchmark, userData, changeAppData,changeUserData, appData,currentUser} = useContext(AppContext)
   const newBenchmarkTemp =[...newBenchmark]
   const userDataTemp = {...userData}
@@ -43,18 +43,43 @@ const Tabnavigator = () =>{
       userDataTemp.friends = {friends:{}}
     }
     if(queryParams.type === "friendRequest"){
-      console.log("QUERy")
-      console.log(queryParams.eMail)
+      console.log("new Friend Request by "+ queryParams.eMail)
       if(!userDataTemp.friends.friends[queryParams.eMail]){
         userDataTemp.friends.friends[queryParams.eMail] = {name: queryParams.name}
       }
-
     }
+    if(queryParams.type === "newPuzzle"){
+      console.log("New Puzzle created by "+ queryParams.name)
+      var friends = JSON.parse(queryParams.friends)
+      var friendsNames = JSON.parse(queryParams.friendsNames)
+      for (var k=0; k<friends.length;k++){
+        if(!(userDataTemp.friends.friends[friends[k]]||friends[k]===currentUser)){
+          userDataTemp.friends.friends[friends[k]] = {name: friendsNames[k]}
+        }
+      }
+      console.log(userDataTemp.friends.puzzles[queryParams.id])
+      if(!userDataTemp.friends.puzzles[queryParams.id]){
+        userDataTemp.friends.puzzles[queryParams.id] = {id:queryParams.id, pieces:0, friends:friends, log:{}}
+      }
+    }
+    if(queryParams.type === "puzzlePieces"){
+      if(!userDataTemp.friends.puzzles[queryParams.puzzleId]){
+        console.log("Puzzle nicht gefunden")
+      }else{
+        if(userDataTemp.friends.puzzles[queryParams.puzzleId].log[queryParams.id]){
+          console.log("Teile bereits erhalten")
+        }else{
+          userDataTemp.friends.puzzles[queryParams.puzzleId].pieces= parseInt(userDataTemp.friends.puzzles[queryParams.puzzleId].pieces)+parseInt(queryParams.pieces)
+          userDataTemp.friends.puzzles[queryParams.puzzleId].log[queryParams.id]={id:queryParams.id, puzzleId:queryParams.puzzleId, pieces:queryParams.pieces, user:queryParams.user}
+        }
+      } 
+    }
+
     changeUserData(userDataTemp)
-        appData[userDataTemp.data.eMail]=userDataTemp
-        changeAppData(appData)
-        const jsonvalue=JSON.stringify(appData)
-        await AsyncStorage.setItem('appData', jsonvalue) 
+    appData[userDataTemp.data.eMail]=userDataTemp
+    changeAppData(appData)
+    const jsonvalue=JSON.stringify(appData)
+    await AsyncStorage.setItem('appData', jsonvalue)
   }
 
 

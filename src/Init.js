@@ -30,7 +30,9 @@ export const Init =(props)=>{
             appData[userData.eMail].data = userData
             appData[userData.eMail].progress = progressData
             appData[userData.eMail].gehoerteUebungen = []
+            appData[userData.eMail].alleGehoertenUebungen=[]
             appData[userData.eMail].journal ={}
+            appData[userData.eMail].friends={friends:{}, puzzles:{}, pieces:0}
             appData[userData.eMail].benchmarks ={
               meditations: 0,
               meditationMinutes:0,

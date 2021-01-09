@@ -6,6 +6,7 @@ import {AppContext} from './context.js';
 import { useContext, useEffect } from 'react';
 import { FreundeRoot } from './FreundeStack/FreundeRoot.js';
 import { MeineFreunde } from './FreundeStack/MeineFreunde.js';
+import { Puzzle } from './FreundeStack/Puzzle.js';
 
 const FreundeStack = createStackNavigator();
 
@@ -14,7 +15,7 @@ export const FreundeScreen =() => {
         <FreundeStack.Navigator>
             <FreundeStack.Screen name="Freunde" component={FreundeRoot}/>
             <FreundeStack.Screen name="Meine Freunde" component={MeineFreunde}/>
-
+            <FreundeStack.Screen name="Puzzle" component={Puzzle}/>
         </FreundeStack.Navigator>
     )
   }

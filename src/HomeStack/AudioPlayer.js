@@ -81,7 +81,10 @@ export const AudioPlayer =({navigation, route})=>{
 
     //Übung zu gehörten hinzufügen und AppData im Storage speichern
     const addGehoerteUebung=async()=> {
+
+        userDataTemp.alleGehoertenUebungen.push(kurse[kurs].Uebungen[uebung].id)
         if (!gehoerteUebungenTemp.includes(kurse[kurs].Uebungen[uebung].id) || !gehoerteUebungenTemp[0]){
+            //wenn Übung bisher noch nie gemacht wurde
             gehoerteUebungenTemp.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungenTemp)
             userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
@@ -89,14 +92,19 @@ export const AudioPlayer =({navigation, route})=>{
             // Benchmark Anzahl verschiedener Übungen
             userDataTemp.benchmarks.xMeditations = userDataTemp.gehoerteUebungen.length
         }
+
+        if(!userDataTemp.friends.pieces){
+            userDataTemp.friends.pieces=0
+        }
+        userDataTemp.friends.pieces+=1
         //kann später weg
         if(!userDataTemp.alleGehoertenUebungen){
             userDataTemp.alleGehoertenUebungen=[]
         }
         //bis hier
-        userDataTemp.alleGehoertenUebungen.push(kurse[kurs].Uebungen[uebung].id)
-        var firstAtDay = false
 
+        //heute Liestungen im Journal
+        var firstAtDay = false
         if(!userDataTemp.journal[today.toDateString()]){
             userDataTemp.journal[today.toDateString()]={}
             userDataTemp.journal[today.toDateString()].meditations=1
@@ -104,35 +112,20 @@ export const AudioPlayer =({navigation, route})=>{
             firstAtDay = true
         }else{
             if(userDataTemp.journal[today.toDateString()].meditations){
-                userDataTemp.journal[today.toDateString()].meditations=userDataTemp.journal[today.toDateString()].meditations+1
-                userDataTemp.journal[today.toDateString()].meditationMinutes=userDataTemp.journal[today.toDateString()].meditationMinutes+dauerInMinuten
+                userDataTemp.journal[today.toDateString()].meditations+=1
+                userDataTemp.journal[today.toDateString()].meditationMinutes+=dauerInMinuten
             }else{
                 userDataTemp.journal[today.toDateString()].meditations=1
                 userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
                 firstAtDay = true
             }
         }
-        if (!userDataTemp.benchmarks){
-            userDataTemp.benchmarks = {
-                meditations: 0,
-                meditationMinutes:0,
-                meditationsEarly:0,
-                meditationsLate:0,
-                meditationsNight:0,
-                allMeditations:0,
-                infoScreen: 0,
-                cancelCounter:0,
-                maxRepeats: 0,
-                puzzles:0,
-                streak:0,
-                benchmarks10: 0,
-                benchmarksReached: []
-              }
-        }
+
+        //Benchmarks - generelle Anzahl und Dauer
         userDataTemp.benchmarks.meditations += 1;
         userDataTemp.benchmarks.meditationMinutes+= dauerInMinuten;
 
-        // Zeit-Abhängige Benchmarks
+        // Benchmarks - Uhrzeit abhängig
         if ( kriegeZeit(10) > new Date()){
             userDataTemp.benchmarks.meditationsEarly += dauerInMinuten
         } 
@@ -142,18 +135,16 @@ export const AudioPlayer =({navigation, route})=>{
         if ( kriegeZeit(23) < new Date()){
             userDataTemp.benchmarks.meditationsNight += dauerInMinuten
         } 
+
+        //Benchmark - Anzahl der Wiederholungen der häufigsten Übung
         const filter = userDataTemp.alleGehoertenUebungen.filter(word=>word===kurse[kurs].Uebungen[uebung].id)
         if(filter.length>userDataTemp.benchmarks.maxRepeats){
             userDataTemp.benchmarks.maxRepeats=filter.length
         }
 
-        // Streak berechnen und checken
+        // Streak um 1 erhöhen, wenn erforderlich
         const yesterday = new Date()
         yesterday.setDate(yesterday.getDate()-1)
-        console.log(userDataTemp.journal[yesterday.toDateString()])
-        console.log(userDataTemp.journal[yesterday.toDateString()].meditations)
-        console.log(!(userDataTemp.journal[today.toDateString()]&&userDataTemp.journal[today.toDateString()].meditations))
-        
         if(userDataTemp.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations&&firstAtDay){
             console.log("steak +1")
             userDataTemp.benchmarks.streak+=1
@@ -169,6 +160,7 @@ export const AudioPlayer =({navigation, route})=>{
             changeNewBenchmark(currentlyReached)
         }
 
+        //Daten speichern
         changeUserData(userDataTemp)
         appData[currentUser]=userDataTemp
         changeAppData(appData)
