@@ -9,17 +9,13 @@ import * as Linking from 'expo-linking';
 
 
 export const FreundeRoot =({navigation}) => {
-    const {userData, changeUserData, changeAppData, appData, currentUser}=useContext(AppContext)
+    const {userData, changeUserData, changeAppData, appData, currentUser, forceUpdate}=useContext(AppContext)
     const userDataTemp={...userData}
 
     const [modalVisible, changeModalVisible] = useState(false)
     const [selectedFriends, changeSelectedFriends] = useState([currentUser,])
 
-    useEffect(()=>{
-        changeUserData(userDataTemp)
-        appData[currentUser]=userDataTemp
-        changeAppData(appData)
-    },[])
+    useEffect(()=>{},[forceUpdate])
 
     function getRandomString(length) {
         var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -165,10 +161,9 @@ export const FreundeRoot =({navigation}) => {
                 data={puzzleArray()}
                 keyExtractor={(item, index)=>item.id}
                 renderItem={renderPuzzle}
-                extraData={userData}
+                extraData={puzzleArray()}
             ></FlatList>
             <Button title="neues Puzzle erstellen" onPress={()=> {changeModalVisible(true)}}></Button>
-            <Text>{userData.gehoerteUebungen[0]&&userData.gehoerteUebungen[0]}</Text>
         </View>
     )
   }

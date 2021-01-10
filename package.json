@@ -20,6 +20,7 @@
     "expo-chart-kit": "^1.2.4",
     "expo-status-bar": "~1.0.3",
     "jsx-to-string": "^1.4.0",
+    "lodash.clonedeep": "^4.5.0",
     "radio-buttons-react-native": "^1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",

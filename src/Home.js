@@ -22,7 +22,7 @@ const HomeStack = createStackNavigator();
 
 //Startseite des Home-Stacks
 const HomeRoot = ({navigation})=>{
-  const {username, changeUsername} = useContext(AppContext);
+  const {username, changeUsername,} = useContext(AppContext);
   const {gehoerteUebungen, changeGehoerteUebungen} = useContext(AppContext);
 
   //Button, um da weiterzumachen, wo man aufgehört hat

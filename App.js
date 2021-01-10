@@ -10,15 +10,16 @@ import {AppContext} from './src/context.js';
 import { Init } from './src/Init.js';
 import { benchmarks } from './src/benchmarks.js';
 import { FreundeScreen } from './src/Freunde.js';
+import cloneDeep from 'lodash/cloneDeep';
 
 const Tab = createBottomTabNavigator();
 
 
 
 export const Tabnavigator = () =>{
-  const {newBenchmark, changeNewBenchmark, userData, changeAppData,changeUserData, appData,currentUser} = useContext(AppContext)
+  const {newBenchmark, changeNewBenchmark, userData, changeAppData,changeUserData, appData,currentUser, changeForceUpdate, forceUpdate} = useContext(AppContext)
   const newBenchmarkTemp =[...newBenchmark]
-  const userDataTemp = {...userData}
+  const userDataTemp = cloneDeep(userData)
 
 
   useEffect(()=>{
@@ -38,7 +39,7 @@ export const Tabnavigator = () =>{
     handleUrl(queryParams)
   }
 
-  const handleUrl= async(queryParams)=>{
+  const handleUrl= (queryParams)=>{
     if(!userDataTemp.friends){
       userDataTemp.friends = {friends:{}}
     }
@@ -52,17 +53,21 @@ export const Tabnavigator = () =>{
       console.log("New Puzzle created by "+ queryParams.name)
       var friends = JSON.parse(queryParams.friends)
       var friendsNames = JSON.parse(queryParams.friendsNames)
+      var includesMe = false
       for (var k=0; k<friends.length;k++){
         if(!(userDataTemp.friends.friends[friends[k]]||friends[k]===currentUser)){
           userDataTemp.friends.friends[friends[k]] = {name: friendsNames[k]}
         }
+        if(friends[k]===currentUser){
+          includesMe= true
+        }
       }
-      console.log(userDataTemp.friends.puzzles[queryParams.id])
-      if(!userDataTemp.friends.puzzles[queryParams.id]){
+      if(!userDataTemp.friends.puzzles[queryParams.id]&&includesMe){
         userDataTemp.friends.puzzles[queryParams.id] = {id:queryParams.id, pieces:0, friends:friends, log:{}}
       }
     }
     if(queryParams.type === "puzzlePieces"){
+      console.log("Puzzle Pieces")
       if(!userDataTemp.friends.puzzles[queryParams.puzzleId]){
         console.log("Puzzle nicht gefunden")
       }else{
@@ -74,11 +79,16 @@ export const Tabnavigator = () =>{
         }
       } 
     }
-
+    changeForceUpdate("") 
+    changeForceUpdate("neue Updates im Freunde-Tab") 
     changeUserData(userDataTemp)
     appData[userDataTemp.data.eMail]=userDataTemp
     changeAppData(appData)
     const jsonvalue=JSON.stringify(appData)
+    storeData(jsonvalue)
+  }
+
+  const storeData=async(jsonvalue)=>{
     await AsyncStorage.setItem('appData', jsonvalue)
   }
 
@@ -119,6 +129,7 @@ export default function App() {
   const [isLoading, changeIsLoading] = useState(true)
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
   const [newBenchmark, changeNewBenchmark] = useState([])
+  const [forceUpdate, changeForceUpdate] =useState(false)
 
   //wird einmalig beim ersten rendern des Components ausgeführt
   useEffect(()=>{
@@ -138,7 +149,9 @@ export default function App() {
 
     gehoerteUebungen, changeGehoerteUebungen,
 
-    newBenchmark, changeNewBenchmark
+    newBenchmark, changeNewBenchmark,
+
+    forceUpdate, changeForceUpdate,
 
   }
 
