@@ -12,6 +12,8 @@ import { VersionsAuswahl } from './HomeStack/VersionsAuswahl.js';
 import { AudioPlayer } from './HomeStack/AudioPlayer.js';
 import {AlleUebungen} from "./HomeStack/AlleUebungen.js"
 import { kurse } from './Kursdaten/Kursdatei.js';
+import {InfoEcke} from './HomeStack/InfoEcke.js';
+import { UebungsInfo } from './HomeStack/UebungsInfo.js';
 import { render } from 'react-dom';
 
 const HomeStack = createStackNavigator();
@@ -52,6 +54,7 @@ const HomeRoot = ({navigation})=>{
       <Text>Hallo {username}</Text> 
       <Button title={"Meine Kurse"} onPress={() =>{navigation.navigate('Meine Kurse')}} ></Button>
       <Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
+      <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>
     </View>
   )
 }
@@ -72,6 +75,8 @@ export const HomeScreen = ()=> {
           <HomeStack.Screen name="Wähle eine Version" component={VersionsAuswahl}/>
           <HomeStack.Screen name="AudioPlayer" component={AudioPlayer}/>
           <HomeStack.Screen name="Alle Übungen" component={AlleUebungen}/>
+          <HomeStack.Screen name="Info Ecke" component={InfoEcke}/>
+          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
         </HomeStack.Navigator>
     )
 }
