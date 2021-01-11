@@ -12,6 +12,8 @@ import { VersionsAuswahl } from './HomeStack/VersionsAuswahl.js';
 import { AudioPlayer } from './HomeStack/AudioPlayer.js';
 import {AlleUebungen} from "./HomeStack/AlleUebungen.js"
 import { kurse } from './Kursdaten/Kursdatei.js';
+import {InfoEcke} from './HomeStack/InfoEcke.js';
+import { UebungsInfo } from './HomeStack/UebungsInfo.js';
 import { render } from 'react-dom';
 import { Journal } from './HomeStack/Journal.js';
 import { JournalTag } from './HomeStack/JournalTag.js';
@@ -45,6 +47,7 @@ const HomeRoot = ({navigation})=>{
       <Button title={"Meine Kurse"} onPress={() =>{navigation.navigate('Meine Kurse')}} ></Button>
       <Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
       <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
+      <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>
     </View>
   )
 }
@@ -68,6 +71,8 @@ export const HomeScreen = ()=> {
           <HomeStack.Screen name="Journal" component={Journal}/>
           <HomeStack.Screen name="individueller Tag" component={JournalTag}/>
           <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly}/>
+          <HomeStack.Screen name="Info Ecke" component={InfoEcke}/>
+          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
         </HomeStack.Navigator>
     )
 }
