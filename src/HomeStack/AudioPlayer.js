@@ -5,8 +5,10 @@ import { Audio } from 'expo-av';
 import {AppContext} from "../context.js"; 
 import { useContext } from 'react';
 import {kurse} from "../Kursdaten/Kursdatei.js"
+import {uebungen} from "../Kursdaten/Uebungsliste.js"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react/cjs/react.development';
+import { benchmarks, checkBenchmarks } from '../benchmarks.js';
 
 const soundObject = new Audio.Sound();
 
@@ -21,9 +23,13 @@ export const AudioPlayer =({navigation, route})=>{
     const uebung=route.params.uebungsIndex
     const sprecher=route.params.sprecherIndex
     const dauer=route.params.dauerIndex
+    const dauerInMinuten=kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dauer
 
-    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser} = useContext(AppContext)
+    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser, userData, changeUserData, changeNewBenchmark} = useContext(AppContext)
     var gehoerteUebungenTemp = [...gehoerteUebungen]
+    const userDataTemp={...userData}
+
+    const today=new Date()
     
     //spielt beim Öffnen die Audio-Datei ab
     useEffect(()=>{
@@ -43,6 +49,16 @@ export const AudioPlayer =({navigation, route})=>{
             await soundObject.unloadAsync()
         }
     },[])
+
+
+    // Zeit-Abhängige Benchmarks: Zeit setzen
+    const kriegeZeit=(zeit) => {
+        const date = new Date()
+        date.setHours(zeit +1)
+        date.setMinutes(0)
+        return date
+    }
+
 
     //wenn die Audio zu Ende gespielt hat, wird der Modal Component eingeblendet
     const endOfAudio =(playbackStatus)=>{
@@ -65,14 +81,98 @@ export const AudioPlayer =({navigation, route})=>{
 
     //Übung zu gehörten hinzufügen und AppData im Storage speichern
     const addGehoerteUebung=async()=> {
+
+        userDataTemp.alleGehoertenUebungen.push(kurse[kurs].Uebungen[uebung].id)
         if (!gehoerteUebungenTemp.includes(kurse[kurs].Uebungen[uebung].id) || !gehoerteUebungenTemp[0]){
+            //wenn Übung bisher noch nie gemacht wurde
             gehoerteUebungenTemp.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungenTemp)
-            appData[currentUser].gehoerteUebungen=gehoerteUebungenTemp
-            changeAppData(appData)
-            const jsonValue = JSON.stringify(appData)
-            await AsyncStorage.setItem('appData', jsonValue)
+            userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
+
+            // Benchmark Anzahl verschiedener Übungen
+            userDataTemp.benchmarks.xMeditations = userDataTemp.gehoerteUebungen.length
         }
+
+        // Verfügbare Übung hinzufügen
+        if (userDataTemp.verfuegbareUebungen[(userDataTemp.verfuegbareUebungen.length)-1] === kurse[kurs].Uebungen[uebung].id){
+            if (uebung+1<kurse[kurs].Uebungen.length){
+                userDataTemp.verfuegbareUebungen.push( kurse[kurs].Uebungen[uebung+1].id)
+            }else{
+                if (kurs+1<kurse.length){
+                    userDataTemp.verfuegbareUebungen.push( kurse[kurs+1].Uebungen[0].id)
+                }
+            }
+        }
+
+
+        if(!userDataTemp.friends.pieces){
+            userDataTemp.friends.pieces=0
+        }
+        userDataTemp.friends.pieces+=1
+
+        //heute Listungen im Journal
+        var firstAtDay = false
+        if(!userDataTemp.journal[today.toDateString()]){
+            userDataTemp.journal[today.toDateString()]={}
+            userDataTemp.journal[today.toDateString()].meditations=1
+            userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+            firstAtDay = true
+        }else{
+            if(userDataTemp.journal[today.toDateString()].meditations){
+                userDataTemp.journal[today.toDateString()].meditations+=1
+                userDataTemp.journal[today.toDateString()].meditationMinutes+=dauerInMinuten
+            }else{
+                userDataTemp.journal[today.toDateString()].meditations=1
+                userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+                firstAtDay = true
+            }
+        }
+
+        //Benchmarks - generelle Anzahl und Dauer
+        userDataTemp.benchmarks.meditations += 1;
+        userDataTemp.benchmarks.meditationMinutes+= dauerInMinuten;
+
+        // Benchmarks - Uhrzeit abhängig
+        if ( kriegeZeit(10) > new Date()){
+            userDataTemp.benchmarks.meditationsEarly += dauerInMinuten
+        } 
+        if ( kriegeZeit(20) < new Date()){
+            userDataTemp.benchmarks.meditationsLate += dauerInMinuten
+        } 
+        if ( kriegeZeit(23) < new Date()){
+            userDataTemp.benchmarks.meditationsNight += dauerInMinuten
+        } 
+
+        //Benchmark - Anzahl der Wiederholungen der häufigsten Übung
+        const filter = userDataTemp.alleGehoertenUebungen.filter(word=>word===kurse[kurs].Uebungen[uebung].id)
+        if(filter.length>userDataTemp.benchmarks.maxRepeats){
+            userDataTemp.benchmarks.maxRepeats=filter.length
+        }
+
+        // Streak um 1 erhöhen, wenn erforderlich
+        const yesterday = new Date()
+        yesterday.setDate(yesterday.getDate()-1)
+        if(userDataTemp.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations&&firstAtDay){
+            console.log("steak +1")
+            userDataTemp.benchmarks.streak+=1
+        }else if (firstAtDay){
+            userDataTemp.benchmarks.streak=1
+        }
+
+
+       // Überprüfen, ob neuer Benchmark erreicht und, wenn ja --> Einfügen in userDataTemp
+        const currentlyReached = checkBenchmarks(userDataTemp)
+        if (currentlyReached.length > 0){
+            userDataTemp.benchmarks.benchmarksReached=userDataTemp.benchmarks.benchmarksReached.concat(currentlyReached)
+            changeNewBenchmark(currentlyReached)
+        }
+
+        //Daten speichern
+        changeUserData(userDataTemp)
+        appData[currentUser]=userDataTemp
+        changeAppData(appData)
+        const jsonValue = JSON.stringify(appData)
+        await AsyncStorage.setItem('appData', jsonValue)
     }
 
     //Button, um nächste Übung zu starten

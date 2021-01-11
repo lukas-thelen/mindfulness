@@ -1,31 +1,121 @@
-import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {useState, useEffect, useContext} from 'react';
+import { Button, StyleSheet, Text, View, Modal,Alert } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import * as Linking from 'expo-linking';
 import {HomeScreen} from './src/Home.js';
 import {ProfilScreen} from './src/Profil.js';
-import {Registrieren} from './src/Registrieren.js';
-import {Anmelden} from './src/Anmelden.js';
-import {StartBildschirm} from './src/InitBildschirm.js';
 import {AppContext} from './src/context.js';
-import {AchtsamkeitsAbfrage} from './src/AchtsamkeitsAbfrage.js';
 import { Init } from './src/Init.js';
+import { benchmarks } from './src/benchmarks.js';
+import { FreundeScreen } from './src/Freunde.js';
+import cloneDeep from 'lodash/cloneDeep';
 
 const Tab = createBottomTabNavigator();
 
 
 
-const Tabnavigator = () =>{
+export const Tabnavigator = () =>{
+  const {newBenchmark, changeNewBenchmark, userData, changeAppData,changeUserData, appData,currentUser, changeForceUpdate, forceUpdate} = useContext(AppContext)
+  const newBenchmarkTemp =[...newBenchmark]
+  const userDataTemp = cloneDeep(userData)
+
+
+  useEffect(()=>{
+    
+    Linking.addEventListener('url', (url)=>{
+      let { path, queryParams } = Linking.parse(url.url)
+      console.log("EventListener")
+      handleUrl(queryParams)
+    })
+    waitForLink()
+  },[])
+
+  const waitForLink= async()=>{
+    const myUrl = await Linking.getInitialURL()
+    let { path, queryParams } = Linking.parse(myUrl)
+    console.log("Wait for link")
+    handleUrl(queryParams)
+  }
+
+  const handleUrl= (queryParams)=>{
+    if(!userDataTemp.friends){
+      userDataTemp.friends = {friends:{}}
+    }
+    if(queryParams.type === "friendRequest"){
+      console.log("new Friend Request by "+ queryParams.eMail)
+      if(!userDataTemp.friends.friends[queryParams.eMail]){
+        userDataTemp.friends.friends[queryParams.eMail] = {name: queryParams.name}
+      }
+    }
+    if(queryParams.type === "newPuzzle"){
+      console.log("New Puzzle created by "+ queryParams.name)
+      var friends = JSON.parse(queryParams.friends)
+      var friendsNames = JSON.parse(queryParams.friendsNames)
+      var includesMe = false
+      for (var k=0; k<friends.length;k++){
+        if(!(userDataTemp.friends.friends[friends[k]]||friends[k]===currentUser)){
+          userDataTemp.friends.friends[friends[k]] = {name: friendsNames[k]}
+        }
+        if(friends[k]===currentUser){
+          includesMe= true
+        }
+      }
+      if(!userDataTemp.friends.puzzles[queryParams.id]&&includesMe){
+        userDataTemp.friends.puzzles[queryParams.id] = {id:queryParams.id, pieces:0, friends:friends, log:{}}
+      }
+    }
+    if(queryParams.type === "puzzlePieces"){
+      console.log("Puzzle Pieces")
+      if(!userDataTemp.friends.puzzles[queryParams.puzzleId]){
+        console.log("Puzzle nicht gefunden")
+      }else{
+        if(userDataTemp.friends.puzzles[queryParams.puzzleId].log[queryParams.id]){
+          console.log("Teile bereits erhalten")
+        }else{
+          userDataTemp.friends.puzzles[queryParams.puzzleId].pieces= parseInt(userDataTemp.friends.puzzles[queryParams.puzzleId].pieces)+parseInt(queryParams.pieces)
+          userDataTemp.friends.puzzles[queryParams.puzzleId].log[queryParams.id]={id:queryParams.id, puzzleId:queryParams.puzzleId, pieces:queryParams.pieces, user:queryParams.user}
+        }
+      } 
+    }
+    changeForceUpdate("") 
+    changeForceUpdate("neue Updates im Freunde-Tab") 
+    changeUserData(userDataTemp)
+    appData[userDataTemp.data.eMail]=userDataTemp
+    changeAppData(appData)
+    const jsonvalue=JSON.stringify(appData)
+    storeData(jsonvalue)
+  }
+
+  const storeData=async(jsonvalue)=>{
+    await AsyncStorage.setItem('appData', jsonvalue)
+  }
+
+
   return(
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Profil" component={ProfilScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <View style = { {height: "100%", width: "100%"}}>
+        <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={newBenchmark.length>0}
+              >
+                <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={{fontSize:30}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].title}</Text>
+                    <Text style={{fontSize:15}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].description}</Text>
+                    <Button title={"weiter"} onPress={()=>{newBenchmarkTemp.shift();changeNewBenchmark(newBenchmarkTemp)}}></Button>
+                </View>
+                </View>
+          </Modal>
+        <NavigationContainer>
+          <Tab.Navigator initialRouteName="Home">
+            <Tab.Screen name="Freunde" component={FreundeScreen} />
+            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Profil" component={ProfilScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+    </View>
   );
 }
 
@@ -38,6 +128,8 @@ export default function App() {
   const [currentUser, changeCurrentUser] = useState("")
   const [isLoading, changeIsLoading] = useState(true)
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
+  const [newBenchmark, changeNewBenchmark] = useState([])
+  const [forceUpdate, changeForceUpdate] =useState(false)
 
   //wird einmalig beim ersten rendern des Components ausgeführt
   useEffect(()=>{
@@ -55,7 +147,11 @@ export default function App() {
 
     currentUser, changeCurrentUser,
 
-    gehoerteUebungen, changeGehoerteUebungen
+    gehoerteUebungen, changeGehoerteUebungen,
+
+    newBenchmark, changeNewBenchmark,
+
+    forceUpdate, changeForceUpdate,
 
   }
 
@@ -83,7 +179,6 @@ export default function App() {
     } catch(e) {
       console.log(e)
     }
-
     changeIsLoading(false)
   }
 
@@ -110,5 +205,27 @@ const styles = StyleSheet.create({
   pagewrap:{
     width: '100%',
     height: '100%'
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalView: {
+    margin: 20,
+    width:"80%",
+    height:"80%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
 });

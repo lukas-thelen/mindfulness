@@ -4,12 +4,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
 import Slider from '@react-native-community/slider';
 
-import {AppContext} from './context.js';
+import {AppContext} from '../context.js';
 import { useContext } from 'react';
 import { abs } from 'react-native-reanimated';
 
-export const StressSkala = (props) =>{
+export const StressSkalaMonthly = ({navigation,route}) =>{
     const [stressData, changeStressData] = useState(2)
+    const {userData, appData, changeAppData, changeUserData}=useContext(AppContext)
+    const userDataTemp={...userData}
     //Die perceived Stress Skala Fragen, auf die mit frage und number zugegriffen wird die aktuelle Frage ist gleichquestions[number]
     const [number, changeNumber] = useState(0)
     const questions = ["Wie oft warst Du im letzten Monat aufgewühlt, weil etwas unerwartet passiert ist?",
@@ -31,19 +33,20 @@ export const StressSkala = (props) =>{
       //Variable um Stresslevel zu kalkulieren
       const [calculatedStressLevel,addStress] = useState(0)
 
-    // Nutzerinfos im AsyncStorage speichern
-    const storeData = async () => {
-      const progressData = props.progressData;
+    const storeMonthlyData=async()=>{
       const today = new Date()
       var dateString = today.toDateString()
       dateString=dateString[4]+dateString[5]+dateString[6]+dateString[11]+dateString[12]+dateString[13]+dateString[14]
-      console.log(dateString)
-      progressData.stressData = {[dateString]:{date:new Date(), level:calculatedStressLevel}};
-      console.log(progressData.stressData)
-      props.changeProgressData(progressData)
-      props.finishInit()
+      userDataTemp.progress.stressData[dateString]={[dateString]:{date:new Date(), level:calculatedStressLevel}}
+      changeUserData(userDataTemp)
+      appData[userDataTemp.data.eMail]=userData
+      changeAppData(appData)
+      const jsonvalue=JSON.stringify(appData)
+      await AsyncStorage.setItem('appData', jsonvalue)
+      navigation.navigate("Journal")
     }
 
+    // Nutzerinfos im AsyncStorage speichern
     const test = () =>{
       console.log("Stressdata",stressData)
       console.log("calculatedStressLevel",calculatedStressLevel)
@@ -91,7 +94,7 @@ export const StressSkala = (props) =>{
     // Setzt die nächste Frage, sollte es die letzte Frage in questions sein, beendet sie die Umfrage und beendet Init
     const weiter = () =>{
       if (buttonValue === "Abschicken"){
-        storeData()
+          storeMonthlyData()
       } else {
         const currentNumber = number +1
         changeNumber(currentNumber)

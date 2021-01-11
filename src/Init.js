@@ -10,6 +10,7 @@ import {StressSkala} from './StressSkala.js';
 import { useLinkProps } from '@react-navigation/native';
 import {AppContext} from './context.js';
 import { useContext } from 'react';
+import { kurse } from './Kursdaten/Kursdatei.js';
 
 
 export const Init =(props)=>{
@@ -29,7 +30,27 @@ export const Init =(props)=>{
             appData[userData.eMail] = {}
             appData[userData.eMail].data = userData
             appData[userData.eMail].progress = progressData
+            appData[userData.eMail].verfuegbareUebungen = getUebungen(progressData.mindfulnessLevelData)
             appData[userData.eMail].gehoerteUebungen = []
+            appData[userData.eMail].alleGehoertenUebungen=[]
+            appData[userData.eMail].journal ={}
+            appData[userData.eMail].friends={friends:{}, puzzles:{}, pieces:0}
+            appData[userData.eMail].benchmarks ={
+              meditations: 0,
+              meditationMinutes:0,
+              meditationsEarly:0,
+              meditationsLate:0,
+              meditationsNight:0,
+              xMeditations:0,
+              allMeditations:0,
+              infoScreen: 0,
+              cancelCounter:0,
+              maxRepeats: 0,
+              puzzles:0,
+              streak:0,
+              benchmarks10: 0,
+              benchmarksReached: []
+            }
             changeUserDataContext(appData[userData.eMail])
             changeCurrentUser(userData.eMail)
             changeAppData(appData)
@@ -41,6 +62,19 @@ export const Init =(props)=>{
               console.log(e)
             }
           props.changeLoggedIn(true)
+    }
+
+    const getUebungen =(level)=>{
+      var i = 0
+      const array = []
+      while (i < level){
+        for (var y = 0; y < kurse[i].Uebungen.length; y++){
+            array.push(kurse[i].Uebungen[y].id)
+        }
+        i++
+      }
+      array.push(kurse[i].Uebungen[0].id)
+      return array
     }
 
     // Navigation zwischen Initpages
