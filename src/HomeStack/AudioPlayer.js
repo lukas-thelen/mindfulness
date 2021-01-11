@@ -93,17 +93,24 @@ export const AudioPlayer =({navigation, route})=>{
             userDataTemp.benchmarks.xMeditations = userDataTemp.gehoerteUebungen.length
         }
 
+        // Verfügbare Übung hinzufügen
+        if (userDataTemp.verfuegbareUebungen[(userDataTemp.verfuegbareUebungen.length)-1] === kurse[kurs].Uebungen[uebung].id){
+            if (uebung+1<kurse[kurs].Uebungen.length){
+                userDataTemp.verfuegbareUebungen.push( kurse[kurs].Uebungen[uebung+1].id)
+            }else{
+                if (kurs+1<kurse.length){
+                    userDataTemp.verfuegbareUebungen.push( kurse[kurs+1].Uebungen[0].id)
+                }
+            }
+        }
+
+
         if(!userDataTemp.friends.pieces){
             userDataTemp.friends.pieces=0
         }
         userDataTemp.friends.pieces+=1
-        //kann später weg
-        if(!userDataTemp.alleGehoertenUebungen){
-            userDataTemp.alleGehoertenUebungen=[]
-        }
-        //bis hier
 
-        //heute Liestungen im Journal
+        //heute Listungen im Journal
         var firstAtDay = false
         if(!userDataTemp.journal[today.toDateString()]){
             userDataTemp.journal[today.toDateString()]={}

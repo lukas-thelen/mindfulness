@@ -143,6 +143,12 @@ export const benchmarks = {
         goal: 3,
         description: "Wiederhole die selbe Übung 3 mal!",
         var: "maxRepeats",
+    },
+    P1:{
+        title: "Das ist nur der Anfang!",
+        goal: 1,
+        description: "Vervollständige 1 Puzzle",
+        var: "puzzles",
     }
 
 }

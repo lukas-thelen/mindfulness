@@ -10,6 +10,7 @@ import {StressSkala} from './StressSkala.js';
 import { useLinkProps } from '@react-navigation/native';
 import {AppContext} from './context.js';
 import { useContext } from 'react';
+import { kurse } from './Kursdaten/Kursdatei.js';
 
 
 export const Init =(props)=>{
@@ -29,6 +30,7 @@ export const Init =(props)=>{
             appData[userData.eMail] = {}
             appData[userData.eMail].data = userData
             appData[userData.eMail].progress = progressData
+            appData[userData.eMail].verfuegbareUebungen = getUebungen(progressData.mindfulnessLevelData)
             appData[userData.eMail].gehoerteUebungen = []
             appData[userData.eMail].alleGehoertenUebungen=[]
             appData[userData.eMail].journal ={}
@@ -60,6 +62,19 @@ export const Init =(props)=>{
               console.log(e)
             }
           props.changeLoggedIn(true)
+    }
+
+    const getUebungen =(level)=>{
+      var i = 0
+      const array = []
+      while (i < level){
+        for (var y = 0; y < kurse[i].Uebungen.length; y++){
+            array.push(kurse[i].Uebungen[y].id)
+        }
+        i++
+      }
+      array.push(kurse[i].Uebungen[0].id)
+      return array
     }
 
     // Navigation zwischen Initpages

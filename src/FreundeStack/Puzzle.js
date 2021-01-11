@@ -6,9 +6,10 @@ import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 import * as Linking from 'expo-linking';
+import { checkBenchmarks } from '../benchmarks.js';
 
 export const Puzzle = ({route, navigation}) => {
-    const {userData, changeUserData, changeAppData, appData, currentUser}=useContext(AppContext)
+    const {userData, changeUserData, changeAppData, appData, currentUser, changeNewBenchmark}=useContext(AppContext)
     const userDataTemp={...userData}
     const [modalVisible, changeModalVisible] = useState(false)
     const [layedPieces, cahngeLayedPieces] = useState(1)
@@ -54,11 +55,20 @@ export const Puzzle = ({route, navigation}) => {
         await AsyncStorage.setItem('appData', jsonValue)
         navigation.goBack()
     }
+
+    //Nur Button
     const einsetzen=()=>{
         changeModalVisible(true)
     }
+
+    //tatsächliches Einsetzen
     const layPieces=async()=>{
+
         userDataTemp.friends.puzzles[route.params.id].pieces+=layedPieces
+        
+        if (userDataTemp.friends.puzzles[route.params.id].pieces === 12){
+            userDataTemp.benchmarks.puzzles +=1
+        }
         userDataTemp.friends.pieces-=layedPieces
         const logId = getRandomString(8)
         const logData = {id:logId, puzzleId:route.params.id, pieces:layedPieces, user:currentUser}
@@ -71,6 +81,15 @@ export const Puzzle = ({route, navigation}) => {
         await AsyncStorage.setItem('appData', jsonValue)
         changeModalVisible(false)
         onShare(message)
+        
+        // Überprüfen, ob neuer Benchmark erreicht und, wenn ja --> Einfügen in userDataTemp
+        const currentlyReached = checkBenchmarks(userDataTemp)
+        if (currentlyReached.length > 0){
+            userDataTemp.benchmarks.benchmarksReached=userDataTemp.benchmarks.benchmarksReached.concat(currentlyReached)
+            changeNewBenchmark(currentlyReached)
+        }
+
+        
     }
 
     const onShare = async (message) => {

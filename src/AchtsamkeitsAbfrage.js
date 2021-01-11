@@ -9,11 +9,12 @@ import { useContext } from 'react';
 
 export const AchtsamkeitsAbfrage =(props)=>{
     const [mindfulnessLevelData, changeMindfulnessLevel] = useState("")
+    const levelValue = {"Anfänger:in": 0, "Fortgeschrittene:r":1, "Experte:in":2}
 
     // Nutzerinfos im AsyncStorage speichern
     const storeData = async () => {
       const progressData = props.progressData;
-      progressData.mindfulnessLevelData = mindfulnessLevelData;
+      progressData.mindfulnessLevelData = levelValue[mindfulnessLevelData];
       props.changeProgressData(progressData)
     }
 
@@ -34,7 +35,7 @@ export const AchtsamkeitsAbfrage =(props)=>{
 
     // Mindfulness-Level angeben
     const mindfulnessLevel = [
-      {label: 'Anfänger'},{label: 'Fortgeschrittener'},{label: 'Experte'}];
+      {label: 'Anfänger:in'},{label: 'Fortgeschrittene:r'},{label: 'Experte:in'}];
 
     // Überprüft Eingabe  
     const test = () =>{

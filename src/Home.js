@@ -16,6 +16,7 @@ import { render } from 'react-dom';
 import { Journal } from './HomeStack/Journal.js';
 import { JournalTag } from './HomeStack/JournalTag.js';
 import { StressSkalaMonthly } from './HomeStack/StressSkalaMonthly.js';
+import { uebungen } from './Kursdaten/Uebungsliste.js';
 
 const HomeStack = createStackNavigator();
 
@@ -23,31 +24,19 @@ const HomeStack = createStackNavigator();
 //Startseite des Home-Stacks
 const HomeRoot = ({navigation})=>{
   const {username, changeUsername,} = useContext(AppContext);
-  const {gehoerteUebungen, changeGehoerteUebungen} = useContext(AppContext);
+  const {gehoerteUebungen, changeGehoerteUebungen, userData} = useContext(AppContext);
 
   //Button, um da weiterzumachen, wo man aufgehört hat
   const InstantStart =(props) =>{
-    if (!gehoerteUebungen[0]){
-      return <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:0, uebungsIndex:0})}}></Button>
+    if (gehoerteUebungen.includes(userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1])){
+      return null
     }
-    const letzteUebungsId = gehoerteUebungen[gehoerteUebungen.length-1]
-    for(i in kurse){
-      for(j in kurse[i].Uebungen){
-        if (kurse[i].Uebungen[j].id===letzteUebungsId){
-          const letzterKurs = parseInt(i)
-          const letzteUebung = parseInt(j)
-          if (letzteUebung+1<kurse[letzterKurs].Uebungen.length){
-            return  <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:letzterKurs, uebungsIndex:letzteUebung+1})}}></Button>
-          }else{
-              if (letzterKurs+1<kurse.length){
-                  return <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:letzterKurs+1, uebungsIndex:0})}}></Button>
-              }
-          }
+      for ( var z = 0; z< uebungen.length; z++){
+        if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]){
+          return <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})}}></Button>
         }
       }
     }
-    return null
-  }
 
   return(
     <View style={styles.container}>
