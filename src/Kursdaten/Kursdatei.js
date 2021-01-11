@@ -9,6 +9,7 @@ export const kurse =[
                 Name:"Einführung",
                 Kategorie:"Mindfulness",
                 Beschreibung:"eine sehr tolle Übung. Hier schreibe ich mal einen Text hin, der mehr als eine Zeile beansprucht, damit wir mal ausprobieren können, wie das aussieht",
+                Info:"Info über die Übung",
                 VersionenNachSprecher:[
                     {
                         Sprecher:"männlich",
@@ -34,6 +35,7 @@ export const kurse =[
                 Name:"Atemübung 1",
                 Kategorie:"Atemübung",
                 Beschreibung:"auch eine sehr tolle Übung. ",
+                Info:"Info über die Übung",
                 VersionenNachSprecher:[
                     {
                         Sprecher:"männlich",
@@ -56,6 +58,7 @@ export const kurse =[
                 Name:"Mindfulness-Übung 1",
                 Kategorie:"Mindfulness",
                 Beschreibung:"die nächste sehr tolle Übung",
+                Info:"Info über die Übung",
                 VersionenNachSprecher:[
                     {
                         Sprecher:"männlich",
@@ -84,6 +87,7 @@ export const kurse =[
                 Name:"Mindfulness-Übung 2",
                 Kategorie:"Mindfulness",
                 Beschreibung:"Wow! Noch eine sehr tolle Übung",
+                Info:"Info über die Übung",
                 VersionenNachSprecher:[
                     {
                         Sprecher:"männlich",
@@ -105,6 +109,7 @@ export const kurse =[
                 Name:"Atemübung 2",
                 Kategorie:"Atemübung",
                 Beschreibung:"So langsam reichts aber mit den tollen Übungen",
+                Info:"Info über die Übung",
                 VersionenNachSprecher:[
                     {
                         Sprecher:"männlich",
