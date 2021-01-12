@@ -5,11 +5,14 @@ import * as Linking from 'expo-linking';
 import {AppContext} from '../context.js';
 import { useContext, useEffect } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
+import { redirectURL } from '../../appDaten.js';
 
 
 export const MeineFreunde =() => {
     const {username, currentUser, userData} = useContext(AppContext)
-    const friendCode = Linking.makeUrl("", {type: "friendRequest", name: username, eMail: currentUser})
+    var friendCode = Linking.makeUrl("", {type: "friendRequest", name: username, eMail: currentUser})
+    var re = /(.*)(\?.*)/;
+    friendCode = friendCode.replace(re, redirectURL+"$2");
     const onShare = async () => {
       try {
         const result = await Share.share({

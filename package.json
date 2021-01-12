@@ -33,7 +33,9 @@
     "react-native-sound": "^0.11.0",
     "react-native-svg": "12.1.0",
     "react-native-svg-charts": "^5.4.0",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "@react-native-community/viewpager": "4.2.0",
+    "expo-notifications": "~0.8.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

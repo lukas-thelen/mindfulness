@@ -1,0 +1,1 @@
+export const redirectURL = "https://tinyurl.com/y6b5k38f"

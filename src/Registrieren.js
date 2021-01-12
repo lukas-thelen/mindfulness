@@ -76,12 +76,6 @@ export const Registrieren =(props)=>{
       showDatepicker(false)
       changeDateChanged(true)
     };
-
-    const test = () =>{
-        console.log(name)
-        console.log(birthday)
-        console.log(gender)
-    }
     
     return(
       <View style={styles.pagewrap, styles.container}>
@@ -135,9 +129,7 @@ export const Registrieren =(props)=>{
         />
 
         <View style={styles.trennlinie}/>
-
-        <Button title={"zeige Daten"} onPress={() =>{test()}} ></Button>
-        <Button title={"anmelden"} onPress={() =>{abschicken()}} ></Button>
+        <Button title={"weiter"} onPress={() =>{abschicken()}} ></Button>
         <Button title={"Zurück"} onPress={() =>{props.changeInitPages('StartBildschirm')}} ></Button>
       </View>
     )

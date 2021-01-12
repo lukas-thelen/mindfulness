@@ -14,11 +14,11 @@ import {AlleUebungen} from "./HomeStack/AlleUebungen.js"
 import { kurse } from './Kursdaten/Kursdatei.js';
 import {InfoEcke} from './HomeStack/InfoEcke.js';
 import { UebungsInfo } from './HomeStack/UebungsInfo.js';
-import { render } from 'react-dom';
 import { Journal } from './HomeStack/Journal.js';
 import { JournalTag } from './HomeStack/JournalTag.js';
 import { StressSkalaMonthly } from './HomeStack/StressSkalaMonthly.js';
 import { uebungen } from './Kursdaten/Uebungsliste.js';
+import ViewPager from '@react-native-community/viewpager';
 
 const HomeStack = createStackNavigator();
 
@@ -29,7 +29,7 @@ const HomeRoot = ({navigation})=>{
   const {gehoerteUebungen, changeGehoerteUebungen, userData} = useContext(AppContext);
 
   //Button, um da weiterzumachen, wo man aufgehört hat
-  const InstantStart =(props) =>{
+  const InstantStart =() =>{
     if (gehoerteUebungen.includes(userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1])){
       return null
     }
@@ -41,14 +41,23 @@ const HomeRoot = ({navigation})=>{
     }
 
   return(
-    <View style={styles.container}>
-      <InstantStart/>
-      <Text>Hallo {username}</Text> 
-      <Button title={"Meine Kurse"} onPress={() =>{navigation.navigate('Meine Kurse')}} ></Button>
-      <Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
-      <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
-      <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>
+    <ViewPager style={styles.viewPager} initialPage={1}>
+      <View key="1">
+        <InfoEcke navigation={navigation}/>
+      </View>
+      <View key="2"style={styles.container}>
+        <InstantStart />
+        <Text>Hallo {username}</Text> 
+        <Button title={"Meine Kurse"} onPress={() =>{navigation.navigate('Meine Kurse')}} ></Button>
+        {/*<Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>*/}
+        <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
+        <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>
     </View>
+    <View key="3">
+        <Journal navigation={navigation}/>
+      </View>
+    </ViewPager>
+    
   )
 }
 
@@ -84,4 +93,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    viewPager: {
+      flex: 1,
+    }
   });

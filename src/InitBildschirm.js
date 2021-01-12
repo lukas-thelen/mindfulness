@@ -13,7 +13,8 @@ export const StartBildschirm = (props) =>{
     return(
         <View style={styles.pagewrap, styles.container}>
         
-        <Text>App-Name</Text>
+        <Text style={{fontSize:30, fontWeight:"bold"}}>Upgrade</Text>
+        <Text style={{fontSize:20, fontWeight:"bold"}}>Your Mind</Text>
 
         <View style={styles.trennlinie}/>
 

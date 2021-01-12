@@ -37,11 +37,6 @@ export const AchtsamkeitsAbfrage =(props)=>{
     const mindfulnessLevel = [
       {label: 'Anfänger:in'},{label: 'Fortgeschrittene:r'},{label: 'Experte:in'}];
 
-    // Überprüft Eingabe  
-    const test = () =>{
-        console.log(mindfulnessLevelData)
-        console.log(props.userData)
-    }
     
     return(
       <View style={styles.pagewrap, styles.container}>
@@ -54,8 +49,6 @@ export const AchtsamkeitsAbfrage =(props)=>{
         />
 
         <View style={styles.trennlinie}/>
-
-        <Button title={"zeige Daten"} onPress={() =>{test()}} ></Button>
         <Button title={"Weiter"} onPress={() =>{abschicken()}} ></Button>
 
       </View>

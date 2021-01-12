@@ -6,8 +6,8 @@ import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 
 
-export const Journal = ({navigation}) => {
-
+export const Journal = (props) => {
+    const navigation=props.navigation
     const {userData} = useContext(AppContext)
 
     const [weekchange, changeWeekchange] =useState(0)
@@ -24,7 +24,7 @@ export const Journal = ({navigation}) => {
         lastMonthString=lastMonthString[4]+lastMonthString[5]+lastMonthString[6]+lastMonthString[11]+lastMonthString[12]+lastMonthString[13]+lastMonthString[14]
         var dateString = today.toDateString()
         dateString=dateString[4]+dateString[5]+dateString[6]+dateString[11]+dateString[12]+dateString[13]+dateString[14]
-        if(userData.progress.stressData[dateString]){
+        if(!userData.progress.stressData[dateString]){
             if(userData.progress.stressData[lastMonthString]){
                 var lastDate=new Date(userData.progress.stressData[lastMonthString].date)
                 lastDate.setDate(lastDate.getDate()+14)
@@ -32,7 +32,9 @@ export const Journal = ({navigation}) => {
                 if(lastDate<today){
                     return true
                 }
+                return false
             }
+            return true
         }
         return false
     }

@@ -6,6 +6,7 @@ import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
+import { redirectURL } from '../../appDaten.js';
 
 
 export const FreundeRoot =({navigation}) => {
@@ -42,13 +43,16 @@ export const FreundeRoot =({navigation}) => {
         const id =getRandomString(8)
         userDataTemp.friends.puzzles[id]={id:id, pieces:0, friends:selectedFriends, log:{}}
         const friendsNames = getFriendsNames()
-        const message = Linking.makeUrl("", {type: "newPuzzle", id:id, name:userData.data.name, user:currentUser, friends:JSON.stringify(selectedFriends), friendsNames:JSON.stringify(friendsNames)})
+        var message = Linking.makeUrl("", {type: "newPuzzle", id:id, name:userData.data.name, user:currentUser, friends:JSON.stringify(selectedFriends), friendsNames:JSON.stringify(friendsNames)})
+        var re = /(.*)(\?.*)/;
+        message = message.replace(re, redirectURL+"$2");
         changeUserData(userDataTemp)
         appData[currentUser]=userDataTemp
         changeAppData(appData)
         const jsonValue = JSON.stringify(appData)
         await AsyncStorage.setItem('appData', jsonValue) 
         onShare(message)
+        changeSelectedFriends([currentUser,])
     }
 
 
@@ -149,7 +153,7 @@ export const FreundeRoot =({navigation}) => {
                         keyExtractor={(item, index)=>item.email}
                         renderItem={renderFreunde}
                     ></FlatList>
-                    <Button title="abbrechen" onPress={()=>{changeModalVisible(false)}}></Button>
+                    <Button title="abbrechen" onPress={()=>{changeModalVisible(false), changeSelectedFriends([currentUser,])}}></Button>
                     <Button disabled={selectedFriends.length===1&&true}title="erstellen" onPress={()=>neuesPuzzle()}></Button>
                     </View>
                 </View>

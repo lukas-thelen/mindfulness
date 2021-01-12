@@ -6,6 +6,7 @@ import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 import DateTimePickerModal from "@react-native-community/datetimepicker"; 
 import { FlatList } from 'react-native-gesture-handler';
+import * as Notifications from 'expo-notifications';
 
 export const Einstellungen = ({navigation}) => {
 const initTime = new Date()
@@ -19,7 +20,13 @@ const [indexTime, changeIndexTime] = useState(0)
 const [anzahl, changeAnzahl]=useState(1)
 
 const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCurrentUser} = useContext(AppContext)
-
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+        }),
+    });
 
     useEffect(()=>{
         if(userData.data.notificationTimes){
@@ -34,6 +41,25 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
         }
     },[])
 
+    const setNotifications=()=>{
+        Notifications.cancelAllScheduledNotificationsAsync()
+        if(notifications){
+            for(var t=0;t<times.length;t++){
+                Notifications.scheduleNotificationAsync({
+                    content: {
+                      title: "Time's up!",
+                      body: 'Change sides!',
+                    },
+                    trigger: {
+                        hour: times[t].getHours(), 
+                        minute: 0, 
+                        repeats: true
+                    },
+                  });
+            }
+    }
+}
+
 
     const logout = async () => {
         try {
@@ -46,6 +72,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
       }
 
     const storeData = async ()=>{
+        setNotifications()
         userData.data.notifications=notifications
         userData.data.notificationTimes=times
         changeUserData(userData)
@@ -130,6 +157,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                 ></FlatList>}
 
                 <Button title="Speichern" onPress={()=>storeData()}></Button>
+                <Button title="Test2" onPress={async()=>{const test = await Notifications.getAllScheduledNotificationsAsync(); console.log(test)}}></Button>
                 <Button title="Konto-Einstellungen" onPress={()=>navigation.navigate("Konto-Informationen")}></Button>
                 <Button title="Informationen über die App" onPress={()=>navigation.navigate("Informationen über die App")}></Button>
                 <TouchableOpacity onPress={() => logout() }> 

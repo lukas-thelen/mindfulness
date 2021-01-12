@@ -48,8 +48,14 @@ export const VersionsAuswahl =({navigation, route})=>{
     }
     return (
         <View style={{padding:15}}>
-            <Text style={{marginBottom:15, fontSize:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
-            <Text style={{marginBottom:15}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text>
+            <View style={{flexDirection:"row"}}>
+                <Text style={{marginBottom:15, fontSize:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
+                <TouchableOpacity 
+                    style={styles.info}
+                    onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:kursIndex, uebungsIndex:uebungsIndex })}}
+                ><Text>i</Text></TouchableOpacity>
+            </View>
+            <Text style={{marginBottom:15}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
             <FlatList
                 numColumns={2}
                 data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
@@ -115,4 +121,13 @@ const styles = StyleSheet.create({
         borderColor:"#ffccdc",
         alignSelf:"center"
     },
+    info:{
+        borderWidth:1, 
+        borderRadius:100, 
+        width:25, 
+        height:25, 
+        alignItems:"center", 
+        justifyContent:"center", 
+        backgroundColor:"white"
+    }
   });

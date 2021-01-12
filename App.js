@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, View, Modal,Alert } from 'react-native';
+import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,7 +14,11 @@ import cloneDeep from 'lodash/cloneDeep';
 
 const Tab = createBottomTabNavigator();
 
-
+const LoadingScreen=()=>{
+  return(
+    <ActivityIndicator/>
+  )
+}
 
 export const Tabnavigator = () =>{
   const {newBenchmark, changeNewBenchmark, userData, changeAppData,changeUserData, appData,currentUser, changeForceUpdate, forceUpdate} = useContext(AppContext)
@@ -35,7 +39,6 @@ export const Tabnavigator = () =>{
   const waitForLink= async()=>{
     const myUrl = await Linking.getInitialURL()
     let { path, queryParams } = Linking.parse(myUrl)
-    console.log("Wait for link")
     handleUrl(queryParams)
   }
 
@@ -186,7 +189,9 @@ export default function App() {
   return (
     <AppContext.Provider value={appContext}>
       <View style={styles.pagewrap}>
-        {loggedIn ? <Tabnavigator style={styles.container}/> : <Init changeLoggedIn={changeLoggedIn}/>}
+        {isLoading?<View style={{height:"100%",justifyContent:"center"}}><ActivityIndicator size="large" color="black"/></View>:<View>
+          {loggedIn ? <Tabnavigator style={styles.container}/> : <Init changeLoggedIn={changeLoggedIn}/>}</View>
+        }
       </View>
     </AppContext.Provider>
 

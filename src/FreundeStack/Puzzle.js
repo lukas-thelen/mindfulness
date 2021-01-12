@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Modal, Share } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Modal, Share, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -7,12 +7,15 @@ import { useContext, useEffect, useState } from 'react';
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 import * as Linking from 'expo-linking';
 import { checkBenchmarks } from '../benchmarks.js';
+import { redirectURL } from '../../appDaten.js';
+import { images } from '../../assets/Puzzles/puzzleImg.js';
+
 
 export const Puzzle = ({route, navigation}) => {
     const {userData, changeUserData, changeAppData, appData, currentUser, changeNewBenchmark}=useContext(AppContext)
     const userDataTemp={...userData}
     const [modalVisible, changeModalVisible] = useState(false)
-    const [layedPieces, cahngeLayedPieces] = useState(1)
+    const [layedPieces, changeLayedPieces] = useState(1)
 
     function getRandomString(length) {
         var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -22,7 +25,6 @@ export const Puzzle = ({route, navigation}) => {
         }
         return result;
     }
-
     const puzzleText=(array)=>{
         var string="Puzzle mit "
         var first = true
@@ -40,11 +42,19 @@ export const Puzzle = ({route, navigation}) => {
         }
         return string
     }
-    const renderPuzzleTeile=({item})=>{
-        return(
-            <View style={item<userDataTemp.friends.puzzles[route.params.id].pieces?{borderWidth:1, height:90, flex:0.25, backgroundColor:"green"}:{borderWidth:1, height:90, flex:0.25}}>
-            </View>
-        )
+    const renderPuzzleTeile=({item, index})=>{
+        if(item<userDataTemp.friends.puzzles[route.params.id].pieces){
+            return(
+                <Image style={styles.image} source={images.Waage[index]}/>
+                
+            )
+        }else{
+            return(
+                <View style={{borderWidth:1, height:90, flex:0.25}}>
+                </View>
+            )
+        }
+        
     }
     const löschen=async()=>{
         delete userDataTemp.friends.puzzles[route.params.id]
@@ -72,7 +82,9 @@ export const Puzzle = ({route, navigation}) => {
         userDataTemp.friends.pieces-=layedPieces
         const logId = getRandomString(8)
         const logData = {id:logId, puzzleId:route.params.id, pieces:layedPieces, user:currentUser}
-        const message = Linking.makeUrl("", {type: "puzzlePieces", id:logId, puzzleId:route.params.id, pieces:layedPieces, user:currentUser})
+        var message = Linking.makeUrl("", {type: "puzzlePieces", id:logId, puzzleId:route.params.id, pieces:layedPieces, user:currentUser})
+        var re = /(.*)(\?.*)/;
+        message = message.replace(re, redirectURL+"$2");
         userDataTemp.friends.puzzles[route.params.id].log[logId]=logData
         changeUserData(userDataTemp)
         appData[currentUser]=userDataTemp
@@ -80,6 +92,7 @@ export const Puzzle = ({route, navigation}) => {
         const jsonValue = JSON.stringify(appData)
         await AsyncStorage.setItem('appData', jsonValue)
         changeModalVisible(false)
+        changeLayedPieces(1)
         onShare(message)
         
         // Überprüfen, ob neuer Benchmark erreicht und, wenn ja --> Einfügen in userDataTemp
@@ -130,11 +143,11 @@ export const Puzzle = ({route, navigation}) => {
                         <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-around", width:200, marginTop:30}}>
                             <Text>{layedPieces}</Text>
                             <View style={{flexDirection:"column"}}>
-                                <Button disabled={layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded()}title="+" onPress={()=>{cahngeLayedPieces(layedPieces+1)}}></Button>
-                                <Button disabled={layedPieces<=1}title="-" onPress={()=>{cahngeLayedPieces(layedPieces-1)}}></Button>
+                                <Button disabled={layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded()}title="+" onPress={()=>{changeLayedPieces(layedPieces+1)}}></Button>
+                                <Button disabled={layedPieces<=1}title="-" onPress={()=>{changeLayedPieces(layedPieces-1)}}></Button>
                             </View>
                         </View>
-                        <Button title="abbrechen" onPress={()=>{changeModalVisible(false)}}></Button>
+                        <Button title="abbrechen" onPress={()=>{changeModalVisible(false), changeLayedPieces(1)}}></Button>
                         <Button title="einsetzen" onPress={()=>{layPieces()}}></Button>
                     </View>
                 </View>
@@ -179,4 +192,9 @@ const styles = StyleSheet.create({
       shadowRadius: 3.84,
       elevation: 5,
     },
+    image:{
+        borderWidth:1, 
+        height:90, 
+        flex:0.25
+    }
   });
