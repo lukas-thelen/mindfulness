@@ -125,6 +125,7 @@ export const Registrieren =(props)=>{
         <RadioButtonRN
           boxStyle={styles.radio}
           data={genderData}
+          textStyle= {{color:"black"}}
           selectedBtn={(e) => changeGender(e.label)}
         />
 
