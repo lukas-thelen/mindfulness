@@ -46,7 +46,7 @@ export const FreundeRoot =({navigation}) => {
         const friendsNames = getFriendsNames()
         var message = Linking.makeUrl("", {type: "newPuzzle", id:id, name:userData.data.name, user:currentUser, friends:JSON.stringify(selectedFriends), friendsNames:JSON.stringify(friendsNames)})
         var re = /(.*)(\?.*)/;
-        message = message.replace(re, redirectURL+"$2");
+        message = message.replace(re, "Lass uns zusammen ein neuen Puzzle beginnen: "+redirectURL+"$2");
         changeUserData(userDataTemp)
         appData[currentUser]=userDataTemp
         changeAppData(appData)
@@ -162,7 +162,7 @@ export const FreundeRoot =({navigation}) => {
             </Modal>
             <Button title="Meine Freunde" onPress={()=> {navigation.navigate("Meine Freunde")}}></Button>
             <Text style={{textAlign:"center", fontSize:22, margin:20}}>PUZZLES</Text>
-            <View style={{height:"60%"}}>
+            <View style={{height:"60%", backgroundColor:"#e1e1e1", width:"95%", alignSelf:"center", borderWidth:1, borderRadius:20}}>
               <FlatList
                   data={puzzleArray()}
                   keyExtractor={(item, index)=>item.id}

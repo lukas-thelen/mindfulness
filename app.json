@@ -1,9 +1,8 @@
 {
   "expo": {
-        "scheme": "myapp",
-
-    "name": "Mindfulness Allgemeine Psychologie",
-    "slug": "mindfulness-allgemeine-psychologie",
+    "scheme": "myapp",
+    "name": "Upgrade Your Mind",
+    "slug": "upgrade-your-mind",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

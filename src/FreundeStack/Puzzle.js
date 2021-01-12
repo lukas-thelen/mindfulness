@@ -84,7 +84,7 @@ export const Puzzle = ({route, navigation}) => {
         const logData = {id:logId, puzzleId:route.params.id, pieces:layedPieces, user:currentUser}
         var message = Linking.makeUrl("", {type: "puzzlePieces", id:logId, puzzleId:route.params.id, pieces:layedPieces, user:currentUser})
         var re = /(.*)(\?.*)/;
-        message = message.replace(re, redirectURL+"$2");
+        message = message.replace(re, "Hier sind neue Teile für unser Puzzle: "+redirectURL+"$2");
         userDataTemp.friends.puzzles[route.params.id].log[logId]=logData
         changeUserData(userDataTemp)
         appData[currentUser]=userDataTemp

@@ -191,7 +191,7 @@ export const AudioPlayer =({navigation, route})=>{
     }
 
     return(
-        <View style={{alignItems:"center"}}>
+        <View style={{alignItems:"center", justifyContent:"center", flex:1}}>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -205,8 +205,6 @@ export const AudioPlayer =({navigation, route})=>{
                 </View>
                 </View>
             </Modal>
-            <Text>Ordnername: {kurse[kurs].Ordnername}</Text>
-            <Text>Dateiname: {kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname}</Text>
             {isPlaying ?
                 <TouchableOpacity onPress={async () => {await soundObject.pauseAsync(); changeIsPlaying(false)}}>
                     <Ionicons name="pause" size={50} color="black" /> 

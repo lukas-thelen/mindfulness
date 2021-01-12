@@ -13,7 +13,7 @@ export const MeineFreunde =() => {
     const {username, currentUser, userData} = useContext(AppContext)
     var friendCode = Linking.makeUrl("", {type: "friendRequest", name: username, eMail: currentUser})
     var re = /(.*)(\?.*)/;
-    friendCode = friendCode.replace(re, redirectURL+"$2");
+    friendCode = friendCode.replace(re, "Füge mich als Freund hinzu: "+redirectURL+"$2");
     const onShare = async () => {
       try {
         const result = await Share.share({

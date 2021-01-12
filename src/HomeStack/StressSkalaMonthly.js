@@ -91,9 +91,10 @@ export const StressSkalaMonthly = ({navigation,route}) =>{
 
         <View style={styles.pagewrap, styles.container}>
             <Text>Lass uns ein Stress-Tagebuch führen</Text>
-            <Text>{question}</Text>
+            <View style={styles.trennlinie}/>
+            <Text style={{padding:20}}>{question}</Text>
             <Slider
-                style={{width: 200, height: 40}}
+                style={{width: 250, height: 40}}
                 minimumValue={0}
                 maximumValue={4}
                 minimumTrackTintColor="green"
@@ -102,13 +103,14 @@ export const StressSkalaMonthly = ({navigation,route}) =>{
                 value={stressData}
                 onValueChange={changeStressData}
             />
-            <View style={{flexDirection:"row", width:240, justifyContent:"space-evenly"}}>
-              <Text style={stressData===0?{fontSize:13}:{fontSize:8}}>Nie</Text>
-              <Text style={stressData===1?{fontSize:13}:{fontSize:8}}>Fast Nie</Text>
-              <Text style={stressData===2?{fontSize:13}:{fontSize:8}}>Manchmal</Text>
-              <Text style={stressData===3?{fontSize:13}:{fontSize:8}}>Ziemlich Oft</Text>
-              <Text style={stressData===4?{fontSize:13}:{fontSize:8}}>Sehr Oft</Text>
+            <View style={{flexDirection:"row", width:280, justifyContent:"space-evenly", marginLeft:20}}>
+              <Text style={stressData===0?{fontSize:16}:{fontSize:10}}>Nie</Text>
+              <Text style={stressData===1?{fontSize:16}:{fontSize:10}}>Fast Nie</Text>
+              <Text style={stressData===2?{fontSize:16}:{fontSize:10}}>Manchmal</Text>
+              <Text style={stressData===3?{fontSize:16}:{fontSize:10}}>Ziemlich Oft</Text>
+              <Text style={stressData===4?{fontSize:16}:{fontSize:10}}>Sehr Oft</Text>
             </View>
+            <View style={styles.trennlinie}/>
             <Button title={buttonValue} onPress={() =>{calculateStress()}} ></Button>
 
         </View>

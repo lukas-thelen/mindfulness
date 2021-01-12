@@ -14,8 +14,7 @@
                     {
                         Sprecher:"männlich",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"EinführungM3.mp3", Dateipfad: require("../../assets/Kurs1/EinführungM3.mp3")},
-                            {Dauer:5, Dateiname:"EinführungM5.mp3", Dateipfad: require("../../assets/Kurs1/EinführungM5.mp3")}
+                            {Dauer:3, Dateiname:"EinführungM3.mp3", Dateipfad: require("../../assets/Kurs1/3MinutenLukas.mp3")}
                             // Audiodateien in den Assets-Ordner packen und hier den Dateipfad via "require" spezifizieren. Require akzeptiert nur 
                             // static Strings also daher bitte einfach nur den Namen der Audiodatei anpassen
                         ]
@@ -23,8 +22,7 @@
                     {
                         Sprecher:"weiblich",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"EinführungF3.mp3", Dateipfad: require("../../assets/Kurs1/EinführungF3.mp3")},
-                            {Dauer:7, Dateiname:"EinführungF7.mp3", Dateipfad: require("../../assets/Kurs1/EinführungF7.mp3")}
+                            {Dauer:3, Dateiname:"EinführungF3.mp3", Dateipfad: require("../../assets/Kurs1/3MinutenLisa.mp3")}
                         ]
                     },
                     //mehr Sprecher

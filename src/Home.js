@@ -49,7 +49,8 @@ const HomeRoot = ({navigation})=>{
         <InfoEcke navigation={navigation}/>
       </View>
       <View key="2"style={styles.container}>
-        <Text style={{fontSize:25}}>Hallo {username}</Text> 
+        <Text style={{fontSize:25}}>Hallo {username}!</Text> 
+        <Text>Schön, dass du wieder da bist!</Text>
         <InstantStart /> 
         <Button title={"Meine Kurse"} onPress={() =>{navigation.navigate('Meine Kurse')}} ></Button>
         {/*<Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
