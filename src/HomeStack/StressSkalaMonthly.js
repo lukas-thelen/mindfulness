@@ -37,35 +37,16 @@ export const StressSkalaMonthly = ({navigation,route}) =>{
       const today = new Date()
       var dateString = today.toDateString()
       dateString=dateString[4]+dateString[5]+dateString[6]+dateString[11]+dateString[12]+dateString[13]+dateString[14]
-      userDataTemp.progress.stressData[dateString]={[dateString]:{date:new Date(), level:calculatedStressLevel}}
+      userDataTemp.progress.stressData[dateString]={date:new Date(), level:calculatedStressLevel}
       changeUserData(userDataTemp)
       appData[userDataTemp.data.eMail]=userData
       changeAppData(appData)
       const jsonvalue=JSON.stringify(appData)
       await AsyncStorage.setItem('appData', jsonvalue)
-      navigation.navigate("Journal")
+      navigation.goBack()
     }
-
-    // Nutzerinfos im AsyncStorage speichern
-    const test = () =>{
-      console.log("Stressdata",stressData)
-      console.log("calculatedStressLevel",calculatedStressLevel)
-      console.log("number",number)
-      
-  }
 
   
-    //Nutzereingabe prüfen
-    const checkInput =()=>{
-        if (stressData === ""){
-          /*Alert.alert(
-            'Unvollständig',
-            'Bitte wähle dein Levell!',
-            [{ text: 'OK'}],
-            { cancelable: false }
-            ); */
-      }
-    }
     // Stress-Level angeben
     const skala = ["Nie","Fast nie","Manchmal","Ziemlich oft","Sehr oft"]
     const stressLevel = [
@@ -111,11 +92,6 @@ export const StressSkalaMonthly = ({navigation,route}) =>{
         <View style={styles.pagewrap, styles.container}>
             <Text>Lass uns ein Stress-Tagebuch führen</Text>
             <Text>{question}</Text>
-            {/*<RadioButtonRN
-              boxStyle={styles.radio}
-              data={stressLevel}
-              selectedBtn={(e) => changeStressData(e.label)}
-            />*/}
             <Slider
                 style={{width: 200, height: 40}}
                 minimumValue={0}
@@ -133,7 +109,6 @@ export const StressSkalaMonthly = ({navigation,route}) =>{
               <Text style={stressData===3?{fontSize:13}:{fontSize:8}}>Ziemlich Oft</Text>
               <Text style={stressData===4?{fontSize:13}:{fontSize:8}}>Sehr Oft</Text>
             </View>
-            <Button title={"zeige Daten"} onPress={() =>{test()}} ></Button>
             <Button title={buttonValue} onPress={() =>{calculateStress()}} ></Button>
 
         </View>
