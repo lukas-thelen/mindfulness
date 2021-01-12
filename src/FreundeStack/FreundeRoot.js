@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Modal, TouchableOpacity, Share } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Modal, TouchableOpacity, Share} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
@@ -113,7 +114,8 @@ export const FreundeRoot =({navigation}) => {
 
     const renderPuzzle=({item})=>{
         return (
-            <TouchableOpacity style={styles.friend}onPress={()=>{navigation.navigate("Puzzle",{id:item.id}) }}>
+            <TouchableOpacity style={styles.puzzle}onPress={()=>{navigation.navigate("Puzzle",{id:item.id}) }}>
+                <MaterialCommunityIcons name="puzzle-outline" size={24} color="black" />
                 <Text style={{fontSize:16}}>{puzzleText(item.friends)}</Text>
             </TouchableOpacity>
         )
@@ -158,20 +160,23 @@ export const FreundeRoot =({navigation}) => {
                     </View>
                 </View>
             </Modal>
-            <Text>FREUNDE</Text>
             <Button title="Meine Freunde" onPress={()=> {navigation.navigate("Meine Freunde")}}></Button>
-            <Text>PUZZLES</Text>
-            <FlatList
-                data={puzzleArray()}
-                keyExtractor={(item, index)=>item.id}
-                renderItem={renderPuzzle}
-                extraData={puzzleArray()}
-            ></FlatList>
-            <Button title="neues Puzzle erstellen" onPress={()=> {changeModalVisible(true)}}></Button>
+            <Text style={{textAlign:"center", fontSize:22, margin:20}}>PUZZLES</Text>
+            <View style={{height:"60%"}}>
+              <FlatList
+                  data={puzzleArray()}
+                  keyExtractor={(item, index)=>item.id}
+                  renderItem={renderPuzzle}
+                  extraData={puzzleArray()}
+              ></FlatList>
+            </View>
+            <TouchableOpacity style={{width:50, height:50, borderRadius:100, backgroundColor:"white", justifyContent:"center", alignItems:"center", borderWidth:2, alignSelf:"center", marginTop:25}}onPress={()=> {changeModalVisible(true)}}>
+              <MaterialCommunityIcons name="puzzle-plus-outline" size={35} color="black" />
+            </TouchableOpacity>
         </View>
     )
   }
-
+  
   const styles = StyleSheet.create({
     centeredView: {
       flex: 1,
@@ -214,5 +219,15 @@ export const FreundeRoot =({navigation}) => {
         justifyContent:"center", 
         paddingLeft:20,
         backgroundColor:"#aaccaa"
+    },
+    puzzle:{
+      height:40, 
+      width:300, 
+      backgroundColor:"white", 
+      alignSelf:"center", 
+      margin:10, 
+      alignItems:"center", 
+      paddingLeft:20,
+      flexDirection:"row"
     }
   });

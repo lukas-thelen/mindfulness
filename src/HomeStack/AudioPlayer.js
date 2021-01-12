@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal } from 'react-native';
 import { Audio } from 'expo-av';
+import { Ionicons } from '@expo/vector-icons';
 
 import {AppContext} from "../context.js"; 
 import { useContext } from 'react';
@@ -98,6 +99,7 @@ export const AudioPlayer =({navigation, route})=>{
             if (uebung+1<kurse[kurs].Uebungen.length){
                 userDataTemp.verfuegbareUebungen.push( kurse[kurs].Uebungen[uebung+1].id)
             }else{
+                console.log("Tesesetgkdfjgbshbfgs")
                 if (kurs+1<kurse.length){
                     userDataTemp.verfuegbareUebungen.push( kurse[kurs+1].Uebungen[0].id)
                 }
@@ -189,7 +191,7 @@ export const AudioPlayer =({navigation, route})=>{
     }
 
     return(
-        <View>
+        <View style={{alignItems:"center"}}>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -205,11 +207,13 @@ export const AudioPlayer =({navigation, route})=>{
             </Modal>
             <Text>Ordnername: {kurse[kurs].Ordnername}</Text>
             <Text>Dateiname: {kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateiname}</Text>
-            {isPlaying ? 
-                <Button title='Pause' onPress={async () => {
-                    await soundObject.pauseAsync(); changeIsPlaying(false)
-                }}></Button> : 
-                <Button title='Play' onPress={async() => {await soundObject.playAsync(); changeIsPlaying(true)}}></Button>}
+            {isPlaying ?
+                <TouchableOpacity onPress={async () => {await soundObject.pauseAsync(); changeIsPlaying(false)}}>
+                    <Ionicons name="pause" size={50} color="black" /> 
+                </TouchableOpacity>:
+                <TouchableOpacity onPress={async() => {await soundObject.playAsync(); changeIsPlaying(true)}}>
+                    <Ionicons name="play" size={50} color="black" /> 
+                </TouchableOpacity>}
         </View>
     );
 

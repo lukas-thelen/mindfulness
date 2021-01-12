@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button,TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
 
 import {AppContext} from './context.js';
 import { useContext, useEffect } from 'react';
@@ -35,7 +36,9 @@ const HomeRoot = ({navigation})=>{
     }
       for ( var z = 0; z< uebungen.length; z++){
         if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]){
-          return <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})}}></Button>
+          return <TouchableOpacity onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})}}>
+              <Ionicons name="play" size={50} color="black" /> 
+          </TouchableOpacity>
         }
       }
     }
@@ -46,12 +49,12 @@ const HomeRoot = ({navigation})=>{
         <InfoEcke navigation={navigation}/>
       </View>
       <View key="2"style={styles.container}>
-        <InstantStart />
-        <Text>Hallo {username}</Text> 
+        <Text style={{fontSize:25}}>Hallo {username}</Text> 
+        <InstantStart /> 
         <Button title={"Meine Kurse"} onPress={() =>{navigation.navigate('Meine Kurse')}} ></Button>
-        {/*<Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>*/}
+        {/*<Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
         <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
-        <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>
+        <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>*/}
     </View>
     <View key="3">
         <Journal navigation={navigation}/>

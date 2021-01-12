@@ -153,8 +153,6 @@ export const KontoInfos = () => {
             <TouchableOpacity onPress={()=>{deleteAccount()}}>
                     <Text>Konto löschen</Text>
                 </TouchableOpacity>
-
-            <Button title="Test" onPress={()=>console.log(appData)}></Button>
          </View>
     )
 }

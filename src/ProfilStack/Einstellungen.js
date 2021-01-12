@@ -54,10 +54,11 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                       if (status !== 'granted') {
                         await Permissions.askAsync(Permissions.NOTIFICATIONS);
                       }
+                    }
                     Notifications.scheduleNotificationAsync({
                         content: {
-                          title: 'Look at that notification',
-                          body: "I'm so proud of myself!",
+                          title: 'Ugrade Your Mind!',
+                          body: "Hattest du heute schon die Zeit runterzukommen? Starte jetzt eine neue Übung.",
                         },
                         trigger: {
                             hour: times[t].getHours(), 
@@ -65,19 +66,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                             repeats: true
                         }
                     });
-                }else{
-                    Notifications.scheduleNotificationAsync({
-                        content: {
-                        title: "Time's up!",
-                        body: 'Change sides!',
-                        },
-                        trigger: {
-                            hour: times[t].getHours(), 
-                            minute: 0, 
-                            repeats: true
-                        },
-                    });
-                }
+                
             }
     }
 }
@@ -164,7 +153,6 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
 
     return (
         <View style ={{flex:1}}>
-            <Text>Ich bin deine Einstellungen!</Text>
             <View style= {styles.reihe}>
                 <Text>Erinnerungen</Text>
                 <Switch onValueChange={()=>{changeNotifications(!notifications)}} value={notifications}/>
@@ -189,7 +177,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
             }
             <View style={{justifyContent:"flex-end", flex:1, marginBottom:20}}>
                 <Button title="Speichern" onPress={()=>storeData()}></Button>
-                <Button title="Test2" onPress={async()=>{const test = await Notifications.getAllScheduledNotificationsAsync(); console.log(test)}}></Button>
+                {/*<Button title="Test2" onPress={async()=>{const test = await Notifications.getAllScheduledNotificationsAsync(); console.log(test)}}></Button>*/}
                 <Button title="Konto-Einstellungen" onPress={()=>navigation.navigate("Konto-Informationen")}></Button>
                 <Button title="Informationen über die App" onPress={()=>navigation.navigate("Informationen über die App")}></Button>
                 <TouchableOpacity style={{alignItems:"center"}} onPress={() => logout() }> 

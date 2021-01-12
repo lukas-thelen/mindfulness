@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import {kurse} from "../Kursdaten/Kursdatei.js"
 
@@ -69,7 +70,14 @@ export const VersionsAuswahl =({navigation, route})=>{
                 keyExtractor={item=>item.Dauer.toString()}
                 renderItem={renderDauer}
             ></FlatList>}
-            <Button title="Play"onPress={()=>{console.log(dauer);console.log(sprecher);abspielen()}}></Button>
+            {sprecher!=""&&dauerIndex()!=-1?
+                <TouchableOpacity style={{alignSelf:"center"}}onPress={()=>abspielen()}>
+                    <Ionicons name="play" size={50} color="black" /> 
+                </TouchableOpacity>:
+                <View style={{alignSelf:"center"}}>
+                    <Ionicons name="play" size={50} color="lightgrey" /> 
+                </View>
+            }
         </View>
     )
 }

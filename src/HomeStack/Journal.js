@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, FlatList,TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
+import { uebungen } from '../Kursdaten/Uebungsliste.js';
 
 
 export const Journal = (props) => {
     const navigation=props.navigation
-    const {userData} = useContext(AppContext)
+    const {userData, gehoerteUebungen} = useContext(AppContext)
 
     const [weekchange, changeWeekchange] =useState(0)
 
@@ -16,6 +18,18 @@ export const Journal = (props) => {
     const wochentageToString={0:"Montag", 1:"Dienstag", 2:"Mittwoch", 3:"Donnerstag", 4:"Freitag", 5:"Samstag", 6:"Sonntag"}
     const today = new Date()
     const date=today.getDate()
+    const InstantStart =() =>{
+        if (gehoerteUebungen.includes(userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1])){
+          return null
+        }
+          for ( var z = 0; z< uebungen.length; z++){
+            if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]){
+              return <TouchableOpacity onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})}}>
+                  <Ionicons name="play" size={50} color="black" /> 
+              </TouchableOpacity>
+            }
+        }
+    }
 
     const stressAktiv=()=>{
         var lastMonth = new Date()
@@ -59,6 +73,9 @@ export const Journal = (props) => {
 
     return (
         <View>
+            <View style={{alignItems:"center", marginBottom:30, marginTop:30}}>
+                <InstantStart/>
+            </View>
             <FlatList
             data={wochentage}
             keyExtractor={(item, index)=>index.toString()}
@@ -68,8 +85,10 @@ export const Journal = (props) => {
                 <Button title="aktuelle Woche"onPress={()=>{changeWeekchange(0)}}></Button>
                 <Button title="Nächste Woche"onPress={()=>{changeWeekchange(weekchange+1)}}></Button>
             </View>
-            {stressAktiv()?<Text>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
-            <Text>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
+            <View style={{alignItems:"center", padding:15}}>
+                {stressAktiv()?<Text>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
+                <Text>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
+            </View>
             <Button disabled={stressAktiv()?false:true} title="zur Stress Umfrage" onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}></Button>
         </View>
     )

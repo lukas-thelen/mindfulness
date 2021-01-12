@@ -4,9 +4,29 @@ import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Alert, Scro
 import {AppContext} from "../context.js"; 
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import { uebungen } from '../Kursdaten/Uebungsliste.js';
+import { Ionicons } from '@expo/vector-icons';
 
 export const InfoEcke=(props)=>{
     const navigation=props.navigation
+    const {gehoerteUebungen, userData} = useContext(AppContext);
+    const atemuebungen = uebungen.filter(item=>item.Kategorie==="Atemübung")
+    const mindfulness = uebungen.filter(item=>item.Kategorie==="Mindfulness")
+    const koerperuebung = uebungen.filter(item=>item.Kategorie==="Körperübung")
+
+
+    const InstantStart =() =>{
+        if (gehoerteUebungen.includes(userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1])){
+          return null
+        }
+          for ( var z = 0; z< uebungen.length; z++){
+            if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]){
+              return <TouchableOpacity onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})}}>
+                  <Ionicons name="play" size={50} color="black" /> 
+              </TouchableOpacity>
+            }
+        }
+    }
+    
     const renderItem =({item})=>{
         return(
             <View style={styles.KursItem}>
@@ -23,10 +43,6 @@ export const InfoEcke=(props)=>{
             </View>
         )
     }
-    const {gehoerteUebungen, userData} = useContext(AppContext);
-    const atemuebungen = uebungen.filter(item=>item.Kategorie==="Atemübung")
-    const mindfulness = uebungen.filter(item=>item.Kategorie==="Mindfulness")
-    const koerperuebung = uebungen.filter(item=>item.Kategorie==="Körperübung")
  
     const alleUebeungen = [
         {
@@ -43,7 +59,11 @@ export const InfoEcke=(props)=>{
         }
     ]
     return(
-        <View>
+        <View style={{flex:1}}>
+            <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
+                <InstantStart/>
+            </View>
+            <View style={{flex:0.85}}>
              <SectionList
                 sections={alleUebeungen}
                 keyExtractor={(item, index) => item + index}
@@ -52,6 +72,7 @@ export const InfoEcke=(props)=>{
                     <Text style={styles.header}>{title}</Text>
                 )}
             />
+            </View>
         </View>
     )
 }

@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Share} from 'react-native';
+import { StyleSheet, Text, View, Button, Share, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Linking from 'expo-linking';
 import {AppContext} from '../context.js';
 import { useContext, useEffect } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { redirectURL } from '../../appDaten.js';
+import { Feather } from '@expo/vector-icons'; 
 
 
 export const MeineFreunde =() => {
@@ -52,7 +53,9 @@ export const MeineFreunde =() => {
 
     return (
         <View>
-          <Button title="Freund:in hinzugügen" onPress={()=> {onShare()}}></Button>
+          <TouchableOpacity style={{width:50, height:50, borderRadius:100, backgroundColor:"white", justifyContent:"center", alignItems:"center", borderWidth:2, alignSelf:"center", marginTop:25}}onPress={()=> {onShare()}}>
+            <Feather name="user-plus" size={24} color="black" />
+          </TouchableOpacity>
           <FlatList
             data={freundeArray()}
             keyExtractor={(item, index)=>item.email}

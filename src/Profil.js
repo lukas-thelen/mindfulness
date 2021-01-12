@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { useContext, useEffect } from 'react/cjs/react.development';
 import { AppContext } from './context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +10,7 @@ import { Statistiken } from './ProfilStack/Statistiken';
 import { Erfolge } from './ProfilStack/Erfolge';
 import { KontoInfos } from './ProfilStack/KontoInfos';
 import { AppInfos } from './ProfilStack/AppInfos';
+import { Feather } from '@expo/vector-icons';
 
 const ProfilStack = createStackNavigator();
 
@@ -51,12 +52,20 @@ export const ProfilRoot = ({navigation})=> {
 
     return(
         <View style={styles.container}>
-            <Text>Hallo {username}</Text>
+          <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%", padding:15}}>
+              <TouchableOpacity onPress={()=>test()}>
+                <Feather name="user" size={50} color="black" />
+                <Text style={{textAlign:"center"}}>{username}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={()=>navigation.navigate("Einstellungen")}>
+                <Feather name="settings" size={50} color="black" />
+              </TouchableOpacity>
+          </View>
+            <View style={styles.container}>
             <Text>Streak {userData.benchmarks.streak}</Text>
-            <Button title="test" onPress={()=>{test()}}></Button>
-            <Button title="Einstellungen" onPress={()=>navigation.navigate("Einstellungen")}></Button> 
             <Button title="Statistiken" onPress={()=>navigation.navigate("Statistiken")}></Button> 
             <Button title="Erfolge" onPress={()=>navigation.navigate("Erfolge")}></Button> 
+            </View>
         </View>
     )
 }
