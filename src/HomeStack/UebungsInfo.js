@@ -11,9 +11,9 @@ export const UebungsInfo =({navigation, route})=>{
 
     return (
         <View style={styles.container}>
-            <Text>Informationen zur Übung: {kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
+            <Text style={{fontSize:18}}>Informationen zur Übung: {kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
             <Text></Text>
-            <Text>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>
+            <Text style={{textAlign:"justify"}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>
         </View>
     )
 }
@@ -24,5 +24,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingLeft:20,
+        paddingRight:20,
+        
     }
   });

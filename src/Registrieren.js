@@ -124,8 +124,8 @@ export const Registrieren =(props)=>{
         <Text>Geschlecht:</Text>
         <RadioButtonRN
           boxStyle={styles.radio}
+          box={false}
           data={genderData}
-          textStyle= {{color:"black"}}
           selectedBtn={(e) => changeGender(e.label)}
         />
 
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     radio:{
       width: 200,
       borderWidth: 0,
-      height:30
+      height:30,
     },
     trennlinie:{
       height:1,

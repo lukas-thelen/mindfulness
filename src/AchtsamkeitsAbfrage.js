@@ -44,6 +44,7 @@ export const AchtsamkeitsAbfrage =(props)=>{
         <Text>Wie gut kennst du dich mit Achtsamkeitstechniken aus?</Text>
         <RadioButtonRN
           boxStyle={styles.radio}
+          box={false}
           data={mindfulnessLevel}
           selectedBtn={(e) => changeMindfulnessLevel(e.label)}
         />

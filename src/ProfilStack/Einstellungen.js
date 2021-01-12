@@ -1,12 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Switch, TextInput, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Button, Switch, TextInput, TouchableOpacity, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
-import DateTimePickerModal from "@react-native-community/datetimepicker"; 
+import DateTimePicker from "@react-native-community/datetimepicker"; 
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { FlatList } from 'react-native-gesture-handler';
 import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 
 export const Einstellungen = ({navigation}) => {
 const initTime = new Date()
@@ -41,21 +43,41 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
         }
     },[])
 
-    const setNotifications=()=>{
+    const setNotifications=async()=>{
         Notifications.cancelAllScheduledNotificationsAsync()
         if(notifications){
             for(var t=0;t<times.length;t++){
-                Notifications.scheduleNotificationAsync({
-                    content: {
-                      title: "Time's up!",
-                      body: 'Change sides!',
-                    },
-                    trigger: {
-                        hour: times[t].getHours(), 
-                        minute: 0, 
-                        repeats: true
-                    },
-                  });
+                if(Platform.OS === 'ios'){
+                    const { status } = await Permissions.getAsync(
+                        Permissions.NOTIFICATIONS
+                      );
+                      if (status !== 'granted') {
+                        await Permissions.askAsync(Permissions.NOTIFICATIONS);
+                      }
+                    Notifications.scheduleNotificationAsync({
+                        content: {
+                          title: 'Look at that notification',
+                          body: "I'm so proud of myself!",
+                        },
+                        trigger: {
+                            hour: times[t].getHours(), 
+                            minute: times[t].getMinutes(), 
+                            repeats: true
+                        }
+                    });
+                }else{
+                    Notifications.scheduleNotificationAsync({
+                        content: {
+                        title: "Time's up!",
+                        body: 'Change sides!',
+                        },
+                        trigger: {
+                            hour: times[t].getHours(), 
+                            minute: 0, 
+                            repeats: true
+                        },
+                    });
+                }
             }
     }
 }
@@ -120,20 +142,29 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                 <TouchableOpacity onPress={()=>{showTimepicker(true); changeIndexTime(index)}}>
                     <Text>{item!=null ? item.getHours().toString()+":"+minutes+" Uhr":"hier eingeben"}</Text>
                 </TouchableOpacity>
-                {timepicker && <DateTimePickerModal
+                {Platform.OS === 'ios'?
+                    <DateTimePickerModal
+                    value={times[index]>0? times[index]:initTime}
+                    isVisible={timepicker}
+                    display="spinner"
+                    mode="time"
+                    onConfirm={handleConfirm}
+                    onCancel={showTimepicker}
+                  />:<View>{timepicker && <DateTimePicker
                     value = {times[index]>0? times[index]:initTime}
                     is24Hour={true}
                     display="spinner"
                     mode="time"
                     onChange={(event, value)=>handleConfirm(value)}              
-                />}
+                />}</View>
+                }
                 </View>
         )
     }
 
     return (
         <View style ={{flex:1}}>
-            <Text>Ich bin deine Einstellungen!{timepicker?"True":"False"}</Text>
+            <Text>Ich bin deine Einstellungen!</Text>
             <View style= {styles.reihe}>
                 <Text>Erinnerungen</Text>
                 <Switch onValueChange={()=>{changeNotifications(!notifications)}} value={notifications}/>
@@ -154,15 +185,17 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                     data={times}
                     keyExtractor={(item, index)=>index.toString()}
                     renderItem={renderUhrzeit}
-                ></FlatList>}
-
+                ></FlatList>
+            }
+            <View style={{justifyContent:"flex-end", flex:1, marginBottom:20}}>
                 <Button title="Speichern" onPress={()=>storeData()}></Button>
                 <Button title="Test2" onPress={async()=>{const test = await Notifications.getAllScheduledNotificationsAsync(); console.log(test)}}></Button>
                 <Button title="Konto-Einstellungen" onPress={()=>navigation.navigate("Konto-Informationen")}></Button>
                 <Button title="Informationen über die App" onPress={()=>navigation.navigate("Informationen über die App")}></Button>
-                <TouchableOpacity onPress={() => logout() }> 
+                <TouchableOpacity style={{alignItems:"center"}} onPress={() => logout() }> 
                     <Text>Abmelden</Text>
                 </TouchableOpacity>
+            </View>
             
         </View>
     )

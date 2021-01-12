@@ -17,7 +17,7 @@ export const InfoEcke=(props)=>{
                             {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>{item.Name}</Text> : <Text >{item.Name}</Text>}
                             {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>Kurs: {kurse[item.KursIndex].Name}</Text> : <Text >Kurs: {kurse[item.KursIndex].Name}</Text>}
                         </View>
-                        {userData.verfuegbareUebungen.includes(item.id)&&<Text style={{marginLeft:"auto", color:"red", fontWeight:"bold"}} >!</Text>}
+                        {!userData.verfuegbareUebungen.includes(item.id)&&<Text style={{marginLeft:"auto", color:"red", fontWeight:"bold"}} >!</Text>}
                     </TouchableOpacity>
                 
             </View>
