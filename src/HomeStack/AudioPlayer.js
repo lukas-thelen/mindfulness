@@ -4,11 +4,10 @@ import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 
 import {AppContext} from "../context.js"; 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import {uebungen} from "../Kursdaten/Uebungsliste.js"
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react/cjs/react.development';
 import { benchmarks, checkBenchmarks } from '../benchmarks.js';
 
 const soundObject = new Audio.Sound();
