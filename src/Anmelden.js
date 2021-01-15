@@ -6,6 +6,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import {AppContext} from './context.js';
 import { useContext } from 'react';
+import { globalStyles } from './globalStyles.js';
 
 export const Anmelden = (props) => {
   const appData = useContext(AppContext).appData
@@ -82,20 +83,20 @@ export const Anmelden = (props) => {
 
         <View style={styles.pagewrap, styles.container}>
         
-        <Text>E-Mail Adresse</Text>
+        <Text>Nutzer-Kennung:</Text>
         <TextInput 
             style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text =>changeEMailInput(text)}></TextInput>
+            onChangeText={text =>changeEMailInput(text)} autoCapitalize = 'none'></TextInput>
 
-        <View style={styles.trennlinie}/>
+        <View style={globalStyles.trennlinie}/>
 
 
         <Text>Passwort</Text>
         <TextInput 
             style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changePasswordInput(text)}></TextInput>
+            onChangeText={text => changePasswordInput(text)} autoCapitalize = 'none'  ></TextInput>
 
-        <View style={styles.trennlinie}/>
+        <View style={globalStyles.trennlinie}/>
 
 
         <Button title={"Anmelden"} onPress={() =>{checkInput()}} ></Button>
@@ -122,11 +123,4 @@ const styles = StyleSheet.create({
       borderWidth: 0,
       height:30
     },
-    trennlinie:{
-      height:1,
-      width:"100%",
-      backgroundColor:"black",
-      marginBottom:10,
-      marginTop:10
-    }
   });

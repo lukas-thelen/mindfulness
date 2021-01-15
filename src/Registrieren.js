@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import {AppContext} from './context.js';
-import { useContext } from 'react';
+import { globalStyles } from './globalStyles.js';
 
 
 export const Registrieren =(props)=>{
@@ -13,6 +14,7 @@ export const Registrieren =(props)=>{
     const [password, changePassword] = useState("")
     const [name, changeName] = useState("")
     const [birthday, changeBirthday] = useState(new Date())
+    const [age, changeAge] =useState(null)
     const [gender, changeGender] = useState("")
     const [datepicker, showDatepicker] = useState(false)
     const [dateChanged, changeDateChanged] = useState(false)
@@ -28,7 +30,8 @@ export const Registrieren =(props)=>{
       userData.password = password;
       userData.name = name;
       userData.gender = gender;
-      userData.birthday = birthday;
+      //userData.birthday = birthday;
+      userData.age = age;
 
 
       changeUsername(name)
@@ -38,7 +41,7 @@ export const Registrieren =(props)=>{
 
     //Nutzerinformationen prüfen und überarbeiten
     const abschicken =()=>{
-      if (eMail === "" || password === "" || name===""|| dateChanged===false || gender === ""){
+      if (eMail === "" || password === "" || name===""|| age===0 || gender === ""){
         Alert.alert(
           'Unvollständig',
           'Bitte fülle alle Felder aus!',
@@ -78,19 +81,45 @@ export const Registrieren =(props)=>{
     };
     
     return(
-      <View style={styles.pagewrap, styles.container}>
-        <Text>Registrierung</Text>
-        <Text>Name:</Text>
+      <KeyboardAwareScrollView 
+        style={{ backgroundColor: '#4c69a5'}}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={globalStyles.container}
+        scrollEnabled={false}
+      >
+      <View style={globalStyles.pagewrap, styles.registrierenContainer}>
+      <Text style={{fontSize:25}}>Registrierung</Text>
+        <Text>Nutzer-Kennung:</Text>
+        <Text style={{fontSize:12}}>(muss eindeutig sein)</Text>
+        <TextInput 
+            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            onChangeText={text => changeEMail(text)} autoCapitalize = 'none'></TextInput>
+
+        <View style={globalStyles.trennlinie}/>
+
+        <Text>Passwort:</Text>
+        <TextInput 
+            autoCapitalize = 'none'
+            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            onChangeText={text => changePassword(text)}></TextInput>
+
+        <View style={globalStyles.trennlinie}/>
+
+        <Text>Vorname:</Text>
         <TextInput 
             style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
             onChangeText={text => changeName(text)}></TextInput>
 
 
-        <View style={styles.trennlinie}/>
+        <View style={globalStyles.trennlinie}/>
 
+        
 
-        <Text>Geburtsdatum:</Text>
-        <TouchableOpacity onPress={()=>{showDatepicker(true)}}>{dateChanged ?
+        <Text>Alter:</Text>
+        <TextInput 
+            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            onChangeText={age => changeAge(age)} keyboardType={'numeric'}></TextInput>
+        {/*<TouchableOpacity onPress={()=>{showDatepicker(true)}}>{dateChanged ?
           <Text>{birthday.getDate()}.{birthday.getMonth()+1}.{birthday.getFullYear()}</Text>:
           <Text>hier eingeben</Text>}
         </TouchableOpacity>
@@ -101,64 +130,31 @@ export const Registrieren =(props)=>{
           mode="date"
           onConfirm={handleConfirm}
           onCancel={showDatepicker}
-        />
+        />*/}
 
-        <View style={styles.trennlinie}/>
-
-
-        <Text>E-Mail:</Text>
-        <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changeEMail(text)}></TextInput>
-
-        <View style={styles.trennlinie}/>
-
-        <Text>Passwort:</Text>
-        <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-            onChangeText={text => changePassword(text)}></TextInput>
-
-        <View style={styles.trennlinie}/>
-
+        <View style={globalStyles.trennlinie}/>
 
         <Text>Geschlecht:</Text>
         <RadioButtonRN
-          boxStyle={styles.radio}
-          box={false}
+          boxStyle={globalStyles.radio}
           data={genderData}
           selectedBtn={(e) => changeGender(e.label)}
         />
 
-        <View style={styles.trennlinie}/>
+        <View style={globalStyles.trennlinie}/>
         <Button title={"weiter"} onPress={() =>{abschicken()}} ></Button>
         <Button title={"Zurück"} onPress={() =>{props.changeInitPages('StartBildschirm')}} ></Button>
       </View>
+      </KeyboardAwareScrollView>
     )
   }
 
-//Styles
-const styles = StyleSheet.create({
-    container: {
+  const styles = StyleSheet.create({
+    registrierenContainer:{
       flex: 1,
       width: '100%',
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
-    },
-    pagewrap:{
-      width: '100%',
-      height: '100%'
-    },
-    radio:{
-      width: 200,
-      borderWidth: 0,
-      height:30,
-    },
-    trennlinie:{
-      height:1,
-      width:"100%",
-      backgroundColor:"black",
-      marginBottom:10,
-      marginTop:10
+      marginTop:60
     }
-  });
+  })

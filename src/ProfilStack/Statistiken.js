@@ -1,15 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CheckBox from '@react-native-community/checkbox';
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 import { LineChart, Grid, XAxis, YAxis, BarChart } from 'react-native-svg-charts'
+import { Chart, VerticalAxis, HorizontalAxis, Line } from 'react-native-responsive-linechart'
+
 
 
 export const Statistiken = () => {
     const [typeOfChart, changeTypeOfChart] =useState("meditations")
     const [showStress, changeShowStress] =useState(false)
+    const [stress, changeStress] =useState(false)
+    const [meditations, changeMeditations] =useState(true)
+    const [minutes, changeMinutes] =useState(false)
     const {userData, cahngeUserData, appData, changeAppData}=useContext(AppContext)
     const contentInset = { top: 20, bottom: 20 }
 
@@ -27,6 +33,26 @@ export const Statistiken = () => {
         }else if(version==="amount"){
             return amount
         }
+    }
+
+    const getData=()=>{
+        const amountArray=[]
+        const minutesArray=[]
+        var dayString=""
+        const day=new Date()
+        while(amountArray.length<7){
+            dayString=day.toDateString()
+            if(userData.journal[dayString]&&userData.journal[dayString].meditations){
+                amountArray.push({y:userData.journal[dayString].meditations,x:6-amountArray.length})
+                minutesArray.push({y:userData.journal[dayString].meditationMinutes,x:6-minutesArray.length })
+            }else{
+                amountArray.push({y:0,x:6-amountArray.length})
+                minutesArray.push({y:0,x:6-minutesArray.length})
+            }
+            day.setDate(day.getDate()-1)
+        }
+        amountArray.reverse()
+        return {meditations:amountArray, minutes:minutesArray}
     }
 
     const getHistory=()=>{
@@ -89,7 +115,26 @@ export const Statistiken = () => {
             <View style={styles.stats}>
                 <Text >Anzahl: {""+getMeditation("amount")}</Text>
             </View>
-            {!showStress?<View style={{ flexDirection: 'row', display: "flex" }}>
+            <Chart
+                style={{ height:220, width: '100%', backgroundColor: '#eee'}}
+                xDomain={{ min: 0, max: 6 }}
+                yDomain={{ min: 0, max: 20 }}
+                padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
+            >
+                <VerticalAxis tickValues={[0, 4, 8, 12, 16, 20]} />
+                <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
+                {meditations&&<Line data={getData().meditations} smoothing="none" theme={{ stroke: { color: 'blue', width: 1 } }} />}
+                {minutes&&<Line data={getData().minutes} smoothing="none" theme={{ stroke: { color: 'red', width: 1 } }} />}
+            </Chart>
+            <View style={{flexDirection:"row", alignItems:"center"}}>
+                <CheckBox value={meditations} onValueChange={(newValue) => changeMeditations(newValue)}/>
+                <Text>Anzahl der Meditationen</Text>
+            </View>
+            <View style={{flexDirection:"row", alignItems:"center"}}>
+                <CheckBox value={minutes} onValueChange={(newValue) => changeMinutes(newValue)}/>
+                <Text>Meditierte Minuten</Text>
+            </View>
+            {/*{!showStress?<View style={{ flexDirection: 'row', display: "flex" }}>
                 <YAxis
                         data={getHistory()}
                         yAccessor={({item})=>item[typeOfChart]}
@@ -103,15 +148,15 @@ export const Statistiken = () => {
                         style={{ flex: 0.1, marginBottom: 15 }}
                     />
                     <View style={{ flex: 0.8 }}>
-                        <LineChart
-                            style={{ height: 200}}
-                            data={getHistory()}
-                            yAccessor={({item})=>item[typeOfChart]}
-                            svg={{ stroke: 'rgb(134, 65, 244)' }}
-                            contentInset={{left: 10, right: 10, top:20, bottom:20}}
-                        >
-                            <Grid />
-                        </LineChart>
+                            <LineChart
+                                style={{ height: 200}}
+                                data={getHistory()}
+                                yAccessor={({item})=>item[typeOfChart]}
+                                svg={{ stroke: 'rgb(134, 65, 244)' }}
+                                contentInset={{left: 10, right: 10, top:20, bottom:20}}
+                            >
+                                <Grid />
+                            </LineChart>
                     
                     <XAxis
                             style={{ marginHorizontal: -10}}
@@ -157,12 +202,12 @@ export const Statistiken = () => {
                             svg={{ fontSize: 10, fill: 'black' }}
                         />
                     </View>
-                </View>}
+                    </View>}
                 <View style={styles.reihe}>
                     <Button title="Minuten"disabled={typeOfChart==="minutes"&&!showStress&&true}onPress={()=>{changeTypeOfChart("minutes");changeShowStress(false)}}></Button>
                     <Button title="Anzahl"disabled={typeOfChart==="meditations"&&!showStress&&true}onPress={()=>{changeTypeOfChart("meditations");changeShowStress(false)}}></Button>
                     <Button title="Stress"disabled={showStress&&true}onPress={()=>{changeShowStress(true)}}></Button>
-                </View>
+                </View>*/}
         </View>
     )
 }
