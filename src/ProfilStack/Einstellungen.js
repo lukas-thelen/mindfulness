@@ -74,9 +74,10 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
 
     const logout = async () => {
         try {
-          await AsyncStorage.removeItem('currentUser')
-          changeLoggedIn(false)
-          changeCurrentUser("")
+            Notifications.cancelAllScheduledNotificationsAsync()
+            await AsyncStorage.removeItem('currentUser')
+            changeLoggedIn(false)
+            changeCurrentUser("")
         } catch (e) {
           console.log(e)
         }

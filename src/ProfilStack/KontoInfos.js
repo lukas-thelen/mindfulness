@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, Alert, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Notifications from 'expo-notifications';
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
@@ -16,11 +17,12 @@ export const KontoInfos = () => {
 
     // Löscht die Account-Daten aus dem Local Storage
     const afterConfirm = async() => {
-       delete appDataTemp[userData.data.eMail]
-       console.log(appDataTemp)
-       changeCurrentUser("")
-       changeAppData(appDataTemp)
-       const jsonvalue=JSON.stringify(appDataTemp)
+        Notifications.cancelAllScheduledNotificationsAsync()
+        delete appDataTemp[userData.data.eMail]
+        console.log(appDataTemp)
+        changeCurrentUser("")
+        changeAppData(appDataTemp)
+        const jsonvalue=JSON.stringify(appDataTemp)
         await AsyncStorage.setItem('appData', jsonvalue)
 
         changeLoggedIn(false)

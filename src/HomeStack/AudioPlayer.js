@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal } from 'react-native';
 import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
+import * as Progress from 'react-native-progress';
 
 import {AppContext} from "../context.js"; 
 import { useContext, useEffect } from 'react';
@@ -17,6 +18,7 @@ const soundObject = new Audio.Sound();
 export const AudioPlayer =({navigation, route})=>{
     const [modalVisible, changeModalVisible] = useState(false)
     const [isPlaying, changeIsPlaying] = useState(true)
+    const [progress, changeProgress] = useState(0)
 
     //Indizes für Arrays aus Kursdatei
     const kurs=route.params.kursIndex
@@ -65,6 +67,7 @@ export const AudioPlayer =({navigation, route})=>{
         if (playbackStatus.didJustFinish){
             changeModalVisible(true)
         }
+        changeProgress(playbackStatus.positionMillis/playbackStatus.durationMillis)
     }
 
     //abspielen der Datei
@@ -211,6 +214,7 @@ export const AudioPlayer =({navigation, route})=>{
                 <TouchableOpacity onPress={async() => {await soundObject.playAsync(); changeIsPlaying(true)}}>
                     <Ionicons name="play" size={50} color="black" /> 
                 </TouchableOpacity>}
+                <Progress.Bar progress={progress} width={200} />
         </View>
     );
 
@@ -242,6 +246,7 @@ const styles = StyleSheet.create({
     modalText: {
       marginBottom: 15,
       textAlign: "center"
-    }
+    },
+
   });
 
