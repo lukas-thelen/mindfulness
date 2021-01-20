@@ -46,7 +46,7 @@ export const AudioPlayer =({navigation, route})=>{
             const millis = status.positionMillis
             const duration = status.durationMillis
             if(millis/duration>0.9){
-                addGehoerteUebung()
+                await addGehoerteUebung()
             }
             await soundObject.unloadAsync()
         }
@@ -177,6 +177,7 @@ export const AudioPlayer =({navigation, route})=>{
         changeAppData(appData)
         const jsonValue = JSON.stringify(appData)
         await AsyncStorage.setItem('appData', jsonValue)
+        return true
     }
 
     //Button, um nächste Übung zu starten
