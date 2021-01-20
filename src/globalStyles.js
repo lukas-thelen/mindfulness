@@ -25,5 +25,8 @@ export const globalStyles = StyleSheet.create({
       backgroundColor:"black",
       marginBottom:10,
       marginTop:10
+    },
+    schriftfarbe:{
+      color:'#fff'
     }
   });
