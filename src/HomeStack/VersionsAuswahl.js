@@ -11,14 +11,18 @@ export const VersionsAuswahl =({navigation, route})=>{
     const kursIndex = route.params.kursIndex
     const uebungsIndex = route.params.uebungsIndex
     const sprecherIndex = kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher.findIndex(item => item.Sprecher === sprecher)
+    const [dauer, changeDauer] = useState(0)
     const dauerArray=() => {
         const array = []
         for(let b=0; b<kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher[sprecherIndex].VersionenNachDauer.length; b++){
             array.push(kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher[sprecherIndex].VersionenNachDauer[b].Dauer)
         }
+        if(dauer===0||array.indexOf(dauer)===-1){
+            changeDauer(array[Math.ceil(array.length/2)-1])
+        }
         return array
     }
-    const [dauer, changeDauer] = useState(dauerArray()[Math.ceil(dauerArray().length/2)-1])
+    
 
     useEffect(()=>{
         changeDauer(dauerArray()[Math.ceil(dauerArray().length/2)-1])
@@ -45,7 +49,6 @@ export const VersionsAuswahl =({navigation, route})=>{
         if(sprecher!=""&&dauerIndex()!=-1){
             navigation.navigate("AudioPlayer", {kursIndex:kursIndex, uebungsIndex:uebungsIndex, sprecherIndex:sprecherIndex, dauerIndex:dauerIndex()})
         }
-        changeSprecher("");
         changeDauer(0)
     }
 
