@@ -20,6 +20,8 @@ import { JournalTag } from './HomeStack/JournalTag.js';
 import { StressSkalaMonthly } from './HomeStack/StressSkalaMonthly.js';
 import { uebungen } from './Kursdaten/Uebungsliste.js';
 import ViewPager from '@react-native-community/viewpager';
+import { VersionsAuswahlText } from './HomeStack/VersionsAuswahlText.js';
+import { TextPlayer } from './HomeStack/TextPlayer.js';
 
 const HomeStack = createStackNavigator();
 
@@ -86,6 +88,8 @@ export const HomeScreen = ()=> {
           <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly}/>
           <HomeStack.Screen name="Info Ecke" component={InfoEcke}/>
           <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
+          <HomeStack.Screen name="Wähle die Dauer" component={VersionsAuswahlText}/>
+          <HomeStack.Screen name="Text-Übung" component={TextPlayer}/>
         </HomeStack.Navigator>
     )
 }

@@ -15,7 +15,7 @@ export const UebungsAuswahl =({navigation, route})=>{
         }
         if(available){
             return(
-                <TouchableOpacity style={styles.UebungsItem} onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:kursIndex, uebungsIndex:index})}}>
+                <TouchableOpacity style={styles.UebungsItem} onPress={()=>{if(item.Audio){navigation.navigate("Wähle eine Version", {kursIndex:kursIndex, uebungsIndex:index})}else{navigation.navigate("Wähle die Dauer", {kursIndex:kursIndex, uebungsIndex:index})}}}>
                     {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>{item.Name}</Text> : <Text >{item.Name}</Text>}
                 </TouchableOpacity>    
             )
