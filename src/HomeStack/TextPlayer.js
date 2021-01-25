@@ -1,15 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal } from 'react-native';
-import { Audio } from 'expo-av';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
+import { useNavigationState } from '@react-navigation/native';
 
 import {AppContext} from "../context.js"; 
-import { useContext, useEffect } from 'react';
 import {kurse} from "../Kursdaten/Kursdatei.js"
-import {uebungen} from "../Kursdaten/Uebungsliste.js"
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { benchmarks, checkBenchmarks } from '../benchmarks.js';
+import {checkBenchmarks } from '../benchmarks.js';
 
 
 
@@ -17,8 +15,11 @@ import { benchmarks, checkBenchmarks } from '../benchmarks.js';
 export const TextPlayer =({navigation, route})=>{
     const [modalVisible, changeModalVisible] = useState(false)
     const [isPlaying, changeIsPlaying] = useState(true)
-    const [progress, changeProgress] = useState(0)
     const [counter, changeCounter] = useState(route.params.dauer*60)
+    const navigationState = useNavigationState(state => state)
+    const navState ={...navigationState}
+    navState.routes = navState.routes.filter(item=>item.name!="Text-Übung"&&item.name!="AudioPlayer"&&item.name!="Wähle eine Version"&&item.name!="Wähle die Dauer")
+    navState.index = navState.index-(navigationState.routes.length-navState.routes.length)
     
     //Indizes für Arrays aus Kursdatei
     const kurs=route.params.kursIndex
@@ -35,11 +36,36 @@ export const TextPlayer =({navigation, route})=>{
     
 
     useEffect(()=>{
-        interval = setInterval(()=>{changeCounter(x => {if(x>0){ return x-1}else{return 0}})} , 1000);
+        if(dauer>0){
+            interval = setInterval(()=>{changeCounter(x => {if(x>0){return x-1}else{return 0}})} , 1000);
+        }else{
+            interval = setInterval(()=>{changeCounter(x => x+1)}, 1000);
+        }
+        
         return()=>{
             clearInterval(interval)
         }
     },[])
+
+    useEffect(()=>{
+        if(dauer>0&&counter===0){
+            handleFinish()
+        }
+    },[counter])
+
+    const handleFinish=()=>{
+        clearInterval(interval);
+        changeModalVisible(true);
+        addGehoerteUebung()
+    }
+
+    // Zeit-Abhängige Benchmarks: Zeit setzen
+    const kriegeZeit=(zeit) => {
+        const date = new Date()
+        date.setHours(zeit +1)
+        date.setMinutes(0)
+        return date
+    }
 
     //Übung zu gehörten hinzufügen und AppData im Storage speichern
     const addGehoerteUebung=async()=> {
@@ -60,7 +86,6 @@ export const TextPlayer =({navigation, route})=>{
             if (uebung+1<kurse[kurs].Uebungen.length){
                 userDataTemp.verfuegbareUebungen.push( kurse[kurs].Uebungen[uebung+1].id)
             }else{
-                console.log("Tesesetgkdfjgbshbfgs")
                 if (kurs+1<kurse.length){
                     userDataTemp.verfuegbareUebungen.push( kurse[kurs+1].Uebungen[0].id)
                 }
@@ -75,35 +100,41 @@ export const TextPlayer =({navigation, route})=>{
 
         //heute Listungen im Journal
         var firstAtDay = false
+        var minuten
+        if(dauer>0){
+            minuten=dauerInMinuten
+        }else{
+            minuten=Math.ceil(counter/60)
+        }
         if(!userDataTemp.journal[today.toDateString()]){
             userDataTemp.journal[today.toDateString()]={}
             userDataTemp.journal[today.toDateString()].meditations=1
-            userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+            userDataTemp.journal[today.toDateString()].meditationMinutes=minuten
             firstAtDay = true
         }else{
             if(userDataTemp.journal[today.toDateString()].meditations){
                 userDataTemp.journal[today.toDateString()].meditations+=1
-                userDataTemp.journal[today.toDateString()].meditationMinutes+=dauerInMinuten
+                userDataTemp.journal[today.toDateString()].meditationMinutes+=minuten
             }else{
                 userDataTemp.journal[today.toDateString()].meditations=1
-                userDataTemp.journal[today.toDateString()].meditationMinutes=dauerInMinuten
+                userDataTemp.journal[today.toDateString()].meditationMinutes=minuten
                 firstAtDay = true
             }
         }
 
         //Benchmarks - generelle Anzahl und Dauer
         userDataTemp.benchmarks.meditations += 1;
-        userDataTemp.benchmarks.meditationMinutes+= dauerInMinuten;
+        userDataTemp.benchmarks.meditationMinutes+= minuten;
 
         // Benchmarks - Uhrzeit abhängig
         if ( kriegeZeit(10) > new Date()){
-            userDataTemp.benchmarks.meditationsEarly += dauerInMinuten
+            userDataTemp.benchmarks.meditationsEarly += minuten
         } 
         if ( kriegeZeit(20) < new Date()){
-            userDataTemp.benchmarks.meditationsLate += dauerInMinuten
+            userDataTemp.benchmarks.meditationsLate += minuten
         } 
         if ( kriegeZeit(23) < new Date()){
-            userDataTemp.benchmarks.meditationsNight += dauerInMinuten
+            userDataTemp.benchmarks.meditationsNight += minuten
         } 
 
         //Benchmark - Anzahl der Wiederholungen der häufigsten Übung
@@ -141,11 +172,29 @@ export const TextPlayer =({navigation, route})=>{
 
     //Button, um nächste Übung zu starten
     const nextUebung=()=>{
+        
         if (uebung+1<kurse[kurs].Uebungen.length){
-            return  <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:kurs, uebungsIndex:uebung+1})}}></Button>
+            return  <Button title="nächste Übung" onPress={()=>{
+                changeModalVisible(false);
+                navigation.reset(navState)
+                if(kurse[kurs].Uebungen[uebung+1].Audio===true){
+                    navigation.navigate("Wähle eine Version", {kursIndex:kurs, uebungsIndex:uebung+1})
+                }else{
+                    navigation.navigate("Wähle die Dauer", {kursIndex:kurs, uebungsIndex:uebung+1})
+                }
+            }}></Button>
         }else{
             if (kurs+1<kurse.length){
-                return <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:kurs+1, uebungsIndex:0})}}></Button>
+                return <Button title="nächste Übung" onPress={()=>{
+                    changeModalVisible(false);
+                    navigation.reset(navState)
+                    if(kurse[kurs+1].Uebungen[uebung].Audio===true){
+                        navigation.navigate("Wähle eine Version", {kursIndex:kurs+1, uebungsIndex:0})
+                    }else{
+                        navigation.navigate("Wähle die Dauer", {kursIndex:kurs+1, uebungsIndex:0})
+                    }
+                    
+                }}></Button>
             }else{
                 return null
             }
@@ -167,17 +216,21 @@ export const TextPlayer =({navigation, route})=>{
                 </View>
                 </View>
             </Modal>
-            {isPlaying ?
-                <TouchableOpacity onPress={()=>{clearInterval(interval); changeIsPlaying(false)}}>
-                    <Ionicons name="pause" size={50} color="black" /> 
-                </TouchableOpacity>:
-                <TouchableOpacity onPress={()=>{interval = setInterval(()=>{changeCounter(x => {if(x>0){ return x-1}else{return 0}})} , 1000); changeIsPlaying(true)}}>
-                    <Ionicons name="play" size={50} color="black" /> 
-                </TouchableOpacity>}
+            {dauer>0? <View style={{alignItems:"center", justifyContent:"center"}}>
+                {isPlaying ?
+                    <TouchableOpacity onPress={()=>{clearInterval(interval); changeIsPlaying(false)}}>
+                        <Ionicons name="pause" size={50} color="black" /> 
+                    </TouchableOpacity>:
+                    <TouchableOpacity onPress={()=>{interval = setInterval(()=>{changeCounter(x => {if(x>0){ return x-1}else{return 0}})} , 1000); changeIsPlaying(true)}}>
+                        <Ionicons name="play" size={50} color="black" /> 
+                    </TouchableOpacity>}
                 <Progress.Bar progress={(dauer-(counter/60))/dauer} width={200} />
-            
-            <Button title="clear interval" onPress={()=>{clearInterval(interval)}}></Button>
+                
+                </View>:
+                <Button title="Übung abschließen" onPress={()=>{handleFinish()}}/>
+            }
             <Text>{counter}</Text>
+
             
         </View>
     );

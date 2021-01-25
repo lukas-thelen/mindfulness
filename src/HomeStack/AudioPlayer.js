@@ -1,15 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal } from 'react-native';
 import { Audio } from 'expo-av';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
+import { useNavigationState } from '@react-navigation/native';
 
 import {AppContext} from "../context.js"; 
-import { useContext, useEffect } from 'react';
 import {kurse} from "../Kursdaten/Kursdatei.js"
-import {uebungen} from "../Kursdaten/Uebungsliste.js"
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { benchmarks, checkBenchmarks } from '../benchmarks.js';
+import { checkBenchmarks } from '../benchmarks.js';
 
 const soundObject = new Audio.Sound();
 
@@ -19,6 +18,10 @@ export const AudioPlayer =({navigation, route})=>{
     const [modalVisible, changeModalVisible] = useState(false)
     const [isPlaying, changeIsPlaying] = useState(true)
     const [progress, changeProgress] = useState(0)
+    const navigationState = useNavigationState(state => state)
+    const navState ={...navigationState}
+    navState.routes = navState.routes.filter(item=>item.name!="Text-Übung"&&item.name!="AudioPlayer"&&item.name!="Wähle eine Version"&&item.name!="Wähle die Dauer")
+    navState.index = navState.index-(navigationState.routes.length-navState.routes.length)
 
     //Indizes für Arrays aus Kursdatei
     const kurs=route.params.kursIndex
@@ -41,14 +44,14 @@ export const AudioPlayer =({navigation, route})=>{
     //wenn beim schließen mehr als 90% gespielt sind, wird die Übung als gehört verarbeitet
     //unloading der Sound-Datei
     useEffect(()=>{
-        return async ()=>{      
-            const status = await soundObject.getStatusAsync()
+        return()=>{      
+            /*const status = await soundObject.getStatusAsync()
             const millis = status.positionMillis
             const duration = status.durationMillis
             if(millis/duration>0.9){
                 await addGehoerteUebung()
-            }
-            await soundObject.unloadAsync()
+            }*/
+            unloadSound()
         }
     },[])
 
@@ -64,10 +67,19 @@ export const AudioPlayer =({navigation, route})=>{
 
     //wenn die Audio zu Ende gespielt hat, wird der Modal Component eingeblendet
     const endOfAudio =(playbackStatus)=>{
-        if (playbackStatus.didJustFinish){
-            changeModalVisible(true)
+        if(playbackStatus.isLoaded&&playbackStatus.shouldPlay){
+            if (playbackStatus.didJustFinish){
+                unloadSound()
+                changeModalVisible(true)
+                addGehoerteUebung()
+            }else{
+                changeProgress(playbackStatus.positionMillis/playbackStatus.durationMillis)
+            }
         }
-        changeProgress(playbackStatus.positionMillis/playbackStatus.durationMillis)
+        
+    }
+    const unloadSound=async()=>{
+        await soundObject.unloadAsync()
     }
 
     //abspielen der Datei
@@ -183,10 +195,26 @@ export const AudioPlayer =({navigation, route})=>{
     //Button, um nächste Übung zu starten
     const nextUebung=()=>{
         if (uebung+1<kurse[kurs].Uebungen.length){
-            return  <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:kurs, uebungsIndex:uebung+1})}}></Button>
+            return  <Button title="nächste Übung" onPress={()=>{
+                changeModalVisible(false);
+                navigation.reset(navState)
+                if(kurse[kurs].Uebungen[uebung+1].Audio===true){
+                    navigation.navigate("Wähle eine Version", {kursIndex:kurs, uebungsIndex:uebung+1})
+                }else{
+                    navigation.navigate("Wähle die Dauer", {kursIndex:kurs, uebungsIndex:uebung+1})
+                }
+            }}></Button>
         }else{
             if (kurs+1<kurse.length){
-                return <Button title="nächste Übung" onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:kurs+1, uebungsIndex:0})}}></Button>
+                return <Button title="nächste Übung" onPress={()=>{
+                    changeModalVisible(false);
+                    navigation.reset(navState)
+                    if(kurse[kurs+1].Uebungen[uebung].Audio===true){
+                        navigation.navigate("Wähle eine Version", {kursIndex:kurs+1, uebungsIndex:0})
+                    }else{
+                        navigation.navigate("Wähle die Dauer", {kursIndex:kurs+1, uebungsIndex:0})
+                    }
+                }}></Button>
             }else{
                 return null
             }

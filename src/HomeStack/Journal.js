@@ -24,12 +24,20 @@ export const Journal = (props) => {
         }
           for ( var z = 0; z< uebungen.length; z++){
             if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]){
-              return <TouchableOpacity onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})}}>
-                  <Ionicons name="play" size={50} color="black" /> 
+              return (
+              <TouchableOpacity onPress={()=>{
+                  if(uebungen[z].Audio){
+                    navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
+                  }else{
+                    navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
+                  }
+              }}>
+                <Ionicons name="play" size={50} color="black" /> 
               </TouchableOpacity>
-            }
+            )
+          }
         }
-    }
+      }
 
     const stressAktiv=()=>{
         var lastMonth = new Date()

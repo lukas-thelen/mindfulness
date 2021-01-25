@@ -14,7 +14,7 @@ export const VersionsAuswahlText =({navigation, route})=>{
 
 
     const abspielen=()=>{
-        navigation.navigate("Text-Übung", {kursIndex:kursIndex, dauer:dauer})
+        navigation.navigate("Text-Übung", {kursIndex:kursIndex, uebungsIndex:uebungsIndex, dauer:dauer})
         changeDauer(0)
     }
 

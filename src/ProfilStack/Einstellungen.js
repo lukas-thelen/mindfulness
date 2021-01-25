@@ -20,6 +20,7 @@ const [timepicker, showTimepicker] = useState(false);
 const [times, changeTimes] = useState([initTime]);
 const [indexTime, changeIndexTime] = useState(0)
 const [anzahl, changeAnzahl]=useState(1)
+const [hinweis, zeigeHinweis]=useState(false)
 
 const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCurrentUser} = useContext(AppContext)
     Notifications.setNotificationHandler({
@@ -96,18 +97,22 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
 
     const onChangeAnzahl = (number) =>{
         number = parseInt(number)
+        if(number>5){
+            number=5
+            zeigeHinweis(true)
+        }else{zeigeHinweis(false)}
         if (number >0){
             changeAnzahl(number)
             const timesTemp = [...times]
             const chosenAnzahl = times.length
-        if (number < chosenAnzahl){
-            changeTimes(timesTemp.slice(0,number))
-        } else if (number > chosenAnzahl){
-            for (i = chosenAnzahl; i < number; i++){
-                timesTemp.push(null)
+            if (number < chosenAnzahl){
+                changeTimes(timesTemp.slice(0,number))
+            } else if (number > chosenAnzahl){
+                for (i = chosenAnzahl; i < number; i++){
+                    timesTemp.push(null)
+                }
+                changeTimes(timesTemp)
             }
-            changeTimes(timesTemp)
-        }
         }
 
     }
@@ -165,8 +170,9 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                     defaultValue={""+anzahl}
 
                     style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-                    keyboardType={'numeric'} onChangeText={number => onChangeAnzahl(number)}>
+                    keyboardType={'numeric'} onChangeText={number => {onChangeAnzahl(number)}}>
                 </TextInput>
+                {hinweis&&<Text style={{color:"red", fontWeight:"bold"}}>!</Text>}
             </View>}
 
             {notifications&&

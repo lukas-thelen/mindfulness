@@ -49,7 +49,6 @@ export const VersionsAuswahl =({navigation, route})=>{
         if(sprecher!=""&&dauerIndex()!=-1){
             navigation.navigate("AudioPlayer", {kursIndex:kursIndex, uebungsIndex:uebungsIndex, sprecherIndex:sprecherIndex, dauerIndex:dauerIndex()})
         }
-        changeDauer(0)
     }
 
     
