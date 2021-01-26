@@ -41,7 +41,13 @@ export const InfoEcke=(props)=>{
             <View style={styles.KursItem}>
                     <TouchableOpacity style={styles.info}onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex })}}><Text>i</Text></TouchableOpacity>
                     <Text></Text>
-                    <TouchableOpacity style={{height:"100%",width:"90%", alignItems:"center", flexDirection:"row", marginRight:20}}onPress={()=>{navigation.navigate("Wähle eine Version", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex })}} title="Play">
+                    <TouchableOpacity style={{height:"100%",width:"90%", alignItems:"center", flexDirection:"row", marginRight:20}}onPress={()=>{
+                        if(item.Audio){
+                            navigation.navigate("Wähle eine Version", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex})
+                        }else{
+                            navigation.navigate("Wähle die Dauer", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex})
+                        }
+                    }} title="Play">
                         <View>
                             {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>{item.Name}</Text> : <Text >{item.Name}</Text>}
                             {gehoerteUebungen.includes(item.id) ? <Text style={{color: "grey"}}>Kurs: {kurse[item.KursIndex].Name}</Text> : <Text >Kurs: {kurse[item.KursIndex].Name}</Text>}
@@ -72,15 +78,15 @@ export const InfoEcke=(props)=>{
         const TeilListe = [
             {
                 title: "Atemübungen",
-                data: atemuebungen.filter(item=>item.Name.includes(TextValue))
+                data: atemuebungen.filter(item=>{let text=item.Name.toLowerCase(); return text.includes(TextValue.toLowerCase())})
             },
             {
                 title: "Mindfulness",
-                data: mindfulness.filter(item=>item.Name.includes(TextValue))
+                data: mindfulness.filter(item=>{let text=item.Name.toLowerCase(); return text.includes(TextValue.toLowerCase())})
             },
             {
                 title: "Körperübung",
-                data: koerperuebung.filter(item=>item.Name.includes(TextValue))
+                data: koerperuebung.filter(item=>{let text=item.Name.toLowerCase(); return text.includes(TextValue.toLowerCase())})
             }
         ]
         if (TextValue == '') {
