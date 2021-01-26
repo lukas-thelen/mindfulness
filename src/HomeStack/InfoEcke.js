@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Alert, ScrollView, SectionList} from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Alert, ScrollView, SectionList, TextInput} from 'react-native';
 
 import {AppContext} from "../context.js"; 
 import {kurse} from "../Kursdaten/Kursdatei.js"
@@ -12,6 +12,7 @@ export const InfoEcke=(props)=>{
     const atemuebungen = uebungen.filter(item=>item.Kategorie==="Atemübung")
     const mindfulness = uebungen.filter(item=>item.Kategorie==="Mindfulness")
     const koerperuebung = uebungen.filter(item=>item.Kategorie==="Körperübung")
+    const [TextValue, onChangeText] = React.useState('');
 
 
     const InstantStart =() =>{
@@ -58,6 +59,29 @@ export const InfoEcke=(props)=>{
             data: koerperuebung
         }
     ]
+
+    const SuchListe = () => {
+        const TeilListe = [
+            {
+                title: "Atemübungen",
+                data: atemuebungen.filter(item=>item.Name.includes(TextValue))
+            },
+            {
+                title: "Mindfulness",
+                data: mindfulness.filter(item=>item.Name.includes(TextValue))
+            },
+            {
+                title: "Körperübung",
+                data: koerperuebung.filter(item=>item.Name.includes(TextValue))
+            }
+        ]
+        if (TextValue == '') {
+            return alleUebeungen
+        } else {
+            return TeilListe
+        }
+    }
+
     return(
         <View style={{flex:1}}>
             <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
@@ -65,12 +89,17 @@ export const InfoEcke=(props)=>{
             </View>
             <View style={{flex:0.85}}>
              <SectionList
-                sections={alleUebeungen}
+                sections={SuchListe()}
                 keyExtractor={(item, index) => item + index}
                 renderItem={(item) => renderItem(item)}
                 renderSectionHeader={({ section: { title } }) => (
                     <Text style={styles.header}>{title}</Text>
                 )}
+            />
+            <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                onChangeText={text => onChangeText(text)}
+                value={TextValue}
             />
             </View>
         </View>
