@@ -59,7 +59,7 @@ export const InfoEcke=(props)=>{
         }
     ]
     return(
-        <ImageBackground source={require('../Startseite.png')} style={styles.imagebackground}>
+        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground}>
             <View style={{flex:1, alignItems:'center'}}>
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart />
