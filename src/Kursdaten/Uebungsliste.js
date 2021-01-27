@@ -9,6 +9,8 @@ const uebungsListe =()=>{
             uebung=kurse[i].Uebungen[j]
             uebung.KursIndex=i
             uebung.UebungsIndex=j
+            uebung.Name = kurse[i].Uebungen[j].Name
+            uebung.Kategorie = kurse[i].Uebungen[j].Kategorie
             uebungenTemp.push(uebung)
         }
     }
