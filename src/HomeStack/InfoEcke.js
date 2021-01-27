@@ -6,6 +6,7 @@ import {AppContext} from "../context.js";
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import { uebungen } from '../Kursdaten/Uebungsliste.js';
 import { Ionicons } from '@expo/vector-icons';
+import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const InfoEcke=(props)=>{
     const navigation=props.navigation
@@ -105,11 +106,13 @@ export const InfoEcke=(props)=>{
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart />
                 </View>
-                <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, flex:0.1,width:"90%", color:"white" }}
-                    onChangeText={text => onChangeText(text)}
-                    value={TextValue}
-                    />
+                <View style={{flex:0.1, width: '95%', justifyContent: 'center'}}> 
+                    <TextInput
+                        style={styles.search}
+                        onChangeText={text => onChangeText(text)}
+                        value={TextValue}
+                        />
+                </View>
                 <View style={styles.background} >
                     <View>
                     <SectionList
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#464982',
       alignItems: 'center',
       flexDirection: 'row',
-      height: 80,
+      height: 75,
       borderRadius: 10,
       marginVertical: 5,
       marginHorizontal: 15,
@@ -154,10 +157,18 @@ const styles = StyleSheet.create({
     },
     header: {
         alignItems: 'center',
-        fontSize: 25,
-        color: '#fff',
         backgroundColor: "#0F113A",
         borderRadius: 10,
+        marginHorizontal: 15,
+    },
+    search: {
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 10,
+        height: '50%',
+        color: '#fff',
+        fontSize: 18,
+        paddingLeft: 15,
         marginHorizontal: 15,
     },
     imagebackground: {
@@ -170,7 +181,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         width: '95%',
-        paddingTop: 10,
+        paddingVertical: 10,
     },
     text: {
         color: '#fff',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList,TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList,TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -90,7 +90,7 @@ export const Journal = (props) => {
                 
                 <View style={styles.background}>
                     <FlatList 
-                        style={{margin:5, width:'95%'}}
+                        style={{marginVertical:10, width:'95%'}}
                         data={wochentage}
                         keyExtractor={(item, index)=>index.toString()}
                         renderItem={renderTag}>
@@ -132,24 +132,26 @@ export const Journal = (props) => {
     )
 }
 
+const journalheight = Dimensions.get('screen').height * 0.455 / 7
+
 const styles = StyleSheet.create({
     tag: {
-        flexDirection:"row",
         backgroundColor: '#464982',
-        alignItems: 'center',
-        height:50,
         paddingLeft:30,
         borderRadius: 10,
-        marginVertical: 3.5,
+        height: journalheight-3.5,
+        marginBottom: 3.5,
+        flexDirection: "row",
+        alignItems: 'center',
     },
     tagEdited:{
-        flexDirection:"row",
         backgroundColor: '#46498270',
-        alignItems: 'center',
-        height:50,
         paddingLeft:30, 
         borderRadius: 10,
-        marginVertical: 3.5,
+        height: journalheight-3.5,
+        marginBottom: 3.5,
+        flexDirection: "row",
+        alignItems: 'center',
     },
     reihe: {
         flexDirection:"row",
