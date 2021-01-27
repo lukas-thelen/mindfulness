@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button,TouchableOpacity, Image, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,8 +20,10 @@ import { JournalTag } from './HomeStack/JournalTag.js';
 import { StressSkalaMonthly } from './HomeStack/StressSkalaMonthly.js';
 import { uebungen } from './Kursdaten/Uebungsliste.js';
 import ViewPager from '@react-native-community/viewpager';
+import { LinearGradient } from 'expo-linear-gradient';
 import { VersionsAuswahlText } from './HomeStack/VersionsAuswahlText.js';
 import { TextPlayer } from './HomeStack/TextPlayer.js';
+
 
 const HomeStack = createStackNavigator();
 
@@ -38,6 +40,7 @@ const HomeRoot = ({navigation})=>{
     }
       for ( var z = 0; z< uebungen.length; z++){
         if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]){
+
           return (
           <TouchableOpacity onPress={()=>{
               if(uebungen[z].Audio){
@@ -46,7 +49,7 @@ const HomeRoot = ({navigation})=>{
                 navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
               }
           }}>
-            <Ionicons name="play" size={50} color="black" /> 
+            <Ionicons name="play" size={50} color="white" /> 
           </TouchableOpacity>
         )
       }
@@ -58,16 +61,34 @@ const HomeRoot = ({navigation})=>{
       <View key="1">
         <InfoEcke navigation={navigation}/>
       </View>
-      <View key="2"style={styles.container}>
-        <Text style={{fontSize:25}}>Hallo {username}!</Text> 
-        <Text>Schön, dass du wieder da bist!</Text>
-        <InstantStart /> 
-        <Button title={"Meine Kurse"} onPress={() =>{navigation.navigate('Meine Kurse')}} ></Button>
-        {/*<Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
-        <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
-        <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>*/}
-    </View>
-    <View key="3">
+      <View key="2" >
+        <ImageBackground source={require('../assets/Startseite.png')} style={styles.imagebackground}>
+          
+          <View style={{...styles.container, flex: 2}}></View>
+          <Text style={styles.text25}>Hallo {username}!</Text> 
+          <Text style={{...styles.text25, marginBottom: 20}}>Schön, dass du wieder da bist!</Text>
+          
+          <InstantStart /> 
+          
+          <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
+          
+          <TouchableOpacity style={styles.button} onPress={() =>{navigation.navigate('Meine Kurse')}} >
+            <LinearGradient
+            colors={['#D476D5', '#C77BD8', '#8F92E3']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 2 }}
+            style={styles.gradient}>
+              <Text style={styles.text25}>Meine Kurse</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          
+          {/*<Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
+            <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
+            <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>*/}
+          <View style={styles.container}></View>
+        </ImageBackground>
+      </View>
+      <View key="3">
         <Journal navigation={navigation}/>
       </View>
     </ViewPager>
@@ -105,11 +126,36 @@ export const HomeScreen = ()=> {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
     },
     viewPager: {
       flex: 1,
+    },
+    imagebackground: {
+      flex: 1,
+      resizeMode: 'cover',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    image: {
+      margin: 20,
+      width: 200,
+      height: 200,
+    },
+    text25: {
+      color: '#fff',
+      fontSize: 25,
+    },
+    gradient: {
+      alignItems: 'center',
+      borderRadius: 20,
+      paddingBottom: 4,
+      paddingTop: 4,
+      paddingHorizontal: 20,
+    },
+    button: {
+      alignItems: 'center',
+      justifyContent: 'center',
     }
   });

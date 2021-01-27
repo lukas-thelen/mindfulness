@@ -54,17 +54,17 @@ export const ProfilRoot = ({navigation})=> {
         <View style={styles.container}>
           <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%", padding:15}}>
               <TouchableOpacity onPress={()=>test()}>
-                <Feather name="user" size={50} color="black" />
+                <Feather name="user" size={50} color="white" />
                 <Text style={{textAlign:"center"}}>{username}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={()=>navigation.navigate("Einstellungen")}>
-                <Feather name="settings" size={50} color="black" />
+                <Feather name="settings" size={50} color="white" />
               </TouchableOpacity>
           </View>
             <View style={styles.container}>
             <Text>Streak {userData.benchmarks.streak}</Text>
-            <Button title="Statistiken" onPress={()=>navigation.navigate("Statistiken")}></Button> 
-            <Button title="Erfolge" onPress={()=>navigation.navigate("Erfolge")}></Button> 
+            <TouchableOpacity title="Statistiken" onPress={()=>navigation.navigate("Statistiken")}></TouchableOpacity> 
+            <TouchableOpacity title="Erfolge" onPress={()=>navigation.navigate("Erfolge")}></TouchableOpacity> 
             </View>
         </View>
     )
@@ -86,7 +86,7 @@ export const ProfilScreen =() => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#0F113A',
       alignItems: 'center',
       justifyContent: 'center',
     },

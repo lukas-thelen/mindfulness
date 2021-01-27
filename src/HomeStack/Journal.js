@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList,TouchableOpacity, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 import { uebungen } from '../Kursdaten/Uebungsliste.js';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const Journal = (props) => {
     const navigation=props.navigation
@@ -25,6 +25,7 @@ export const Journal = (props) => {
           for ( var z = 0; z< uebungen.length; z++){
             if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]){
               return (
+
               <TouchableOpacity onPress={()=>{
                   if(uebungen[z].Audio){
                     navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
@@ -32,7 +33,7 @@ export const Journal = (props) => {
                     navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
                   }
               }}>
-                <Ionicons name="play" size={50} color="black" /> 
+                <Ionicons name="play" size={50} color="#464982" /> 
               </TouchableOpacity>
             )
           }
@@ -73,56 +74,118 @@ export const Journal = (props) => {
         const millis = dateOfDay.getTime()
         return(
             <TouchableOpacity style={userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].journalChanged?styles.tagEdited:styles.tag} onPress={()=>{navigation.navigate("individueller Tag", {date:millis})}}>
-                <Text style={weekchange===0&&today.getDay()===((index+1)%7)?{color:"red", flex:1}:{color:"black", flex:1}}>{item} {dateOfDay.getDate()}.{dateOfDay.getMonth()+1}</Text>
-                {userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].meditations?<View style={{backgroundColor:"black", width:10, height:10, borderRadius:100, marginRight:20}}/>:null}
+                    <Text style={weekchange===0&&today.getDay()===((index+1)%7)?{color:"#D874D4", fontWeight:'bold', flex:1}:{color:"white", fontWeight:'bold', flex:1}}>{item} {dateOfDay.getDate()}.{dateOfDay.getMonth()+1}</Text>
+                    {userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].meditations?<View style={{backgroundColor:"#D874D4", width:10, height:10, borderRadius:100, marginRight:20}}/>:null}
             </TouchableOpacity>
         )
     }
 
     return (
-        <View>
-            <View style={{alignItems:"center", marginBottom:30, marginTop:30}}>
-                <InstantStart/>
+        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground}>
+            <View style={{flex:1, alignItems:'center'}}>
+                
+                <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
+                    <InstantStart/>
+                </View>
+                
+                <View style={styles.background}>
+                    <FlatList 
+                        style={{margin:5, width:'95%'}}
+                        data={wochentage}
+                        keyExtractor={(item, index)=>index.toString()}
+                        renderItem={renderTag}>
+                    </FlatList>
+                </View>
+
+                <View style={{flex:0.25, alignContent:'center'}}>
+                    <View style={styles.reihe}>
+                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(weekchange-1)}}>
+                            <Text style={styles.text}>Woche davor</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(0)}}>
+                            <Text style={styles.text}>Aktuelle Woche</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(weekchange+1)}}>
+                            <Text style={styles.text}>Woche danach</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{alignItems:'center', padding:10}}>
+                        {stressAktiv()?<Text style={styles.text}>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
+                        <Text>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
+                    </View>
+                    
+                    <View style={{alignItems:'center'}}>
+                        <TouchableOpacity styles={{alignItems: 'center', justifyContent: 'center'}} disabled={stressAktiv()?false:true} onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}>
+                            <LinearGradient
+                            colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 2 }}
+                            style={styles.gradient}>
+                                <Text style={styles.text}>Zur Stress-Umfrage</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-            <FlatList
-            data={wochentage}
-            keyExtractor={(item, index)=>index.toString()}
-            renderItem={renderTag}></FlatList>
-            <View style={styles.reihe}>
-                <Button title="Letzte Woche"onPress={()=>{changeWeekchange(weekchange-1)}}></Button>
-                <Button title="aktuelle Woche"onPress={()=>{changeWeekchange(0)}}></Button>
-                <Button title="Nächste Woche"onPress={()=>{changeWeekchange(weekchange+1)}}></Button>
-            </View>
-            <View style={{alignItems:"center", padding:15}}>
-                {stressAktiv()?<Text>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
-                <Text>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
-            </View>
-            <Button disabled={stressAktiv()?false:true} title="zur Stress Umfrage" onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}></Button>
-        </View>
+        </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
     tag: {
         flexDirection:"row",
-        backgroundColor: '#fff',
+        backgroundColor: '#464982',
         alignItems: 'center',
         height:50,
-        borderColor:"black",
-        borderBottomWidth:1,
         paddingLeft:30,
+        borderRadius: 10,
+        marginVertical: 3.5,
     },
     tagEdited:{
         flexDirection:"row",
-        backgroundColor: '#ddd',
+        backgroundColor: '#46498270',
         alignItems: 'center',
         height:50,
-        borderColor:"black",
-        borderBottomWidth:1,
         paddingLeft:30, 
-    },reihe: {
+        borderRadius: 10,
+        marginVertical: 3.5,
+    },
+    reihe: {
         flexDirection:"row",
-        alignItems: "flex-start", 
-        justifyContent: "center",
+        alignItems: "center", 
+        justifyContent: "space-around",
+        marginTop: 15,
+    },
+    imagebackground: {
+        flex: 1,
+        resizeMode: 'cover',
+    },
+    background: {
+        backgroundColor: "#0F113A90",
+        flex:0.6,
+        borderRadius: 10,
+        alignItems: 'center',
+        width: '90%',
+    },
+    text: {
+        color: '#fff',
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    gradient: {
+        alignItems: 'center',
+        borderRadius: 15,
+        paddingBottom: 4,
+        paddingTop: 4,
+        paddingHorizontal: 20,
+      },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 6,
+        borderColor: '#fff',
+        borderWidth: 1,
+        padding: 3,
     },
   });

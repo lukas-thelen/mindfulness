@@ -82,25 +82,28 @@ export const Anmelden = (props) => {
     return(
 
         <View style={styles.pagewrap, styles.container}>
-        
-        <Text>Nutzer-Kennung:</Text>
+        <Text style= {{color: '#fff', marginBottom: 80, fontSize: 40}}>Anmeldung</Text>
+        <Text style= {{color: '#fff'}}>Benutzername</Text>
         <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            style={styles.textinput}
             onChangeText={text =>changeEMailInput(text)} autoCapitalize = 'none'></TextInput>
 
         <View style={globalStyles.trennlinie}/>
 
 
-        <Text>Passwort</Text>
+        <Text style={{color: '#fff'}}>Passwort</Text>
         <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            style={styles.textinput}
             onChangeText={text => changePasswordInput(text)} autoCapitalize = 'none'  ></TextInput>
 
         <View style={globalStyles.trennlinie}/>
 
-
-        <Button title={"Anmelden"} onPress={() =>{checkInput()}} ></Button>
-        <Button title={"Zurück"} onPress={() =>{props.changeInitPages('StartBildschirm')}} ></Button>
+        <TouchableOpacity style={styles.containertext1} onPress={()=>checkInput() }>
+              <Text style={{color: '#fff', fontSize: 20}}>Anmelden</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
+              <Text style={{color: '#fff', fontSize: 10}}>Zurück</Text>
+        </TouchableOpacity>
       </View>
     )
 }
@@ -110,9 +113,35 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       width: '100%',
-      backgroundColor: '#fff',
+      backgroundColor: '#0F113A',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    textinput: {
+      height: '3%', 
+      borderColor: '#464982', 
+      backgroundColor: '#464982', 
+      borderWidth: 10, 
+      width:200, 
+      borderRadius:200, 
+
+    },
+    containertext1: {
+      alignItems:'center',
+      width: '40%',
+      height: '4%',
+      borderRadius: 100,
+      backgroundColor: '#80DEE4',
+      marginTop: 60,
+      shadowColor: 'black',
+      shadowOpacity: 0.8,
+      elevation: 10,
+      shadowRadius: 8,
+      shadowOffset : { width: 10, height: 5}
+    },
+    containertext2: {
+      alignItems:'center',
+      marginTop: 15
     },
     pagewrap:{
       width: '100%',

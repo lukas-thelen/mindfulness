@@ -88,26 +88,26 @@ export const Registrieren =(props)=>{
         scrollEnabled={false}
       >
       <View style={globalStyles.pagewrap, styles.registrierenContainer}>
-      <Text style={{fontSize:25}}>Registrierung</Text>
-        <Text>Nutzer-Kennung:</Text>
-        <Text style={{fontSize:12}}>(muss eindeutig sein)</Text>
+      <Text style={{fontSize:25, color: '#fff'}}>Registrierung</Text>
+        <Text style={styles.text}>Benutzername</Text>
+        <Text style={{fontSize:12, color: '#fff'}}>(muss eindeutig sein)</Text>
         <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            style={styles.textinput}
             onChangeText={text => changeEMail(text)} autoCapitalize = 'none'></TextInput>
 
         <View style={globalStyles.trennlinie}/>
 
-        <Text>Passwort:</Text>
+        <Text style={styles.text}>Passwort</Text>
         <TextInput 
             autoCapitalize = 'none'
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            style={styles.textinput}
             onChangeText={text => changePassword(text)}></TextInput>
 
         <View style={globalStyles.trennlinie}/>
 
-        <Text>Vorname:</Text>
+        <Text style={styles.text}>Vorname</Text>
         <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            style={styles.textinput}
             onChangeText={text => changeName(text)}></TextInput>
 
 
@@ -115,9 +115,9 @@ export const Registrieren =(props)=>{
 
         
 
-        <Text>Alter:</Text>
+        <Text style={styles.text}>Alter</Text>
         <TextInput 
-            style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+            style={styles.textinput}
             onChangeText={age => changeAge(age)} keyboardType={'numeric'}></TextInput>
         {/*<TouchableOpacity onPress={()=>{showDatepicker(true)}}>{dateChanged ?
           <Text>{birthday.getDate()}.{birthday.getMonth()+1}.{birthday.getFullYear()}</Text>:
@@ -134,7 +134,7 @@ export const Registrieren =(props)=>{
 
         <View style={globalStyles.trennlinie}/>
 
-        <Text>Geschlecht:</Text>
+        <Text style={styles.text}>Geschlecht</Text>
         <RadioButtonRN
           boxStyle={globalStyles.radio}
           data={genderData}
@@ -142,8 +142,12 @@ export const Registrieren =(props)=>{
         />
 
         <View style={globalStyles.trennlinie}/>
-        <Button title={"weiter"} onPress={() =>{abschicken()}} ></Button>
-        <Button title={"Zurück"} onPress={() =>{props.changeInitPages('StartBildschirm')}} ></Button>
+        <TouchableOpacity style={styles.containertext1} onPress={() =>abschicken()}>
+              <Text style={{color: '#fff', fontSize: 18}}>Registrieren</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
+              <Text style={{color: '#fff', fontSize: 10}}>Zurück</Text>
+        </TouchableOpacity>
       </View>
       </KeyboardAwareScrollView>
     )
@@ -153,8 +157,40 @@ export const Registrieren =(props)=>{
     registrierenContainer:{
       flex: 1,
       width: '100%',
-      backgroundColor: '#fff',
+      backgroundColor: '#0F113A',
       alignItems: 'center',
       marginTop:60
+    },
+    textinput: {
+      height: '3%', 
+      borderColor: '#464982', 
+      backgroundColor: '#464982', 
+      borderWidth: 10, 
+      width:200, 
+      borderRadius:200, 
+    },
+    text: {
+      color: '#fff'
+    },
+    containertext1: {
+      alignItems:'center',
+      width: '40%',
+      height: '4%',
+      borderRadius: 100,
+      backgroundColor: '#80DEE4',
+      marginTop: 60,
+      shadowColor: 'black',
+      shadowOpacity: 0.8,
+      elevation: 10,
+      shadowRadius: 8,
+      shadowOffset : { width: 10, height: 5}
+    },
+    containertext2: {
+      alignItems:'center',
+      marginTop: 15
+    },
+    containertext3: {
+
     }
+    
   })
