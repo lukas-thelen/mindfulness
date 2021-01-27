@@ -105,10 +105,15 @@ export const InfoEcke=(props)=>{
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart />
                 </View>
+                <TextInput
+                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, flex:0.1,width:"90%", color:"white" }}
+                    onChangeText={text => onChangeText(text)}
+                    value={TextValue}
+                    />
                 <View style={styles.background} >
                     <View>
                     <SectionList
-                        sections={alleUebeungen}
+                        sections={SuchListe()}
                         keyExtractor={(item, index) => item + index}
                         renderItem={(item) => renderItem(item)}
                         renderSectionHeader={({ section: { title } }) => (
@@ -119,24 +124,10 @@ export const InfoEcke=(props)=>{
                     />
                     </View>
                 </View>
+                
             </View>
-            <View style={{flex:0.85}}>
-             <SectionList
-                sections={SuchListe()}
-                keyExtractor={(item, index) => item + index}
-                renderItem={(item) => renderItem(item)}
-                renderSectionHeader={({ section: { title } }) => (
-                    <Text style={styles.header}>{title}</Text>
-                )}
-            />
-            <TextInput
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={text => onChangeText(text)}
-                value={TextValue}
-            />
-            </View>
-        </View>
-</ImageBackground>
+            
+        </ImageBackground>
 
     )
 }
@@ -175,7 +166,7 @@ const styles = StyleSheet.create({
     },
     background: {
         backgroundColor: "#0F113A90",
-        flex:0.85,
+        flex:0.75,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         width: '95%',
