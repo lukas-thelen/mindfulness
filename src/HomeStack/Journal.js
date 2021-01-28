@@ -99,13 +99,13 @@ export const Journal = (props) => {
 
                 <View style={{flex:0.25, alignContent:'center'}}>
                     <View style={styles.reihe}>
-                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(weekchange-1)}}>
+                        <TouchableOpacity style={styles.buttonRand} onPress={()=>{changeWeekchange(weekchange-1)}}>
                             <Text style={styles.text}>Woche davor</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(0)}}>
+                        <TouchableOpacity style={styles.buttonRand} onPress={()=>{changeWeekchange(0)}}>
                             <Text style={styles.text}>Aktuelle Woche</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(weekchange+1)}}>
+                        <TouchableOpacity style={styles.buttonRand} onPress={()=>{changeWeekchange(weekchange+1)}}>
                             <Text style={styles.text}>Woche danach</Text>
                         </TouchableOpacity>
                     </View>
@@ -116,13 +116,13 @@ export const Journal = (props) => {
                     </View>
                     
                     <View style={{alignItems:'center'}}>
-                        <TouchableOpacity styles={{alignItems: 'center', justifyContent: 'center'}} disabled={stressAktiv()?false:true} onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}>
+                        <TouchableOpacity styles={styles.button} disabled={stressAktiv()?false:true} onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}>
                             <LinearGradient
-                            colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 2 }}
-                            style={styles.gradient}>
-                                <Text style={styles.text}>Zur Stress-Umfrage</Text>
+                                colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 2 }}
+                                style={styles.gradient}>
+                                    <Text style={styles.text}>Zur Stress-Umfrage</Text>
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
@@ -178,16 +178,23 @@ const styles = StyleSheet.create({
     gradient: {
         alignItems: 'center',
         borderRadius: 15,
-        paddingBottom: 4,
-        paddingTop: 4,
+        paddingVertical: 5,
         paddingHorizontal: 20,
       },
-    button: {
+    buttonRand: {
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 6,
         borderColor: '#fff',
         borderWidth: 1,
         padding: 3,
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
     },
   });

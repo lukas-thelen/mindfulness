@@ -157,5 +157,9 @@ const styles = StyleSheet.create({
     button: {
       alignItems: 'center',
       justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {width:0, height:4},
+      shadowRadius: 4,
+      shadowOpacity: 0.4,
     }
   });

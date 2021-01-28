@@ -54,14 +54,14 @@ export const UebungsAuswahl =({navigation, route})=>{
     )
 }
 
-const uebungheigth = Dimensions.get('screen').height * 0.45 / 4
+const uebungheight = Dimensions.get('screen').height * 0.45 / 4
 
 const styles = StyleSheet.create({
     UebungsItem: {
       backgroundColor: '#464982',
       alignItems: 'center',
       justifyContent: 'center',
-      height:uebungheigth,
+      height:uebungheight,
       borderRadius: 10,
       marginVertical: 8,
     },
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#46498290',
         alignItems: 'center',
         justifyContent: 'center',
-        height:uebungheigth,
+        height:uebungheight,
         borderRadius: 10,
         marginVertical: 8,
     },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3D3D3D',
         alignItems: 'center',
         justifyContent: 'center',
-        height:uebungheigth,
+        height:uebungheight,
         borderRadius: 10,
         marginVertical:8, 
     },
