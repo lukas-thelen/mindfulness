@@ -13,7 +13,14 @@ import { Chart, VerticalAxis, HorizontalAxis, Line } from 'react-native-responsi
 export const Statistiken = () => {
     const [typeOfChart, changeTypeOfChart] =useState("meditations")
     const [showStress, changeShowStress] =useState(false)
-    const [stress, changeStress] =useState(false)
+    const [monthlyStress, changeMonthlyStress] =useState(false)
+    const [dailyStress, changeDailyStress] =useState(false)
+    const [craving, changeCraving] =useState(false)
+    const [pflichten, changePflichten] =useState(false)
+    const [stimmung, changeStimmung] =useState(false)
+    const [morgenStunden,changeMorgenStunden]=useState(null)
+    const [heuteStunden, changeHeuteStunden]=useState(null)
+    const [willMeditate, changeWillMeditate]=useState(false)
     const [meditations, changeMeditations] =useState(true)
     const [minutes, changeMinutes] =useState(false)
     const {userData, cahngeUserData, appData, changeAppData}=useContext(AppContext)
@@ -38,6 +45,12 @@ export const Statistiken = () => {
     const getData=()=>{
         const amountArray=[]
         const minutesArray=[]
+        const dailyStressArray =[]
+        const carvingArray=[]
+        const stimmungArray=[]
+        const pflichtenArray =[]
+        const heuteStundenArray=[]
+        const morgenStundenArray=[]
         var dayString=""
         const day=new Date()
         while(amountArray.length<7){
@@ -45,9 +58,25 @@ export const Statistiken = () => {
             if(userData.journal[dayString]&&userData.journal[dayString].meditations){
                 amountArray.push({y:userData.journal[dayString].meditations,x:6-amountArray.length})
                 minutesArray.push({y:userData.journal[dayString].meditationMinutes,x:6-minutesArray.length })
+                
             }else{
                 amountArray.push({y:0,x:6-amountArray.length})
                 minutesArray.push({y:0,x:6-minutesArray.length})
+            }
+            if(userData.journal[dayString]&&userData.journal[dayString].stimmung){
+                dailyStressArray.push({y:userData.journal[dayString].stress,x:6-dailyStressArray.length })
+                carvingArray.push({y:userData.journal[dayString].carving,x:6-carvingArray.length })
+                stimmungArray.push({y:userData.journal[dayString].stimmung,x:6-stimmungArray.length })
+                pflichtenArray.push({y:userData.journal[dayString].pflichten,x:6-pflichtenArray.length })
+                heuteStundenArray.push({y:userData.journal[dayString].heuteStunden,x:6-heuteStundenArray.length })
+                morgenStundenArray.push({y:userData.journal[dayString].morgenStunden,x:6-morgenStundenArray.length })
+            } else {
+                dailyStressArray.push({y:0,x:6-dailyStressArray.length })
+                carvingArray.push({y:0,x:6-carvingArray.length })
+                stimmungArray.push({y:0,x:6-stimmungArray.length })
+                pflichtenArray.push({y:0,x:6-pflichtenArray.length })
+                heuteStundenArray.push({y:0,x:6-heuteStundenArray.length })
+                morgenStundenArray.push({y:0,x:6-morgenStundenArray.length })
             }
             day.setDate(day.getDate()-1)
         }
@@ -115,17 +144,30 @@ export const Statistiken = () => {
             <View style={styles.stats}>
                 <Text >Anzahl: {""+getMeditation("amount")}</Text>
             </View>
-            <Chart
-                style={{ height:220, width: '100%', backgroundColor: '#eee'}}
-                xDomain={{ min: 0, max: 6 }}
-                yDomain={{ min: 0, max: 20 }}
-                padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
-            >
-                <VerticalAxis tickValues={[0, 4, 8, 12, 16, 20]} />
-                <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
-                {meditations&&<Line data={getData().meditations} smoothing="none" theme={{ stroke: { color: 'blue', width: 1 } }} />}
-                {minutes&&<Line data={getData().minutes} smoothing="none" theme={{ stroke: { color: 'red', width: 1 } }} />}
-            </Chart>
+        
+            <View style={{flexDirection:"row"}}>
+                <Chart
+                    style={{ height:220, flex: 0.93, backgroundColor: '#eee'}}
+                    xDomain={{ min: 0, max: 6 }}
+                    yDomain={{ min: 0, max: 20 }}
+                    padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
+                >
+                    <VerticalAxis tickValues={[0, 4, 8, 12, 16, 20]} />
+                    <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
+                    {meditations&&<Line data={getData().meditations} smoothing="none" theme={{ stroke: { color: 'blue', width: 1 } }} />}
+                    {minutes&&<Line data={getData().minutes} smoothing="none" theme={{ stroke: { color: 'red', width: 1 } }} />}
+
+                </Chart>
+
+                <View style= {{flexDirection:"column", flex: 0.07, justifyContent:"space-between", marginBottom:15}}>
+                    <Text>+ +</Text>
+                    <Text>+</Text>
+                    <Text>°</Text>
+                    <Text>-</Text>
+                    <Text>- -</Text>
+                </View>
+            </View>
+            
             <View style={{flexDirection:"row", alignItems:"center"}}>
                 <CheckBox value={meditations} onValueChange={(newValue) => changeMeditations(newValue)}/>
                 <Text>Anzahl der Meditationen</Text>
@@ -134,6 +176,8 @@ export const Statistiken = () => {
                 <CheckBox value={minutes} onValueChange={(newValue) => changeMinutes(newValue)}/>
                 <Text>Meditierte Minuten</Text>
             </View>
+            
+    
             {/*{!showStress?<View style={{ flexDirection: 'row', display: "flex" }}>
                 <YAxis
                         data={getHistory()}

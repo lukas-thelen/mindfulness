@@ -63,8 +63,12 @@ export const ProfilRoot = ({navigation})=> {
           </View>
             <View style={styles.container}>
             <Text>Streak {userData.benchmarks.streak}</Text>
-            <TouchableOpacity title="Statistiken" onPress={()=>navigation.navigate("Statistiken")}></TouchableOpacity> 
-            <TouchableOpacity title="Erfolge" onPress={()=>navigation.navigate("Erfolge")}></TouchableOpacity> 
+            <TouchableOpacity  onPress={()=>navigation.navigate("Statistiken")}>
+              <Text>Statistiken</Text>
+            </TouchableOpacity> 
+            <TouchableOpacity title="Erfolge" onPress={()=>navigation.navigate("Erfolge")}>
+              <Text>Erfolge</Text>
+            </TouchableOpacity> 
             </View>
         </View>
     )
