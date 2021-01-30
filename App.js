@@ -11,6 +11,7 @@ import { Init } from './src/Init.js';
 import { benchmarks } from './src/benchmarks.js';
 import { FreundeScreen } from './src/Freunde.js';
 import cloneDeep from 'lodash/cloneDeep';
+import { Feather } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -112,10 +113,43 @@ export const Tabnavigator = () =>{
                 </View>
           </Modal>
         <NavigationContainer>
-          <Tab.Navigator initialRouteName="Home">
-            <Tab.Screen name="Freunde" component={FreundeScreen} />
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Profil" component={ProfilScreen} />
+          <Tab.Navigator 
+            initialRouteName="Home"
+            tabBarOptions={{
+              activeTintColor: '#D476D5',
+              inactiveTintColor: '#fff',
+              style:{
+                backgroundColor: '#0F113A',
+              }
+            }}
+          >
+            <Tab.Screen 
+              name="Freunde" 
+              component={FreundeScreen}
+              options={{
+                tabBarIcon: ({ tintcolor }) => (
+                  <Feather name="users" size={30} color={'#fff'} />
+                ),
+              }}
+            />
+            <Tab.Screen 
+              name="Home" 
+              component={HomeScreen} 
+              options={{
+                tabBarIcon: ({ tintcolor }) => (
+                  <Feather name="home" size={30} color="white" />
+                ),
+              }}
+            />
+            <Tab.Screen 
+              name="Profil" 
+              component={ProfilScreen} 
+              options={{
+                tabBarIcon: ({ tintcolor }) => (
+                  <Feather name="user" size={30} color="white" />
+                ),
+              }}
+            />
           </Tab.Navigator>
         </NavigationContainer>
     </View>
