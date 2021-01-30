@@ -64,7 +64,7 @@ const HomeRoot = ({navigation})=>{
       <View key="2" >
         <ImageBackground source={require('../assets/Startseite.png')} style={styles.imagebackground}>
           
-          <View style={{...styles.container, flex: 2}}></View>
+          <View style={{flex: 2.5}}></View>
           <Text style={styles.text25}>Hallo {username}!</Text> 
           <Text style={{...styles.text25, marginBottom: 20}}>Schön, dass du wieder da bist!</Text>
           
@@ -74,11 +74,11 @@ const HomeRoot = ({navigation})=>{
           
           <TouchableOpacity style={styles.button} onPress={() =>{navigation.navigate('Meine Kurse')}} >
             <LinearGradient
-            colors={['#D476D5', '#C77BD8', '#8F92E3']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 2 }}
-            style={styles.gradient}>
-              <Text style={styles.text25}>Meine Kurse</Text>
+              colors={['#D476D5', '#C77BD8', '#8F92E3']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 2 }}
+              style={styles.gradient}>
+                <Text style={styles.text25}>Meine Kurse</Text>
             </LinearGradient>
           </TouchableOpacity>
           

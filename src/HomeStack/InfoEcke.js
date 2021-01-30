@@ -7,6 +7,7 @@ import {kurse} from "../Kursdaten/Kursdatei.js"
 import { uebungen } from '../Kursdaten/Uebungsliste.js';
 import { Ionicons } from '@expo/vector-icons';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
+import { Feather } from '@expo/vector-icons';
 
 export const InfoEcke=(props)=>{
     const navigation=props.navigation
@@ -41,25 +42,48 @@ export const InfoEcke=(props)=>{
     
     const renderItem =({item})=>{
         return(
-            <View style={styles.KursItem}>
+            <View>
+                {gehoerteUebungen.includes(item.id) ? 
+                    (<View style={styles.KursItemDone}>
+                        <TouchableOpacity style={styles.info}onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex })}}>
+                            <Text style={{color:'#fff'}}>i</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{alignItems:"center", flexDirection:"row", width: '85%'}}onPress={()=>{
+                            if(item.Audio){
+                                navigation.navigate("Wähle eine Version", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex})
+                            }else{
+                                navigation.navigate("Wähle die Dauer", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex})
+                            }
+                        }}>
+                            <View>
+                            <Text style={styles.text}>{item.Name}</Text>
+                                <Text style={styles.text} >Kurs: {kurse[item.KursIndex].Name}</Text>
+                            </View>
+                            {!userData.verfuegbareUebungen.includes(item.id)&&<Text style={{marginLeft:"auto", color:"white", fontWeight:"bold"}} >!</Text>}
+                        </TouchableOpacity>
+                    
+                    </View>) :
+                    (<View style={styles.KursItem}>
 
-                    <TouchableOpacity style={styles.info}onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex })}}><Text style={{color:'#fff'}} >i</Text></TouchableOpacity>
-                    <Text></Text>
-                    <TouchableOpacity style={{alignItems:"center", flexDirection:"row", width: '85%'}}onPress={()=>{
-                        if(item.Audio){
-                            navigation.navigate("Wähle eine Version", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex})
-                        }else{
-                            navigation.navigate("Wähle die Dauer", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex})
-                        }
-                    }}>
-                        <View>
-                            {gehoerteUebungen.includes(item.id) ? <Text style={{...styles.text, color: "#ffffff90"}}>{item.Name}</Text> : <Text style={styles.text}>{item.Name}</Text>}
-                            {gehoerteUebungen.includes(item.id) ? <Text style={{...styles.text, color: "#ffffff90"}}>Kurs: {kurse[item.KursIndex].Name}</Text> : <Text style={styles.text} >Kurs: {kurse[item.KursIndex].Name}</Text>}
-                        </View>
-                        {!userData.verfuegbareUebungen.includes(item.id)&&<Text style={{marginLeft:"auto", color:"white", fontWeight:"bold"}} >!</Text>}
-                    </TouchableOpacity>
-                
+                        <TouchableOpacity style={styles.info}onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex })}}>
+                            <Text style={{color:'#fff'}}>i</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{alignItems:"center", flexDirection:"row", width: '85%'}}onPress={()=>{
+                            if(item.Audio){
+                                navigation.navigate("Wähle eine Version", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex})
+                            }else{
+                                navigation.navigate("Wähle die Dauer", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex})
+                            }
+                        }}>
+                            <View>
+                                <Text style={styles.text}>{item.Name}</Text>
+                                <Text style={styles.text} >Kurs: {kurse[item.KursIndex].Name}</Text>
+                            </View>
+                            {!userData.verfuegbareUebungen.includes(item.id)&&<Text style={{marginLeft:"auto", color:"white", fontWeight:"bold"}} >!</Text>}
+                        </TouchableOpacity>
+                    </View>)}
             </View>
+            
         )
     }
  
@@ -106,12 +130,15 @@ export const InfoEcke=(props)=>{
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart />
                 </View>
-                <View style={{flex:0.1, width: '95%', justifyContent: 'center'}}> 
+                <View style={{flex:0.1}}>
+                <View style={styles.searchbackground}> 
+                    <Feather name="search" size={20} color="white" />
                     <TextInput
                         style={styles.search}
                         onChangeText={text => onChangeText(text)}
                         value={TextValue}
                         />
+                </View>
                 </View>
                 <View style={styles.background} >
                     <View>
@@ -137,14 +164,22 @@ export const InfoEcke=(props)=>{
 
 const styles = StyleSheet.create({
     KursItem: {
-      flex: 1,
-      backgroundColor: '#464982',
-      alignItems: 'center',
-      flexDirection: 'row',
-      height: 75,
-      borderRadius: 10,
-      marginVertical: 5,
-      marginHorizontal: 15,
+        flex: 1,
+        backgroundColor: '#464982',
+        alignItems: 'center',
+        flexDirection: 'row',
+        height: 75,
+        borderRadius: 10,
+        marginVertical: 5,
+    },
+    KursItemDone: {
+        flex: 1,
+        backgroundColor: '#46498270',
+        alignItems: 'center',
+        flexDirection: 'row',
+        height: 75,
+        borderRadius: 10,
+        marginVertical: 5,
     },
     info:{ 
         borderRadius:100, 
@@ -159,17 +194,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: "#0F113A",
         borderRadius: 10,
-        marginHorizontal: 15,
     },
     search: {
-        borderWidth: 1,
-        borderColor: '#fff',
         borderRadius: 10,
-        height: '50%',
+        paddingVertical:4,
         color: '#fff',
         fontSize: 18,
-        paddingLeft: 15,
-        marginHorizontal: 15,
+        paddingLeft: 10,
+        flexGrow:1,
+    },
+    searchbackground: {
+        flexDirection:'row',
+        borderRadius: 10,
+        width: '85%',
+        height:'50%',
+        alignItems:'center', 
+        justifyContent: 'center', 
+        backgroundColor: "#46498290",
+        borderRadius: 10,
+        paddingLeft: 10,
     },
     imagebackground: {
         flex: 1,
@@ -180,8 +223,8 @@ const styles = StyleSheet.create({
         flex:0.75,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        width: '95%',
-        paddingVertical: 10,
+        width: '90%',
+        padding: 10,
     },
     text: {
         color: '#fff',

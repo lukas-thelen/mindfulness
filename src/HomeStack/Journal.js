@@ -112,10 +112,10 @@ export const Journal = (props) => {
 
                     <View style={{alignItems:'center', padding:10}}>
                         {stressAktiv()?<Text style={styles.text}>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
-                        <Text>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
+                        <Text style={styles.text}>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
                     </View>
                     
-                    <View style={{alignItems:'center'}}>
+                    <View style={styles.button}>
                         <TouchableOpacity styles={styles.button} disabled={stressAktiv()?false:true} onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}>
                             <LinearGradient
                                 colors={['#D476D5', '#C77BD8', '#8F92E3']}

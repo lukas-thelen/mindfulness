@@ -28,7 +28,7 @@ export const UebungsAuswahl =({navigation, route})=>{
         }else{
             return(
                 <View style={styles.UebungsItemUnavailable}>
-                    {gehoerteUebungen.includes(item.id) ? <Text style={styles.text}>{item.Name}</Text> : <Text style={styles.text}>{item.Name}</Text>}
+                    {gehoerteUebungen.includes(item.id) ? <Text style={{...styles.text, color:'#ffffff90'}}>{item.Name}</Text> : <Text style={{...styles.text, color:'#ffffff90'}}>{item.Name}</Text>}
                 </View>    
             )
         }
@@ -38,8 +38,7 @@ export const UebungsAuswahl =({navigation, route})=>{
 
     return (
         <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground}>
-            <View style={{flex:1, alignItems:'center'}}>
-                <View style={{flex:0.2}} />
+            <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
                 <View style={styles.background}>
                     <FlatList
                         data={kurse[kursIndex].Uebungen}
@@ -48,36 +47,37 @@ export const UebungsAuswahl =({navigation, route})=>{
                         style={{width:'90%'}}
                     ></FlatList>
                 </View>
-                <View style={{flex:0.1}} />
             </View>
         </ImageBackground>
     )
 }
 
-const uebungheight = Dimensions.get('screen').height * 0.45 / 4
+
 
 const styles = StyleSheet.create({
     UebungsItem: {
       backgroundColor: '#464982',
       alignItems: 'center',
       justifyContent: 'center',
-      height:uebungheight,
+      height:70,
       borderRadius: 10,
       marginVertical: 8,
+      borderWidth: 1,
+      borderColor: '#80DEE4',
     },
     UebungsItemDone: {
         backgroundColor: '#46498290',
         alignItems: 'center',
         justifyContent: 'center',
-        height:uebungheight,
+        height:70,
         borderRadius: 10,
         marginVertical: 8,
     },
     UebungsItemUnavailable: {
-        backgroundColor: '#3D3D3D',
+        backgroundColor: '#3D3D3D60',
         alignItems: 'center',
         justifyContent: 'center',
-        height:uebungheight,
+        height:70,
         borderRadius: 10,
         marginVertical:8, 
     },
@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     },
     background: {
         backgroundColor: "#0F113A90",
-        flex:0.7,
         borderRadius: 10,
         alignItems: 'center',
         width: '90%',
