@@ -13,11 +13,79 @@ export const Journal = (props) => {
     const {userData, gehoerteUebungen} = useContext(AppContext)
 
     const [weekchange, changeWeekchange] =useState(0)
+    const [xHeight,changeXHeight] = useState(800)
 
     const wochentage=["Mo", "Di","Mi","Do", "Fr", "Sa", "So"]
     const wochentageToString={0:"Montag", 1:"Dienstag", 2:"Mittwoch", 3:"Donnerstag", 4:"Freitag", 5:"Samstag", 6:"Sonntag"}
     const today = new Date()
     const date=today.getDate()
+    const journalheight = Dimensions.get('screen').height * 0.455 / 7
+
+    const styles = StyleSheet.create({
+        tag: {
+            backgroundColor: '#464982',
+            paddingLeft:30,
+            borderRadius: 10,
+            height: (xHeight-44.5)/7,
+            marginBottom: 3.5,
+            flexDirection: "row",
+            alignItems: 'center',
+        },
+        tagEdited:{
+            backgroundColor: '#46498270',
+            paddingLeft:30, 
+            borderRadius: 10,
+            height: (xHeight-44.5)/7,
+            marginBottom: 3.5,
+            flexDirection: "row",
+            alignItems: 'center',
+        },
+        reihe: {
+            flexDirection:"row",
+            alignItems: "center", 
+            justifyContent: "space-around",
+            marginTop: 15,
+        },
+        imagebackground: {
+            flex: 1,
+            alignItems:'center'
+        },
+        background: {
+            backgroundColor: "#0F113A90",
+            flex:0.6,
+            borderRadius: 10,
+            alignItems: 'center',
+            width: '90%',
+        },
+        text: {
+            color: '#fff',
+            fontSize: 16,
+            textAlign: 'center',
+        },
+        gradient: {
+            alignItems: 'center',
+            borderRadius: 15,
+            paddingVertical: 5,
+            paddingHorizontal: 20,
+          },
+        buttonRand: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 6,
+            borderColor: '#fff',
+            borderWidth: 1,
+            padding: 3,
+        },
+        button: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            shadowColor: '#000',
+            shadowOffset: {width:0, height:4},
+            shadowRadius: 4,
+            shadowOpacity: 0.4,
+        },
+      });
+
     const InstantStart =() =>{
         if (gehoerteUebungen.includes(userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1])){
           return null
@@ -81,14 +149,13 @@ export const Journal = (props) => {
     }
 
     return (
-        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground}>
-            <View style={{flex:1, alignItems:'center'}}>
-                
+        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+            
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart/>
                 </View>
                 
-                <View style={styles.background}>
+                <View style={styles.background} onLayout={(event)=>{var{height}=event.nativeEvent.layout;changeXHeight(height)}}>
                     <FlatList 
                         style={{marginVertical:10, width:'95%'}}
                         data={wochentage}
@@ -127,75 +194,11 @@ export const Journal = (props) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            
             <View style={{height:60}}/>
         </ImageBackground>
     )
+
+
+
 }
-
-const journalheight = Dimensions.get('screen').height * 0.455 / 7
-
-const styles = StyleSheet.create({
-    tag: {
-        backgroundColor: '#464982',
-        paddingLeft:30,
-        borderRadius: 10,
-        height: journalheight-3.5,
-        marginBottom: 3.5,
-        flexDirection: "row",
-        alignItems: 'center',
-    },
-    tagEdited:{
-        backgroundColor: '#46498270',
-        paddingLeft:30, 
-        borderRadius: 10,
-        height: journalheight-3.5,
-        marginBottom: 3.5,
-        flexDirection: "row",
-        alignItems: 'center',
-    },
-    reihe: {
-        flexDirection:"row",
-        alignItems: "center", 
-        justifyContent: "space-around",
-        marginTop: 15,
-    },
-    imagebackground: {
-        flex: 1,
-        resizeMode: 'cover',
-    },
-    background: {
-        backgroundColor: "#0F113A90",
-        flex:0.6,
-        borderRadius: 10,
-        alignItems: 'center',
-        width: '90%',
-    },
-    text: {
-        color: '#fff',
-        fontSize: 16,
-        textAlign: 'center',
-    },
-    gradient: {
-        alignItems: 'center',
-        borderRadius: 15,
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-      },
-    buttonRand: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 6,
-        borderColor: '#fff',
-        borderWidth: 1,
-        padding: 3,
-    },
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: {width:0, height:4},
-        shadowRadius: 4,
-        shadowOpacity: 0.4,
-    },
-  });
