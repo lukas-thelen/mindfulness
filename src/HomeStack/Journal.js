@@ -13,13 +13,12 @@ export const Journal = (props) => {
     const {userData, gehoerteUebungen} = useContext(AppContext)
 
     const [weekchange, changeWeekchange] =useState(0)
-    const [xHeight,changeXHeight] = useState(800)
+    const [xHeight,changeXHeight] = useState(400)
 
     const wochentage=["Mo", "Di","Mi","Do", "Fr", "Sa", "So"]
     const wochentageToString={0:"Montag", 1:"Dienstag", 2:"Mittwoch", 3:"Donnerstag", 4:"Freitag", 5:"Samstag", 6:"Sonntag"}
     const today = new Date()
     const date=today.getDate()
-    const journalheight = Dimensions.get('screen').height * 0.455 / 7
 
     const styles = StyleSheet.create({
         tag: {
@@ -32,7 +31,7 @@ export const Journal = (props) => {
             alignItems: 'center',
         },
         tagEdited:{
-            backgroundColor: '#46498270',
+            backgroundColor: '#464982b2',
             paddingLeft:30, 
             borderRadius: 10,
             height: (xHeight-44.5)/7,
@@ -51,7 +50,7 @@ export const Journal = (props) => {
             alignItems:'center'
         },
         background: {
-            backgroundColor: "#0F113A90",
+            backgroundColor: "#0F113Ab2",
             flex:0.6,
             borderRadius: 10,
             alignItems: 'center',
@@ -149,7 +148,7 @@ export const Journal = (props) => {
     }
 
     return (
-        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        <ImageBackground source={require('../../assets/Startseite_kurz.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
             
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart/>
