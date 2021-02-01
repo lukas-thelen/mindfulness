@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator } from 'react-native';
+import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView} from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -227,10 +227,12 @@ export default function App() {
   //Wrap für gesamte App - cond. Rendering für angemeldet/nicht angemeldet
   return (
     <AppContext.Provider value={appContext}>
-      <View style={styles.pagewrap}>
+      <View style={{backgroundColor:'#000'}}>
+      <SafeAreaView style={styles.pagewrap}>
         {isLoading?<View style={{height:"100%",justifyContent:"center"}}><ActivityIndicator size="large" color="black"/></View>:<View>
           {loggedIn ? <Tabnavigator style={styles.container}/> : <Init changeLoggedIn={changeLoggedIn}/>}</View>
         }
+      </SafeAreaView>
       </View>
     </AppContext.Provider>
 
@@ -248,7 +250,7 @@ const styles = StyleSheet.create({
   },
   pagewrap:{
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   centeredView: {
     flex: 1,
