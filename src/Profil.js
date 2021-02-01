@@ -52,15 +52,14 @@ export const ProfilRoot = ({navigation})=> {
 
     return(
       <ImageBackground source={require('../assets/Profil.png')} style={styles.imagebackground}>
-        <View style={styles.container}>
           
           <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%", padding:15, flex:0.15}}>
             <TouchableOpacity onPress={()=>test()}>
-              <Feather name="user" size={50} color="white" />
+              <Feather name="user" size={40} color="white" />
               <Text style={{textAlign:"center", color:'#fff'}}>{username}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>navigation.navigate("Einstellungen")}>
-              <Feather name="settings" size={50} color="white" />
+              <Feather name="settings" size={40} color="white" />
             </TouchableOpacity>
           </View>
 
@@ -82,7 +81,7 @@ export const ProfilRoot = ({navigation})=> {
             </View>
           </View>
 
-        </View>
+          <View style={{height:60}}/>
       </ImageBackground>
     )
 }
@@ -90,22 +89,95 @@ export const ProfilRoot = ({navigation})=> {
 export const ProfilScreen =() => {
   return (
       <ProfilStack.Navigator>
-          <ProfilStack.Screen name="Profil" component={ProfilRoot}/>
-          <ProfilStack.Screen name="Einstellungen" component={Einstellungen}/>
-          <ProfilStack.Screen name="Statistiken" component={Statistiken}/>
-          <ProfilStack.Screen name="Erfolge" component={Erfolge}/>
-          <ProfilStack.Screen name="Konto-Informationen" component={KontoInfos}/>
-          <ProfilStack.Screen name="Informationen über die App" component={AppInfos}/>
+          <ProfilStack.Screen name="Profil" component={ProfilRoot} options={{
+            title: 'Profil',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Einstellungen" component={Einstellungen} options={{
+            title: 'Einstellungen',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Statistiken" component={Statistiken} options={{
+            title: 'Statistiken',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Erfolge" component={Erfolge} options={{
+            title: 'Erfolge',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Konto-Informationen" component={KontoInfos} options={{
+            title: 'Account',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Informationen über die App" component={AppInfos} options={{
+            title: 'Appinfo',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
       </ProfilStack.Navigator>
   )
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     item: {
       backgroundColor: '#464982',
       borderRadius: 10,
@@ -135,6 +207,6 @@ const styles = StyleSheet.create({
     },
     imagebackground: {
       flex: 1,
-      resizeMode: 'cover',
+      alignItems:'center'
     },
   });
