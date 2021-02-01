@@ -55,8 +55,8 @@ export const JournalTag = ({navigation, route}) => {
     }
 
     return (
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-            <View style={{alignItems:"center"}}>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+            
                 <Text style={styles.text25}>Datum: {date.getDate()}.{date.getMonth()+1}</Text>
                 <Text style={styles.text25}>Platz für deine Gedanken:</Text>
                 <View style={styles.trennlinie}></View>
@@ -68,44 +68,6 @@ export const JournalTag = ({navigation, route}) => {
                         maximumValue={6}
                         minimumTrackTintColor='#89FFF1'
                         maximumTrackTintColor='#D476D5'
-                        customMinimumTrack={(
-                            <LinearGradient
-                            start={{x: .74, y: .26}}
-                            end={{x: 0, y: .77}}
-                            colors={['#ff8960', '#ff62a5']}
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                            }}
-                            />
-                        )}
-                        customMaximumTrack={(
-                            <LinearGradient
-                                start={{x: .74, y: .26}}
-                                end={{x: 0, y: .77}}
-                                colors={['#efefef', '#c1c0c9']}
-                                style={{
-                                width: '100%',
-                                height: '100%',
-                                }}
-                            />
-                        )}
-                        customThumb={(
-                            <LinearGradient
-                            start={{x: .74, y: .26}}
-                            end={{x: 0, y: .77}}
-                            colors={['#ff8960', '#ff62a5']}
-                            style={{
-                                width: 36,
-                                height: 36,
-                                margin: 2,
-                                borderRadius: 36 / 2,
-                                borderWidth: 4,
-                                borderColor: '#fff',
-                                elevation: 1
-                            }}
-                            />
-                        )}
                         step={1}
                         value={stimmung}
                         onValueChange={changeStimmung}
@@ -134,7 +96,7 @@ export const JournalTag = ({navigation, route}) => {
                             <Text style={{color:'#0F113A'}}>Speichern</Text>
                     </LinearGradient>
                 </TouchableOpacity>
-            </View>
+            
             <View style={{height:60}}/>
         </ImageBackground>
     )
@@ -173,7 +135,7 @@ const styles = StyleSheet.create({
     },
     imagebackground: {
         flex: 1,
-        resizeMode: 'cover',
+        alignItems: 'center',
     },
     text: {
         color: '#fff',

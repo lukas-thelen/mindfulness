@@ -53,8 +53,8 @@ export const MeineFreunde =() => {
 
     return (
       <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-        <View style={{flex:1}}>
-          <View style={{flex:0.2}}>
+        
+          <View style={{flex:0.2, width:'100%'}}>
             <TouchableOpacity style={{alignItems:'flex-end', marginTop:20, marginRight:20}} onPress={()=> {onShare()}}>
               <Feather name="user-plus" size={30} color="#fff" style={{marginRight:35}}/>
               <Text style={{color:'#fff', fontSize:16}}>Freunde adden</Text>
@@ -71,7 +71,8 @@ export const MeineFreunde =() => {
               ></FlatList>
             </View>
           </View>
-        </View>
+        
+        <View style={{height:60}}/>
       </ImageBackground>
     )
   }
@@ -88,7 +89,7 @@ export const MeineFreunde =() => {
     },
     imagebackground: {
       flex: 1,
-      resizeMode: 'cover',
+      alignItems:'center'
     },
     background: {
       backgroundColor: "#0F113A90",

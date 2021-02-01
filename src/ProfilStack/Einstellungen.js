@@ -10,6 +10,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Feather } from '@expo/vector-icons';
 
 export const Einstellungen = ({navigation}) => {
 const initTime = new Date()
@@ -160,7 +161,6 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
 
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-            <View style ={{flex:1, alignItems:'center'}}>
 
                 <View style={{flex:0.6, paddingTop:40}}>
                     <View style= {styles.reihe}>
@@ -168,6 +168,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                         <Switch 
                             trackColor={{ false: "#3D3D3D", true: "#80DEE4" }}
                             ios_backgroundColor="#3D3D3D"
+                            thumbColor='#fff'
                             onValueChange={()=>{changeNotifications(!notifications)}} value={notifications}
                         />
                     </View>
@@ -218,12 +219,13 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                 </View>
 
                 <View style={{flex:0.1}}>
-                <   TouchableOpacity style={{alignItems:"center"}} onPress={() => logout() }> 
-                        <Text style={{color:'#fff', fontSize:18, textDecorationLine:'underline'}}>Abmelden</Text>
+                <   TouchableOpacity style={{alignItems:"center", flexDirection:'row'}} onPress={() => logout() }> 
+                        <Feather name="log-out" size={22} color="white" />
+                        <Text style={{color:'#fff', fontSize:18, textDecorationLine:'underline', marginLeft:5}}>Abmelden</Text>
                     </TouchableOpacity>
                 </View>
                 
-            </View>
+                <View style={{height:60}}/>
         </ImageBackground>
     )
 }
@@ -247,7 +249,7 @@ const styles = StyleSheet.create({
     },
     imagebackground: {
         flex: 1,
-        resizeMode: 'cover',
+        alignItems:'center'
     },
     background: {
         backgroundColor: "#0F113A90",

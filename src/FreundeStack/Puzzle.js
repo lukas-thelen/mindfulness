@@ -133,7 +133,7 @@ export const Puzzle = ({route, navigation}) => {
 
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-            <View style={{flex:1, alignItems:'center'}}>
+            
             {userData.friends.puzzles[route.params.id]&&<View style={{flex:1, alignItems:'center', justifyContent:'center', width:'100%'}}>
                 <Modal
                     animationType="slide"
@@ -172,7 +172,7 @@ export const Puzzle = ({route, navigation}) => {
                 
                 <View style={styles.background}>
                     <Text style={{...styles.text20, marginBottom:16}}>{puzzleText(userData.friends.puzzles[route.params.id].friends)}</Text>
-                    <View style={{width:320, alignSelf:"center", backgroundColor:'#464982'}}>
+                    <View style={{width:320, alignSelf:"center", backgroundColor:'#46498290'}}>
                         <FlatList
                             numColumns={4}
                             data={[5,9,0,11,3,6,8,1,10,2,7,4]}
@@ -195,7 +195,7 @@ export const Puzzle = ({route, navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>}
-            </View>
+            <View style={{height:60}}/>
         </ImageBackground>
     )
 }
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     },
     imagebackground: {
         flex: 1,
-        resizeMode: 'cover',
+        alignItems:'center'
     },
     gradient: {
         alignItems: 'center',

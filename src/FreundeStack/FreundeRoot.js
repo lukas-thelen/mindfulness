@@ -145,7 +145,7 @@ export const FreundeRoot =({navigation}) => {
       }
     return (
       <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-        <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+        
             <Modal
                   animationType="slide"
                   transparent={true}
@@ -196,9 +196,8 @@ export const FreundeRoot =({navigation}) => {
                   <Text style={styles.text}>Neues Puzzle</Text>
                 </TouchableOpacity>
               </View>
-              
             </View>
-        </View>
+        <View style={{height:60}}/>
       </ImageBackground>
     )
   }
@@ -238,7 +237,7 @@ export const FreundeRoot =({navigation}) => {
     selectedFriend:{
         height:45, 
         width:'100%', 
-        backgroundColor:'#89FFF190', 
+        backgroundColor:'#89FFF1b2', 
         alignSelf:"center", 
         justifyContent:"center", 
         paddingLeft:20,
@@ -265,7 +264,7 @@ export const FreundeRoot =({navigation}) => {
     },
     imagebackground: {
       flex: 1,
-      resizeMode: 'cover',
+      alignItems: 'center',
     },
     background: {
       backgroundColor: "#0F113A90",
@@ -274,7 +273,7 @@ export const FreundeRoot =({navigation}) => {
       justifyContent: 'flex-start',
       padding:10,
       width: '90%',
-      height: '70%',
+      height: '75%',
    },
     text: {
       color:'#fff',

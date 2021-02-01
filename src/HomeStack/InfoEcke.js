@@ -125,8 +125,8 @@ export const InfoEcke=(props)=>{
     }
 
     return(
-        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground}>
-            <View style={{flex:1, alignItems:'center'}}>
+        <ImageBackground source={require('../../assets/Startseite_kurz.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart />
                 </View>
@@ -155,7 +155,7 @@ export const InfoEcke=(props)=>{
                     </View>
                 </View>
                 
-            </View>
+                <View style={{height:60}}/>
             
         </ImageBackground>
 
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     },
     KursItemDone: {
         flex: 1,
-        backgroundColor: '#46498270',
+        backgroundColor: '#46498290',
         alignItems: 'center',
         flexDirection: 'row',
         height: 75,
@@ -207,16 +207,17 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         borderRadius: 10,
         width: '85%',
-        height:'50%',
+        height: 35,
         alignItems:'center', 
         justifyContent: 'center', 
-        backgroundColor: "#46498290",
+        backgroundColor: "#464982b2",
         borderRadius: 10,
         paddingLeft: 10,
     },
     imagebackground: {
         flex: 1,
         resizeMode: 'cover',
+        alignItems:'center',
     },
     background: {
         backgroundColor: "#0F113A90",

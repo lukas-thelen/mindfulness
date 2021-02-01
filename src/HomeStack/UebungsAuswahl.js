@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     background: {
-        backgroundColor: "#0F113A90",
+        backgroundColor: "#0F113Ab2",
         borderRadius: 10,
         alignItems: 'center',
         width: '90%',
