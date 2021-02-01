@@ -119,16 +119,21 @@ export const Tabnavigator = () =>{
               activeTintColor: '#D476D5',
               inactiveTintColor: '#fff',
               style:{
+                height:60,
+                borderTopLeftRadius:15,
+                borderTopRightRadius:15,
                 backgroundColor: '#0F113A',
-              }
+                position:"absolute"
+              },
+              showLabel:false,
             }}
           >
             <Tab.Screen 
               name="Freunde" 
               component={FreundeScreen}
               options={{
-                tabBarIcon: ({ tintcolor }) => (
-                  <Feather name="users" size={30} color={'#fff'} />
+                tabBarIcon: ({focused}) => (
+                  <Feather name="users" size={30} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />
@@ -136,8 +141,8 @@ export const Tabnavigator = () =>{
               name="Home" 
               component={HomeScreen} 
               options={{
-                tabBarIcon: ({ tintcolor }) => (
-                  <Feather name="home" size={30} color="white" />
+                tabBarIcon: ({ focused }) => (
+                  <Feather name="home" size={30} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />
@@ -145,8 +150,8 @@ export const Tabnavigator = () =>{
               name="Profil" 
               component={ProfilScreen} 
               options={{
-                tabBarIcon: ({ tintcolor }) => (
-                  <Feather name="user" size={30} color="white" />
+                tabBarIcon: ({ focused }) => (
+                  <Feather name="user" size={30} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />

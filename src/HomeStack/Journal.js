@@ -128,6 +128,7 @@ export const Journal = (props) => {
                     </View>
                 </View>
             </View>
+            <View style={{height:60}}/>
         </ImageBackground>
     )
 }

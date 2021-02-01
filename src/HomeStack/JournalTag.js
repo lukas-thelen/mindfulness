@@ -135,6 +135,7 @@ export const JournalTag = ({navigation, route}) => {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
+            <View style={{height:60}}/>
         </ImageBackground>
     )
 }

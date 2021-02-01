@@ -111,12 +111,9 @@ export const HomeScreen = ()=> {
           <HomeStack.Screen name="Wähle eine Übung!" component={UebungsAuswahl}/>
           <HomeStack.Screen name="Wähle eine Version" component={VersionsAuswahl}/>
           <HomeStack.Screen name="AudioPlayer" component={AudioPlayer}/>
-          <HomeStack.Screen name="Alle Übungen" component={AlleUebungen}/>
-          <HomeStack.Screen name="Journal" component={Journal}/>
           <HomeStack.Screen options={{title:"test"}} name="individueller Tag" component={JournalTag}/>
           <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly}/>
           <HomeStack.Screen name="Info Ecke" component={InfoEcke}/>
-          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
           <HomeStack.Screen name="Wähle die Dauer" component={VersionsAuswahlText}/>
           <HomeStack.Screen name="Text-Übung" component={TextPlayer}/>
         </HomeStack.Navigator>
