@@ -95,7 +95,7 @@ export const Statistiken = () => {
                 amountArray.push({y:0,x:6-amountArray.length})
                 minutesArray.push({y:0,x:6-minutesArray.length})
             }
-            if(userData.journal[dayString]&&userData.journal[dayString].stimmung){
+            if(userData.journal[dayString]&&userData.journal[dayString].journalChanged){
                 dailyStressArray.push({y:userData.journal[dayString].stress,x:6-dailyStressArray.length })
                 cravingArray.push({y:userData.journal[dayString].craving,x:6-cravingArray.length })
                 stimmungArray.push({y:userData.journal[dayString].stimmung,x:6-stimmungArray.length })
