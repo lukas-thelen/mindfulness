@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import CheckBox from '@react-native-community/checkbox';
+import { CheckBox } from 'react-native-elements'
 
 import {AppContext} from './context.js';
 import { globalStyles } from './globalStyles.js';
@@ -130,8 +130,7 @@ export const Registrieren =(props)=>{
           onCancel={showDatepicker}
         />*/}
         <View style={{flexDirection:"row", alignItems:"center"}}>
-          {/* die Farbbearbeitung funktioniert für Apple und android unterschiedlich s. https://github.com/react-native-checkbox/react-native-checkbox */}
-          <CheckBox tintColors={{true:"pink", false:"white"}} value={agb} onValueChange={(newValue) => changeAgb(newValue)}/>
+          <CheckBox checked={agb} onPress={() => changeAgb(!agb)}/>
           <Text style={{color:"white"}}>Ich habe die AGB natürlich gelesen.</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={() =>abschicken()}>
