@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import CheckBox from '@react-native-community/checkbox';
 
 import {AppContext} from './context.js';
 import { globalStyles } from './globalStyles.js';
@@ -16,6 +17,7 @@ export const Registrieren =(props)=>{
     const [name, changeName] = useState("")
     const [birthday, changeBirthday] = useState(new Date())
     const [age, changeAge] =useState(null)
+    const [agb, changeAgb] =useState(false)
     const [gender, changeGender] = useState("")
     const [datepicker, showDatepicker] = useState(false)
     const [dateChanged, changeDateChanged] = useState(false)
@@ -30,7 +32,6 @@ export const Registrieren =(props)=>{
       userData.eMail = eMail;
       userData.password = password;
       userData.name = name;
-      userData.gender = gender;
       //userData.birthday = birthday;
       userData.age = age;
 
@@ -42,7 +43,7 @@ export const Registrieren =(props)=>{
 
     //Nutzerinformationen prüfen und überarbeiten
     const abschicken =()=>{
-      if (eMail === "" || password === "" || name===""|| age===0 || gender === ""){
+      if (eMail === "" || password === "" || name===""|| age===0){
         Alert.alert(
           'Unvollständig',
           'Bitte fülle alle Felder aus!',
@@ -61,6 +62,12 @@ export const Registrieren =(props)=>{
         Alert.alert(
           'E-Mail-Adresse bereits vergeben',
           'Unter dieser Adresse besteht bereits ein Konto. Versuche dich damit anzumelden!',
+          { cancelable: false }
+        );
+      }else if(!agb){
+        Alert.alert(
+          'Bitte stimme unseren AGB zu',
+          '',
 
           [{ text: 'zum Anmelden', onPress: () => props.changeInitPages('Anmelden') }, {text:"ok"}],
           { cancelable: false }
@@ -69,10 +76,6 @@ export const Registrieren =(props)=>{
         storeData()
       }
     }
-
-
-    const genderData = [
-      {label: 'männlich'},{label: 'weiblich'},{label: 'divers'}];
 
     //Geburtstag bestätigen
     const handleConfirm = (selectedDate) => {
@@ -126,15 +129,11 @@ export const Registrieren =(props)=>{
           onConfirm={handleConfirm}
           onCancel={showDatepicker}
         />*/}
-
-
-        <Text style={styles.text}>Geschlecht</Text>
-        <RadioButtonRN
-          boxStyle={styles.radio}
-          data={genderData}
-          selectedBtn={(e) => changeGender(e.label)}
-        />
-
+        <View style={{flexDirection:"row", alignItems:"center"}}>
+          {/* die Farbbearbeitung funktioniert für Apple und android unterschiedlich s. https://github.com/react-native-checkbox/react-native-checkbox */}
+          <CheckBox tintColors={{true:"pink", false:"white"}} value={agb} onValueChange={(newValue) => changeAgb(newValue)}/>
+          <Text style={{color:"white"}}>Ich habe die AGB natürlich gelesen.</Text>
+        </View>
         <TouchableOpacity style={styles.button} onPress={() =>abschicken()}>
             <LinearGradient
             colors={['#80DEE4', '#89FFE3']}
@@ -147,6 +146,7 @@ export const Registrieren =(props)=>{
         <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
               <Text style={{color: '#fff', fontSize: 12,textDecorationLine: "underline"}}>Zurück</Text>
         </TouchableOpacity>
+        
       </View>
       </KeyboardAwareScrollView>
     )
