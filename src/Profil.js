@@ -63,6 +63,7 @@ export const ProfilRoot = ({navigation})=> {
             </TouchableOpacity>
           </View>
 
+
           <View style={{flex:0.2, alignItems:'center', width:'90%'}}>
           <TouchableOpacity style={styles.streak} onPress={()=>navigation.navigate("Statistiken")}>
               <Text style={{color:'#fff'}}>Streak {userData.benchmarks.streak}</Text>
