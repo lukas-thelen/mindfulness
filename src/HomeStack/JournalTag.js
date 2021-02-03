@@ -88,13 +88,13 @@ export const JournalTag = ({navigation, route}) => {
                     <Slider
                         style={{width: 200, height: 40}}
                         minimumValue={0}
-                        maximumValue={6}
+                        maximumValue={4}
                         minimumTrackTintColor='#89FFF1'
                         maximumTrackTintColor='#D476D5'
                         step={1}
                         value={stimmung}
                         onValueChange={changeStimmung}
-                        disabled={status()==="past"||status()==="future"? true:false}
+                        disabled={!editable? true:false}
                     />
                   <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>{stimmungsÜbersetzung[stimmung]}</Text>
                 </View>
@@ -159,6 +159,7 @@ export const JournalTag = ({navigation, route}) => {
                 <TextInput blurOnSubmit={true} multiline={true}defaultValue={sonstiges} onChangeText={changeSonstiges} style={styles.textBox}></TextInput>
                 <Button title="speichern"   onPress={()=>storeData()}></Button>
             </View>
+            <View style={{height:60}}/>
         </ScrollView>
         </ImageBackground>
 

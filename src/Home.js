@@ -173,6 +173,7 @@ export const HomeScreen = ()=> {
           <HomeStack.Screen name="Info Ecke" component={InfoEcke}/>
           <HomeStack.Screen name="Wähle die Dauer" component={VersionsAuswahlText}/>
           <HomeStack.Screen name="Text-Übung" component={TextPlayer}/>
+          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
         </HomeStack.Navigator>
     )
 }
