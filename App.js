@@ -97,6 +97,7 @@ export const Tabnavigator = () =>{
 
 
   return(
+    
     <View style = { {height: "100%", width: "100%"}}>
         <Modal
                   animationType="slide"
@@ -111,6 +112,7 @@ export const Tabnavigator = () =>{
                 </View>
                 </View>
           </Modal>
+        
         <NavigationContainer>
           <Tab.Navigator initialRouteName="Home">
             <Tab.Screen name="Freunde" component={FreundeScreen} />
