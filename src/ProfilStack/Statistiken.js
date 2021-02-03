@@ -23,7 +23,7 @@ export const Statistiken = () => {
     const [maxValue, changeMaxValue] = useState(4)
     const {userData, cahngeUserData, appData, changeAppData}=useContext(AppContext)
     const contentInset = { top: 20, bottom: 20 }
-    const colors = ["#65fe35", "#5792ff", "#aaaa00", "#ccaa00", "#4499ed", "#99aaff", "#de2277", "#47be78"]
+    const colors = ["pink", "#5792ff", "#aaaa00", "#ccaa00", "#4499ed", "#99aaff", "#de2277", "#47be78"]
 
     useEffect(()=>{
         let max= 4
@@ -176,9 +176,9 @@ export const Statistiken = () => {
                     <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
                     {meditations&&<Line data={getData().meditations} smoothing="cubic-spline" theme={{ stroke: { color: colors[0], width: 3 } }} />}
                     {minutes&&<Line data={getData().minutes} smoothing="cubic-spline" theme={{ stroke: { color: colors[1], width: 3 } }} />}
-                    {dailyStress&&<Line data={resize(getData().dailyStress)} smoothing="cubic-spline" theme={{ stroke: { color: colors[2], width: 3 } }} />}
-                    {craving&&<Line data={resize(getData().craving)} smoothing="cubic-spline" theme={{ stroke: { color: colors[3], width: 3 } }} />}
-                    {stimmung&&<Line data={resize(getData().stimmung)} smoothing="cubic-spline" theme={{ stroke: { color: colors[4], width: 3 } }} />}
+                    {stimmung&&<Line data={resize(getData().stimmung)} smoothing="cubic-spline" theme={{ stroke: { color: colors[2], width: 3 } }} />}
+                    {dailyStress&&<Line data={resize(getData().dailyStress)} smoothing="cubic-spline" theme={{ stroke: { color: colors[3], width: 3 } }} />}
+                    {craving&&<Line data={resize(getData().craving)} smoothing="cubic-spline" theme={{ stroke: { color: colors[4], width: 3 } }} />}
                     {pflichten&&<Line data={resize(getData().pflichten)} smoothing="cubic-spline" theme={{ stroke: { color: colors[5], width: 3 } }} />}
                     {heuteStunden&&<Line data={getData().heuteStunden} smoothing="cubic-spline" theme={{ stroke: { color: colors[6], width: 3 } }} />}
                     {morgenStunden&&<Line data={getData().morgenStunden} smoothing="cubic-spline" theme={{ stroke: { color: colors[7], width: 3 } }} />}
@@ -206,17 +206,17 @@ export const Statistiken = () => {
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
                 <CheckBox value={stimmung} onValueChange={(newValue) => changeStimmung(newValue)}/>
-                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[4]}}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[2]}}/>
                 <Text>Stimmung</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
                 <CheckBox value={dailyStress} onValueChange={(newValue) => changeDailyStress(newValue)}/>
-                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[2]}}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[3]}}/>
                 <Text>Stress (täglich)</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
                 <CheckBox value={craving} onValueChange={(newValue) => changeCraving(newValue)}/>
-                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[3]}}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[4]}}/>
                 <Text>Craving</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
