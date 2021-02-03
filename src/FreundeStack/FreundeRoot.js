@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Modal, TouchableOpacity, Share} from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Modal, TouchableOpacity, Share, ImageBackground} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -8,6 +8,8 @@ import { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import { redirectURL } from '../../appDaten.js';
+import { Feather } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export const FreundeRoot =({navigation}) => {
@@ -115,8 +117,8 @@ export const FreundeRoot =({navigation}) => {
     const renderPuzzle=({item})=>{
         return (
             <TouchableOpacity style={styles.puzzle}onPress={()=>{navigation.navigate("Puzzle",{id:item.id}) }}>
-                <MaterialCommunityIcons name="puzzle-outline" size={24} color="black" />
-                <Text style={{fontSize:16}}>{puzzleText(item.friends)}</Text>
+                <MaterialCommunityIcons name="puzzle-outline" size={22} color="#fff" />
+                <Text style={{fontSize:16, color:'#fff', marginLeft:5}}>{puzzleText(item.friends)}</Text>
             </TouchableOpacity>
         )
     }
@@ -137,12 +139,13 @@ export const FreundeRoot =({navigation}) => {
                 }               
             }}
           >
-            <Text style={{fontSize:16}}>{item.name}</Text>
+            <Text style={{color:'#fff', fontSize:16}}>{item.name}</Text>
           </TouchableOpacity>
         )
       }
     return (
-        <View>
+      <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+        
             <Modal
                   animationType="slide"
                   transparent={true}
@@ -150,30 +153,52 @@ export const FreundeRoot =({navigation}) => {
               >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                    <FlatList
-                        data={freundeArray()}
-                        keyExtractor={(item, index)=>item.email}
-                        renderItem={renderFreunde}
-                    ></FlatList>
-                    <Button title="abbrechen" onPress={()=>{changeModalVisible(false), changeSelectedFriends([currentUser,])}}></Button>
-                    <Button disabled={selectedFriends.length===1&&true}title="erstellen" onPress={()=>neuesPuzzle()}></Button>
+                      <FlatList
+                          style={{marginVertical:10, width:'95%'}}
+                          data={freundeArray()}
+                          keyExtractor={(item, index)=>item.email}
+                          renderItem={renderFreunde}
+                      ></FlatList>
+                      <TouchableOpacity style={styles.button} disabled={selectedFriends.length===1&&true} onPress={()=>neuesPuzzle()}>
+                        <LinearGradient
+                            colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 2 }}
+                            style={styles.gradient}>
+                                <Text style={{color:'#fff', fontSize:18}}>Erstellen</Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={{marginTop:20}} onPress={()=>{changeModalVisible(false), changeSelectedFriends([currentUser,])}}>
+                        <Text style={{...styles.text, textDecorationLine:'underline'}}>Abbrechen</Text>
+                      </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
-            <Button title="Meine Freunde" onPress={()=> {navigation.navigate("Meine Freunde")}}></Button>
-            <Text style={{textAlign:"center", fontSize:22, margin:20}}>PUZZLES</Text>
-            <View style={{height:"60%", backgroundColor:"#e1e1e1", width:"95%", alignSelf:"center", borderWidth:1, borderRadius:20}}>
-              <FlatList
-                  data={puzzleArray()}
-                  keyExtractor={(item, index)=>item.id}
-                  renderItem={renderPuzzle}
-                  extraData={puzzleArray()}
-              ></FlatList>
+            
+            <View style={{flex:0.15, width:'100%'}}>
+              <TouchableOpacity style={{alignItems:'flex-end', marginTop:20, marginRight:20}} onPress={()=> {navigation.navigate("Meine Freunde")}}>
+                <Feather name="users" size={30} color={'#fff'} style={{marginRight:35}}/> 
+                <Text style={styles.text}>Meine Freunde</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity style={{width:50, height:50, borderRadius:100, backgroundColor:"white", justifyContent:"center", alignItems:"center", borderWidth:2, alignSelf:"center", marginTop:25}}onPress={()=> {changeModalVisible(true)}}>
-              <MaterialCommunityIcons name="puzzle-plus-outline" size={35} color="black" />
-            </TouchableOpacity>
-        </View>
+
+            <View style={{flex:0.85, alignItems:'center', width:'100%'}}>
+              <Text style={{color:'#fff', textAlign:"center", fontSize:22, marginBottom:20}}>PUZZLES</Text>
+              <View style={styles.background}>
+                <FlatList
+                    style={{marginVertical:10, width:'95%'}}
+                    data={puzzleArray()}
+                    keyExtractor={(item, index)=>item.id}
+                    renderItem={renderPuzzle}
+                    extraData={puzzleArray()}
+                ></FlatList>
+                <TouchableOpacity style={styles.puzzleNeu}onPress={()=> {changeModalVisible(true)}}>
+                  <Text style={styles.text}>Neues Puzzle</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+        <View style={{height:60}}/>
+      </ImageBackground>
     )
   }
   
@@ -184,50 +209,88 @@ export const FreundeRoot =({navigation}) => {
       alignItems: "center"
     },
     modalView: {
-      margin: 20,
-      width:"80%",
-      height:"80%",
-      backgroundColor: "white",
-      borderRadius: 20,
+      backgroundColor: '#0F113A',
+      width: '90%',
+      height:"60%",
+      borderColor: '#8F92E3',
+      borderWidth: 1,
+      borderRadius: 15,
+      borderRadius: 15,
       padding: 35,
       alignItems: "center",
       shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
+      shadowOffset: {width:0, height:4},
+      shadowOpacity: 0.4,
+      shadowRadius: 4,
       elevation: 5,
       justifyContent:"space-between"
     },
     friend:{
-        height:40, 
-        width:300, 
-        backgroundColor:"white", 
+        height:45, 
+        width:'100%', 
+        backgroundColor:"#464982", 
         alignSelf:"center", 
-        margin:10, 
-        justifyContent:"center", 
-        paddingLeft:20
-    },
-    selectedFriend:{
-        height:40, 
-        width:300, 
-        backgroundColor:"white", 
-        alignSelf:"center", 
-        margin:10, 
         justifyContent:"center", 
         paddingLeft:20,
-        backgroundColor:"#aaccaa"
+        borderRadius:10,
+    },
+    selectedFriend:{
+        height:45, 
+        width:'100%', 
+        backgroundColor:'#89FFF1b2', 
+        alignSelf:"center", 
+        justifyContent:"center", 
+        paddingLeft:20,
+        borderRadius:10,
     },
     puzzle:{
-      height:40, 
-      width:300, 
-      backgroundColor:"white", 
-      alignSelf:"center", 
-      margin:10, 
+      height:50, 
+      width:'100%', 
+      backgroundColor:"#464982", 
+      alignSelf:"flex-end", 
       alignItems:"center", 
       paddingLeft:20,
-      flexDirection:"row"
-    }
+      flexDirection:"row",
+      borderRadius:10,
+    },
+    puzzleNeu:{
+      height:50, 
+      width:'95%', 
+      backgroundColor:"#D874D4", 
+      alignSelf:"center", 
+      alignItems:"center",
+      justifyContent:'center',
+      borderRadius:10,
+    },
+    imagebackground: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    background: {
+      backgroundColor: "#0F113A90",
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      padding:10,
+      width: '90%',
+      height: '75%',
+   },
+    text: {
+      color:'#fff',
+      fontSize: 16,
+    },
+    gradient: {
+      alignItems: 'center',
+      borderRadius: 16,
+      paddingVertical: 5,
+      paddingHorizontal: 30,
+    },
+    button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {width:0, height:4},
+      shadowRadius: 4,
+      shadowOpacity: 0.4,
+    },
   });

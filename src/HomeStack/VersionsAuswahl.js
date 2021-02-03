@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -57,7 +57,7 @@ export const VersionsAuswahl =({navigation, route})=>{
          return kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher[sprecherIndex].VersionenNachDauer.findIndex(item => item.Dauer === dauer)
     }
     return (
-        <View style={{padding:15}}>
+        <ImageBackground source={require('../../assets/ErsteSeite.png')} style={styles.imagebackground}>
             <View style={{flexDirection:"row"}}>
                 <Text style={{marginBottom:15, fontSize:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
                 <TouchableOpacity 
@@ -78,7 +78,7 @@ export const VersionsAuswahl =({navigation, route})=>{
                 data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher[sprecherIndex].VersionenNachDauer}
                 keyExtractor={item=>item.Dauer.toString()}
                 renderItem={renderDauer}
-    ></FlatList> */}
+                ></FlatList> */}
             <View style = {{flexDirection: "row", justifyContent: "center"}}>
 
                 <View style= {{flex:1, justifyContent: "center", alignItems: "flex-end"}}>
@@ -101,16 +101,21 @@ export const VersionsAuswahl =({navigation, route})=>{
                     </TouchableOpacity>}
                 </View>
             </View>
-
             {sprecher!=""&&dauerIndex()!=-1?
                 <TouchableOpacity style={{alignSelf:"center"}}onPress={()=>abspielen()}>
-                    <Ionicons name="play" size={50} color="black" /> 
+                    <LinearGradient
+                    colors={['#89FFF1', '#8F92E3', '#D476D5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 2 }}
+                    style={styles.gradient}>
+                        <Text style={styles.text25}>Übung starten</Text>
+                    </LinearGradient>
                 </TouchableOpacity>:
                 <View style={{alignSelf:"center"}}>
                     <Ionicons name="play" size={50} color="lightgrey" /> 
                 </View>
-            }
-        </View>
+}
+            </ImageBackground>
     )
 }
 
@@ -182,5 +187,18 @@ const styles = StyleSheet.create({
         color: "grey",
         margin: 5,
         fontSize:25
-    }
+    },
+    imagebackground: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    gradient: {
+        alignItems: 'center',
+        borderRadius: 13,
+        paddingBottom: 4,
+        paddingTop: 4,
+        paddingHorizontal: 20,
+      },
   });

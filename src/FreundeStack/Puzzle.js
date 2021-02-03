@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Modal, Share, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Modal, Share, Image, ImageBackground} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -9,6 +9,8 @@ import * as Linking from 'expo-linking';
 import { checkBenchmarks } from '../benchmarks.js';
 import { redirectURL } from '../../appDaten.js';
 import { images } from '../../assets/Puzzles/puzzleImg.js';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export const Puzzle = ({route, navigation}) => {
@@ -50,7 +52,7 @@ export const Puzzle = ({route, navigation}) => {
             )
         }else{
             return(
-                <View style={{borderWidth:1, height:90, flex:0.25}}>
+                <View style={{borderWidth:1, height:80, flex:0.25}}>
                 </View>
             )
         }
@@ -130,42 +132,71 @@ export const Puzzle = ({route, navigation}) => {
     } 
 
     return (
-        <View>
-        {userData.friends.puzzles[route.params.id]&&<View>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text>Wie viele Teile möchstest du einsetzen?</Text>
-                        <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-around", width:200, marginTop:30}}>
-                            <Text>{layedPieces}</Text>
-                            <View style={{flexDirection:"column"}}>
-                                <Button disabled={layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded()}title="+" onPress={()=>{changeLayedPieces(layedPieces+1)}}></Button>
-                                <Button disabled={layedPieces<=1}title="-" onPress={()=>{changeLayedPieces(layedPieces-1)}}></Button>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+            
+            {userData.friends.puzzles[route.params.id]&&<View style={{flex:1, alignItems:'center', justifyContent:'center', width:'100%'}}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={{color:'#fff', fontSize:17, textAlign:'center'}}>Wie viele Teile möchstest du einsetzen?</Text>
+                            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center", marginTop:30}}>
+                                <Text style={{color:'#fff', fontSize:17, marginHorizontal:20}}>{layedPieces}</Text>
+                                <View style={{flexDirection:"column", alignItems:'center'}}>
+                                    <TouchableOpacity style={{marginHorizontal:20, marginVertical:10}} disabled={layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded()} onPress={()=>{changeLayedPieces(layedPieces+1)}}>
+                                        <Text style={{color:'#fff', fontSize:17}}>+</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{marginHorizontal:20, marginVertical:10}} disabled={layedPieces<=1} onPress={()=>{changeLayedPieces(layedPieces-1)}}>
+                                        <Text style={{color:'#fff', fontSize:17}}>-</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
+                            <TouchableOpacity style={{...styles.button, marginTop:30}} onPress={()=>{layPieces()}}>
+                                <LinearGradient
+                                    colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 2 }}
+                                    style={styles.gradient}>
+                                        <Text style={{color:'#fff', fontSize:16}}>Einsetzen</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginTop:20}} onPress={()=>{changeModalVisible(false), changeLayedPieces(1)}}>
+                                <Text style={{color:'#fff', textDecorationLine:'underline'}}>Abbrechen</Text>
+                            </TouchableOpacity>
                         </View>
-                        <Button title="abbrechen" onPress={()=>{changeModalVisible(false), changeLayedPieces(1)}}></Button>
-                        <Button title="einsetzen" onPress={()=>{layPieces()}}></Button>
                     </View>
+                </Modal>
+                
+                <View style={styles.background}>
+                    <Text style={{...styles.text20, marginBottom:16}}>{puzzleText(userData.friends.puzzles[route.params.id].friends)}</Text>
+                    <View style={{width:320, alignSelf:"center", backgroundColor:'#46498290'}}>
+                        <FlatList
+                            numColumns={4}
+                            data={[5,9,0,11,3,6,8,1,10,2,7,4]}
+                            keyExtractor={(item, index)=>index}
+                            renderItem={renderPuzzleTeile}
+                        ></FlatList>
+                    </View>
+                    <Text style={{color:'#fff', marginVertical:10}}>Verfügbare Puzzleteile: {userData.friends.pieces}</Text>
+                    <TouchableOpacity style={{...styles.button, marginTop:20}} disabled={maxNeeded()===0||userData.friends.pieces===0} onPress={()=>einsetzen()}>
+                        <LinearGradient
+                            colors={['#89FFF1', '#80DEE4', '#8F92E3', '#D476D5']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={styles.gradient}>
+                                <Text style={{color:'#0F113A', fontSize:18}}>Teil einsetzen</Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{alignItems:'center', marginTop:15}} onPress={()=>löschen()}>
+                        <Text style={{color:'#fff', textDecorationLine:'underline'}}>Puzzle löschen</Text>
+                    </TouchableOpacity>
                 </View>
-            </Modal>
-            <Text>{puzzleText(userData.friends.puzzles[route.params.id].friends)}</Text>
-            <View style={{width:360, alignSelf:"center"}}>
-                <FlatList
-                    numColumns={4}
-                    data={[5,9,0,11,3,6,8,1,10,2,7,4]}
-                    keyExtractor={(item, index)=>index}
-                    renderItem={renderPuzzleTeile}
-                ></FlatList>
-            </View>
-            <Text>{userData.friends.pieces}</Text>
-            <Button disabled={maxNeeded()===0||userData.friends.pieces===0}title="Puzzleteile einsetzen" onPress={()=>einsetzen()}></Button>
-            <Button title="Puzzle löschen" onPress={()=>löschen()}></Button>
-        </View>}
-        </View>
+            </View>}
+            <View style={{height:60}}/>
+        </ImageBackground>
     )
 }
 
@@ -176,25 +207,53 @@ const styles = StyleSheet.create({
       alignItems: "center"
     },
     modalView: {
-      margin: 20,
-      width:"80%",
-      height:"80%",
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
+        backgroundColor: '#0F113A',
+        width:"90%",
+        height:"60%",
+        borderColor: '#8F92E3',
+        borderWidth: 1,
+        borderRadius: 15,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {width:0, height:4},
+        shadowOpacity: 0.4,
+        shadowRadius: 4,
+        elevation: 5,
+        justifyContent:"center"
     },
     image:{
         borderWidth:1, 
-        height:90, 
+        height:80, 
         flex:0.25
-    }
+    },
+    imagebackground: {
+        flex: 1,
+        alignItems:'center'
+    },
+    gradient: {
+        alignItems: 'center',
+        borderRadius: 16,
+        paddingVertical: 5,
+        paddingHorizontal: 30,
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
+    },
+    text20: {
+        color:'#fff',
+        fontSize: 20,
+    },
+    background: {
+        backgroundColor: "#0F113A90",
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        padding:15,
+     },
   });

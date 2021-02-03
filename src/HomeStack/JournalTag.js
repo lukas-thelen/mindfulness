@@ -1,13 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
+
+import { StyleSheet, Text, View, Button, TextInput, ImageBackground, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Slider from '@react-native-community/slider';
+import { LinearGradient } from 'expo-linear-gradient';
 import CheckBox from '@react-native-community/checkbox';
+
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const JournalTag = ({navigation, route}) => {
+
     const [stimmung, changeStimmung]= useState(2)
     const [stress, changeStress]= useState(2)
     const [craving, changeCraving]= useState(2)
@@ -21,12 +26,14 @@ export const JournalTag = ({navigation, route}) => {
     const userDataTemp = {...userData}
     const today = new Date()
     const date = new Date(route.params.date)
+
     const yesterday = new Date()
     yesterday.setDate(yesterday.getDate()-1)
-    const stimmungsÜbersetzung={0:"sehr schlecht", 1:"eher schlecht", 2:"neutral", 3:"eher gut", 4:"sehr gut"}
+    const stimmungsÜbersetzung={0:"sehr schlecht", 1:"schlecht", 2:"neutral", 3:"gut", 4:"sehr gut"}
     const stressÜbersetzung={0:"gar nicht", 1:"eher wenig", 2:"durchschnittlich", 3:"eher stark", 4:"sehr stark"}
     const cravingÜbersetzung={0:"nie", 1:"selten", 2:"manchmal", 3:"oft", 4:"immer"}
     const pflichtenÜbersetzung={0:"nein", 1:"eher nein", 2:"jaein", 3:"eher ja", 4:"ja"}
+
 
     useEffect(()=>{
         if(today.toDateString()===date.toDateString()|| yesterday.toDateString()===date.toDateString()){
@@ -70,24 +77,27 @@ export const JournalTag = ({navigation, route}) => {
     }
 
     return (
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
         <ScrollView >
             <View style = {{alignItems: "center"}}>
-                <Text style={{fontSize:25}}>Datum: {date.getDate()}.{date.getMonth()+1}</Text>
-                <Text style={{fontSize:25}}>Platz für deine Gedanken:</Text>
+                <Text style={styles.text25}>Datum: {date.getDate()}.{date.getMonth()+1}</Text>
+                <Text style={styles.text25}>Platz für deine Gedanken:</Text>
                 <View style={styles.trennlinie}></View>
-                <Text style={!editable?{color:"grey"}:{color:"black"}}>Wie geht's Dir heute?</Text>
-                <Slider
-                    style={{width: 200, height: 40}}
-                    minimumValue={0}
-                    maximumValue={4}
-                    minimumTrackTintColor="green"
-                    maximumTrackTintColor="red"
-                    step={1}
-                    value={stimmung}
-                    onValueChange={changeStimmung}
-                    disabled={!editable? true:false}
-                />
-                <Text>{stimmungsÜbersetzung[stimmung]}</Text>
+                <View style={styles.background}>
+                    <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie geht's dir heute?</Text>
+                    <Slider
+                        style={{width: 200, height: 40}}
+                        minimumValue={0}
+                        maximumValue={6}
+                        minimumTrackTintColor='#89FFF1'
+                        maximumTrackTintColor='#D476D5'
+                        step={1}
+                        value={stimmung}
+                        onValueChange={changeStimmung}
+                        disabled={status()==="past"||status()==="future"? true:false}
+                    />
+                  <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>{stimmungsÜbersetzung[stimmung]}</Text>
+                </View>
 
                 <View style={styles.trennlinie}/>
 
@@ -150,38 +160,33 @@ export const JournalTag = ({navigation, route}) => {
                 <Button title="speichern"   onPress={()=>storeData()}></Button>
             </View>
         </ScrollView>
+        </ImageBackground>
+
     )
 }
 const styles = StyleSheet.create({
-    tag: {
-      backgroundColor: '#fff',
-      justifyContent: 'center',
-      height:50,
-      borderColor:"black",
-      borderBottomWidth:1,
-      paddingLeft:30,
-    },
     textInput:{ 
-        height: 20, 
-        borderColor: 'gray', 
-        borderWidth: 1, 
-        width:200, 
-        borderRadius:200, 
-        paddingLeft:10
+        borderColor: '#ffffff90', 
+        borderWidth: 1,
+        borderRadius:10,
+        color: '#fff',
+        textAlign: 'center',
+        paddingVertical:6, 
+        paddingHorizontal:20,
     },
     textBox:{ 
-        height: 200, 
-        borderColor: 'gray', 
+        height: 130,
+        borderColor: '#ffffff90', 
         borderWidth: 1, 
-        width:300, 
+        width:'100%', 
         borderRadius:10, 
-        paddingLeft:10,
+        padding:10,
         textAlignVertical:"top",
+        color: '#fff',
     },
     trennlinie:{
         height:1,
         width:"100%",
-        backgroundColor:"black",
         marginBottom:10,
         marginTop:10
     },
@@ -190,5 +195,40 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         alignItems: "flex-start", 
         justifyContent: "center",
-    }
+    },
+    imagebackground: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    text: {
+        color: '#fff',
+        marginBottom: 5,
+    },
+    text25: {
+        color: '#fff',
+        fontSize: 25,
+    },
+    gradient: {
+        alignItems: 'center',
+        borderRadius: 14,
+        paddingVertical: 5,
+        paddingHorizontal: 30,
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
+    },
+    background: {
+        backgroundColor: "#0F113A90",
+        padding:20,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent:'center',
+        width: '90%',
+        marginVertical: 6,
+    },
   });

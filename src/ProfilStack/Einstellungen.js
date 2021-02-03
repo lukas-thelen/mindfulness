@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Switch, TextInput, TouchableOpacity, Platform} from 'react-native';
+import { StyleSheet, Text, View, Button, Switch, TextInput, TouchableOpacity, Platform, ImageBackground} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -9,6 +9,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { FlatList } from 'react-native-gesture-handler';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Feather } from '@expo/vector-icons';
 
 export const Einstellungen = ({navigation}) => {
 const initTime = new Date()
@@ -133,9 +135,9 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
         }
         return(
             <View style= {styles.reihe}>
-                <Text>{index+1}. Uhrzeit:  </Text>
+                <Text style={styles.text}>{index+1}. Uhrzeit:  </Text>
                 <TouchableOpacity onPress={()=>{showTimepicker(true); changeIndexTime(index)}}>
-                    <Text>{item!=null ? item.getHours().toString()+":"+minutes+" Uhr":"hier eingeben"}</Text>
+                    <Text style={styles.text}>{item!=null ? item.getHours().toString()+":"+minutes+" Uhr":"hier eingeben"}</Text>
                 </TouchableOpacity>
                 {Platform.OS === 'ios'?
                     <DateTimePickerModal
@@ -158,51 +160,122 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
     }
 
     return (
-        <View style ={{flex:1}}>
-            <View style= {styles.reihe}>
-                <Text>Erinnerungen</Text>
-                <Switch onValueChange={()=>{changeNotifications(!notifications)}} value={notifications}/>
-            </View>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
 
-            {notifications&& <View style= {styles.reihe}>
-                <Text>Anzahl</Text>
-                <TextInput 
-                    defaultValue={""+anzahl}
+                <View style={{flex:0.6, paddingTop:40}}>
+                    <View style= {styles.reihe}>
+                        <Text style={styles.text}>Erinnerungen: </Text>
+                        <Switch 
+                            trackColor={{ false: "#3D3D3D", true: "#80DEE4" }}
+                            ios_backgroundColor="#3D3D3D"
+                            thumbColor='#fff'
+                            onValueChange={()=>{changeNotifications(!notifications)}} value={notifications}
+                        />
+                    </View>
 
-                    style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-                    keyboardType={'numeric'} onChangeText={number => {onChangeAnzahl(number)}}>
-                </TextInput>
-                {hinweis&&<Text style={{color:"red", fontWeight:"bold"}}>!</Text>}
-            </View>}
+                    {notifications&& <View style= {styles.reihe}>
+                        <Text style={styles.text}>Anzahl: </Text>
+                        <TextInput 
+                            defaultValue={""+anzahl}
+                            style={{color: '#fff', paddingVertical:6, paddingHorizontal:20, borderColor:'#fff', borderWidth: 1, borderRadius:10, textAlign:'center'}}
+                            keyboardType={'numeric'} onChangeText={number => {onChangeAnzahl(number)}}>
+                        </TextInput>
+                        {hinweis&&<Text style={{color:"red", fontWeight:"bold"}}>!</Text>}
+                    </View>}
 
-            {notifications&&
-                <FlatList
-                    data={times}
-                    keyExtractor={(item, index)=>index.toString()}
-                    renderItem={renderUhrzeit}
-                ></FlatList>
-            }
-            <View style={{justifyContent:"flex-end", flex:1, marginBottom:20}}>
-                <Button title="Speichern" onPress={()=>storeData()}></Button>
-                {/*<Button title="Test2" onPress={async()=>{const test = await Notifications.getAllScheduledNotificationsAsync(); console.log(test)}}></Button>*/}
-                <Button title="Konto-Einstellungen" onPress={()=>navigation.navigate("Konto-Informationen")}></Button>
-                <Button title="Informationen über die App" onPress={()=>navigation.navigate("Informationen über die App")}></Button>
-                <TouchableOpacity style={{alignItems:"center"}} onPress={() => logout() }> 
-                    <Text>Abmelden</Text>
-                </TouchableOpacity>
-            </View>
-            
-        </View>
+                    <View style={{height:'50%'}}>
+                    {notifications&&
+                        <FlatList
+                            data={times}
+                            keyExtractor={(item, index)=>index.toString()}
+                            renderItem={renderUhrzeit}
+                        ></FlatList>
+                    }
+                    </View>
+
+                    <View>
+                        <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
+                            <LinearGradient
+                                colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 2 }}
+                                style={styles.gradient}>
+                                    <Text style={styles.text}>Speichern</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <View style={{flex:0.3, width:'90%', alignItems:'center'}}>
+                    <View style={styles.background}>
+                        {/*<Button title="Test2" onPress={async()=>{const test = await Notifications.getAllScheduledNotificationsAsync(); console.log(test)}}></Button>*/}
+                        <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Konto-Informationen")}>
+                            <Text style={styles.text}>Account</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Informationen über die App")}>
+                            <Text style={styles.text}>Informationen über die App</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <View style={{flex:0.1}}>
+                <   TouchableOpacity style={{alignItems:"center", flexDirection:'row'}} onPress={() => logout() }> 
+                        <Feather name="log-out" size={22} color="white" />
+                        <Text style={{color:'#fff', fontSize:18, textDecorationLine:'underline', marginLeft:5}}>Abmelden</Text>
+                    </TouchableOpacity>
+                </View>
+                
+                <View style={{height:60}}/>
+        </ImageBackground>
     )
 }
 
 //Styles
 const styles = StyleSheet.create({
-    reihe: {
-        //flex:1,
-        flexDirection:"row",
-        alignItems: "flex-start", 
-        justifyContent: "center",
+    item: {
+        backgroundColor: '#464982',
+        borderRadius: 10,
+        height: 50,
+        marginVertical: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '90%',
     },
-
+    reihe: {
+        flexDirection:"row",
+        alignItems: "center", 
+        justifyContent: "center",
+        marginVertical: 10,
+    },
+    imagebackground: {
+        flex: 1,
+        alignItems:'center'
+    },
+    background: {
+        backgroundColor: "#0F113A90",
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical:10,
+        width: '100%',
+        marginBottom:20,
+    },
+    text: {
+        color: '#fff',
+        fontSize: 16,
+    },
+    gradient: {
+        alignItems: 'center',
+        borderRadius: 14,
+        paddingVertical: 5,
+        paddingHorizontal: 30,
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
+    },
   });

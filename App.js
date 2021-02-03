@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator } from 'react-native';
+import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView} from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,6 +11,7 @@ import { Init } from './src/Init.js';
 import { benchmarks } from './src/benchmarks.js';
 import { FreundeScreen } from './src/Freunde.js';
 import cloneDeep from 'lodash/cloneDeep';
+import { Feather } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -114,10 +115,48 @@ export const Tabnavigator = () =>{
           </Modal>
         
         <NavigationContainer>
-          <Tab.Navigator initialRouteName="Home">
-            <Tab.Screen name="Freunde" component={FreundeScreen} />
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Profil" component={ProfilScreen} />
+          <Tab.Navigator 
+            initialRouteName="Home"
+            tabBarOptions={{
+              activeTintColor: '#D476D5',
+              inactiveTintColor: '#fff',
+              style:{
+                height:60,
+                borderTopLeftRadius:15,
+                borderTopRightRadius:15,
+                backgroundColor: '#0F113A',
+                position:"absolute"
+              },
+              showLabel:false,
+            }}
+          >
+            <Tab.Screen 
+              name="Freunde" 
+              component={FreundeScreen}
+              options={{
+                tabBarIcon: ({focused}) => (
+                  <Feather name="users" size={30} color={focused?'#D476D5':"#fff"} />
+                ),
+              }}
+            />
+            <Tab.Screen 
+              name="Home" 
+              component={HomeScreen} 
+              options={{
+                tabBarIcon: ({ focused }) => (
+                  <Feather name="home" size={30} color={focused?'#D476D5':"#fff"} />
+                ),
+              }}
+            />
+            <Tab.Screen 
+              name="Profil" 
+              component={ProfilScreen} 
+              options={{
+                tabBarIcon: ({ focused }) => (
+                  <Feather name="user" size={30} color={focused?'#D476D5':"#fff"} />
+                ),
+              }}
+            />
           </Tab.Navigator>
         </NavigationContainer>
     </View>
@@ -190,10 +229,12 @@ export default function App() {
   //Wrap für gesamte App - cond. Rendering für angemeldet/nicht angemeldet
   return (
     <AppContext.Provider value={appContext}>
-      <View style={styles.pagewrap}>
+      <View style={{backgroundColor:'#000'}}>
+      <SafeAreaView style={styles.pagewrap}>
         {isLoading?<View style={{height:"100%",justifyContent:"center"}}><ActivityIndicator size="large" color="black"/></View>:<View>
           {loggedIn ? <Tabnavigator style={styles.container}/> : <Init changeLoggedIn={changeLoggedIn}/>}</View>
         }
+      </SafeAreaView>
       </View>
     </AppContext.Provider>
 
@@ -211,7 +252,7 @@ const styles = StyleSheet.create({
   },
   pagewrap:{
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   centeredView: {
     flex: 1,
