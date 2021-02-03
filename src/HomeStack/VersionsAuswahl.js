@@ -115,27 +115,28 @@ export const VersionsAuswahl =({navigation, route})=>{
                     <Ionicons name="play" size={50} color="lightgrey" /> 
                 </View>
 }
+            <View style={{height:60}}/>
             </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
     SprecherItem: {
-        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        height:100,
+        height:60,
+        width:120,
         margin:3,
         borderRadius:100,
         marginBottom:10,
     },
     SelectedItem: {
-        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        height:100,
+        height:60,
+        width:120,
         margin:3,
         borderRadius:100,
         marginBottom:10,
