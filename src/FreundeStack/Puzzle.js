@@ -11,7 +11,7 @@ import { redirectURL } from '../../appDaten.js';
 import { images } from '../../assets/Puzzles/puzzleImg.js';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export const Puzzle = ({route, navigation}) => {
     const {userData, changeUserData, changeAppData, appData, currentUser, changeNewBenchmark}=useContext(AppContext)
@@ -171,7 +171,10 @@ export const Puzzle = ({route, navigation}) => {
                 </Modal>
                 
                 <View style={styles.background}>
-                    <Text style={{...styles.text20, marginBottom:16}}>{puzzleText(userData.friends.puzzles[route.params.id].friends)}</Text>
+                    <View style={{flexDirection:'row', alignItems:'center', marginBottom:16}}>
+                        <MaterialCommunityIcons name="puzzle-outline" size={22} color="#fff" />
+                        <Text style={{...styles.text20, marginLeft:4}}>{puzzleText(userData.friends.puzzles[route.params.id].friends)}</Text>
+                    </View>
                     <View style={{width:320, alignSelf:"center", backgroundColor:'#46498290'}}>
                         <FlatList
                             numColumns={4}
@@ -181,12 +184,12 @@ export const Puzzle = ({route, navigation}) => {
                         ></FlatList>
                     </View>
                     <Text style={{color:'#fff', marginVertical:10}}>Verfügbare Puzzleteile: {userData.friends.pieces}</Text>
-                    <TouchableOpacity style={{...styles.button, marginTop:20}} disabled={maxNeeded()===0||userData.friends.pieces===0} onPress={()=>einsetzen()}>
+                    <TouchableOpacity  disabled={maxNeeded()===0||userData.friends.pieces===0} style={{...styles.button, marginTop:20}} onPress={()=>einsetzen()}>
                         <LinearGradient
                             colors={['#89FFF1', '#80DEE4', '#8F92E3', '#D476D5']}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
-                            style={styles.gradient}>
+                            style={maxNeeded()===0||userData.friends.pieces===0?{...styles.gradient, opacity:0.3}:styles.gradient}>
                                 <Text style={{color:'#0F113A', fontSize:18}}>Teil einsetzen</Text>
                         </LinearGradient>
                     </TouchableOpacity>

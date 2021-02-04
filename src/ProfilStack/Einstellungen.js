@@ -11,6 +11,7 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 export const Einstellungen = ({navigation}) => {
 const initTime = new Date()
@@ -137,7 +138,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
             <View style= {styles.reihe}>
                 <Text style={styles.text}>{index+1}. Uhrzeit:  </Text>
                 <TouchableOpacity onPress={()=>{showTimepicker(true); changeIndexTime(index)}}>
-                    <Text style={styles.text}>{item!=null ? item.getHours().toString()+":"+minutes+" Uhr":"hier eingeben"}</Text>
+                    <Text style={styles.text}>{item!=null ? item.getHours().toString()+":"+minutes+" Uhr":"(hier eingeben)"}</Text>
                 </TouchableOpacity>
                 {Platform.OS === 'ios'?
                     <DateTimePickerModal
@@ -162,9 +163,10 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
 
-                <View style={{flex:0.6, paddingTop:40}}>
+                <View style={{flex:0.6, paddingTop:40, alignItems:'center'}}>
                     <View style= {styles.reihe}>
-                        <Text style={styles.text}>Erinnerungen: </Text>
+                        <Ionicons name="notifications-outline" size={16} color="white" />
+                        <Text style={{...styles.text, marginLeft:4}}>Erinnerungen: </Text>
                         <Switch 
                             trackColor={{ false: "#3D3D3D", true: "#80DEE4" }}
                             ios_backgroundColor="#3D3D3D"
@@ -183,17 +185,15 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                         {hinweis&&<Text style={{color:"red", fontWeight:"bold"}}>!</Text>}
                     </View>}
 
-                    <View style={{height:'50%'}}>
-                    {notifications&&
+                    {notifications&& <View style={{height:'50%'}}>
                         <FlatList
                             data={times}
                             keyExtractor={(item, index)=>index.toString()}
                             renderItem={renderUhrzeit}
                         ></FlatList>
-                    }
-                    </View>
+                    </View>}
 
-                    <View>
+                    <View style={{marginTop:10}}>
                         <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
                             <LinearGradient
                                 colors={['#D476D5', '#C77BD8', '#8F92E3']}
@@ -210,17 +210,19 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                     <View style={styles.background}>
                         {/*<Button title="Test2" onPress={async()=>{const test = await Notifications.getAllScheduledNotificationsAsync(); console.log(test)}}></Button>*/}
                         <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Konto-Informationen")}>
-                            <Text style={styles.text}>Account</Text>
+                         <Ionicons name="finger-print-outline" size={16} color="white" />
+                            <Text style={{...styles.text, marginLeft:4}}>Account</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Informationen über die App")}>
-                            <Text style={styles.text}>Informationen über die App</Text>
+                        <TouchableOpacity style={{...styles.item, flexDirection:'row'}} onPress={()=>navigation.navigate("Informationen über die App")}>
+                            <Ionicons name="phone-portrait-outline" size={16} color="white" />
+                            <Text style={{...styles.text, marginLeft:4}}>Informationen über die App</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
                 <View style={{flex:0.1}}>
                 <   TouchableOpacity style={{alignItems:"center", flexDirection:'row'}} onPress={() => logout() }> 
-                        <Feather name="log-out" size={22} color="white" />
+                        <Ionicons name="log-out-outline" size={24} color="white" />
                         <Text style={{color:'#fff', fontSize:18, textDecorationLine:'underline', marginLeft:5}}>Abmelden</Text>
                     </TouchableOpacity>
                 </View>
@@ -240,6 +242,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '90%',
+        flexDirection:'row'
     },
     reihe: {
         flexDirection:"row",

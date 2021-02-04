@@ -12,6 +12,8 @@ import { benchmarks } from './src/benchmarks.js';
 import { FreundeScreen } from './src/Freunde.js';
 import cloneDeep from 'lodash/cloneDeep';
 import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -135,7 +137,7 @@ export const Tabnavigator = () =>{
               component={FreundeScreen}
               options={{
                 tabBarIcon: ({focused}) => (
-                  <Feather name="users" size={30} color={focused?'#D476D5':"#fff"} />
+                  <Ionicons name="people-outline" size={36} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />
@@ -144,7 +146,7 @@ export const Tabnavigator = () =>{
               component={HomeScreen} 
               options={{
                 tabBarIcon: ({ focused }) => (
-                  <Feather name="home" size={30} color={focused?'#D476D5':"#fff"} />
+                  <AntDesign name="home" size={30} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />
@@ -153,7 +155,7 @@ export const Tabnavigator = () =>{
               component={ProfilScreen} 
               options={{
                 tabBarIcon: ({ focused }) => (
-                  <Feather name="user" size={30} color={focused?'#D476D5':"#fff"} />
+                  <Ionicons name="person-outline" size={30} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />

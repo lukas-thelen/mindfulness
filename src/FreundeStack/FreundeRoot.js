@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import { redirectURL } from '../../appDaten.js';
-import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
@@ -177,7 +177,7 @@ export const FreundeRoot =({navigation}) => {
             
             <View style={{flex:0.15, width:'100%'}}>
               <TouchableOpacity style={{alignItems:'flex-end', marginTop:20, marginRight:20}} onPress={()=> {navigation.navigate("Meine Freunde")}}>
-                <Feather name="users" size={30} color={'#fff'} style={{marginRight:35}}/> 
+                <Ionicons name="people-outline" size={30} color={'#fff'} style={{marginRight:40}}/> 
                 <Text style={styles.text}>Meine Freunde</Text>
               </TouchableOpacity>
             </View>
@@ -193,7 +193,8 @@ export const FreundeRoot =({navigation}) => {
                     extraData={puzzleArray()}
                 ></FlatList>
                 <TouchableOpacity style={styles.puzzleNeu}onPress={()=> {changeModalVisible(true)}}>
-                  <Text style={styles.text}>Neues Puzzle</Text>
+                <MaterialCommunityIcons name="puzzle-plus-outline" size={22} color="#fff" />
+                  <Text style={{fontSize:16, color:'#fff', marginLeft:5}}>Neues Puzzle</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -261,6 +262,7 @@ export const FreundeRoot =({navigation}) => {
       alignItems:"center",
       justifyContent:'center',
       borderRadius:10,
+      flexDirection:'row'
     },
     imagebackground: {
       flex: 1,

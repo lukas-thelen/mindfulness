@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Slider from '@react-native-community/slider';
 import { LinearGradient } from 'expo-linear-gradient';
 import { CheckBox } from 'react-native-elements'
+import { Ionicons } from '@expo/vector-icons';
 
 
 import {AppContext} from '../context.js';
@@ -116,7 +117,8 @@ export const JournalTag = ({navigation, route}) => {
                 </View>
 
                 <View style={styles.background}>
-                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie oft hast Du heute in deinem Alltag daran gedacht gedacht zu spielen?</Text>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie oft hast Du heute in deinem Alltag daran gedacht zu spielen?</Text>
+                <Ionicons name="game-controller-outline" size={22} color="white" />
                 <Slider
                     style={{width: 200, height: 40}}
                     minimumValue={0}
@@ -149,16 +151,18 @@ export const JournalTag = ({navigation, route}) => {
 
                 <View style={styles.background}>
                 <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie viele Stunden hast Du heute gespielt?</Text>
+                <Ionicons name="game-controller-outline" size={22} color="white" />
                 <TextInput editable={!editable? false:true} defaultValue={heuteStunden} keyboardType={'numeric'} onChangeText={changeHeuteStunden} style={styles.textInput}></TextInput>
                 </View>
 
                 <View style={styles.background}>
                 <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie viele Stunden hast Du vor morgen zu spielen?</Text>
+                <Ionicons name="game-controller-outline" size={22} color="white" />
                 <TextInput editable={!editable? false:true} defaultValue={morgenStunden} keyboardType={'numeric'} onChangeText={changeMorgenStunden} style={styles.textInput}></TextInput>
                 </View>
 
                 <View style={{...styles.background, flexDirection:'row'}}>
-                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Hast Du vor morgen zu meditieren?</Text>
+                <Text style={!editable?{color:"#ffffff70"}:{color:'#fff'}}>Hast Du vor morgen zu meditieren?</Text>
                 <CheckBox uncheckedColor={!editable?"#ffffff70":'#fff'} checkedColor={'#89FFF1'} checked={willMeditate} disabled={!editable? true:false} onPress={() => changeWillMeditate(!willMeditate)}/>
                 </View>
                 
@@ -196,6 +200,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingVertical:6, 
         paddingHorizontal:20,
+        marginTop:5
     },
     textBox:{ 
         height: 130,
