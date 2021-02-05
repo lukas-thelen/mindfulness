@@ -69,13 +69,13 @@ const HomeRoot = ({navigation})=>{
           
           <View style={{flex: 0.25}}></View>
           <View style={{flex:0.15, alignItems:'center', justifyContent:'flex-end'}}>
-            <Text style={styles.text25}>Hallo {username}!</Text> 
-            <Text style={{...styles.text25}}>Schön, dass du wieder da bist!</Text>
+            <Text style={styles.text}>Hallo {username}!</Text> 
+            <Text style={styles.text}>Schön, dass du wieder da bist!</Text>
           </View>
           <View style={{flex:0.1, alignItems:'center', justifyContent:'center', flexDirection:'row'}}>
-            <Text style={{color:'#464982', fontSize:20}}>Nächste</Text>
+            <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Nächste</Text>
             <InstantStart />
-            <Text style={{color:'#464982', fontSize:20}}>Übung</Text>
+            <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Übung</Text>
           </View>
 
           <View style={{flex:0.5, alignItems:'center', justifyContent:'flex-start'}}>
@@ -90,7 +90,7 @@ const HomeRoot = ({navigation})=>{
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 2 }}
               style={styles.gradient}>
-                <Text style={styles.text25}>Meine Kurse</Text>
+                <Text style={styles.text}>Meine Kurse</Text>
             </LinearGradient>
           </TouchableOpacity>
           </View>
@@ -128,7 +128,8 @@ export const HomeScreen = ()=> {
             },
             headerTintColor: '#0F113A',
             headerTitleStyle: {
-              fontSize: 25
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="Meine Kurse" component={KursAuswahl} options={{
@@ -139,6 +140,7 @@ export const HomeScreen = ()=> {
             headerTintColor: '#0F113A',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="Wähle eine Übung!" component={UebungsAuswahl} options={{
@@ -149,6 +151,7 @@ export const HomeScreen = ()=> {
             headerTintColor: '#0F113A',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="Wähle eine Version" component={VersionsAuswahl}
@@ -160,6 +163,7 @@ export const HomeScreen = ()=> {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="AudioPlayer" component={AudioPlayer}/>
@@ -171,6 +175,7 @@ export const HomeScreen = ()=> {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly}/>
@@ -184,6 +189,7 @@ export const HomeScreen = ()=> {
             headerTintColor: '#0F113A',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="Text-Übung" component={TextPlayer}
@@ -195,6 +201,7 @@ export const HomeScreen = ()=> {
             headerTintColor: '#0F113A',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
@@ -221,9 +228,10 @@ const styles = StyleSheet.create({
       width: 200,
       height: 200,
     },
-    text25: {
+    text: {
       color: '#fff',
-      fontSize: 25,
+      fontSize: 22,
+      fontFamily: 'Poppins_400Regular'
     },
     gradient: {
       alignItems: 'center',

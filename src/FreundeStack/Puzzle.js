@@ -142,15 +142,15 @@ export const Puzzle = ({route, navigation}) => {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={{color:'#fff', fontSize:17, textAlign:'center'}}>Wie viele Teile möchstest du einsetzen?</Text>
+                            <Text style={{...styles.text, fontSize:16, textAlign:'center'}}>Wie viele Teile möchstest du einsetzen?</Text>
                             <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center", marginTop:30}}>
-                                <Text style={{color:'#fff', fontSize:17, marginHorizontal:20}}>{layedPieces}</Text>
+                                <Text style={{...styles.text, fontSize:16, marginHorizontal:20}}>{layedPieces}</Text>
                                 <View style={{flexDirection:"column", alignItems:'center'}}>
                                     <TouchableOpacity style={{marginHorizontal:20, marginVertical:10}} disabled={layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded()} onPress={()=>{changeLayedPieces(layedPieces+1)}}>
-                                        <Text style={{color:'#fff', fontSize:17}}>+</Text>
+                                        <Text style={{...styles.text, fontSize:16}}>+</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={{marginHorizontal:20, marginVertical:10}} disabled={layedPieces<=1} onPress={()=>{changeLayedPieces(layedPieces-1)}}>
-                                        <Text style={{color:'#fff', fontSize:17}}>-</Text>
+                                        <Text style={{...styles.text, fontSize:16}}>-</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -160,11 +160,11 @@ export const Puzzle = ({route, navigation}) => {
                                     start={{ x: 0, y: 0 }}
                                     end={{ x: 1, y: 2 }}
                                     style={styles.gradient}>
-                                        <Text style={{color:'#fff', fontSize:16}}>Einsetzen</Text>
+                                        <Text style={{...styles.text, fontSize:16}}>Einsetzen</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
                             <TouchableOpacity style={{marginTop:20}} onPress={()=>{changeModalVisible(false), changeLayedPieces(1)}}>
-                                <Text style={{color:'#fff', textDecorationLine:'underline'}}>Abbrechen</Text>
+                                <Text style={{...styles.text, textDecorationLine:'underline'}}>Abbrechen</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -173,7 +173,7 @@ export const Puzzle = ({route, navigation}) => {
                 <View style={styles.background}>
                     <View style={{flexDirection:'row', alignItems:'center', marginBottom:16}}>
                         <MaterialCommunityIcons name="puzzle-outline" size={22} color="#fff" />
-                        <Text style={{...styles.text20, marginLeft:4}}>{puzzleText(userData.friends.puzzles[route.params.id].friends)}</Text>
+                        <Text style={{...styles.textM, fontSize:20, textAlign:'center', marginLeft:4}}>{puzzleText(userData.friends.puzzles[route.params.id].friends)}</Text>
                     </View>
                     <View style={{width:320, alignSelf:"center", backgroundColor:'#46498290'}}>
                         <FlatList
@@ -183,18 +183,18 @@ export const Puzzle = ({route, navigation}) => {
                             renderItem={renderPuzzleTeile}
                         ></FlatList>
                     </View>
-                    <Text style={{color:'#fff', marginVertical:10}}>Verfügbare Puzzleteile: {userData.friends.pieces}</Text>
+                    <Text style={{...styles.text, fontSize: 13, marginVertical:10}}>Verfügbare Puzzleteile: {userData.friends.pieces}</Text>
                     <TouchableOpacity  disabled={maxNeeded()===0||userData.friends.pieces===0} style={{...styles.button, marginTop:20}} onPress={()=>einsetzen()}>
                         <LinearGradient
                             colors={['#89FFF1', '#80DEE4', '#8F92E3', '#D476D5']}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                             style={maxNeeded()===0||userData.friends.pieces===0?{...styles.gradient, opacity:0.3}:styles.gradient}>
-                                <Text style={{color:'#0F113A', fontSize:18}}>Teil einsetzen</Text>
+                                <Text style={{...styles.text, color:'#0F113A', fontSize:18}}>Teil einsetzen</Text>
                         </LinearGradient>
                     </TouchableOpacity>
                     <TouchableOpacity style={{alignItems:'center', marginTop:15}} onPress={()=>löschen()}>
-                        <Text style={{color:'#fff', textDecorationLine:'underline'}}>Puzzle löschen</Text>
+                        <Text style={{...styles.text, textDecorationLine:'underline'}}>Puzzle löschen</Text>
                     </TouchableOpacity>
                 </View>
             </View>}
@@ -248,9 +248,15 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         shadowOpacity: 0.4,
     },
-    text20: {
+    text: {
         color:'#fff',
-        fontSize: 20,
+        fontSize: 15,
+        fontFamily: 'Poppins_400Regular'
+    },
+    textM: {
+        color:'#fff',
+        fontSize: 15,
+        fontFamily: 'Poppins_500Medium'
     },
     background: {
         backgroundColor: "#0F113A90",
@@ -258,5 +264,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         padding:15,
+        width:'90%'
      },
   });

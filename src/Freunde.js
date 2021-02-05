@@ -21,6 +21,7 @@ export const FreundeScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
             <FreundeStack.Screen name="Meine Freunde" component={MeineFreunde} options={{
@@ -31,6 +32,7 @@ export const FreundeScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
             <FreundeStack.Screen name="Puzzle" component={Puzzle} options={{
@@ -41,6 +43,7 @@ export const FreundeScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
         </FreundeStack.Navigator>

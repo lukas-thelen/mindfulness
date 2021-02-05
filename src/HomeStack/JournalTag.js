@@ -200,7 +200,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingVertical:6, 
         paddingHorizontal:20,
-        marginTop:5
+        marginTop:5,
+        fontFamily:'Poppins_400Regular',
+        fontSize:14
     },
     textBox:{ 
         height: 130,
@@ -211,6 +213,8 @@ const styles = StyleSheet.create({
         padding:10,
         textAlignVertical:"top",
         color: '#fff',
+        fontFamily:'Poppins_400Regular',
+        fontSize:14
     },
     trennlinie:{
         height:1,
@@ -231,11 +235,14 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         marginBottom: 5,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily:'Poppins_400Regular',
+        fontSize: 14
     },
     text25: {
         color: '#fff',
-        fontSize: 25,
+        fontSize: 22,
+        fontFamily:'Poppins_400Regular'
     },
     gradient: {
         alignItems: 'center',

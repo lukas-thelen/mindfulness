@@ -59,8 +59,9 @@ export const Journal = (props) => {
         },
         text: {
             color: '#fff',
-            fontSize: 16,
+            fontSize: 14,
             textAlign: 'center',
+            fontFamily: 'Poppins_400Regular'
         },
         gradient: {
             alignItems: 'center',
@@ -148,7 +149,7 @@ export const Journal = (props) => {
         const millis = dateOfDay.getTime()
         return(
             <TouchableOpacity style={userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].journalChanged?styles.tagEdited:styles.tag} onPress={()=>{navigation.navigate("individueller Tag", {date:millis})}}>
-                    <Text style={weekchange===0&&today.getDay()===((index+1)%7)?{color:"#D874D4", fontWeight:'bold', flex:1}:{color:"white", fontWeight:'bold', flex:1}}>{item} {dateOfDay.getDate()}.{dateOfDay.getMonth()+1}</Text>
+                    <Text style={weekchange===0&&today.getDay()===((index+1)%7)?{color:"#D874D4", fontFamily:'Poppins_500Medium', flex:1}:{color:"white", fontFamily:'Poppins_500Medium', flex:1}}>{item} {dateOfDay.getDate()}.{dateOfDay.getMonth()+1}</Text>
                     {userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].meditations?<MaterialCommunityIcons name="meditation" size={25} color="#D874D4" style={{marginRight:20}}/>:null}
             </TouchableOpacity>
         )

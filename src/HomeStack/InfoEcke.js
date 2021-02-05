@@ -148,7 +148,7 @@ export const InfoEcke=(props)=>{
                         renderItem={(item) => renderItem(item)}
                         renderSectionHeader={({ section: { title } }) => (
                             <TouchableOpacity style={styles.header}>
-                                <Text style={{color: '#fff', fontSize:25,}}>{title}</Text>
+                                <Text style={{color: '#fff', fontSize:22, fontFamily: 'Poppins_400Regular'}}>{title}</Text>
                             </TouchableOpacity>
                         )}
                     />
@@ -197,9 +197,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical:4,
         color: '#fff',
-        fontSize: 18,
+        fontSize: 17,
         paddingLeft: 10,
         flexGrow:1,
+        fontFamily: 'Poppins_400Regular',
+        justifyContent:'center'
     },
     searchbackground: {
         flexDirection:'row',
@@ -227,7 +229,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 15,
         marginLeft: 15,
+        fontFamily: 'Poppins_400Regular'
     }
   });

@@ -14,6 +14,10 @@ import cloneDeep from 'lodash/cloneDeep';
 import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { useFonts, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins';
+import AppLoading from 'expo-app-loading';
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -176,6 +180,13 @@ export default function App() {
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
   const [newBenchmark, changeNewBenchmark] = useState([])
   const [forceUpdate, changeForceUpdate] =useState(false)
+  let [] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+  });
+
+
+
 
   //wird einmalig beim ersten rendern des Components ausgeführt
   useEffect(()=>{

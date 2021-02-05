@@ -118,7 +118,7 @@ export const FreundeRoot =({navigation}) => {
         return (
             <TouchableOpacity style={styles.puzzle}onPress={()=>{navigation.navigate("Puzzle",{id:item.id}) }}>
                 <MaterialCommunityIcons name="puzzle-outline" size={22} color="#fff" />
-                <Text style={{fontSize:16, color:'#fff', marginLeft:5}}>{puzzleText(item.friends)}</Text>
+                <Text style={{...styles.textM, marginLeft:5}}>{puzzleText(item.friends)}</Text>
             </TouchableOpacity>
         )
     }
@@ -139,7 +139,7 @@ export const FreundeRoot =({navigation}) => {
                 }               
             }}
           >
-            <Text style={{color:'#fff', fontSize:16}}>{item.name}</Text>
+            <Text style={styles.textM}>{item.name}</Text>
           </TouchableOpacity>
         )
       }
@@ -165,7 +165,7 @@ export const FreundeRoot =({navigation}) => {
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 2 }}
                             style={styles.gradient}>
-                                <Text style={{color:'#fff', fontSize:18}}>Erstellen</Text>
+                                <Text style={{...styles.text, fontSize:17}}>Erstellen</Text>
                         </LinearGradient>
                       </TouchableOpacity>
                       <TouchableOpacity style={{marginTop:20}} onPress={()=>{changeModalVisible(false), changeSelectedFriends([currentUser,])}}>
@@ -183,7 +183,7 @@ export const FreundeRoot =({navigation}) => {
             </View>
 
             <View style={{flex:0.85, alignItems:'center', width:'100%'}}>
-              <Text style={{color:'#fff', textAlign:"center", fontSize:22, marginBottom:20}}>PUZZLES</Text>
+              <Text style={{...styles.text, fontSize:22, marginBottom:20}}>PUZZLES</Text>
               <View style={styles.background}>
                 <FlatList
                     style={{marginVertical:10, width:'95%'}}
@@ -194,7 +194,7 @@ export const FreundeRoot =({navigation}) => {
                 ></FlatList>
                 <TouchableOpacity style={styles.puzzleNeu}onPress={()=> {changeModalVisible(true)}}>
                 <MaterialCommunityIcons name="puzzle-plus-outline" size={22} color="#fff" />
-                  <Text style={{fontSize:16, color:'#fff', marginLeft:5}}>Neues Puzzle</Text>
+                  <Text style={{...styles.textM, marginLeft:5}}>Neues Puzzle</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -279,7 +279,13 @@ export const FreundeRoot =({navigation}) => {
    },
     text: {
       color:'#fff',
-      fontSize: 16,
+      fontSize: 15,
+      fontFamily: 'Poppins_400Regular'
+    },
+    textM: {
+      color:'#fff',
+      fontSize: 15,
+      fontFamily: 'Poppins_500Medium'
     },
     gradient: {
       alignItems: 'center',

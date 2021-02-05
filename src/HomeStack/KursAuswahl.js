@@ -14,7 +14,7 @@ export const KursAuswahl =({navigation})=>{
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}
                     style={styles.gradient}>
-                    <Text style={{color:'#0F113A', fontSize:20}}>{item.Name}</Text>
+                    <Text style={{color:'#0F113A', fontSize:20, fontFamily: 'Poppins_500Medium'}}>{item.Name}</Text>
                 </LinearGradient>  
             </TouchableOpacity>    
         )
