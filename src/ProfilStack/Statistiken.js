@@ -168,8 +168,8 @@ export const Statistiken = () => {
             </View>
             <View style={{width:"90%", alignSelf:"center", flex:0.85}}>
                 <View style={{flexDirection:"row", flex:0.07}}> 
-                    <TouchableOpacity style={showMonthly?{...styles.tab, backgroundColor:"#D476D5"}:{...styles.tab, backgroundColor:"#0F113A"}} onPress={()=>changeShowMonthly(false)}><Text>täglich</Text></TouchableOpacity>
-                    <TouchableOpacity style={!showMonthly?{...styles.tab, backgroundColor:"#D476D5"}:{...styles.tab, backgroundColor:"#0F113A"}} onPress={()=>changeShowMonthly(true)}><Text>monatlich</Text></TouchableOpacity>
+                    <TouchableOpacity style={showMonthly?{...styles.tab, backgroundColor:"#D476D5"}:{...styles.tab, backgroundColor:"#464982"}} onPress={()=>changeShowMonthly(false)}><Text>täglich</Text></TouchableOpacity>
+                    <TouchableOpacity style={!showMonthly?{...styles.tab, backgroundColor:"#D476D5"}:{...styles.tab, backgroundColor:"#464982"}} onPress={()=>changeShowMonthly(true)}><Text>monatlich</Text></TouchableOpacity>
                 </View>
                 <View style={styles.chartBackground}>
                 {showMonthly?
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
         backgroundColor:"blue",
     },
     chartBackground:{
-        backgroundColor:"#0F113A",
+        backgroundColor:"#464982",
         flex:0.93,
         borderBottomLeftRadius:30,
         borderBottomRightRadius:30,
