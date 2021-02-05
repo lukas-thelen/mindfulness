@@ -173,17 +173,23 @@ export const Statistiken = () => {
                 </View>
                 <View style={styles.chartBackground}>
                 {showMonthly?
-                <View style={{backgroundColor: '#eee'}}>
-                    <Chart
-                            style={{ height:220}}
-                            xDomain={{ min: 6, max: 11 }}
-                            yDomain={{ min: 0, max: 50 }}
-                            padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
-                        >
-                            <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
-                            <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12]}}}/>
-                            <Line data={getHistoryStress()} smoothing="none" theme={{ stroke: { color: colors[0], width: 4 } }} />
-                    </Chart>
+                <View style={{flex:1}}>
+                    <View style={{backgroundColor: '#eee', flexShrink:1}}>
+                        <Chart
+                                style={{ height:220}}
+                                xDomain={{ min: 6, max: 11 }}
+                                yDomain={{ min: 0, max: 50 }}
+                                padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
+                            >
+                                <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
+                                <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12]}}}/>
+                                <Line data={getHistoryStress()} smoothing="none" theme={{ stroke: { color: colors[0], width: 4 } }} />
+                        </Chart>
+                    </View>
+                    <View style={{flexDirection:"row", alignItems:"center"}}>
+                            <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[0]}}/>
+                            <Text>Stress</Text>
+                    </View>
                 </View>:
                 <View style={{flex:1}}>
                     <View style={{flexDirection:"row",backgroundColor: '#eee', flexShrink:1}}>
@@ -191,7 +197,7 @@ export const Statistiken = () => {
                             style={{ height:220, flex: 0.93}}
                             xDomain={{ min: 0, max: 6 }}
                             yDomain={{ min: 0, max: maxValue }}
-                            padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
+                            padding={{ left: 30, top: 10, bottom: 20, right: 5 }}
                         >
                             <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
                             <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
@@ -206,7 +212,7 @@ export const Statistiken = () => {
 
                         </Chart>
 
-                        <View style= {{flexDirection:"column", flex: 0.07, justifyContent:"space-between", marginBottom:15}}>
+                        <View style= {{flexDirection:"column", flex: 0.07, justifyContent:"space-between", marginBottom:12}}>
                             <Text>+ +</Text>
                             <Text>+</Text>
                             <Text>°</Text>
