@@ -180,12 +180,10 @@ export default function App() {
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
   const [newBenchmark, changeNewBenchmark] = useState([])
   const [forceUpdate, changeForceUpdate] =useState(false)
-  let [] = useFonts({
+  let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
   });
-
-
 
 
   //wird einmalig beim ersten rendern des Components ausgeführt
@@ -244,7 +242,7 @@ export default function App() {
     <AppContext.Provider value={appContext}>
       <View style={{backgroundColor:'#000'}}>
       <SafeAreaView style={styles.pagewrap}>
-        {isLoading?<View style={{height:"100%",justifyContent:"center"}}><ActivityIndicator size="large" color="black"/></View>:<View>
+        {isLoading||!fontsLoaded?<View style={{height:"100%",justifyContent:"center"}}><ActivityIndicator size="large" color="black"/></View>:<View>
           {loggedIn ? <Tabnavigator style={styles.container}/> : <Init changeLoggedIn={changeLoggedIn}/>}</View>
         }
       </SafeAreaView>
