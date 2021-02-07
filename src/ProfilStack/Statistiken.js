@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CheckBox from '@react-native-community/checkbox';
+import { CheckBox } from 'react-native-elements'
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
@@ -195,42 +195,42 @@ export const Statistiken = () => {
             </View>
             
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={meditations} onValueChange={(newValue) => changeMeditations(newValue)}/>
+                <CheckBox checked={meditations} onPress={() => changeMeditations(!meditations)}/>
                 <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[0]}}/>
                 <Text>Anzahl der Meditationen</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={minutes} onValueChange={(newValue) => changeMinutes(newValue)}/>
+                <CheckBox checked={minutes} onPress={() => changeMinutes(!minutes)}/>
                 <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[1]}}/>
                 <Text>Meditierte Minuten</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={stimmung} onValueChange={(newValue) => changeStimmung(newValue)}/>
+                <CheckBox checked={stimmung} onPress={() => changeStimmung(!stimmung)}/>
                 <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[2]}}/>
                 <Text>Stimmung</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={dailyStress} onValueChange={(newValue) => changeDailyStress(newValue)}/>
+                <CheckBox checked={dailyStress} onPress={() => changeDailyStress(!dailyStress)}/>
                 <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[3]}}/>
                 <Text>Stress (täglich)</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={craving} onValueChange={(newValue) => changeCraving(newValue)}/>
+                <CheckBox checked={craving} onPress={() => changeCraving(!craving)}/>
                 <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[4]}}/>
                 <Text>Craving</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={pflichten} onValueChange={(newValue) => changePflichten(newValue)}/>
+                <CheckBox checked={pflichten} onPress={() => changePflichten(!pflichten)}/>
                 <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[5]}}/>
                 <Text>Pflichterfüllung</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={heuteStunden} onValueChange={(newValue) => changeHeuteStunden(newValue)}/>
+                <CheckBox checked={heuteStunden} onPress={() => changeHeuteStunden(!heuteStunden)}/>
                 <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[6]}}/>
                 <Text>Tatsächliche Spielstunden</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={morgenStunden} onValueChange={(newValue) => changeMorgenStunden(newValue)}/>
+                <CheckBox checked={morgenStunden} onPress={()=>changeMorgenStunden(!morgenStunden)}/>
                 <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[7]}}/>
                 <Text>Vorgenommene Spielstunden</Text>
             </View>
