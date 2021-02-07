@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { KeyboardAvoidingView } from 'react-native';
 
 export const JournalTag = ({navigation, route}) => {
 
@@ -79,7 +80,10 @@ export const JournalTag = ({navigation, route}) => {
 
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
-        <ScrollView >
+        <KeyboardAvoidingView 
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}>
+        <ScrollView style={{width:'100%'}}>
             <View style = {{alignItems: "center"}}>
                 <Text style={styles.text25}>Datum: {date.getDate()}.{date.getMonth()+1}</Text>
                 <Text style={styles.text25}>Platz für deine Gedanken:</Text>
@@ -187,11 +191,16 @@ export const JournalTag = ({navigation, route}) => {
             </View>
             
         </ScrollView>
+        </KeyboardAvoidingView>
         </ImageBackground>
 
     )
 }
 const styles = StyleSheet.create({
+    container: {
+        flex:1,
+        width:'100%',
+    },
     textInput:{ 
         borderColor: '#ffffff90', 
         borderWidth: 1,
@@ -264,7 +273,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         justifyContent:'center',
-        width: '90%',
+        width: '85%',
         marginVertical: 6,
     },
   });
