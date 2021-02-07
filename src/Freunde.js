@@ -13,9 +13,48 @@ const FreundeStack = createStackNavigator();
 export const FreundeScreen =() => {
     return (
         <FreundeStack.Navigator>
-            <FreundeStack.Screen name="Freunde" component={FreundeRoot}/>
-            <FreundeStack.Screen name="Meine Freunde" component={MeineFreunde}/>
-            <FreundeStack.Screen name="Puzzle" component={Puzzle}/>
+            <FreundeStack.Screen name="Freunde" component={FreundeRoot} options={{
+            title: 'Freunde',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+            <FreundeStack.Screen name="Meine Freunde" component={MeineFreunde} options={{
+            title: 'Meine Freunde',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+            <FreundeStack.Screen name="Puzzle" component={Puzzle} options={{
+            title: 'Puzzle',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
         </FreundeStack.Navigator>
     )
   }

@@ -23,6 +23,7 @@ import ViewPager from '@react-native-community/viewpager';
 import { LinearGradient } from 'expo-linear-gradient';
 import { VersionsAuswahlText } from './HomeStack/VersionsAuswahlText.js';
 import { TextPlayer } from './HomeStack/TextPlayer.js';
+import { Feather } from '@expo/vector-icons';
 
 
 const HomeStack = createStackNavigator();
@@ -62,23 +63,26 @@ const HomeRoot = ({navigation})=>{
         <InfoEcke navigation={navigation}/>
       </View>
       <View key="2" >
-        <ImageBackground source={require('../assets/Startseite.png')} style={styles.imagebackground}>
+        <ImageBackground source={require('../assets/Startseite_kurz.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
           
-          <View style={{...styles.container, flex: 2}}></View>
+          <View style={{flex: 2.5}}></View>
           <Text style={styles.text25}>Hallo {username}!</Text> 
           <Text style={{...styles.text25, marginBottom: 20}}>Schön, dass du wieder da bist!</Text>
           
           <InstantStart /> 
           
-          <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
-          
+          <View style={{flexDirection:'row', alignItems:'center'}}>
+            <Feather name="chevrons-left" size={30} color="#5467A9" />
+            <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
+            <Feather name="chevrons-right" size={30} color="#5467A9" />
+          </View>
           <TouchableOpacity style={styles.button} onPress={() =>{navigation.navigate('Meine Kurse')}} >
             <LinearGradient
-            colors={['#D476D5', '#C77BD8', '#8F92E3']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 2 }}
-            style={styles.gradient}>
-              <Text style={styles.text25}>Meine Kurse</Text>
+              colors={['#D476D5', '#C77BD8', '#8F92E3']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 2 }}
+              style={styles.gradient}>
+                <Text style={styles.text25}>Meine Kurse</Text>
             </LinearGradient>
           </TouchableOpacity>
           
@@ -86,6 +90,7 @@ const HomeRoot = ({navigation})=>{
             <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
             <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>*/}
           <View style={styles.container}></View>
+          <View style={{height:60}}/>
         </ImageBackground>
       </View>
       <View key="3">
@@ -106,19 +111,69 @@ export const HomeScreen = ()=> {
     
     return(
         <HomeStack.Navigator>
-          <HomeStack.Screen name="Home" component={HomeRoot}/>
-          <HomeStack.Screen name="Meine Kurse" component={KursAuswahl}/>
-          <HomeStack.Screen name="Wähle eine Übung!" component={UebungsAuswahl}/>
+          <HomeStack.Screen name="Home" component={HomeRoot} options={{
+            title: 'Home',
+            headerStyle: {
+              backgroundColor: '#80DEE4',
+            },
+            headerTintColor: '#0F113A',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#0F113A',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <HomeStack.Screen name="Meine Kurse" component={KursAuswahl} options={{
+            title: 'Meine Kurse',
+            headerStyle: {
+              backgroundColor: '#80DEE4',
+            },
+            headerTintColor: '#0F113A',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#0F113A',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <HomeStack.Screen name="Wähle eine Übung!" component={UebungsAuswahl} options={{
+            title: 'Kurs',
+            headerStyle: {
+              backgroundColor: '#80DEE4',
+            },
+            headerTintColor: '#0F113A',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#0F113A',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
           <HomeStack.Screen name="Wähle eine Version" component={VersionsAuswahl}/>
           <HomeStack.Screen name="AudioPlayer" component={AudioPlayer}/>
-          <HomeStack.Screen name="Alle Übungen" component={AlleUebungen}/>
-          <HomeStack.Screen name="Journal" component={Journal}/>
-          <HomeStack.Screen options={{title:"test"}} name="individueller Tag" component={JournalTag}/>
+          <HomeStack.Screen name="individueller Tag" component={JournalTag} options={{
+            title: 'Journal',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
           <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly}/>
           <HomeStack.Screen name="Info Ecke" component={InfoEcke}/>
-          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
           <HomeStack.Screen name="Wähle die Dauer" component={VersionsAuswahlText}/>
           <HomeStack.Screen name="Text-Übung" component={TextPlayer}/>
+          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
         </HomeStack.Navigator>
     )
 }
@@ -134,7 +189,6 @@ const styles = StyleSheet.create({
     },
     imagebackground: {
       flex: 1,
-      resizeMode: 'cover',
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -157,5 +211,9 @@ const styles = StyleSheet.create({
     button: {
       alignItems: 'center',
       justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {width:0, height:4},
+      shadowRadius: 4,
+      shadowOpacity: 0.4,
     }
   });

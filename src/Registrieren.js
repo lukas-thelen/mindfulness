@@ -4,9 +4,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { CheckBox } from 'react-native-elements'
 
 import {AppContext} from './context.js';
 import { globalStyles } from './globalStyles.js';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export const Registrieren =(props)=>{
@@ -15,6 +17,7 @@ export const Registrieren =(props)=>{
     const [name, changeName] = useState("")
     const [birthday, changeBirthday] = useState(new Date())
     const [age, changeAge] =useState(null)
+    const [agb, changeAgb] =useState(false)
     const [gender, changeGender] = useState("")
     const [datepicker, showDatepicker] = useState(false)
     const [dateChanged, changeDateChanged] = useState(false)
@@ -29,7 +32,6 @@ export const Registrieren =(props)=>{
       userData.eMail = eMail;
       userData.password = password;
       userData.name = name;
-      userData.gender = gender;
       //userData.birthday = birthday;
       userData.age = age;
 
@@ -41,7 +43,7 @@ export const Registrieren =(props)=>{
 
     //Nutzerinformationen prüfen und überarbeiten
     const abschicken =()=>{
-      if (eMail === "" || password === "" || name===""|| age===0 || gender === ""){
+      if (eMail === "" || password === "" || name===""|| age===0){
         Alert.alert(
           'Unvollständig',
           'Bitte fülle alle Felder aus!',
@@ -60,6 +62,12 @@ export const Registrieren =(props)=>{
         Alert.alert(
           'E-Mail-Adresse bereits vergeben',
           'Unter dieser Adresse besteht bereits ein Konto. Versuche dich damit anzumelden!',
+          { cancelable: false }
+        );
+      }else if(!agb){
+        Alert.alert(
+          'Bitte stimme unseren AGB zu',
+          '',
 
           [{ text: 'zum Anmelden', onPress: () => props.changeInitPages('Anmelden') }, {text:"ok"}],
           { cancelable: false }
@@ -68,10 +76,6 @@ export const Registrieren =(props)=>{
         storeData()
       }
     }
-
-
-    const genderData = [
-      {label: 'männlich'},{label: 'weiblich'},{label: 'divers'}];
 
     //Geburtstag bestätigen
     const handleConfirm = (selectedDate) => {
@@ -88,14 +92,12 @@ export const Registrieren =(props)=>{
         scrollEnabled={false}
       >
       <View style={globalStyles.pagewrap, styles.registrierenContainer}>
-      <Text style={{fontSize:25, color: '#fff'}}>Registrierung</Text>
+      <Text style={{fontSize:25, color: '#fff', marginBottom: 5}}>Registrierung</Text>
         <Text style={styles.text}>Benutzername</Text>
-        <Text style={{fontSize:12, color: '#fff'}}>(muss eindeutig sein)</Text>
         <TextInput 
             style={styles.textinput}
             onChangeText={text => changeEMail(text)} autoCapitalize = 'none'></TextInput>
 
-        <View style={globalStyles.trennlinie}/>
 
         <Text style={styles.text}>Passwort</Text>
         <TextInput 
@@ -103,15 +105,11 @@ export const Registrieren =(props)=>{
             style={styles.textinput}
             onChangeText={text => changePassword(text)}></TextInput>
 
-        <View style={globalStyles.trennlinie}/>
-
         <Text style={styles.text}>Vorname</Text>
         <TextInput 
             style={styles.textinput}
             onChangeText={text => changeName(text)}></TextInput>
 
-
-        <View style={globalStyles.trennlinie}/>
 
         
 
@@ -131,23 +129,23 @@ export const Registrieren =(props)=>{
           onConfirm={handleConfirm}
           onCancel={showDatepicker}
         />*/}
-
-        <View style={globalStyles.trennlinie}/>
-
-        <Text style={styles.text}>Geschlecht</Text>
-        <RadioButtonRN
-          boxStyle={globalStyles.radio}
-          data={genderData}
-          selectedBtn={(e) => changeGender(e.label)}
-        />
-
-        <View style={globalStyles.trennlinie}/>
-        <TouchableOpacity style={styles.containertext1} onPress={() =>abschicken()}>
-              <Text style={{color: '#fff', fontSize: 18}}>Registrieren</Text>
+        <View style={{flexDirection:"row", alignItems:"center"}}>
+          <CheckBox checked={agb} onPress={() => changeAgb(!agb)}/>
+          <Text style={{color:"white"}}>Ich habe die AGB natürlich gelesen.</Text>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={() =>abschicken()}>
+            <LinearGradient
+            colors={['#80DEE4', '#89FFE3']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 2 }}
+            style={styles.gradient}>
+              <Text style={{color: '#fff', fontSize: 25}}>Registrieren</Text>
+            </LinearGradient>
         </TouchableOpacity>
         <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
-              <Text style={{color: '#fff', fontSize: 10}}>Zurück</Text>
+              <Text style={{color: '#fff', fontSize: 12,textDecorationLine: "underline"}}>Zurück</Text>
         </TouchableOpacity>
+        
       </View>
       </KeyboardAwareScrollView>
     )
@@ -162,15 +160,17 @@ export const Registrieren =(props)=>{
       marginTop:60
     },
     textinput: {
-      height: '3%', 
+      height: '5%', 
       borderColor: '#464982', 
       backgroundColor: '#464982', 
       borderWidth: 10, 
-      width:200, 
+      width:'70%', 
       borderRadius:200, 
     },
     text: {
-      color: '#fff'
+      color: '#fff',
+      fontSize: 12,
+      marginTop: 25
     },
     containertext1: {
       alignItems:'center',
@@ -189,8 +189,27 @@ export const Registrieren =(props)=>{
       alignItems:'center',
       marginTop: 15
     },
-    containertext3: {
-
-    }
     
+    gradient: {
+      alignItems: 'center',
+      borderRadius: 20,
+      paddingBottom: 4,
+      paddingTop: 4,
+      paddingHorizontal: 20,
+    },
+    button: {
+      alignItems: 'center',
+      borderRadius: 100,
+      marginTop: 10,
+      justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {width:0, height:4},
+      shadowRadius: 4,
+      shadowOpacity: 0.4,
+    },
+    radio:{
+      width: 200,
+      borderWidth: 0,
+      height:30,
+    },
   })

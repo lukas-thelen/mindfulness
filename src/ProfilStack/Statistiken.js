@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CheckBox from '@react-native-community/checkbox';
+import { CheckBox } from 'react-native-elements'
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
@@ -11,13 +11,48 @@ import { Chart, VerticalAxis, HorizontalAxis, Line } from 'react-native-responsi
 
 
 export const Statistiken = () => {
-    const [typeOfChart, changeTypeOfChart] =useState("meditations")
-    const [showStress, changeShowStress] =useState(false)
-    const [stress, changeStress] =useState(false)
+    const [dailyStress, changeDailyStress] =useState(false)
+    const [craving, changeCraving] =useState(false)
+    const [pflichten, changePflichten] =useState(false)
+    const [stimmung, changeStimmung] =useState(false)
+    const [morgenStunden,changeMorgenStunden]=useState(null)
+    const [heuteStunden, changeHeuteStunden]=useState(null)
+    const [willMeditate, changeWillMeditate]=useState(false)
     const [meditations, changeMeditations] =useState(true)
     const [minutes, changeMinutes] =useState(false)
+    const [maxValue, changeMaxValue] = useState(4)
     const {userData, cahngeUserData, appData, changeAppData}=useContext(AppContext)
     const contentInset = { top: 20, bottom: 20 }
+    const colors = ["pink", "#5792ff", "#aaaa00", "#ccaa00", "#4499ed", "#99aaff", "#de2277", "#47be78"]
+
+    useEffect(()=>{
+        let max= 4
+        if (meditations){
+            var max2 = Math.max.apply(Math, getData().meditations.map(function(o) { return o.y; }))
+            if (max2 > max){
+                max = max2
+            }
+        }
+        if (minutes){
+            var max2 = Math.max.apply(Math, getData().minutes.map(function(o) { return o.y; }))
+            if (max2> max){
+                max = max2
+            }
+        }
+        if (heuteStunden){
+            var max2 = Math.max.apply(Math, getData().heuteStunden.map(function(o) { return o.y; }))
+            if (max2> max){
+                max = max2
+            }
+        }
+        if (morgenStunden){
+            var max2 = Math.max.apply(Math, getData().morgenStunden.map(function(o) { return o.y; }))
+            if (max2> max){
+                max = max2
+            }
+        }
+        changeMaxValue(max)
+    }, [meditations, minutes,heuteStunden,morgenStunden])
 
     const getMeditation=(version)=>{
         var minutes=0
@@ -38,48 +73,55 @@ export const Statistiken = () => {
     const getData=()=>{
         const amountArray=[]
         const minutesArray=[]
+        const dailyStressArray =[]
+        const cravingArray=[]
+        const stimmungArray=[]
+        const pflichtenArray =[]
+        const heuteStundenArray=[]
+        const morgenStundenArray=[]
         var dayString=""
+        var yesterdayString=""
         const day=new Date()
+        const yesterday = new Date()
+        yesterday.setDate(day.getDate()-1)
         while(amountArray.length<7){
             dayString=day.toDateString()
+            yesterdayString=yesterday.toDateString()
             if(userData.journal[dayString]&&userData.journal[dayString].meditations){
                 amountArray.push({y:userData.journal[dayString].meditations,x:6-amountArray.length})
                 minutesArray.push({y:userData.journal[dayString].meditationMinutes,x:6-minutesArray.length })
+                
             }else{
                 amountArray.push({y:0,x:6-amountArray.length})
                 minutesArray.push({y:0,x:6-minutesArray.length})
             }
-            day.setDate(day.getDate()-1)
-        }
-        amountArray.reverse()
-        return {meditations:amountArray, minutes:minutesArray}
-    }
+            if(userData.journal[dayString]&&userData.journal[dayString].journalChanged){
+                dailyStressArray.push({y:userData.journal[dayString].stress,x:6-dailyStressArray.length })
+                cravingArray.push({y:userData.journal[dayString].craving,x:6-cravingArray.length })
+                stimmungArray.push({y:userData.journal[dayString].stimmung,x:6-stimmungArray.length })
+                pflichtenArray.push({y:userData.journal[dayString].pflichten,x:6-pflichtenArray.length })
+                heuteStundenArray.push({y:userData.journal[dayString].heuteStunden,x:6-heuteStundenArray.length })
+            } else {
+                dailyStressArray.push({y:0,x:6-dailyStressArray.length })
+                cravingArray.push({y:0,x:6-cravingArray.length })
+                stimmungArray.push({y:0,x:6-stimmungArray.length })
+                pflichtenArray.push({y:0,x:6-pflichtenArray.length })
+                heuteStundenArray.push({y:0,x:6-heuteStundenArray.length })
+            }
 
-    const getHistory=()=>{
-        const amountArray=[]
-        const minutesArray=[]
-        var dayString=""
-        const day=new Date()
-        while(amountArray.length<7){
-            dayString=day.toDateString()
-            if(userData.journal[dayString]&&userData.journal[dayString].meditations){
-                amountArray.push({
-                    meditations:userData.journal[dayString].meditations,
-                    minutes:userData.journal[dayString].meditationMinutes,
-                    date:day.getDay()
-                })
-            }else{
-                amountArray.push({
-                    meditations:0,
-                    minutes:0,
-                    date:day.getDay()
-                })
+            if(userData.journal[yesterdayString]&&userData.journal[yesterdayString].morgenStunden){
+                morgenStundenArray.push({y:userData.journal[yesterdayString].morgenStunden,x:6-morgenStundenArray.length })
+            }else {
+                morgenStundenArray.push({y:0,x:6-morgenStundenArray.length })
             }
             day.setDate(day.getDate()-1)
+            yesterday.setDate(yesterday.getDate()-1)
         }
-        amountArray.reverse() 
-        return amountArray
+        amountArray.reverse()
+        return {meditations:amountArray, minutes:minutesArray, dailyStress:dailyStressArray, craving: cravingArray, stimmung: stimmungArray, pflichten:pflichtenArray, heuteStunden: heuteStundenArray, morgenStunden: morgenStundenArray}
     }
+
+   //Monatlicher Stress
     const getHistoryStress=()=>{
         const stressArray=[]
         var monthString=""
@@ -107,6 +149,13 @@ export const Statistiken = () => {
     const tagesÜbersetzer={0:"So", 1:"Mo", 2:"Di", 3:"Mi", 4:"Do", 5:"Fr", 6:"Sa"}
     const monatsÜbersetzer={0:"Jan", 1:"Feb", 2:"Mär", 3:"Apr", 4:"Mai", 5:"Jun", 6:"Jul", 7:"Aug", 8:"Sep", 9:"Okt", 10:"Nov", 11:"Dez"}
 
+    const resize=(array)=>{
+        for (var i=0; i< array.length; i++){
+            array[i].y = array[i].y/4*maxValue
+        }
+        return array
+    }
+
     return (
         <View>
             <View style={styles.stats}>
@@ -115,99 +164,76 @@ export const Statistiken = () => {
             <View style={styles.stats}>
                 <Text >Anzahl: {""+getMeditation("amount")}</Text>
             </View>
-            <Chart
-                style={{ height:220, width: '100%', backgroundColor: '#eee'}}
-                xDomain={{ min: 0, max: 6 }}
-                yDomain={{ min: 0, max: 20 }}
-                padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
-            >
-                <VerticalAxis tickValues={[0, 4, 8, 12, 16, 20]} />
-                <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
-                {meditations&&<Line data={getData().meditations} smoothing="none" theme={{ stroke: { color: 'blue', width: 1 } }} />}
-                {minutes&&<Line data={getData().minutes} smoothing="none" theme={{ stroke: { color: 'red', width: 1 } }} />}
-            </Chart>
+        
+            <View style={{flexDirection:"row"}}>
+                <Chart
+                    style={{ height:220, flex: 0.93, backgroundColor: '#eee'}}
+                    xDomain={{ min: 0, max: 6 }}
+                    yDomain={{ min: 0, max: maxValue }}
+                    padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
+                >
+                    <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
+                    <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
+                    {meditations&&<Line data={getData().meditations} smoothing="cubic-spline" theme={{ stroke: { color: colors[0], width: 3 } }} />}
+                    {minutes&&<Line data={getData().minutes} smoothing="cubic-spline" theme={{ stroke: { color: colors[1], width: 3 } }} />}
+                    {stimmung&&<Line data={resize(getData().stimmung)} smoothing="cubic-spline" theme={{ stroke: { color: colors[2], width: 3 } }} />}
+                    {dailyStress&&<Line data={resize(getData().dailyStress)} smoothing="cubic-spline" theme={{ stroke: { color: colors[3], width: 3 } }} />}
+                    {craving&&<Line data={resize(getData().craving)} smoothing="cubic-spline" theme={{ stroke: { color: colors[4], width: 3 } }} />}
+                    {pflichten&&<Line data={resize(getData().pflichten)} smoothing="cubic-spline" theme={{ stroke: { color: colors[5], width: 3 } }} />}
+                    {heuteStunden&&<Line data={getData().heuteStunden} smoothing="cubic-spline" theme={{ stroke: { color: colors[6], width: 3 } }} />}
+                    {morgenStunden&&<Line data={getData().morgenStunden} smoothing="cubic-spline" theme={{ stroke: { color: colors[7], width: 3 } }} />}
+
+                </Chart>
+
+                <View style= {{flexDirection:"column", flex: 0.07, justifyContent:"space-between", marginBottom:15}}>
+                    <Text>+ +</Text>
+                    <Text>+</Text>
+                    <Text>°</Text>
+                    <Text>-</Text>
+                    <Text>- -</Text>
+                </View>
+            </View>
+            
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={meditations} onValueChange={(newValue) => changeMeditations(newValue)}/>
+                <CheckBox checked={meditations} onPress={() => changeMeditations(!meditations)}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[0]}}/>
                 <Text>Anzahl der Meditationen</Text>
             </View>
             <View style={{flexDirection:"row", alignItems:"center"}}>
-                <CheckBox value={minutes} onValueChange={(newValue) => changeMinutes(newValue)}/>
+                <CheckBox checked={minutes} onPress={() => changeMinutes(!minutes)}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[1]}}/>
                 <Text>Meditierte Minuten</Text>
             </View>
-            {/*{!showStress?<View style={{ flexDirection: 'row', display: "flex" }}>
-                <YAxis
-                        data={getHistory()}
-                        yAccessor={({item})=>item[typeOfChart]}
-                        contentInset={contentInset}
-                        svg={{
-                            fill: 'grey',
-                            fontSize: 10,
-                        }}
-                        numberOfTicks={10}
-                        formatLabel={(value) => `${value}`}
-                        style={{ flex: 0.1, marginBottom: 15 }}
-                    />
-                    <View style={{ flex: 0.8 }}>
-                            <LineChart
-                                style={{ height: 200}}
-                                data={getHistory()}
-                                yAccessor={({item})=>item[typeOfChart]}
-                                svg={{ stroke: 'rgb(134, 65, 244)' }}
-                                contentInset={{left: 10, right: 10, top:20, bottom:20}}
-                            >
-                                <Grid />
-                            </LineChart>
-                    
-                    <XAxis
-                            style={{ marginHorizontal: -10}}
-                            data={getHistory()}
-                            formatLabel={(index, value) => tagesÜbersetzer[getHistory()[index].date]}
-                            contentInset={{ left: 20, right: 20 }}
-                            svg={{ fontSize: 10, fill: 'black' }}
-                        />
-                    </View>
-                </View>:
-                <View style={{ flexDirection: 'row', display: "flex" }}>
-                    <YAxis
-                        data={getHistoryStress()}
-                        yAccessor={({item})=>item.stress}
-                        contentInset={contentInset}
-                        max={50}
-                        svg={{
-                            fill: 'grey',
-                            fontSize: 10,
-                        }}
-                        numberOfTicks={10}
-                        formatLabel={(value) => `${value}`}
-                        style={{ flex: 0.1, marginBottom: 15 }}
-                    />
-                    <View style={{ flex: 0.8 }}>
-                        <BarChart
-                            yMax={50}
-                            style={{ height: 200}}
-                            data={getHistoryStress()}
-                            yAccessor={({item})=>item.stress}
-                            svg={{ fill:"rgb(134, 65, 244)" }}
-                            contentInset={{left: 10, right: 10, top:20, bottom:20}}
-                            spacingInner={0.3}
-                        >
-                            <Grid />
-                        </BarChart>
-                    
-                    <XAxis
-                            style={{ marginHorizontal: -10}}
-                            data={getHistoryStress()}
-                            formatLabel={(index, value) => monatsÜbersetzer[getHistoryStress()[index].month]}
-                            contentInset={{ left: 40, right: 40 }}
-                            svg={{ fontSize: 10, fill: 'black' }}
-                        />
-                    </View>
-                    </View>}
-                <View style={styles.reihe}>
-                    <Button title="Minuten"disabled={typeOfChart==="minutes"&&!showStress&&true}onPress={()=>{changeTypeOfChart("minutes");changeShowStress(false)}}></Button>
-                    <Button title="Anzahl"disabled={typeOfChart==="meditations"&&!showStress&&true}onPress={()=>{changeTypeOfChart("meditations");changeShowStress(false)}}></Button>
-                    <Button title="Stress"disabled={showStress&&true}onPress={()=>{changeShowStress(true)}}></Button>
-                </View>*/}
+            <View style={{flexDirection:"row", alignItems:"center"}}>
+                <CheckBox checked={stimmung} onPress={() => changeStimmung(!stimmung)}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[2]}}/>
+                <Text>Stimmung</Text>
+            </View>
+            <View style={{flexDirection:"row", alignItems:"center"}}>
+                <CheckBox checked={dailyStress} onPress={() => changeDailyStress(!dailyStress)}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[3]}}/>
+                <Text>Stress (täglich)</Text>
+            </View>
+            <View style={{flexDirection:"row", alignItems:"center"}}>
+                <CheckBox checked={craving} onPress={() => changeCraving(!craving)}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[4]}}/>
+                <Text>Craving</Text>
+            </View>
+            <View style={{flexDirection:"row", alignItems:"center"}}>
+                <CheckBox checked={pflichten} onPress={() => changePflichten(!pflichten)}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[5]}}/>
+                <Text>Pflichterfüllung</Text>
+            </View>
+            <View style={{flexDirection:"row", alignItems:"center"}}>
+                <CheckBox checked={heuteStunden} onPress={() => changeHeuteStunden(!heuteStunden)}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[6]}}/>
+                <Text>Tatsächliche Spielstunden</Text>
+            </View>
+            <View style={{flexDirection:"row", alignItems:"center"}}>
+                <CheckBox checked={morgenStunden} onPress={()=>changeMorgenStunden(!morgenStunden)}/>
+                <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[7]}}/>
+                <Text>Vorgenommene Spielstunden</Text>
+            </View>
         </View>
     )
 }

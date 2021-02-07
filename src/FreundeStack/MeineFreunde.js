@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Share, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Button, Share, TouchableOpacity, ImageBackground} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Linking from 'expo-linking';
 import {AppContext} from '../context.js';
@@ -44,24 +44,59 @@ export const MeineFreunde =() => {
 
     const renderFreunde=({item, index})=>{
       return(
-        <View style={{height:50, width:300, backgroundColor:"white", alignSelf:"center", margin:10, justifyContent:"center", paddingLeft:20}}>
-          <Text style={{fontSize:16}}>{item.name}</Text>
+        <View style={styles.friend}>
+          <Text style={{color:'#fff', fontSize:16}}>{item.name}</Text>
         </View>
       )
     }
 
 
     return (
-        <View>
-          <TouchableOpacity style={{width:50, height:50, borderRadius:100, backgroundColor:"white", justifyContent:"center", alignItems:"center", borderWidth:2, alignSelf:"center", marginTop:25}}onPress={()=> {onShare()}}>
-            <Feather name="user-plus" size={24} color="black" />
-          </TouchableOpacity>
-          <FlatList
-            data={freundeArray()}
-            keyExtractor={(item, index)=>item.email}
-            renderItem={renderFreunde}
-          ></FlatList>
-            
-        </View>
+      <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+        
+          <View style={{flex:0.2, width:'100%'}}>
+            <TouchableOpacity style={{alignItems:'flex-end', marginTop:20, marginRight:20}} onPress={()=> {onShare()}}>
+              <Feather name="user-plus" size={30} color="#fff" style={{marginRight:35}}/>
+              <Text style={{color:'#fff', fontSize:16}}>Freunde adden</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{flex:0.8, alignItems:'center', width:'100%'}}>
+            <View style={styles.background}>
+              <Text style={{color:'#fff', fontSize:20, marginBottom:20}}>Meine Freunde</Text>
+              <FlatList
+                style={{marginVertical:10, width:'95%'}}
+                data={freundeArray()}
+                keyExtractor={(item, index)=>item.email}
+                renderItem={renderFreunde}
+              ></FlatList>
+            </View>
+          </View>
+        
+        <View style={{height:60}}/>
+      </ImageBackground>
     )
   }
+
+  const styles = StyleSheet.create({
+    friend:{
+      height:45, 
+      width:'100%', 
+      backgroundColor:"#464982", 
+      alignSelf:"center", 
+      justifyContent:"center", 
+      paddingLeft:20,
+      borderRadius:10,
+    },
+    imagebackground: {
+      flex: 1,
+      alignItems:'center'
+    },
+    background: {
+      backgroundColor: "#0F113A90",
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      padding:10,
+      width: '90%',
+   },
+  });

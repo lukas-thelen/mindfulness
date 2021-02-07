@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList,TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList,TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -13,11 +13,78 @@ export const Journal = (props) => {
     const {userData, gehoerteUebungen} = useContext(AppContext)
 
     const [weekchange, changeWeekchange] =useState(0)
+    const [xHeight,changeXHeight] = useState(400)
 
     const wochentage=["Mo", "Di","Mi","Do", "Fr", "Sa", "So"]
     const wochentageToString={0:"Montag", 1:"Dienstag", 2:"Mittwoch", 3:"Donnerstag", 4:"Freitag", 5:"Samstag", 6:"Sonntag"}
     const today = new Date()
     const date=today.getDate()
+
+    const styles = StyleSheet.create({
+        tag: {
+            backgroundColor: '#464982',
+            paddingLeft:30,
+            borderRadius: 10,
+            height: (xHeight-44.5)/7,
+            marginBottom: 3.5,
+            flexDirection: "row",
+            alignItems: 'center',
+        },
+        tagEdited:{
+            backgroundColor: '#464982b2',
+            paddingLeft:30, 
+            borderRadius: 10,
+            height: (xHeight-44.5)/7,
+            marginBottom: 3.5,
+            flexDirection: "row",
+            alignItems: 'center',
+        },
+        reihe: {
+            flexDirection:"row",
+            alignItems: "center", 
+            justifyContent: "space-around",
+            marginTop: 15,
+        },
+        imagebackground: {
+            flex: 1,
+            alignItems:'center'
+        },
+        background: {
+            backgroundColor: "#0F113Ab2",
+            flex:0.6,
+            borderRadius: 10,
+            alignItems: 'center',
+            width: '90%',
+        },
+        text: {
+            color: '#fff',
+            fontSize: 16,
+            textAlign: 'center',
+        },
+        gradient: {
+            alignItems: 'center',
+            borderRadius: 15,
+            paddingVertical: 5,
+            paddingHorizontal: 20,
+          },
+        buttonRand: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 6,
+            borderColor: '#fff',
+            borderWidth: 1,
+            padding: 3,
+        },
+        button: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            shadowColor: '#000',
+            shadowOffset: {width:0, height:4},
+            shadowRadius: 4,
+            shadowOpacity: 0.4,
+        },
+      });
+
     const InstantStart =() =>{
         if (gehoerteUebungen.includes(userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1])){
           return null
@@ -81,16 +148,15 @@ export const Journal = (props) => {
     }
 
     return (
-        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground}>
-            <View style={{flex:1, alignItems:'center'}}>
-                
+        <ImageBackground source={require('../../assets/Startseite_kurz.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+            
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart/>
                 </View>
                 
-                <View style={styles.background}>
+                <View style={styles.background} onLayout={(event)=>{var{height}=event.nativeEvent.layout;changeXHeight(height)}}>
                     <FlatList 
-                        style={{margin:5, width:'95%'}}
+                        style={{marginVertical:10, width:'95%'}}
                         data={wochentage}
                         keyExtractor={(item, index)=>index.toString()}
                         renderItem={renderTag}>
@@ -99,93 +165,39 @@ export const Journal = (props) => {
 
                 <View style={{flex:0.25, alignContent:'center'}}>
                     <View style={styles.reihe}>
-                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(weekchange-1)}}>
+                        <TouchableOpacity style={styles.buttonRand} onPress={()=>{changeWeekchange(weekchange-1)}}>
                             <Text style={styles.text}>Woche davor</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(0)}}>
+                        <TouchableOpacity style={styles.buttonRand} onPress={()=>{changeWeekchange(0)}}>
                             <Text style={styles.text}>Aktuelle Woche</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={()=>{changeWeekchange(weekchange+1)}}>
+                        <TouchableOpacity style={styles.buttonRand} onPress={()=>{changeWeekchange(weekchange+1)}}>
                             <Text style={styles.text}>Woche danach</Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={{alignItems:'center', padding:10}}>
                         {stressAktiv()?<Text style={styles.text}>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
-                        <Text>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
+                        <Text style={styles.text}>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
                     </View>
                     
-                    <View style={{alignItems:'center'}}>
-                        <TouchableOpacity styles={{alignItems: 'center', justifyContent: 'center'}} disabled={stressAktiv()?false:true} onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}>
+                    <View style={styles.button}>
+                        <TouchableOpacity styles={styles.button} disabled={stressAktiv()?false:true} onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}>
                             <LinearGradient
-                            colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 2 }}
-                            style={styles.gradient}>
-                                <Text style={styles.text}>Zur Stress-Umfrage</Text>
+                                colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 2 }}
+                                style={styles.gradient}>
+                                    <Text style={styles.text}>Zur Stress-Umfrage</Text>
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            
+            <View style={{height:60}}/>
         </ImageBackground>
     )
-}
 
-const styles = StyleSheet.create({
-    tag: {
-        flexDirection:"row",
-        backgroundColor: '#464982',
-        alignItems: 'center',
-        height:50,
-        paddingLeft:30,
-        borderRadius: 10,
-        marginVertical: 3.5,
-    },
-    tagEdited:{
-        flexDirection:"row",
-        backgroundColor: '#46498270',
-        alignItems: 'center',
-        height:50,
-        paddingLeft:30, 
-        borderRadius: 10,
-        marginVertical: 3.5,
-    },
-    reihe: {
-        flexDirection:"row",
-        alignItems: "center", 
-        justifyContent: "space-around",
-        marginTop: 15,
-    },
-    imagebackground: {
-        flex: 1,
-        resizeMode: 'cover',
-    },
-    background: {
-        backgroundColor: "#0F113A90",
-        flex:0.6,
-        borderRadius: 10,
-        alignItems: 'center',
-        width: '90%',
-    },
-    text: {
-        color: '#fff',
-        fontSize: 16,
-        textAlign: 'center',
-    },
-    gradient: {
-        alignItems: 'center',
-        borderRadius: 15,
-        paddingBottom: 4,
-        paddingTop: 4,
-        paddingHorizontal: 20,
-      },
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 6,
-        borderColor: '#fff',
-        borderWidth: 1,
-        padding: 3,
-    },
-  });
+
+
+}

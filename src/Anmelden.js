@@ -7,6 +7,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {AppContext} from './context.js';
 import { useContext } from 'react';
 import { globalStyles } from './globalStyles.js';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const Anmelden = (props) => {
   const appData = useContext(AppContext).appData
@@ -82,13 +83,12 @@ export const Anmelden = (props) => {
     return(
 
         <View style={styles.pagewrap, styles.container}>
-        <Text style= {{color: '#fff', marginBottom: 80, fontSize: 40}}>Anmeldung</Text>
+        <Text style= {{color: '#fff', marginBottom: 100, fontSize: 30}}>Anmeldung</Text>
         <Text style= {{color: '#fff'}}>Benutzername</Text>
         <TextInput 
             style={styles.textinput}
             onChangeText={text =>changeEMailInput(text)} autoCapitalize = 'none'></TextInput>
 
-        <View style={globalStyles.trennlinie}/>
 
 
         <Text style={{color: '#fff'}}>Passwort</Text>
@@ -96,13 +96,18 @@ export const Anmelden = (props) => {
             style={styles.textinput}
             onChangeText={text => changePasswordInput(text)} autoCapitalize = 'none'  ></TextInput>
 
-        <View style={globalStyles.trennlinie}/>
 
-        <TouchableOpacity style={styles.containertext1} onPress={()=>checkInput() }>
-              <Text style={{color: '#fff', fontSize: 20}}>Anmelden</Text>
+        <TouchableOpacity style={styles.button} onPress={()=>checkInput() }>
+            <LinearGradient
+            colors={['#80DEE4', '#89FFE3']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 2 }}
+            style={styles.gradient}>
+              <Text style={{color: '#fff', fontSize: 25}}>Anmelden</Text>
+            </LinearGradient>
         </TouchableOpacity>
         <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
-              <Text style={{color: '#fff', fontSize: 10}}>Zurück</Text>
+              <Text style={{color: '#fff', fontSize: 10,textDecorationLine: "underline"}}>Zurück</Text>
         </TouchableOpacity>
       </View>
     )
@@ -118,17 +123,17 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     textinput: {
-      height: '3%', 
-      borderColor: '#464982', 
+      height: '5%', 
+      borderColor: '#464982',
+      marginBottom: 20, 
       backgroundColor: '#464982', 
       borderWidth: 10, 
-      width:200, 
-      borderRadius:200, 
-
+      width:'70%', 
+      borderRadius:200,
     },
     containertext1: {
       alignItems:'center',
-      width: '40%',
+      width: '50%',
       height: '4%',
       borderRadius: 100,
       backgroundColor: '#80DEE4',
@@ -141,7 +146,7 @@ const styles = StyleSheet.create({
     },
     containertext2: {
       alignItems:'center',
-      marginTop: 15
+      marginTop: 10
     },
     pagewrap:{
       width: '100%',
@@ -152,4 +157,19 @@ const styles = StyleSheet.create({
       borderWidth: 0,
       height:30
     },
+    gradient: {
+      alignItems: 'center',
+      borderRadius: 20,
+      paddingBottom: 4,
+      paddingTop: 4,
+      paddingHorizontal: 20,
+    },
+    button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {width:0, height:4},
+      shadowRadius: 4,
+      shadowOpacity: 0.4,
+    }
   });

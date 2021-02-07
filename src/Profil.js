@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ImageBackground } from 'react-native';
 import { useContext, useEffect } from 'react';
 import { AppContext } from './context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -51,43 +51,163 @@ export const ProfilRoot = ({navigation})=> {
       }
 
     return(
-        <View style={styles.container}>
-          <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%", padding:15}}>
-              <TouchableOpacity onPress={()=>test()}>
-                <Feather name="user" size={50} color="white" />
-                <Text style={{textAlign:"center"}}>{username}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={()=>navigation.navigate("Einstellungen")}>
-                <Feather name="settings" size={50} color="white" />
-              </TouchableOpacity>
+      <ImageBackground source={require('../assets/Profil.png')} style={styles.imagebackground}>
+          
+          <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%", padding:15, flex:0.15}}>
+            <TouchableOpacity onPress={()=>test()}>
+              <Feather name="user" size={40} color="white" />
+              <Text style={{textAlign:"center", color:'#fff'}}>{username}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate("Einstellungen")}>
+              <Feather name="settings" size={40} color="white" />
+            </TouchableOpacity>
           </View>
-            <View style={styles.container}>
-            <Text>Streak {userData.benchmarks.streak}</Text>
-            <TouchableOpacity title="Statistiken" onPress={()=>navigation.navigate("Statistiken")}></TouchableOpacity> 
-            <TouchableOpacity title="Erfolge" onPress={()=>navigation.navigate("Erfolge")}></TouchableOpacity> 
+
+
+          <View style={{flex:0.2, alignItems:'center', width:'90%'}}>
+          <TouchableOpacity style={styles.streak} onPress={()=>navigation.navigate("Statistiken")}>
+              <Text style={{color:'#fff'}}>Streak {userData.benchmarks.streak}</Text>
+              <Text style={{color:'#fff', marginLeft:'auto'}}>Gesamtminuten </Text>
+            </TouchableOpacity> 
+          </View>
+
+          <View style={{flex:0.65, width: '90%'}}>
+            <View style={styles.background}>
+                <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Statistiken")}>
+                  <Text style={{color:'#fff'}}>Statistiken</Text>
+                </TouchableOpacity> 
+                <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Erfolge")}>
+                  <Text style={{color:'#fff'}}>Erfolge</Text>
+                </TouchableOpacity>
             </View>
-        </View>
+          </View>
+
+          <View style={{height:60}}/>
+      </ImageBackground>
     )
 }
 
 export const ProfilScreen =() => {
   return (
       <ProfilStack.Navigator>
-          <ProfilStack.Screen name="Profil" component={ProfilRoot}/>
-          <ProfilStack.Screen name="Einstellungen" component={Einstellungen}/>
-          <ProfilStack.Screen name="Statistiken" component={Statistiken}/>
-          <ProfilStack.Screen name="Erfolge" component={Erfolge}/>
-          <ProfilStack.Screen name="Konto-Informationen" component={KontoInfos}/>
-          <ProfilStack.Screen name="Informationen über die App" component={AppInfos}/>
+          <ProfilStack.Screen name="Profil" component={ProfilRoot} options={{
+            title: 'Profil',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Einstellungen" component={Einstellungen} options={{
+            title: 'Einstellungen',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Statistiken" component={Statistiken} options={{
+            title: 'Statistiken',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Erfolge" component={Erfolge} options={{
+            title: 'Erfolge',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Konto-Informationen" component={KontoInfos} options={{
+            title: 'Account',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
+          <ProfilStack.Screen name="Informationen über die App" component={AppInfos} options={{
+            title: 'Appinfo',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              borderColor: '#D476D5',
+              borderWidth:1,
+              borderRadius: 15,
+              paddingHorizontal: 10,
+            },
+          }}/>
       </ProfilStack.Navigator>
   )
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#0F113A',
+    item: {
+      backgroundColor: '#464982',
+      borderRadius: 10,
+      height: 50,
+      marginVertical: 3.5,
       alignItems: 'center',
       justifyContent: 'center',
+      width: '90%',
+    },
+    streak: {
+      backgroundColor: '#464982',
+      borderRadius: 10,
+      height: 50,
+      marginVertical: 4,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      paddingHorizontal: 15,
+      width: '90%',
+      flexDirection: 'row',
+    },
+    background: {
+      backgroundColor: "#0F113A90",
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical:10,
+    },
+    imagebackground: {
+      flex: 1,
+      alignItems:'center'
     },
   });
