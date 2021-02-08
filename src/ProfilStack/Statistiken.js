@@ -25,7 +25,7 @@ export const Statistiken = () => {
     const [showMonthly, changeShowMonthly] = useState(true)
     const {userData, cahngeUserData, appData, changeAppData}=useContext(AppContext)
     const contentInset = { top: 20, bottom: 20 }
-    const colors = ["#D476D5", "#8F92E3", "#80DEE4", "#573280", "#EDDEA4", "#E2856E", "#B0F2B4", "#3685B5"]
+    const colors = ["#9400d3", "#8F92E3", "#fe5d9f", "#D476D5",'#ffc6ff', "#6495ED", "#a2d2ff", "#84dcc6"]
 
     useEffect(()=>{
         let max= 4
@@ -169,12 +169,12 @@ export const Statistiken = () => {
 
             <View style={{width:"90%", alignSelf:"center", flex:0.85}}>
                 <View style={{flexDirection:"row", flex:0.07}}> 
-                    <TouchableOpacity style={{...styles.tab, backgroundColor:"#464982"}} onPress={()=>changeShowMonthly(true)}><Text style={styles.text}>täglich</Text></TouchableOpacity>
-                    <TouchableOpacity style={{...styles.tab, backgroundColor:"#D476D5"}} onPress={()=>changeShowMonthly(false)}><Text style={styles.text}>monatlich</Text></TouchableOpacity>
+                <TouchableOpacity style={showMonthly?{...styles.tab, backgroundColor:"#D476D5"}:{...styles.tab, backgroundColor:"#464982"}} onPress={()=>changeShowMonthly(true)}><Text style={styles.text}>täglich</Text></TouchableOpacity>
+                <TouchableOpacity style={!showMonthly?{...styles.tab, backgroundColor:"#D476D5"}:{...styles.tab, backgroundColor:"#464982"}} onPress={()=>changeShowMonthly(false)}><Text style={styles.text}>monatlich</Text></TouchableOpacity>
                 </View>
                 
                 {!showMonthly?
-                <View style={{...styles.chartBackground, backgroundColor:'#D476D5b2'}}>
+                <View style={{...styles.chartBackground}}>
                 <View style={{flex:1}}>
                     <View style={{backgroundColor: '#eee', flexShrink:1}}>
                         <Chart
@@ -185,11 +185,11 @@ export const Statistiken = () => {
                             >
                                 <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
                                 <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12]}}}/>
-                                <Line data={getHistoryStress()} smoothing="none" theme={{ stroke: { color: colors[0], width: 4 } }} />
+                                <Line data={getHistoryStress()} smoothing="none" theme={{ stroke: { color: colors[3], width: 4 } }} />
                         </Chart>
                     </View>
-                    <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <View style={{marginLeft:5, marginRight:5, height:10, width:10, borderRadius:100, backgroundColor:colors[0]}}/>
+                    <View style={{flexDirection:"row", alignItems:"center", marginTop:20, marginLeft:10}}>
+                            <View style={{marginLeft:5, marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[3]}}/>
                             <Text style={styles.text}>Stress</Text>
                     </View>
                 </View>
@@ -204,7 +204,7 @@ export const Statistiken = () => {
                             yDomain={{ min: 0, max: maxValue }}
                             padding={{ left: 30, top: 10, bottom: 20, right: 5 }}
                         >
-                            <VerticalAxis style={{color:'#fff'}} tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
+                            <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
                             <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
                             {meditations&&<Line data={getData().meditations} smoothing="cubic-spline" theme={{ stroke: { color: colors[0], width: 3 } }} />}
                             {minutes&&<Line data={getData().minutes} smoothing="cubic-spline" theme={{ stroke: { color: colors[1], width: 3 } }} />}
@@ -296,9 +296,10 @@ const styles = StyleSheet.create({
         borderTopRightRadius:20,
     },
     chartBackground:{
-        backgroundColor:"#464982b2",
+        backgroundColor:"#0F113A90",
         flex:0.93,
         paddingTop:10,
+        paddingHorizontal:10
     },
     imagebackground: {
         flexGrow: 1,
