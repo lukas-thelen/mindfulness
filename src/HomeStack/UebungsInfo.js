@@ -10,6 +10,7 @@ export const UebungsInfo =({navigation, route})=>{
 
     const kursIndex = route.params.kursIndex
     const uebungsIndex = route.params.uebungsIndex
+    const [activeSections, changeActiveSections] = useState([])
 
     function generateKogProzList() {
         const KogProzListe = []
@@ -19,32 +20,22 @@ export const UebungsInfo =({navigation, route})=>{
         return KogProzListe
     }
    
-  class AccordionView extends Component {
-    state = {
-      activeSections: [],
-    };
    
-    _renderHeader = section => {
+     const _renderHeader = (content, id, isActive, sections) => {
       return (
-        <View style={styles.header}>
-          <Text style={styles.headerText}>{section.title}</Text>
+        <View style={isActive?{...styles.header, backgroundColor:"pink"}:styles.header}>
+          <Text style={styles.headerText}>{content.title}</Text>
         </View>
       );
     };
    
-    _renderContent = section => {
+     const _renderContent = (content, id, isActive, sections) => {
       return (
         <View style={styles.content}>
-          <Text>{section.content}</Text>
+          <Text>{content.content}</Text>
         </View>
       );
     };
-   
-    _updateSections = activeSections => {
-      this.setState({ activeSections });
-    };
-   
-    render() {
       return (
         <View style={styles.container}>
             <Text style={{fontSize:18}}>Informationen zur Übung: {kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
@@ -54,18 +45,15 @@ export const UebungsInfo =({navigation, route})=>{
             <Text>Angesprochene kognitive Prozesse:</Text>
             <Accordion
                 sections={generateKogProzList()}
-                activeSections={this.state.activeSections}
-                renderHeader={this._renderHeader}
-                renderContent={this._renderContent}
-                onChange={this._updateSections}/>
-            </View>
+                touchableComponent={TouchableOpacity}
+                activeSections={activeSections}
+                renderHeader={_renderHeader}
+                renderContent={_renderContent}
+                onChange={changeActiveSections}/>
+          </View>
       );
-    }
-}
-    return (
-        <AccordionView></AccordionView>
-    )
-}
+  }
+
 
 const styles = StyleSheet.create({
     container: {
