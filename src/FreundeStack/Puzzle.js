@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     },
     gradient: {
         alignItems: 'center',
-        borderRadius: 16,
+        borderRadius: 17,
         paddingVertical: 5,
         paddingHorizontal: 30,
     },

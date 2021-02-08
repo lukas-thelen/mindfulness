@@ -289,7 +289,7 @@ export const FreundeRoot =({navigation}) => {
     },
     gradient: {
       alignItems: 'center',
-      borderRadius: 16,
+      borderRadius: 17,
       paddingVertical: 5,
       paddingHorizontal: 30,
     },

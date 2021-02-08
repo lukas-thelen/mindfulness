@@ -33,7 +33,7 @@ export const InfoEcke=(props)=>{
                     navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
                   }
               }}>
-                <Ionicons name="play" size={50} color="#464982" /> 
+                <Ionicons name="play" size={50} color="#464982" style={styles.playButton} /> 
               </TouchableOpacity>
             )
           }
@@ -232,5 +232,11 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginLeft: 15,
         fontFamily: 'Poppins_400Regular'
+    },
+    playButton: {
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
     }
   });

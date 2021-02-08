@@ -179,7 +179,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                         <Text style={styles.text}>Anzahl: </Text>
                         <TextInput 
                             defaultValue={""+anzahl}
-                            style={{color: '#fff', paddingVertical:6, paddingHorizontal:20, borderColor:'#fff', borderWidth: 1, borderRadius:10, textAlign:'center'}}
+                            style={{color: '#fff', paddingVertical:6, paddingHorizontal:20, borderColor:'#fff', borderWidth: 1, borderRadius:10, textAlign:'center', marginRight:5}}
                             keyboardType={'numeric'} onChangeText={number => {onChangeAnzahl(number)}}>
                         </TextInput>
                         {hinweis&&<Text style={{color:"red", fontWeight:"bold"}}>!</Text>}
