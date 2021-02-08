@@ -166,7 +166,17 @@ export const HomeScreen = ()=> {
               fontFamily: 'Poppins_500Medium'
             },
           }}/>
-          <HomeStack.Screen name="AudioPlayer" component={AudioPlayer}/>
+          <HomeStack.Screen name="AudioPlayer" component={AudioPlayer} options={{
+            title: 'Übung',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
           <HomeStack.Screen name="individueller Tag" component={JournalTag} options={{
             title: 'Journal',
             headerStyle: {
@@ -178,7 +188,17 @@ export const HomeScreen = ()=> {
               fontFamily: 'Poppins_500Medium'
             },
           }}/>
-          <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly}/>
+          <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly} options={{
+            title: 'Stress-Umfrage',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
           <HomeStack.Screen name="Info Ecke" component={InfoEcke}/>
           <HomeStack.Screen name="Wähle die Dauer" component={VersionsAuswahlText}
           options={{
@@ -204,7 +224,17 @@ export const HomeScreen = ()=> {
               fontFamily: 'Poppins_500Medium'
             },
           }}/>
-          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
+          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo} options={{
+            title: 'Übungsinfo',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
         </HomeStack.Navigator>
     )
 }
