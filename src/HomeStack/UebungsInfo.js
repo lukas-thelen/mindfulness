@@ -1,7 +1,7 @@
 import React, { useState, Component } from 'react';
 import { useEffect } from 'react';
 import { render } from 'react-dom';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 
 import {kurse} from "../Kursdaten/Kursdatei.js"
@@ -37,7 +37,8 @@ export const UebungsInfo =({navigation, route})=>{
       );
     };
       return (
-        <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.container}>
             <Text style={{fontSize:18}}>Informationen zur Übung: {kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
             <Text></Text>
             <Text style={{textAlign:"justify"}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>
@@ -51,6 +52,7 @@ export const UebungsInfo =({navigation, route})=>{
                 renderContent={_renderContent}
                 onChange={changeActiveSections}/>
           </View>
+        </ScrollView>
       );
   }
 
