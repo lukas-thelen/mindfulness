@@ -15,6 +15,8 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 
@@ -113,9 +115,18 @@ export const Tabnavigator = () =>{
               >
                 <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={{fontSize:30}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].title}</Text>
-                    <Text style={{fontSize:15}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].description}</Text>
-                    <Button title={"weiter"} onPress={()=>{newBenchmarkTemp.shift();changeNewBenchmark(newBenchmarkTemp)}}></Button>
+                    <Text style={{...styles.text, textAlign:'center', color:'#D476D5'}}>Neuer Erfolg!</Text>
+                    <Text style={{...styles.text, fontSize:28, textAlign:'center'}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].title}</Text>
+                    <Text style={{...styles.text, textAlign:'center'}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].description}</Text>
+                    <TouchableOpacity styles={styles.button} onPress={()=>{newBenchmarkTemp.shift();changeNewBenchmark(newBenchmarkTemp)}}>
+                    <LinearGradient
+                            colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 2 }}
+                            style={styles.gradient}>
+                                <Text style={{...styles.text, fontSize:17}}>YAY!</Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
                 </View>
                 </View>
           </Modal>
@@ -271,20 +282,39 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   modalView: {
-    margin: 20,
-    width:"80%",
-    height:"80%",
-    backgroundColor: "white",
-    borderRadius: 20,
+    backgroundColor: '#0F113A',
+    width: '90%',
+    height:"60%",
+    borderColor: '#8F92E3',
+    borderWidth: 1,
+    borderRadius: 15,
+    borderRadius: 15,
     padding: 35,
     alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5
+    shadowOffset: {width:0, height:4},
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    elevation: 5,
+    justifyContent:"space-around"
+  },
+  text: {
+    fontFamily: 'Poppins_400Regular',
+    fontSize:16,
+    color:'#fff',
+  },
+  gradient: {
+    alignItems: 'center',
+    borderRadius: 17,
+    paddingVertical: 5,
+    paddingHorizontal: 30,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width:0, height:4},
+    shadowRadius: 4,
+    shadowOpacity: 0.4,
   },
 });
