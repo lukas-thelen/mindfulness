@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button , FlatList, TouchableOpacity, Modal,} from 'react-native';
+import { StyleSheet, Text, View, Button , FlatList, TouchableOpacity, Modal, ImageBackground} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -42,10 +42,10 @@ export const Erfolge = () => {
     const renderBenchmark = ({item}) => {
         const percent = ((userData.benchmarks[item.var]/item.goal)*100).toString() + "%"
         return(
-            <TouchableOpacity onPress={()=>changeModal(item.key)}style = {{flex:1, padding:10, margin:10, backgroundColor: "white"}}>
-                <Text style = {item.reached?{color: "black"}:{color:"grey"}}>{item.title}</Text>
+            <TouchableOpacity onPress={()=>changeModal(item.key)}style = {{flex:1, padding:10, margin:10, backgroundColor: "#0F113A90"}}>
+                <Text style = {item.reached?{color: "black"}:{color:"white"}}>{item.title}</Text>
                 <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100, marginTop:15}}>
-                    <View style = {{maxWidth:"100%", minWidth: 3, width:percent, backgroundColor: "green", height: "100%", borderRadius:100}}></View>
+                    <View style = {{maxWidth:"100%", minWidth: 3, width:percent, backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
                 </View>
             </TouchableOpacity>
         );
@@ -57,34 +57,40 @@ export const Erfolge = () => {
         return null
     }
     return (
-        <View>
-            <Modal
-                  animationType="slide"
-                  transparent={true}
-                  visible={modal!=""}
-              >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <View style={{flex:0.3, justifyContent:"space-between"}}>
-                            <Text style={{fontSize:22}}>{benchmarks[modal]&&benchmarks[modal].title}</Text>
-                            <Text>{benchmarks[modal]&&benchmarks[modal].description}</Text>
-                            <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100,width:200, alignSelf:"center"}}>
-                                <View style = {{maxWidth:"100%", minWidth: 3, width:percentage(benchmarks[modal]), backgroundColor: "green", height: "100%", borderRadius:100}}></View>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+            <View>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modal!=""}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <View style={{flex:0.3, justifyContent:"space-between"}}>
+                                <Text style={{color:"white", fontSize:22}}>{benchmarks[modal]&&benchmarks[modal].title}</Text>
+                                <Text style={{color:"white"}}>{benchmarks[modal]&&benchmarks[modal].description}</Text>
+                                <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100,width:200, alignSelf:"center"}}>
+                                    <View style = {{maxWidth:"100%", minWidth: 3, width:percentage(benchmarks[modal]), backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
+                                </View>
+                            </View>
+                            <View style={{flex:0.7, justifyContent:"flex-end"}}>
+                                <TouchableOpacity title="zurück" onPress={()=>changeModal("")}>
+                                    <Text style={{color:"white"}}>Zurück</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
-                        <View style={{flex:0.7, justifyContent:"flex-end"}}>
-                            <Button title="zurück" onPress={()=>changeModal("")}></Button>
-                        </View>
                     </View>
-                </View>
-            </Modal>
-            <FlatList
-                    numColumns={2}
-                    data={benchmarkArray()}
-                    keyExtractor={(item, index)=>item.key}
-                    renderItem={renderBenchmark}
-                ></FlatList>
-        </View>
+                </Modal>
+                <FlatList
+                        numColumns={2}
+                        data={benchmarkArray()}
+                        keyExtractor={(item, index)=>item.key}
+                        renderItem={renderBenchmark}
+                        style={{width:"100%"}}
+                    ></FlatList>
+            </View>
+            <View style={{height:60}}/>
+        </ImageBackground>
     )
 }
 
@@ -106,21 +112,24 @@ const styles = StyleSheet.create({
       alignItems: "center"
     },
     modalView: {
-      margin: 20,
-      width:"80%",
-      height:"80%",
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      justifyContent:"space-between"
+        backgroundColor: '#0F113A',
+        width: '90%',
+        height:"60%",
+        borderColor: '#8F92E3',
+        borderWidth: 1,
+        borderRadius: 15,
+        borderRadius: 15,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {width:0, height:4},
+        shadowOpacity: 0.4,
+        shadowRadius: 4,
+        elevation: 5,
+        justifyContent:"space-between"
+    },
+    imagebackground: {
+        flex: 1,
+        
     },
   });

@@ -12,7 +12,7 @@ export const StartBildschirm = (props) =>{
 
     return(
       
-      <ImageBackground source={require('../assets/ErsteSeite.png')} style={styles.imagebackground}>
+      <ImageBackground source={require('../assets/ErsteSeite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
         <View style={styles.container}>
         <Text style={{fontSize:40, fontWeight:"bold", color: '#fff', marginBottom: 10}}>Upgrade</Text>
         <Text style={{fontSize:25, fontWeight:"bold", color: '#fff',marginBottom: 60}}>your mind</Text>
@@ -80,16 +80,15 @@ const styles = StyleSheet.create({
     },
     imagebackground: {
       flex: 1,
-      resizeMode: 'cover',
       justifyContent: 'center',
       alignItems: 'center',
     },
     image: {
       position: 'absolute',
-      top: 490,
-      left: 200,
-      width: 170,
-      height: 170
+      top: '72%',
+      left: '54%',
+      width: 150,
+      height: 150
      
     },
   

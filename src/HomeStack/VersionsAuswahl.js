@@ -57,15 +57,16 @@ export const VersionsAuswahl =({navigation, route})=>{
          return kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher[sprecherIndex].VersionenNachDauer.findIndex(item => item.Dauer === dauer)
     }
     return (
-        <ImageBackground source={require('../../assets/ErsteSeite.png')} style={styles.imagebackground}>
-            <View style={{flexDirection:"row"}}>
-                <Text style={{marginBottom:15, fontSize:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+            <View >
+                
                 <TouchableOpacity 
                     style={styles.info}
                     onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:kursIndex, uebungsIndex:uebungsIndex })}}
                 ><Text>i</Text></TouchableOpacity>
             </View>
-            <Text style={{marginBottom:15}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
+            <Text style={{textAlignVertical: 'center', fontSize:25, marginBottom: '5%',color: '#fff'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
+            <Text style={{textAlignVertical: 'center', marginBottom: '5%', color: '#fff'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
             <FlatList
                 numColumns={2}
                 data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
@@ -88,10 +89,10 @@ export const VersionsAuswahl =({navigation, route})=>{
                 </View>
                 <LinearGradient start={[0, 0.5]}
                     end={[1, 0.5]}
-                    colors={['#EFBB35', '#4AAE9B']}
-                    style={{borderRadius: 100, width:80, height:80, alignSelf:"center"}}>
+                    colors={['#89FFF1', '#8F92E3', '#D476D5']}
+                    style={{borderRadius: 40, width:80, height:80, alignSelf:"center", marginBottom: '10%'}}>
                     <View style={styles.circleGradient}>
-                    <Text style= {{fontSize: 35}}>{dauer}</Text>
+                    <Text style= {{fontSize: 35, color: '#fff'}}>{dauer}</Text>
                     </View>
                 </LinearGradient>
 
@@ -102,7 +103,7 @@ export const VersionsAuswahl =({navigation, route})=>{
                 </View>
             </View>
             {sprecher!=""&&dauerIndex()!=-1?
-                <TouchableOpacity style={{alignSelf:"center"}}onPress={()=>abspielen()}>
+                <TouchableOpacity style={{alignSelf:"center", marginBottom: '20%'}}onPress={()=>abspielen()}>
                     <LinearGradient
                     colors={['#89FFF1', '#8F92E3', '#D476D5']}
                     start={{ x: 0, y: 0 }}
@@ -122,26 +123,25 @@ export const VersionsAuswahl =({navigation, route})=>{
 
 const styles = StyleSheet.create({
     SprecherItem: {
-        backgroundColor: '#fff',
+        backgroundColor: '#8F92E370',
         alignItems: 'center',
         justifyContent: 'center',
-        height:60,
-        width:120,
+        height:50,
+        width:130,
         margin:3,
         borderRadius:100,
-        marginBottom:10,
     },
     SelectedItem: {
-        backgroundColor: '#fff',
+        backgroundColor: '#8F92E3',
         alignItems: 'center',
         justifyContent: 'center',
-        height:60,
-        width:120,
+        height:50,
+        width:130,
         margin:3,
         borderRadius:100,
-        marginBottom:10,
         borderWidth:3,
-        borderColor:"#ffccdc",
+        borderColor: '#8F92E3'
+        
     },
     DauerItem:{
         backgroundColor: '#fff',
@@ -171,14 +171,18 @@ const styles = StyleSheet.create({
         borderWidth:1, 
         borderRadius:100, 
         width:25, 
-        height:25, 
+        height:25,
+        marginTop: '22%',
+        marginRight: '12%', 
         alignItems:"center", 
         justifyContent:"center", 
-        backgroundColor:"white"
+        backgroundColor:"white",
+        marginLeft: '80%',
+        marginTop: '5%'
     },
     circleGradient: {
-        margin: 5,
-        backgroundColor: "white",
+        margin: 4,
+        backgroundColor: "#141744",
         borderRadius: 100,
         flex:1,
         alignItems: "center",
@@ -201,5 +205,6 @@ const styles = StyleSheet.create({
         paddingBottom: 4,
         paddingTop: 4,
         paddingHorizontal: 20,
+        marginBottom: 50
       },
   });
