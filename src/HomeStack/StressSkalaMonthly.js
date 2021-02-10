@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
 import Slider from '@react-native-community/slider';
@@ -7,6 +7,7 @@ import Slider from '@react-native-community/slider';
 import {AppContext} from '../context.js';
 import { useContext } from 'react';
 import { abs } from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const StressSkalaMonthly = ({navigation,route}) =>{
     const [stressData, changeStressData] = useState(2)
@@ -15,15 +16,15 @@ export const StressSkalaMonthly = ({navigation,route}) =>{
     //Die perceived Stress Skala Fragen, auf die mit frage und number zugegriffen wird die aktuelle Frage ist gleichquestions[number]
     const [number, changeNumber] = useState(0)
     const questions = ["Wie oft warst Du im letzten Monat aufgewühlt, weil etwas unerwartet passiert ist?",
-                    "Wie oft hattest Du im letzten Monat das Gefühl, nicht in der Lage zu sein, die wichtigen Dinge in Deinem Leben kontrollieren zu können?",
-                    "Wie oft hast DU dich im letzten Monat nervös und gestresst gefühlt?",
-                    "Wie oft warst Du im letzten Monat zuversichtlich, dass Du fähig bist, ihre persönlichen Probleme zu ubewältigen?",
-                    "Wie oft hast Du im letzten Monat das Gefühl, dass sich die Dinge zu Ihren Gunsten entwickeln?",
-                    "Wie oft hattest Du im letzten Monat den Eindruck, nicht all Deinen anstehenden Aufgaben gewachsen zu sein?",
-                    "Wie oft warst Du im letzten Monat in der Lage, ärgerliche Situationen in Deinem Leben zu beeinflussen?",
-                    "Wie oft hast Du im letzten Monat das Gefühl, alles im Griff zu haben?",
-                    "Wie oft hast Du dich im letzten Monat über Dinge gegeärgert, über die Du keine Kontrolle hattest?",
-                    "Wie oft hattest Du im letzten Monat das Gefühl, dass sich so viele Schwierigkeiten angehäufthaben, dass Du diese nicht überwinden konntest?",
+                    "Wie oft hattest Du im letzten Monat das Gefühl, nicht in der Lage zu sein, die wichtigen Dinge in deinem Leben kontrollieren zu können?",
+                    "Wie oft hast Du dich im letzten Monat nervös und gestresst gefühlt?",
+                    "Wie oft warst Du im letzten Monat zuversichtlich, dass Du fähig bist, deine persönlichen Probleme zu bewältigen?",
+                    "Wie oft hast Du im letzten Monat das Gefühl gehabt, dass sich die Dinge zu deinen Gunsten entwickeln?",
+                    "Wie oft hattest Du im letzten Monat den Eindruck, nicht all deinen anstehenden Aufgaben gewachsen zu sein?",
+                    "Wie oft warst Du im letzten Monat in der Lage, ärgerliche Situationen in deinem Leben zu beeinflussen?",
+                    "Wie oft hast Du im letzten Monat das Gefühl gehabt, alles im Griff zu haben?",
+                    "Wie oft hast Du dich im letzten Monat über Dinge geärgert, über die Du keine Kontrolle hattest?",
+                    "Wie oft hattest Du im letzten Monat das Gefühl, dass sich so viele Schwierigkeiten angehäuft haben, dass Du diese nicht überwinden konntest?",
                   ]
 
       // Variablen für den dynamischen Button (von "Nächste Frage" --> Abschicken)
@@ -88,58 +89,85 @@ export const StressSkalaMonthly = ({navigation,route}) =>{
       }
     }
     return(
-
-        <View style={styles.pagewrap, styles.container}>
-            <Text>Lass uns ein Stress-Tagebuch führen</Text>
-            <View style={styles.trennlinie}/>
-            <Text style={{padding:20}}>{question}</Text>
+      <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        
+            <Text style={{color:'#fff', fontSize:20, marginBottom:50}}>Dein monatliches Stress-Tagebuch</Text>
+            
+            <View style={styles.background}>
+            <Text style={styles.text}>{question}</Text>
             <Slider
                 style={{width: 250, height: 40}}
                 minimumValue={0}
                 maximumValue={4}
-                minimumTrackTintColor="green"
-                maximumTrackTintColor="grey"
+                minimumTrackTintColor='#89FFF1'
+                maximumTrackTintColor='#D476D5'
                 step={1}
                 value={stressData}
                 onValueChange={changeStressData}
             />
-            <View style={{flexDirection:"row", width:280, justifyContent:"space-evenly", marginLeft:20}}>
-              <Text style={stressData===0?{fontSize:16}:{fontSize:10}}>Nie</Text>
-              <Text style={stressData===1?{fontSize:16}:{fontSize:10}}>Fast Nie</Text>
-              <Text style={stressData===2?{fontSize:16}:{fontSize:10}}>Manchmal</Text>
-              <Text style={stressData===3?{fontSize:16}:{fontSize:10}}>Ziemlich Oft</Text>
-              <Text style={stressData===4?{fontSize:16}:{fontSize:10}}>Sehr Oft</Text>
+            <View style={{flexDirection:"row", width:280, justifyContent:"space-around", marginLeft:20}}>
+              <Text style={stressData===0?{fontSize:16, color:'#fff'}:{fontSize:10, color:'#fff'}}>Nie</Text>
+              <Text style={stressData===1?{fontSize:16, color:'#fff', marginLeft:15}:{fontSize:10, color:'#fff'}}>Fast Nie</Text>
+              <Text style={stressData===2?{fontSize:16, color:'#fff', marginLeft:15}:{fontSize:10, color:'#fff'}}>Manchmal</Text>
+              <Text style={stressData===3?{fontSize:16, color:'#fff'}:{fontSize:10, color:'#fff'}}>Ziemlich Oft</Text>
+              <Text style={stressData===4?{fontSize:16, color:'#fff'}:{fontSize:10, color:'#fff'}}>Sehr Oft</Text>
             </View>
-            <View style={styles.trennlinie}/>
-            <Button title={buttonValue} onPress={() =>{calculateStress()}} ></Button>
+            </View>
 
-        </View>
+            <TouchableOpacity style={styles.button} onPress={() =>{calculateStress()}}>
+              <LinearGradient
+                colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 2 }}
+                style={styles.gradient}>
+                  <Text style={{color:'#fff', fontSize:16}}>{buttonValue}</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+
+        </ImageBackground>
     )
 
 }
 //Styles
 const styles = StyleSheet.create({
-    container: {
+    imagebackground: {
       flex: 1,
-      width: '100%',
-      backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
-    },
-    pagewrap:{
-      width: '100%',
-      height: '100%'
+      justifyContent:'center'
     },
     radio:{
       width: 200,
       borderWidth: 0,
       height:30
     },
-    trennlinie:{
-      height:1,
-      width:"100%",
-      backgroundColor:"black",
-      marginBottom:10,
-      marginTop:10
-    }
+    text:{
+      color:'#fff',
+      fontSize:18,
+      textAlign:'center',
+      marginBottom:5
+    },
+    background: {
+      backgroundColor: "#0F113A90",
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding:20,
+      width: '90%',
+    },
+    gradient: {
+      alignItems: 'center',
+      borderRadius: 15,
+      paddingBottom: 4,
+      paddingTop: 4,
+      paddingHorizontal: 20,
+    },
+    button: {
+      marginTop: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {width:0, height:4},
+      shadowRadius: 4,
+      shadowOpacity: 0.4,
+    },
   });

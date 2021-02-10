@@ -4,12 +4,14 @@ import { StyleSheet, Text, View, Button, TextInput, ImageBackground, ScrollView 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Slider from '@react-native-community/slider';
 import { LinearGradient } from 'expo-linear-gradient';
-import CheckBox from '@react-native-community/checkbox';
+import { CheckBox } from 'react-native-elements'
+import { Ionicons } from '@expo/vector-icons';
 
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { KeyboardAvoidingView } from 'react-native';
 
 export const JournalTag = ({navigation, route}) => {
 
@@ -78,7 +80,10 @@ export const JournalTag = ({navigation, route}) => {
 
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
-        <ScrollView >
+        <KeyboardAvoidingView 
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}>
+        <ScrollView style={{width:'100%'}}>
             <View style = {{alignItems: "center"}}>
                 <Text style={styles.text25}>Datum: {date.getDate()}.{date.getMonth()+1}</Text>
                 <Text style={styles.text25}>Platz für deine Gedanken:</Text>
@@ -99,73 +104,103 @@ export const JournalTag = ({navigation, route}) => {
                   <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>{stimmungsÜbersetzung[stimmung]}</Text>
                 </View>
 
-                <View style={styles.trennlinie}/>
-
-                <Text style={!editable?{color:"grey"}:{color:"black"}}>Wie gestresst fühlst Du dich heute?</Text>
+                <View style={styles.background}>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie gestresst fühlst Du dich heute?</Text>
                 <Slider
                     style={{width: 200, height: 40}}
                     minimumValue={0}
                     maximumValue={4}
-                    minimumTrackTintColor="green"
-                    maximumTrackTintColor="red"
+                    minimumTrackTintColor='#89FFF1'
+                    maximumTrackTintColor='#D476D5'
                     step={1}
                     value={stress}
                     onValueChange={changeStress}
                     disabled={!editable? true:false}
                 />
-                <Text>{stressÜbersetzung[stress]}</Text>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>{stressÜbersetzung[stress]}</Text>
+                </View>
 
-                <View style={styles.trennlinie}/>
-                <Text style={!editable?{color:"grey"}:{color:"black"}}>Wie oft hast Du heute in deinem Alltag daran gedacht gedacht zu spielen?</Text>
+                <View style={styles.background}>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie oft hast Du heute in deinem Alltag daran gedacht zu spielen?</Text>
+                <Ionicons name="game-controller-outline" size={22} color="white" />
                 <Slider
                     style={{width: 200, height: 40}}
                     minimumValue={0}
                     maximumValue={4}
-                    minimumTrackTintColor="green"
-                    maximumTrackTintColor="red"
+                    minimumTrackTintColor='#89FFF1'
+                    maximumTrackTintColor='#D476D5'
                     step={1}
                     value={craving}
                     onValueChange={changeCraving}
                     disabled={!editable? true:false}
                 />
-                <Text>{cravingÜbersetzung[craving]}</Text>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>{cravingÜbersetzung[craving]}</Text>
+                </View>
 
-                <View style={styles.trennlinie}/>
-                <Text style={!editable?{color:"grey"}:{color:"black"}}>Hast Du deine Pflichten heute zufriedenstellend erledigt? </Text>
+                <View style={styles.background}>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Hast Du deine Pflichten heute zufriedenstellend erledigt? </Text>
                 <Slider
                     style={{width: 200, height: 40}}
                     minimumValue={0}
                     maximumValue={4}
-                    minimumTrackTintColor="green"
-                    maximumTrackTintColor="red"
+                    minimumTrackTintColor='#89FFF1'
+                    maximumTrackTintColor='#D476D5'
                     step={1}
                     value={pflichten}
                     onValueChange={changePflichten}
                     disabled={!editable? true:false}
                 />
-                <Text>{pflichtenÜbersetzung[pflichten]}</Text>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>{pflichtenÜbersetzung[pflichten]}</Text>
+                </View>
 
-                <View style={styles.trennlinie}/>
-                <Text style={!editable?{color:"grey"}:{color:"black"}}>Wie viele Stunden hast Du heute gespielt?</Text>
+                <View style={styles.background}>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie viele Stunden hast Du heute gespielt?</Text>
+                <Ionicons name="game-controller-outline" size={22} color="white" />
                 <TextInput editable={!editable? false:true} defaultValue={heuteStunden} keyboardType={'numeric'} onChangeText={changeHeuteStunden} style={styles.textInput}></TextInput>
-                <View style={styles.trennlinie}/>
-                <Text style={!editable?{color:"grey"}:{color:"black"}}>Wie viele Stunden hast Du vor morgen zu spielen?</Text>
+                </View>
+
+                <View style={styles.background}>
+                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie viele Stunden hast Du vor morgen zu spielen?</Text>
+                <Ionicons name="game-controller-outline" size={22} color="white" />
                 <TextInput editable={!editable? false:true} defaultValue={morgenStunden} keyboardType={'numeric'} onChangeText={changeMorgenStunden} style={styles.textInput}></TextInput>
-                <View style={styles.trennlinie}/>
-                <Text style={!editable?{color:"grey"}:{color:"black"}}>Hast Du vor morgen zu meditieren?</Text>
-                <CheckBox value={willMeditate} onValueChange={(newValue) => changeWillMeditate(newValue)}/>
-                <View style={styles.trennlinie}/>
-                <Text>Möchtest du noch was loswerden?</Text>
+                </View>
+
+                <View style={{...styles.background, flexDirection:'row'}}>
+                <Text style={!editable?{color:"#ffffff70"}:{color:'#fff'}}>Hast Du vor morgen zu meditieren?</Text>
+                <CheckBox uncheckedColor={!editable?"#ffffff70":'#fff'} checkedColor={'#89FFF1'} checked={willMeditate} disabled={!editable? true:false} onPress={() => changeWillMeditate(!willMeditate)}/>
+                </View>
+                
+                <View style={styles.background}>
+                <Text style={styles.text}>Möchtest du noch was loswerden?</Text>
                 <TextInput blurOnSubmit={true} multiline={true}defaultValue={sonstiges} onChangeText={changeSonstiges} style={styles.textBox}></TextInput>
-                <Button title="speichern"   onPress={()=>storeData()}></Button>
+                </View>
+                
+                <View style={styles.trennlinie}/>
+                <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
+                <LinearGradient
+                    colors={['#89FFF1', '#80DEE4', '#8F92E3', '#D476D5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.gradient}>
+                    <Text style={{color:'#0F113A'}}>Speichern</Text>
+                </LinearGradient>  
+                </TouchableOpacity>
+                <View style={styles.trennlinie}/>
+                
+                <View style={{height:60}}/>
             </View>
-            <View style={{height:60}}/>
+            
         </ScrollView>
+        </KeyboardAvoidingView>
         </ImageBackground>
 
     )
 }
 const styles = StyleSheet.create({
+    container: {
+        flex:1,
+        width:'100%',
+    },
     textInput:{ 
         borderColor: '#ffffff90', 
         borderWidth: 1,
@@ -174,6 +209,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingVertical:6, 
         paddingHorizontal:20,
+        marginTop:5,
+        fontFamily:'Poppins_400Regular',
+        fontSize:14
     },
     textBox:{ 
         height: 130,
@@ -184,6 +222,8 @@ const styles = StyleSheet.create({
         padding:10,
         textAlignVertical:"top",
         color: '#fff',
+        fontFamily:'Poppins_400Regular',
+        fontSize:14
     },
     trennlinie:{
         height:1,
@@ -204,10 +244,14 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         marginBottom: 5,
+        textAlign: 'center',
+        fontFamily:'Poppins_400Regular',
+        fontSize: 14
     },
     text25: {
         color: '#fff',
-        fontSize: 25,
+        fontSize: 22,
+        fontFamily:'Poppins_400Regular'
     },
     gradient: {
         alignItems: 'center',
@@ -224,12 +268,12 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.4,
     },
     background: {
-        backgroundColor: "#0F113A90",
+        backgroundColor: "#46498280",
         padding:20,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent:'center',
-        width: '90%',
+        width: '85%',
         marginVertical: 6,
     },
   });

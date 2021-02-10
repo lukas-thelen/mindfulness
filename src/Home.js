@@ -26,6 +26,7 @@ import { TextPlayer } from './HomeStack/TextPlayer.js';
 import { Feather } from '@expo/vector-icons';
 
 
+
 const HomeStack = createStackNavigator();
 
 
@@ -50,7 +51,7 @@ const HomeRoot = ({navigation})=>{
                 navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
               }
           }}>
-            <Ionicons name="play" size={50} color="white" /> 
+            <Ionicons name="play" size={50} color="#8F92E3" style={styles.playButton} /> 
           </TouchableOpacity>
         )
       }
@@ -59,18 +60,25 @@ const HomeRoot = ({navigation})=>{
 
   return(
     <ViewPager style={styles.viewPager} initialPage={1}>
+      
       <View key="1">
         <InfoEcke navigation={navigation}/>
       </View>
       <View key="2" >
-        <ImageBackground source={require('../assets/Startseite_kurz.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        <ImageBackground source={require('../assets/Startseite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
           
-          <View style={{flex: 2.5}}></View>
-          <Text style={styles.text25}>Hallo {username}!</Text> 
-          <Text style={{...styles.text25, marginBottom: 20}}>Schön, dass du wieder da bist!</Text>
-          
-          <InstantStart /> 
-          
+          <View style={{flex: 0.25}}></View>
+          <View style={{flex:0.15, alignItems:'center', justifyContent:'flex-end'}}>
+            <Text style={styles.text}>Hallo {username}!</Text> 
+            <Text style={styles.text}>Schön, dass du wieder da bist!</Text>
+          </View>
+          <View style={{flex:0.1, alignItems:'center', justifyContent:'center', flexDirection:'row'}}>
+            <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Nächste</Text>
+            <InstantStart />
+            <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Übung</Text>
+          </View>
+
+          <View style={{flex:0.5, alignItems:'center', justifyContent:'flex-start'}}>
           <View style={{flexDirection:'row', alignItems:'center'}}>
             <Feather name="chevrons-left" size={30} color="#5467A9" />
             <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
@@ -82,14 +90,15 @@ const HomeRoot = ({navigation})=>{
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 2 }}
               style={styles.gradient}>
-                <Text style={styles.text25}>Meine Kurse</Text>
+                <Text style={styles.text}>Meine Kurse</Text>
             </LinearGradient>
           </TouchableOpacity>
+          </View>
           
           {/*<Button title={"Alle Übungen"} onPress={() =>{navigation.navigate("Alle Übungen")}} ></Button>
             <Button title={"Journal"} onPress={() =>{navigation.navigate("Journal")}} ></Button>
             <Button title={"Info-Ecke"} onPress={() =>{navigation.navigate("Info Ecke")}} ></Button>*/}
-          <View style={styles.container}></View>
+          
           <View style={{height:60}}/>
         </ImageBackground>
       </View>
@@ -113,16 +122,14 @@ export const HomeScreen = ()=> {
         <HomeStack.Navigator>
           <HomeStack.Screen name="Home" component={HomeRoot} options={{
             title: 'Home',
+            headerShown: false,
             headerStyle: {
               backgroundColor: '#80DEE4',
             },
             headerTintColor: '#0F113A',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#0F113A',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="Meine Kurse" component={KursAuswahl} options={{
@@ -133,10 +140,7 @@ export const HomeScreen = ()=> {
             headerTintColor: '#0F113A',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#0F113A',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <HomeStack.Screen name="Wähle eine Übung!" component={UebungsAuswahl} options={{
@@ -147,14 +151,32 @@ export const HomeScreen = ()=> {
             headerTintColor: '#0F113A',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#0F113A',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
-          <HomeStack.Screen name="Wähle eine Version" component={VersionsAuswahl}/>
-          <HomeStack.Screen name="AudioPlayer" component={AudioPlayer}/>
+          <HomeStack.Screen name="Wähle eine Version" component={VersionsAuswahl}
+          options={{
+            title: 'Wähle eine Version',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
+          <HomeStack.Screen name="AudioPlayer" component={AudioPlayer} options={{
+            title: 'Übung',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
           <HomeStack.Screen name="individueller Tag" component={JournalTag} options={{
             title: 'Journal',
             headerStyle: {
@@ -163,17 +185,56 @@ export const HomeScreen = ()=> {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#D476D5',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
-          <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly}/>
+          <HomeStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly} options={{
+            title: 'Stress-Umfrage',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
           <HomeStack.Screen name="Info Ecke" component={InfoEcke}/>
-          <HomeStack.Screen name="Wähle die Dauer" component={VersionsAuswahlText}/>
-          <HomeStack.Screen name="Text-Übung" component={TextPlayer}/>
-          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo}/>
+          <HomeStack.Screen name="Wähle die Dauer" component={VersionsAuswahlText}
+          options={{
+            title: 'Wähle die Dauer',
+            headerStyle: {
+              backgroundColor: '#80DEE4',
+            },
+            headerTintColor: '#0F113A',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
+          <HomeStack.Screen name="Text-Übung" component={TextPlayer}
+          options={{
+            title: 'Text-Übung',
+            headerStyle: {
+              backgroundColor: '#80DEE4',
+            },
+            headerTintColor: '#0F113A',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
+          <HomeStack.Screen name="Übungsinfo" component={UebungsInfo} options={{
+            title: 'Übungsinfo',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
         </HomeStack.Navigator>
     )
 }
@@ -197,9 +258,10 @@ const styles = StyleSheet.create({
       width: 200,
       height: 200,
     },
-    text25: {
+    text: {
       color: '#fff',
-      fontSize: 25,
+      fontSize: 22,
+      fontFamily: 'Poppins_400Regular'
     },
     gradient: {
       alignItems: 'center',
@@ -211,6 +273,12 @@ const styles = StyleSheet.create({
     button: {
       alignItems: 'center',
       justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {width:0, height:4},
+      shadowRadius: 4,
+      shadowOpacity: 0.4,
+    },
+    playButton: {
       shadowColor: '#000',
       shadowOffset: {width:0, height:4},
       shadowRadius: 4,

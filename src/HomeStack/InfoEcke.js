@@ -33,7 +33,7 @@ export const InfoEcke=(props)=>{
                     navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
                   }
               }}>
-                <Ionicons name="play" size={50} color="#464982" /> 
+                <Ionicons name="play" size={50} color="#464982" style={styles.playButton} /> 
               </TouchableOpacity>
             )
           }
@@ -46,7 +46,7 @@ export const InfoEcke=(props)=>{
                 {gehoerteUebungen.includes(item.id) ? 
                     (<View style={styles.KursItemDone}>
                         <TouchableOpacity style={styles.info}onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex })}}>
-                            <Text style={{color:'#fff'}}>i</Text>
+                            <Ionicons name="information-circle-outline" size={26} color="white" />
                         </TouchableOpacity>
                         <TouchableOpacity style={{alignItems:"center", flexDirection:"row", width: '85%'}}onPress={()=>{
                             if(item.Audio){
@@ -66,7 +66,7 @@ export const InfoEcke=(props)=>{
                     (<View style={styles.KursItem}>
 
                         <TouchableOpacity style={styles.info}onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:item.KursIndex, uebungsIndex:item.UebungsIndex })}}>
-                            <Text style={{color:'#fff'}}>i</Text>
+                            <Ionicons name="information-circle-outline" size={26} color="white" />
                         </TouchableOpacity>
                         <TouchableOpacity style={{alignItems:"center", flexDirection:"row", width: '85%'}}onPress={()=>{
                             if(item.Audio){
@@ -125,14 +125,14 @@ export const InfoEcke=(props)=>{
     }
 
     return(
-        <ImageBackground source={require('../../assets/Startseite_kurz.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
         
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart />
                 </View>
                 <View style={{flex:0.1}}>
                 <View style={styles.searchbackground}> 
-                    <Feather name="search" size={20} color="white" />
+                    <Ionicons name="search-outline" size={20} color="white" />
                     <TextInput
                         style={styles.search}
                         onChangeText={text => onChangeText(text)}
@@ -148,7 +148,7 @@ export const InfoEcke=(props)=>{
                         renderItem={(item) => renderItem(item)}
                         renderSectionHeader={({ section: { title } }) => (
                             <TouchableOpacity style={styles.header}>
-                                <Text style={{color: '#fff', fontSize:25,}}>{title}</Text>
+                                <Text style={{color: '#fff', fontSize:22, fontFamily: 'Poppins_400Regular'}}>{title}</Text>
                             </TouchableOpacity>
                         )}
                     />
@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
         height: 75,
         borderRadius: 10,
         marginVertical: 5,
+        paddingHorizontal: 5
     },
     KursItemDone: {
         flex: 1,
@@ -180,15 +181,12 @@ const styles = StyleSheet.create({
         height: 75,
         borderRadius: 10,
         marginVertical: 5,
+        paddingHorizontal: 5
     },
     info:{ 
-        borderRadius:100, 
-        width:25, 
-        height:25, 
         alignItems:"center", 
         justifyContent:"center", 
-        backgroundColor:"#8F92E3",
-        marginLeft: 10,
+        marginLeft: 12,
     },
     header: {
         alignItems: 'center',
@@ -199,9 +197,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical:4,
         color: '#fff',
-        fontSize: 18,
+        fontSize: 17,
         paddingLeft: 10,
         flexGrow:1,
+        fontFamily: 'Poppins_400Regular',
+        justifyContent:'center'
     },
     searchbackground: {
         flexDirection:'row',
@@ -229,7 +229,14 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#fff',
-        fontSize: 16,
-        marginLeft: 20,
+        fontSize: 15,
+        marginLeft: 15,
+        fontFamily: 'Poppins_400Regular'
+    },
+    playButton: {
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
     }
   });

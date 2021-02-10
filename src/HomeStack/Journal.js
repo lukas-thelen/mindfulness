@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, FlatList,TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
@@ -58,8 +59,9 @@ export const Journal = (props) => {
         },
         text: {
             color: '#fff',
-            fontSize: 16,
+            fontSize: 14,
             textAlign: 'center',
+            fontFamily: 'Poppins_400Regular'
         },
         gradient: {
             alignItems: 'center',
@@ -83,6 +85,12 @@ export const Journal = (props) => {
             shadowRadius: 4,
             shadowOpacity: 0.4,
         },
+        playButton: {
+            shadowColor: '#000',
+            shadowOffset: {width:0, height:4},
+            shadowRadius: 4,
+            shadowOpacity: 0.4,
+        }
       });
 
     const InstantStart =() =>{
@@ -100,7 +108,7 @@ export const Journal = (props) => {
                     navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
                   }
               }}>
-                <Ionicons name="play" size={50} color="#464982" /> 
+                <Ionicons name="play" size={50} color="#464982" style={styles.playButton}/> 
               </TouchableOpacity>
             )
           }
@@ -141,14 +149,14 @@ export const Journal = (props) => {
         const millis = dateOfDay.getTime()
         return(
             <TouchableOpacity style={userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].journalChanged?styles.tagEdited:styles.tag} onPress={()=>{navigation.navigate("individueller Tag", {date:millis})}}>
-                    <Text style={weekchange===0&&today.getDay()===((index+1)%7)?{color:"#D874D4", fontWeight:'bold', flex:1}:{color:"white", fontWeight:'bold', flex:1}}>{item} {dateOfDay.getDate()}.{dateOfDay.getMonth()+1}</Text>
-                    {userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].meditations?<View style={{backgroundColor:"#D874D4", width:10, height:10, borderRadius:100, marginRight:20}}/>:null}
+                    <Text style={weekchange===0&&today.getDay()===((index+1)%7)?{color:"#D874D4", fontFamily:'Poppins_500Medium', flex:1}:{color:"white", fontFamily:'Poppins_500Medium', flex:1}}>{item} {dateOfDay.getDate()}.{dateOfDay.getMonth()+1}</Text>
+                    {userData.journal[dateOfDay.toDateString()]&&userData.journal[dateOfDay.toDateString()].meditations?<MaterialCommunityIcons name="meditation" size={25} color="#D874D4" style={{marginRight:20}}/>:null}
             </TouchableOpacity>
         )
     }
 
     return (
-        <ImageBackground source={require('../../assets/Startseite_kurz.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        <ImageBackground source={require('../../assets/Startseite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
             
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart/>
@@ -163,7 +171,7 @@ export const Journal = (props) => {
                     </FlatList>
                 </View>
 
-                <View style={{flex:0.25, alignContent:'center'}}>
+                <View style={{flex:0.25, alignContent:'center', width:'100%', paddingHorizontal:10}}>
                     <View style={styles.reihe}>
                         <TouchableOpacity style={styles.buttonRand} onPress={()=>{changeWeekchange(weekchange-1)}}>
                             <Text style={styles.text}>Woche davor</Text>
@@ -178,7 +186,7 @@ export const Journal = (props) => {
 
                     <View style={{alignItems:'center', padding:10}}>
                         {stressAktiv()?<Text style={styles.text}>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
-                        <Text style={styles.text}>Du hast erst vor kurzem eine Stress-Umfrage durchgeführt!</Text>}
+                        <Text style={styles.text}>Du hast deine Stress-Umfrage für diesen Monat durchgeführt!</Text>}
                     </View>
                     
                     <View style={styles.button}>
@@ -187,7 +195,7 @@ export const Journal = (props) => {
                                 colors={['#D476D5', '#C77BD8', '#8F92E3']}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 2 }}
-                                style={styles.gradient}>
+                                style={stressAktiv()?styles.gradient:{...styles.gradient, opacity:0.4}}>
                                     <Text style={styles.text}>Zur Stress-Umfrage</Text>
                             </LinearGradient>
                         </TouchableOpacity>

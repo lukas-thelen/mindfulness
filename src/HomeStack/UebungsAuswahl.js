@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
       marginVertical: 8,
       borderWidth: 1,
       borderColor: '#80DEE4',
+      padding:10
     },
     UebungsItemDone: {
         backgroundColor: '#46498290',
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
         height:70,
         borderRadius: 10,
         marginVertical: 8,
+        padding:10
     },
     UebungsItemUnavailable: {
         backgroundColor: '#3D3D3D60',
@@ -79,7 +81,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height:70,
         borderRadius: 10,
-        marginVertical:8, 
+        marginVertical:8,
+        padding:10
     },
     imagebackground: {
         flex: 1,
@@ -96,5 +99,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         textAlign: 'center',
+        fontFamily: 'Poppins_400Regular'
     },
   });

@@ -6,7 +6,7 @@ import {AppContext} from '../context.js';
 import { useContext, useEffect } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { redirectURL } from '../../appDaten.js';
-import { Feather } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
 
 
 export const MeineFreunde =() => {
@@ -45,7 +45,7 @@ export const MeineFreunde =() => {
     const renderFreunde=({item, index})=>{
       return(
         <View style={styles.friend}>
-          <Text style={{color:'#fff', fontSize:16}}>{item.name}</Text>
+          <Text style={styles.textM}>{item.name}</Text>
         </View>
       )
     }
@@ -56,13 +56,13 @@ export const MeineFreunde =() => {
         
           <View style={{flex:0.2, width:'100%'}}>
             <TouchableOpacity style={{alignItems:'flex-end', marginTop:20, marginRight:20}} onPress={()=> {onShare()}}>
-              <Feather name="user-plus" size={30} color="#fff" style={{marginRight:35}}/>
-              <Text style={{color:'#fff', fontSize:16}}>Freunde adden</Text>
+              <Ionicons name="person-add-outline" size={30} color="#fff" style={{marginRight:40}}/>
+              <Text style={styles.text}>Freunde adden</Text>
             </TouchableOpacity>
           </View>
           <View style={{flex:0.8, alignItems:'center', width:'100%'}}>
             <View style={styles.background}>
-              <Text style={{color:'#fff', fontSize:20, marginBottom:20}}>Meine Freunde</Text>
+              <Text style={{...styles.text, fontSize:20, marginBottom:20}}>Meine Freunde</Text>
               <FlatList
                 style={{marginVertical:10, width:'95%'}}
                 data={freundeArray()}
@@ -98,5 +98,15 @@ export const MeineFreunde =() => {
       justifyContent: 'flex-start',
       padding:10,
       width: '90%',
-   },
+    },
+    text: {
+      color:'#fff',
+      fontSize: 15,
+      fontFamily: 'Poppins_400Regular'
+    },
+    textM: {
+      color:'#fff',
+      fontSize: 15,
+      fontFamily: 'Poppins_500Medium'
+    },
   });

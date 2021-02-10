@@ -10,7 +10,7 @@ import { Statistiken } from './ProfilStack/Statistiken';
 import { Erfolge } from './ProfilStack/Erfolge';
 import { KontoInfos } from './ProfilStack/KontoInfos';
 import { AppInfos } from './ProfilStack/AppInfos';
-import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const ProfilStack = createStackNavigator();
 
@@ -55,18 +55,19 @@ export const ProfilRoot = ({navigation})=> {
           
           <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%", padding:15, flex:0.15}}>
             <TouchableOpacity onPress={()=>test()}>
-              <Feather name="user" size={40} color="white" />
+              <Ionicons name="person-outline" size={36} color="white" />
               <Text style={{textAlign:"center", color:'#fff'}}>{username}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>navigation.navigate("Einstellungen")}>
-              <Feather name="settings" size={40} color="white" />
+              <Ionicons name="cog-outline" size={36} color="white" />
             </TouchableOpacity>
           </View>
 
 
           <View style={{flex:0.2, alignItems:'center', width:'90%'}}>
           <TouchableOpacity style={styles.streak} onPress={()=>navigation.navigate("Statistiken")}>
-              <Text style={{color:'#fff'}}>Streak {userData.benchmarks.streak}</Text>
+              <Ionicons name="flame-outline" size={16} color="white" />
+              <Text style={{color:'#fff', marginLeft:4}}>Streak {userData.benchmarks.streak}</Text>
               <Text style={{color:'#fff', marginLeft:'auto'}}>Gesamtminuten </Text>
             </TouchableOpacity> 
           </View>
@@ -74,10 +75,12 @@ export const ProfilRoot = ({navigation})=> {
           <View style={{flex:0.65, width: '90%'}}>
             <View style={styles.background}>
                 <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Statistiken")}>
-                  <Text style={{color:'#fff'}}>Statistiken</Text>
+                  <Ionicons name="stats-chart-outline" size={16} color="white" />
+                  <Text style={{color:'#fff', marginLeft:10}}>Statistiken</Text>
                 </TouchableOpacity> 
                 <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Erfolge")}>
-                  <Text style={{color:'#fff'}}>Erfolge</Text>
+                  <Ionicons name="trophy-outline" size={16} color="white" />
+                  <Text style={{color:'#fff', marginLeft:10}}>Erfolge</Text>
                 </TouchableOpacity>
             </View>
           </View>
@@ -98,10 +101,6 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#D476D5',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
             },
           }}/>
           <ProfilStack.Screen name="Einstellungen" component={Einstellungen} options={{
@@ -112,10 +111,6 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#D476D5',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
             },
           }}/>
           <ProfilStack.Screen name="Statistiken" component={Statistiken} options={{
@@ -126,10 +121,6 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#D476D5',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
             },
           }}/>
           <ProfilStack.Screen name="Erfolge" component={Erfolge} options={{
@@ -140,10 +131,6 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#D476D5',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
             },
           }}/>
           <ProfilStack.Screen name="Konto-Informationen" component={KontoInfos} options={{
@@ -154,10 +141,6 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#D476D5',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
             },
           }}/>
           <ProfilStack.Screen name="Informationen über die App" component={AppInfos} options={{
@@ -168,10 +151,6 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
-              borderColor: '#D476D5',
-              borderWidth:1,
-              borderRadius: 15,
-              paddingHorizontal: 10,
             },
           }}/>
       </ProfilStack.Navigator>
@@ -187,6 +166,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       width: '90%',
+      flexDirection: 'row'
     },
     streak: {
       backgroundColor: '#464982',

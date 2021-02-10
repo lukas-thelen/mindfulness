@@ -12,6 +12,12 @@ import { benchmarks } from './src/benchmarks.js';
 import { FreundeScreen } from './src/Freunde.js';
 import cloneDeep from 'lodash/cloneDeep';
 import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { useFonts, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins';
+
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -135,7 +141,7 @@ export const Tabnavigator = () =>{
               component={FreundeScreen}
               options={{
                 tabBarIcon: ({focused}) => (
-                  <Feather name="users" size={30} color={focused?'#D476D5':"#fff"} />
+                  <Ionicons name="people-outline" size={36} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />
@@ -144,7 +150,7 @@ export const Tabnavigator = () =>{
               component={HomeScreen} 
               options={{
                 tabBarIcon: ({ focused }) => (
-                  <Feather name="home" size={30} color={focused?'#D476D5':"#fff"} />
+                  <AntDesign name="home" size={30} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />
@@ -153,7 +159,7 @@ export const Tabnavigator = () =>{
               component={ProfilScreen} 
               options={{
                 tabBarIcon: ({ focused }) => (
-                  <Feather name="user" size={30} color={focused?'#D476D5':"#fff"} />
+                  <Ionicons name="person-outline" size={30} color={focused?'#D476D5':"#fff"} />
                 ),
               }}
             />
@@ -174,6 +180,11 @@ export default function App() {
   const [gehoerteUebungen, changeGehoerteUebungen] =useState([])
   const [newBenchmark, changeNewBenchmark] = useState([])
   const [forceUpdate, changeForceUpdate] =useState(false)
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+  });
+
 
   //wird einmalig beim ersten rendern des Components ausgeführt
   useEffect(()=>{
@@ -231,7 +242,7 @@ export default function App() {
     <AppContext.Provider value={appContext}>
       <View style={{backgroundColor:'#000'}}>
       <SafeAreaView style={styles.pagewrap}>
-        {isLoading?<View style={{height:"100%",justifyContent:"center"}}><ActivityIndicator size="large" color="black"/></View>:<View>
+        {isLoading||!fontsLoaded?<View style={{height:"100%",justifyContent:"center"}}><ActivityIndicator size="large" color="black"/></View>:<View>
           {loggedIn ? <Tabnavigator style={styles.container}/> : <Init changeLoggedIn={changeLoggedIn}/>}</View>
         }
       </SafeAreaView>
