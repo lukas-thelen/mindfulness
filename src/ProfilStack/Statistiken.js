@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { LineChart, Grid, XAxis, YAxis, BarChart } from 'react-native-svg-charts'
 import { Chart, VerticalAxis, HorizontalAxis, Line } from 'react-native-responsive-linechart'
 import { ImageBackground } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 
@@ -22,10 +23,10 @@ export const Statistiken = () => {
     const [meditations, changeMeditations] =useState(true)
     const [minutes, changeMinutes] =useState(false)
     const [maxValue, changeMaxValue] = useState(4)
-    const [showMonthly, changeShowMonthly] = useState(true)
+    const [showMonthly, changeShowMonthly] = useState(false)
     const {userData, cahngeUserData, appData, changeAppData}=useContext(AppContext)
     const contentInset = { top: 20, bottom: 20 }
-    const colors = ["#9400d3", "#8F92E3", "#fe5d9f", "#D476D5",'#ffc6ff', "#6495ED", "#a2d2ff", "#84dcc6"]
+    const colors = ["#9400d3", "#8F92E3", "#fe5d9f", "#D476D5",'#ffc6ff', "#6495ED", "#acecf7", "#84dcc6"]
 
     useEffect(()=>{
         let max= 4
@@ -169,22 +170,26 @@ export const Statistiken = () => {
 
             <View style={{width:"90%", alignSelf:"center", flex:0.85}}>
                 <View style={{flexDirection:"row", flex:0.07}}> 
-                <TouchableOpacity style={showMonthly?{...styles.tab, backgroundColor:"#D476D5"}:{...styles.tab, backgroundColor:"#464982"}} onPress={()=>changeShowMonthly(true)}><Text style={styles.text}>täglich</Text></TouchableOpacity>
-                <TouchableOpacity style={!showMonthly?{...styles.tab, backgroundColor:"#D476D5"}:{...styles.tab, backgroundColor:"#464982"}} onPress={()=>changeShowMonthly(false)}><Text style={styles.text}>monatlich</Text></TouchableOpacity>
+                <TouchableOpacity style={!showMonthly?{...styles.tab, backgroundColor:"#464982"}:{...styles.tab, backgroundColor:"#46498290"}} onPress={()=>changeShowMonthly(false)}><Text style={styles.text}>täglich</Text></TouchableOpacity>
+                <TouchableOpacity style={showMonthly?{...styles.tab, backgroundColor:"#464982"}:{...styles.tab, backgroundColor:"#46498290"}} onPress={()=>changeShowMonthly(true)}><Text style={styles.text}>monatlich</Text></TouchableOpacity>
                 </View>
                 
-                {!showMonthly?
-                <View style={{...styles.chartBackground}}>
+                {showMonthly?
+                <LinearGradient
+                colors={['#464982', '#0F113A90']}
+                start={{ x: 1, y: 0 }}
+                end={{ x: 0.9, y: 0.5}}
+                style={styles.chartBackground}>
                 <View style={{flex:1}}>
-                    <View style={{backgroundColor: '#eee', flexShrink:1}}>
+                    <View style={{flexShrink:1}}>
                         <Chart
                                 style={{ height:220}}
                                 xDomain={{ min: 6, max: 11 }}
                                 yDomain={{ min: 0, max: 50 }}
                                 padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
                             >
-                                <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
-                                <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12]}}}/>
+                                <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1), label:{color: '#fff'}}}} />
+                                <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12], label:{color: '#fff'}}}}/>
                                 <Line data={getHistoryStress()} smoothing="none" theme={{ stroke: { color: colors[3], width: 4 } }} />
                         </Chart>
                     </View>
@@ -193,19 +198,23 @@ export const Statistiken = () => {
                             <Text style={styles.text}>Stress</Text>
                     </View>
                 </View>
-                </View>
+                </LinearGradient>
                 :
-                <View style={styles.chartBackground}>
+                <LinearGradient
+                colors={['#464982', '#0F113A90']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0.2, y: 0.5}}
+                style={styles.chartBackground}>
                 <View style={{flex:1}}>
-                    <View style={{flexDirection:"row",backgroundColor: '#eee', flexShrink:1}}>
+                    <View style={{flexDirection:"row", flexShrink:1}}>
                         <Chart
                             style={{ height:220, flex: 0.93}}
                             xDomain={{ min: 0, max: 6 }}
                             yDomain={{ min: 0, max: maxValue }}
                             padding={{ left: 30, top: 10, bottom: 20, right: 5 }}
                         >
-                            <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1)}}} />
-                            <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7]}}}/>
+                            <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1), label:{color: '#fff'}}}} />
+                            <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7], label:{color: '#fff'}}}}/>
                             {meditations&&<Line data={getData().meditations} smoothing="cubic-spline" theme={{ stroke: { color: colors[0], width: 3 } }} />}
                             {minutes&&<Line data={getData().minutes} smoothing="cubic-spline" theme={{ stroke: { color: colors[1], width: 3 } }} />}
                             {stimmung&&<Line data={resize(getData().stimmung)} smoothing="cubic-spline" theme={{ stroke: { color: colors[2], width: 3 } }} />}
@@ -218,57 +227,57 @@ export const Statistiken = () => {
                         </Chart>
 
                         <View style= {{flexDirection:"column", flex: 0.07, justifyContent:"space-between", marginBottom:12}}>
-                            <Text>+ +</Text>
-                            <Text>+</Text>
-                            <Text>°</Text>
-                            <Text>-</Text>
-                            <Text>- -</Text>
+                            <Text style={{color:'#fff'}}>+ +</Text>
+                            <Text style={{color:'#fff'}}>+</Text>
+                            <Text style={{color:'#fff'}}>°</Text>
+                            <Text style={{color:'#fff'}}>-</Text>
+                            <Text style={{color:'#fff'}}>- -</Text>
                         </View>
                     </View>
                     <ScrollView style={{flex:0.5}}>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <CheckBox checked={meditations} onPress={() => changeMeditations(!meditations)}/>
+                            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={meditations} onPress={() => changeMeditations(!meditations)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[0]}}/>
                             <Text style={styles.text}>Anzahl der Meditationen</Text>
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <CheckBox checked={minutes} onPress={() => changeMinutes(!minutes)}/>
+                            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={minutes} onPress={() => changeMinutes(!minutes)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[1]}}/>
                             <Text style={styles.text}>Meditierte Minuten</Text>
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <CheckBox checked={stimmung} onPress={() => changeStimmung(!stimmung)}/>
+                            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={stimmung} onPress={() => changeStimmung(!stimmung)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[2]}}/>
                             <Text style={styles.text}>Stimmung</Text>
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <CheckBox checked={dailyStress} onPress={() => changeDailyStress(!dailyStress)}/>
+                            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={dailyStress} onPress={() => changeDailyStress(!dailyStress)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[3]}}/>
                             <Text style={styles.text}>Stress (täglich)</Text>
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <CheckBox checked={craving} onPress={() => changeCraving(!craving)}/>
+                            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={craving} onPress={() => changeCraving(!craving)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[4]}}/>
                             <Text style={styles.text}>Craving</Text>
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <CheckBox checked={pflichten} onPress={() => changePflichten(!pflichten)}/>
+                            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={pflichten} onPress={() => changePflichten(!pflichten)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[5]}}/>
                             <Text style={styles.text}>Pflichterfüllung</Text>
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <CheckBox checked={heuteStunden} onPress={() => changeHeuteStunden(!heuteStunden)}/>
+                            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={heuteStunden} onPress={() => changeHeuteStunden(!heuteStunden)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[6]}}/>
                             <Text style={styles.text}>Tatsächliche Spielstunden</Text>
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <CheckBox checked={morgenStunden} onPress={()=>changeMorgenStunden(!morgenStunden)}/>
+                            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={morgenStunden} onPress={()=>changeMorgenStunden(!morgenStunden)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[7]}}/>
                             <Text style={styles.text}>Vorgenommene Spielstunden</Text>
                         </View>
                     </ScrollView>
                 </View>
-                </View>}
+                </LinearGradient>}
                 
             </View>
             <View style={{height:60}}/>
@@ -296,7 +305,6 @@ const styles = StyleSheet.create({
         borderTopRightRadius:20,
     },
     chartBackground:{
-        backgroundColor:"#0F113A90",
         flex:0.93,
         paddingTop:10,
         paddingHorizontal:10
