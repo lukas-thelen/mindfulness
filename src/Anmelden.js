@@ -82,33 +82,33 @@ export const Anmelden = (props) => {
       
     return(
 
-        <View style={styles.pagewrap, styles.container}>
-        <Text style= {{color: '#fff', marginBottom: 100, fontSize: 30}}>Anmeldung</Text>
-        <Text style= {{color: '#fff'}}>Benutzername</Text>
-        <TextInput 
-            style={styles.textinput}
-            onChangeText={text =>changeEMailInput(text)} autoCapitalize = 'none'></TextInput>
+        <View style={styles.container}>
+          <Text style= {{...styles.textM, marginBottom: 100, fontSize: 30}}>Anmeldung</Text>
+          
+          <Text style= {{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Benutzername</Text>
+          <TextInput 
+              style={styles.textinput}
+              onChangeText={text =>changeEMailInput(text)} autoCapitalize = 'none'>
+          </TextInput>
+
+          <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Passwort</Text>
+          <TextInput 
+              style={{...styles.textinput, marginBottom:50}}
+              onChangeText={text => changePasswordInput(text)} autoCapitalize = 'none'  ></TextInput>
 
 
-
-        <Text style={{color: '#fff'}}>Passwort</Text>
-        <TextInput 
-            style={styles.textinput}
-            onChangeText={text => changePasswordInput(text)} autoCapitalize = 'none'  ></TextInput>
-
-
-        <TouchableOpacity style={styles.button} onPress={()=>checkInput() }>
-            <LinearGradient
-            colors={['#80DEE4', '#89FFE3']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 2 }}
-            style={styles.gradient}>
-              <Text style={{color: '#fff', fontSize: 25}}>Anmelden</Text>
-            </LinearGradient>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
-              <Text style={{color: '#fff', fontSize: 10,textDecorationLine: "underline"}}>Zurück</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={()=>checkInput() }>
+              <LinearGradient
+              colors={['#D476D5', '#C77BD8', '#8F92E3']}
+              start={{ x: 0, y: 0.4 }}
+              end={{ x: 0, y: 1 }}
+              style={styles.gradient}>
+                <Text style={{...styles.text, fontSize:18}}>Anmelden</Text>
+              </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
+                <Text style={{...styles.text, fontSize:14, textDecorationLine: "underline"}}>Zurück</Text>
+          </TouchableOpacity>
       </View>
     )
 }
@@ -123,34 +123,19 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     textinput: {
-      height: '5%', 
-      borderColor: '#464982',
-      marginBottom: 20, 
+      paddingVertical:5,
+      paddingHorizontal:20, 
       backgroundColor: '#464982', 
-      borderWidth: 10, 
       width:'70%', 
-      borderRadius:200,
-    },
-    containertext1: {
-      alignItems:'center',
-      width: '50%',
-      height: '4%',
-      borderRadius: 100,
-      backgroundColor: '#80DEE4',
-      marginTop: 60,
-      shadowColor: 'black',
-      shadowOpacity: 0.8,
-      elevation: 10,
-      shadowRadius: 8,
-      shadowOffset : { width: 10, height: 5}
+      borderRadius:10,
+      color:'#fff',
+      fontSize:16,
+      fontFamily:'Poppins_400Regular',
+      marginBottom: 20, 
     },
     containertext2: {
       alignItems:'center',
       marginTop: 10
-    },
-    pagewrap:{
-      width: '100%',
-      height: '100%'
     },
     radio:{
       width: 200,
@@ -159,7 +144,7 @@ const styles = StyleSheet.create({
     },
     gradient: {
       alignItems: 'center',
-      borderRadius: 20,
+      borderRadius: 18,
       paddingBottom: 4,
       paddingTop: 4,
       paddingHorizontal: 20,
@@ -171,5 +156,15 @@ const styles = StyleSheet.create({
       shadowOffset: {width:0, height:4},
       shadowRadius: 4,
       shadowOpacity: 0.4,
-    }
+      marginBottom:10
+    },
+    text: {
+      color:'#fff',
+      fontSize:17,
+      fontFamily:'Poppins_400Regular'
+    }, 
+    textM: {
+      color:'#fff',
+      fontFamily:'Poppins_500Medium'
+    } 
   });
