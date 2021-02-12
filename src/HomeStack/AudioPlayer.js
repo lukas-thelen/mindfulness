@@ -9,6 +9,7 @@ import { useNavigationState } from '@react-navigation/native';
 import {AppContext} from "../context.js"; 
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import { checkBenchmarks } from '../benchmarks.js';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const soundObject = new Audio.Sound();
 
@@ -206,7 +207,7 @@ export const AudioPlayer =({navigation, route})=>{
             }}></Button>
         }else{
             if (kurs+1<kurse.length){
-                return <Button title="nächste Übung" onPress={()=>{
+                return <TouchableOpacity style={styles.button} onPress={()=>{
                     changeModalVisible(false);
                     navigation.reset(navState)
                     if(kurse[kurs+1].Uebungen[uebung].Audio===true){
@@ -214,7 +215,15 @@ export const AudioPlayer =({navigation, route})=>{
                     }else{
                         navigation.navigate("Wähle die Dauer", {kursIndex:kurs+1, uebungsIndex:0})
                     }
-                }}></Button>
+                }}>
+                     <LinearGradient
+                    colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 2 }}
+                    style={styles.gradient}>
+                        <Text style={{...styles.modalText, fontSize:17}}>Nächste Übung</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
             }else{
                 return null
             }
@@ -222,7 +231,7 @@ export const AudioPlayer =({navigation, route})=>{
     }
 
     return(
-        <View style={{alignItems:"center", justifyContent:"center", flex:1}}>
+        <View style={{alignItems:"center", justifyContent:"center", flex:1, width:'100%', height:'100%' }}>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -230,9 +239,13 @@ export const AudioPlayer =({navigation, route})=>{
             >
                 <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Herzlichen Glückwunsch. Du hast die Übung erfolgreich beendet!</Text>
-                    <Button title="zum Hauptmenü" onPress={()=>{navigation.navigate("Home")}}></Button>
+                <Text style={{...styles.modalText, fontSize:20, marginBottom:10}}>Herzlichen Glückwunsch!</Text>
+                    <Text style={{...styles.modalText, fontSize:20, marginBottom:80}}>Du hast die Übung erfolgreich beendet.</Text>
+                    <Text style={{...styles.modalText, marginBottom:30}}>Möchtest Du mit der nächsten Übung fortfahren?</Text>
                     {nextUebung()}
+                    <TouchableOpacity   onPress={()=>{navigation.navigate("Home")}}>
+                        <Text style={{...styles.modalText, textDecorationLine:'underline', fontSize:14}}>Zum Hauptmenü</Text>
+                    </TouchableOpacity>
                 </View>
                 </View>
             </Modal>
@@ -256,26 +269,42 @@ const styles = StyleSheet.create({
       alignItems: "center"
     },
     modalView: {
-      margin: 20,
-      width:"80%",
-      height:"80%",
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
+        backgroundColor: '#0F113A',
+        width: '90%',
+        height:"60%",
+        borderColor: '#8F92E3',
+        borderWidth: 1,
+        borderRadius: 15,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {width:0, height:4},
+        shadowOpacity: 0.4,
+        shadowRadius: 4,
+        elevation: 5,
+        justifyContent:"center"
       },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5
+      modalText: {
+        textAlign: "center",
+        fontFamily: 'Poppins_400Regular',
+        color: '#fff',
+        fontSize:16
     },
-    modalText: {
-      marginBottom: 15,
-      textAlign: "center"
-    },
-
+    gradient: {
+        alignItems: 'center',
+        borderRadius: 16,
+        paddingBottom: 4,
+        paddingTop: 4,
+        paddingHorizontal: 20,
+      },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
+        marginBottom: 20
+     },
   });
 
