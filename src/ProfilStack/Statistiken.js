@@ -159,12 +159,12 @@ export const Statistiken = () => {
     }
 
     return (
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
         
             <View style={{flex:0.15, justifyContent:'center', alignSelf:'center'}}>
                 <View style={styles.streak}>
-                    <Text style={styles.text}>Anzahl Übungen: {""+getMeditation("amount")}</Text>
-                    <Text style={{...styles.text, marginLeft:'auto'}}>Minuten: {""+getMeditation("minutes")}</Text>
+                    <Text style={{...styles.text, fontSize:14}}>Anzahl Übungen: {""+getMeditation("amount")}</Text>
+                    <Text style={{...styles.text, marginLeft:'auto', fontSize:14}}>Minuten: {""+getMeditation("minutes")}</Text>
                 </View>
             </View>
 
@@ -188,8 +188,8 @@ export const Statistiken = () => {
                                 yDomain={{ min: 0, max: 50 }}
                                 padding={{ left: 30, top: 10, bottom: 20, right: 20 }}
                             >
-                                <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1), label:{color: '#fff'}}}} />
-                                <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12], label:{color: '#fff'}}}}/>
+                                <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1), label:{color: '#fff', fontFamily:'Poppins_400Regular'}}}} />
+                                <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12], label:{color: '#fff', fontFamily:'Poppins_400Regular'}}}}/>
                                 <Line data={getHistoryStress()} smoothing="none" theme={{ stroke: { color: colors[3], width: 4 } }} />
                         </Chart>
                     </View>
@@ -213,8 +213,8 @@ export const Statistiken = () => {
                             yDomain={{ min: 0, max: maxValue }}
                             padding={{ left: 30, top: 10, bottom: 20, right: 5 }}
                         >
-                            <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1), label:{color: '#fff'}}}} />
-                            <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7], label:{color: '#fff'}}}}/>
+                            <VerticalAxis tickCount={5} theme={{labels:{formatter:x=>x.toFixed(1), label:{color: '#fff', fontFamily: 'Poppins_400Regular'}}}} />
+                            <HorizontalAxis tickCount={7} theme={{labels:{formatter:x=>tagesÜbersetzer[(1+x+new Date().getDay())%7], label:{color: '#fff', fontFamily: 'Poppins_400Regular'}}}}/>
                             {meditations&&<Line data={getData().meditations} smoothing="cubic-spline" theme={{ stroke: { color: colors[0], width: 3 } }} />}
                             {minutes&&<Line data={getData().minutes} smoothing="cubic-spline" theme={{ stroke: { color: colors[1], width: 3 } }} />}
                             {stimmung&&<Line data={resize(getData().stimmung)} smoothing="cubic-spline" theme={{ stroke: { color: colors[2], width: 3 } }} />}
