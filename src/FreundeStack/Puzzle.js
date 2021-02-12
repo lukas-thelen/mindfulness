@@ -132,7 +132,7 @@ export const Puzzle = ({route, navigation}) => {
     } 
 
     return (
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}  imageStyle={{resizeMode:'stretch'}}>
             
             {userData.friends.puzzles[route.params.id]&&<View style={{flex:1, alignItems:'center', justifyContent:'center', width:'100%'}}>
                 <Modal
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     },
     gradient: {
         alignItems: 'center',
-        borderRadius: 17,
+        borderRadius: 18,
         paddingVertical: 5,
         paddingHorizontal: 30,
     },

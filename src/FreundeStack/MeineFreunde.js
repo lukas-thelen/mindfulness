@@ -52,7 +52,7 @@ export const MeineFreunde =() => {
 
 
     return (
-      <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+      <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
         
           <View style={{flex:0.2, width:'100%'}}>
             <TouchableOpacity style={{alignItems:'flex-end', marginTop:20, marginRight:20}} onPress={()=> {onShare()}}>

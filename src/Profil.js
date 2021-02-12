@@ -51,12 +51,12 @@ export const ProfilRoot = ({navigation})=> {
       }
 
     return(
-      <ImageBackground source={require('../assets/Profil.png')} style={styles.imagebackground}>
+      <ImageBackground source={require('../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
           
           <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%", padding:15, flex:0.15}}>
             <TouchableOpacity onPress={()=>test()}>
               <Ionicons name="person-outline" size={36} color="white" />
-              <Text style={{textAlign:"center", color:'#fff'}}>{username}</Text>
+              <Text style={{...styles.text,textAlign:"center", fontSize:16}}>{username}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>navigation.navigate("Einstellungen")}>
               <Ionicons name="cog-outline" size={36} color="white" />
@@ -67,8 +67,8 @@ export const ProfilRoot = ({navigation})=> {
           <View style={{flex:0.2, alignItems:'center', width:'90%'}}>
           <TouchableOpacity style={styles.streak} onPress={()=>navigation.navigate("Statistiken")}>
               <Ionicons name="flame-outline" size={16} color="white" />
-              <Text style={{color:'#fff', marginLeft:4}}>Streak {userData.benchmarks.streak}</Text>
-              <Text style={{color:'#fff', marginLeft:'auto'}}>Gesamtminuten </Text>
+              <Text style={{...styles.text, marginLeft:4}}>Streak {userData.benchmarks.streak}</Text>
+              <Text style={{...styles.text, marginLeft:'auto'}}>Gesamtminuten </Text>
             </TouchableOpacity> 
           </View>
 
@@ -76,11 +76,11 @@ export const ProfilRoot = ({navigation})=> {
             <View style={styles.background}>
                 <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Statistiken")}>
                   <Ionicons name="stats-chart-outline" size={16} color="white" />
-                  <Text style={{color:'#fff', marginLeft:10}}>Statistiken</Text>
+                  <Text style={{...styles.text, marginLeft:10}}>Statistiken</Text>
                 </TouchableOpacity> 
                 <TouchableOpacity style={styles.item} onPress={()=>navigation.navigate("Erfolge")}>
                   <Ionicons name="trophy-outline" size={16} color="white" />
-                  <Text style={{color:'#fff', marginLeft:10}}>Erfolge</Text>
+                  <Text style={{...styles.text, marginLeft:10}}>Erfolge</Text>
                 </TouchableOpacity>
             </View>
           </View>
@@ -101,6 +101,7 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <ProfilStack.Screen name="Einstellungen" component={Einstellungen} options={{
@@ -111,6 +112,7 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <ProfilStack.Screen name="Statistiken" component={Statistiken} options={{
@@ -121,6 +123,7 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <ProfilStack.Screen name="Erfolge" component={Erfolge} options={{
@@ -131,6 +134,7 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <ProfilStack.Screen name="Konto-Informationen" component={KontoInfos} options={{
@@ -141,6 +145,7 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
           <ProfilStack.Screen name="Informationen über die App" component={AppInfos} options={{
@@ -151,6 +156,7 @@ export const ProfilScreen =() => {
             headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
             },
           }}/>
       </ProfilStack.Navigator>
@@ -190,4 +196,9 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems:'center'
     },
+    text: {
+      color:'#fff',
+      fontFamily:'Poppins_400Regular',
+      fontSize:14
+    }
   });
