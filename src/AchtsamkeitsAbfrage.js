@@ -23,8 +23,8 @@ export const AchtsamkeitsAbfrage =(props)=>{
     const abschicken =()=>{
       if (mindfulnessLevelData === ""){
         Alert.alert(
-          'Unvollständig',
-          'Bitte wähle dein Level!',
+          'Bitte wähl dein Level aus',
+          'Falls du dir nicht sicher bist, nimm Anfänger:in',
           [{ text: 'OK'}],
           { cancelable: false }
         );
@@ -40,9 +40,11 @@ export const AchtsamkeitsAbfrage =(props)=>{
 
     
     return(
-      <ImageBackground source={require('../assets/ErsteSeite.png')} style={styles.imagebackground}>
-          <Text style= {{color: '#fff'}}>Wie gut kennst du dich mit Achtsamkeitstechniken aus?</Text>
+      <ImageBackground source={require('../assets/ErsteSeite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+          <Text style= {{...styles.text, marginBottom:20}}>Wie gut kennst du dich mit Achtsamkeitstechniken aus?</Text>
           <RadioButtonRN
+            activeColor={'#89FFF1'}
+            textStyle={{fontFamily:'Poppins_400Regular', fontSize:16, color:'#fff', marginLeft:5}}
             boxStyle={styles.radio}
             box={false}
             data={mindfulnessLevel}
@@ -51,10 +53,10 @@ export const AchtsamkeitsAbfrage =(props)=>{
           <TouchableOpacity style={styles.button} onPress={() =>{abschicken()}} >
             <LinearGradient
               colors={['#D476D5', '#C77BD8', '#8F92E3']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 2 }}
+              start={{ x: 0, y: 0.4 }}
+              end={{ x: 0, y: 1 }}
               style={styles.gradient}>
-                <Text style={styles.text25}>Weiter</Text>
+                <Text style={styles.text}>Weiter</Text>
             </LinearGradient>
           </TouchableOpacity>
         </ImageBackground>
@@ -80,7 +82,6 @@ const styles = StyleSheet.create({
       borderWidth: 0,
       height:30,
     },
-
     imagebackground: {
       flex: 1,
       justifyContent: 'center',
@@ -93,13 +94,19 @@ const styles = StyleSheet.create({
       shadowOffset: {width:0, height:4},
       shadowRadius: 4,
       shadowOpacity: 0.4,
+      marginTop: 10
     },
     gradient: {
       alignItems: 'center',
-      borderRadius: 10,
-      paddingBottom: 4,
-      paddingTop: 4,
-      paddingHorizontal: 20,
+      borderRadius: 18,
+      paddingVertical: 4,
+      paddingHorizontal: 30,
       marginTop: '10%'
     },
+    text: {
+      color:'#fff',
+      fontSize:18,
+      fontFamily:'Poppins_400Regular',
+      textAlign:'center'
+    }, 
   });
