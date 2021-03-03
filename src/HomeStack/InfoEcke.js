@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Alert, ScrollView, SectionList, ImageBackground, TextInput} from 'react-native';
 
 
@@ -15,7 +15,7 @@ export const InfoEcke=(props)=>{
     const atemuebungen = uebungen.filter(item=>item.Kategorie==="Atemübung")
     const mindfulness = uebungen.filter(item=>item.Kategorie==="Mindfulness")
     const koerperuebung = uebungen.filter(item=>item.Kategorie==="Körperübung")
-    const [TextValue, onChangeText] = React.useState('');
+    const [TextValue, onChangeText] = useState('');
 
 
     const InstantStart =() =>{
@@ -138,6 +138,8 @@ export const InfoEcke=(props)=>{
                         onChangeText={text => onChangeText(text)}
                         value={TextValue}
                         />
+                    {TextValue!=""&&<Ionicons name="close-outline" size={32} color="white" onPress={()=>{onChangeText("")}}/>}
+
                 </View>
                 </View>
                 <View style={styles.background} >
