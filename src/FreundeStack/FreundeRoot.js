@@ -235,10 +235,6 @@ export const FreundeRoot =({navigation}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <Button title="test" onPress={()=>{userDataTemp.friends.puzzles={};changeUserData(userDataTemp)
-        appData[currentUser]=userDataTemp
-        changeAppData(appData)
-        const jsonValue = JSON.stringify(appData)}}/>
         <View style={{height:60}}/>
       </ImageBackground>
     )
