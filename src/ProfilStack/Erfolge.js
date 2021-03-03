@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button , FlatList, TouchableOpacity, Modal, ImageBackground} from 'react-native';
+import { StyleSheet, Text, View, Button , FlatList, TouchableOpacity, Modal, ImageBackground, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -44,6 +44,7 @@ export const Erfolge = () => {
         return(
             <TouchableOpacity style ={{justifyContent:'space-between', flex:1, padding:10, margin:10, backgroundColor: "#46498280", borderRadius:8}} onPress={()=>changeModal(item.key)}>
                 <Text style = {item.reached?{...styles.text, fontFamily:'Poppins_500Medium'}:{...styles.text, color:"#ffffff90"}}>{item.title}</Text>
+                <Image style={item.reached?styles.image:{...styles.image,tintColor:"#00000080"}}source={item.picture}/>
                 <View style = {{height:12, borderRadius:100, marginTop:15, backgroundColor:'#00000050'}}>
                     <View style={{maxWidth:"100%", minWidth: 3, width:percent, backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
                 </View>
@@ -69,6 +70,7 @@ export const Erfolge = () => {
                             <View style={{flex:0.5, justifyContent:"space-between"}}>
                                 <Text style={{...styles.text, alignSelf:'center', textAlign:'center', fontSize:22}}>{benchmarks[modal]&&benchmarks[modal].title}</Text>
                                 <Text style={{...styles.text, textAlign:'center', fontSize:16}}>{benchmarks[modal]&&benchmarks[modal].description}</Text>
+                                <Image style={userData.benchmarks.benchmarksReached.includes(modal)?styles.image:{...styles.image,tintColor:"#00000080"}} source={benchmarks[modal]&&benchmarks[modal].picture}/>
                                 <View style = {{height:12, backgroundColor:'#333', borderRadius:100,width:200, alignSelf:"center"}}>
                                     <View style = {{maxWidth:"100%", minWidth: 3, width:percentage(benchmarks[modal]), backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
                                 </View>
@@ -133,11 +135,19 @@ const styles = StyleSheet.create({
     imagebackground: {
         flex: 1,
     },
+
     text: {
         fontFamily: 'Poppins_400Regular',
         color:'#fff',
         fontSize:14,
         alignSelf:'center',
         textAlign: 'center'
+    },
+    image:{
+        alignSelf:"center",
+        height:50,
+        width:50,
+        marginTop:10
+
     }
   });

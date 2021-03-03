@@ -10,6 +10,8 @@ import * as Linking from 'expo-linking';
 import { redirectURL } from '../../appDaten.js';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { images } from '../../assets/Puzzles/puzzleImg.js';
+
 
 
 export const FreundeRoot =({navigation}) => {
@@ -20,6 +22,30 @@ export const FreundeRoot =({navigation}) => {
     const [selectedFriends, changeSelectedFriends] = useState([currentUser,])
 
     useEffect(()=>{},[forceUpdate])
+
+    const getMotif=()=>{
+      if(!userDataTemp.friends.motifs){
+        userDataTemp.friends.motifs=[]
+      }
+      var found = false
+      var number = 0
+      var motif = ""
+      if(userDataTemp.friends.motifs.length===Object.keys(images).length){
+        number = Math.floor(Math.random() * Object.keys(images).length)
+        motif = Object.keys(images)[number]
+        userDataTemp.friends.motifs=[motif]
+        found = true
+      }
+      while (!found){
+        number = Math.floor(Math.random() * Object.keys(images).length)
+        if(!userDataTemp.friends.motifs.includes(Object.keys(images)[number])){ 
+          motif = Object.keys(images)[number]
+          userDataTemp.friends.motifs.push(motif)
+          found = true
+        }
+      }
+      return motif
+    }
 
     function getRandomString(length) {
         var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -44,9 +70,10 @@ export const FreundeRoot =({navigation}) => {
     const neuesPuzzle=async()=>{
         changeModalVisible(false)
         const id =getRandomString(8)
-        userDataTemp.friends.puzzles[id]={id:id, pieces:0, friends:selectedFriends, log:{}}
+        const motif = getMotif()
+        userDataTemp.friends.puzzles[id]={id:id, pieces:0, friends:selectedFriends, log:{}, motif:motif}
         const friendsNames = getFriendsNames()
-        var message = Linking.makeUrl("", {type: "newPuzzle", id:id, name:userData.data.name, user:currentUser, friends:JSON.stringify(selectedFriends), friendsNames:JSON.stringify(friendsNames)})
+        var message = Linking.makeUrl("", {type: "newPuzzle", id:id, name:userData.data.name, user:currentUser, friends:JSON.stringify(selectedFriends), friendsNames:JSON.stringify(friendsNames), motif:motif})
         var re = /(.*)(\?.*)/;
         message = message.replace(re, "Lass uns zusammen ein neuen Puzzle beginnen: "+redirectURL+"$2");
         changeUserData(userDataTemp)
@@ -82,10 +109,19 @@ export const FreundeRoot =({navigation}) => {
 
     const puzzleArray=()=>{
         const array=[]
+        const finishedArray=[]
         for(puzzle in userData.friends.puzzles){
+          if(userData.friends.puzzles[puzzle].pieces<12){
             array.push(userData.friends.puzzles[puzzle])
+          }else{
+            finishedArray.push(userData.friends.puzzles[puzzle])
+          }
         }
-        return array
+        //console.log(finishedArray)
+        array.reverse()
+        finishedArray.reverse()
+        const allArray = array.concat(finishedArray)
+        return allArray
     }
 
     const freundeArray=()=>{
@@ -118,7 +154,8 @@ export const FreundeRoot =({navigation}) => {
         return (
             <TouchableOpacity style={styles.puzzle}onPress={()=>{navigation.navigate("Puzzle",{id:item.id}) }}>
                 <MaterialCommunityIcons name="puzzle-outline" size={22} color="#fff" />
-                <Text style={{...styles.textM, marginLeft:5}}>{puzzleText(item.friends)}</Text>
+                <Text style={{...styles.textM, marginLeft:5, flex:1}}>{puzzleText(item.friends)}</Text>
+                {item.pieces===12&&<Ionicons name="trophy-outline" size={22} color="#fff" style={{marginRight:15}}/>}
             </TouchableOpacity>
         )
     }
@@ -198,6 +235,10 @@ export const FreundeRoot =({navigation}) => {
                 </TouchableOpacity>
               </View>
             </View>
+            <Button title="test" onPress={()=>{userDataTemp.friends.puzzles={};changeUserData(userDataTemp)
+        appData[currentUser]=userDataTemp
+        changeAppData(appData)
+        const jsonValue = JSON.stringify(appData)}}/>
         <View style={{height:60}}/>
       </ImageBackground>
     )

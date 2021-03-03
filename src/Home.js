@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
 import {AppContext} from './context.js';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import {KursAuswahl} from './HomeStack/KursAuswahl.js'
 import { UebungsAuswahl } from './HomeStack/UebungsAuswahl.js';
 import { VersionsAuswahl } from './HomeStack/VersionsAuswahl.js';
@@ -24,6 +24,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { VersionsAuswahlText } from './HomeStack/VersionsAuswahlText.js';
 import { TextPlayer } from './HomeStack/TextPlayer.js';
 import { Feather } from '@expo/vector-icons';
+import {randomPerson} from '../assets/Personen/randomPerson.js'
 
 
 
@@ -32,8 +33,12 @@ const HomeStack = createStackNavigator();
 
 //Startseite des Home-Stacks
 const HomeRoot = ({navigation})=>{
+  const viewPagerRef = useRef(null);
   const {username, changeUsername,} = useContext(AppContext);
-  const {gehoerteUebungen, changeGehoerteUebungen, userData} = useContext(AppContext);
+  const {gehoerteUebungen, changeGehoerteUebungen, userData, forceUpdate} = useContext(AppContext);
+  useEffect(()=>{
+    viewPagerRef.current.setPage(1)
+  },[forceUpdate])
 
   //Button, um da weiterzumachen, wo man aufgehört hat
   const InstantStart =() =>{
@@ -59,7 +64,7 @@ const HomeRoot = ({navigation})=>{
   }
 
   return(
-    <ViewPager style={styles.viewPager} initialPage={1}>
+    <ViewPager style={styles.viewPager} initialPage={1} ref={viewPagerRef}>
       
       <View key="1">
         <InfoEcke navigation={navigation}/>
@@ -81,7 +86,7 @@ const HomeRoot = ({navigation})=>{
           <View style={{flex:0.5, alignItems:'center', justifyContent:'flex-start'}}>
           <View style={{flexDirection:'row', alignItems:'center'}}>
             <Feather name="chevrons-left" size={30} color="#5467A9" />
-            <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
+            <Image source={randomPerson} style={styles.image}/>
             <Feather name="chevrons-right" size={30} color="#5467A9" />
           </View>
           <TouchableOpacity style={styles.button} onPress={() =>{navigation.navigate('Meine Kurse')}} >

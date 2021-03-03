@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView,Keyboard} from 'react-native';
+import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView,Keyboard, Image} from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -117,6 +117,7 @@ export const Tabnavigator = () =>{
                 <View style={styles.modalView}>
                     <Text style={{...styles.text, textAlign:'center', color:'#D476D5'}}>Neuer Erfolg!</Text>
                     <Text style={{...styles.text, fontSize:28, textAlign:'center'}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].title}</Text>
+                    <Image style={{alignSelf:"center"}}source={benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].picture}/>
                     <Text style={{...styles.text, textAlign:'center'}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].description}</Text>
                     <TouchableOpacity styles={styles.button} onPress={()=>{newBenchmarkTemp.shift();changeNewBenchmark(newBenchmarkTemp)}}>
                     <LinearGradient
@@ -161,8 +162,17 @@ export const Tabnavigator = () =>{
               component={HomeScreen} 
               options={{
                 tabBarIcon: ({ focused }) => (
-                  <AntDesign name="home" size={30} color={focused?'#D476D5':"#fff"} />
+                  <AntDesign name="home" size={30} color={focused?'#D476D5':"#fff"}/>
                 ),
+              }}
+              listeners={{
+                tabPress: e => {
+                  if(forceUpdate===""){
+                    changeForceUpdate("reset Home Page") 
+                  }else{
+                    changeForceUpdate("") 
+                  }
+                }
               }}
             />
             <Tab.Screen 

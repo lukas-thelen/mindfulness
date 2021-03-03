@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Modal, Share, Image, ImageBackground} from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Modal, Share, Image, ImageBackground, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -9,7 +9,6 @@ import * as Linking from 'expo-linking';
 import { checkBenchmarks } from '../benchmarks.js';
 import { redirectURL } from '../../appDaten.js';
 import { images } from '../../assets/Puzzles/puzzleImg.js';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -47,7 +46,7 @@ export const Puzzle = ({route, navigation}) => {
     const renderPuzzleTeile=({item, index})=>{
         if(item<userDataTemp.friends.puzzles[route.params.id].pieces){
             return(
-                <Image style={styles.image} source={images.Waage[index]}/>
+                <Image style={styles.image} source={images[userDataTemp.friends.puzzles[route.params.id].motif][index]}/>
                 
             )
         }else{
