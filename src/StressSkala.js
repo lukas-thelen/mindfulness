@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert , ImageBackground} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioButtonRN from 'radio-buttons-react-native';
 import Slider from '@react-native-community/slider';
@@ -7,22 +7,23 @@ import Slider from '@react-native-community/slider';
 import {AppContext} from './context.js';
 import { useContext } from 'react';
 import { abs } from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const StressSkala = (props) =>{
     const [stressData, changeStressData] = useState(2)
     //Die perceived Stress Skala Fragen, auf die mit frage und number zugegriffen wird die aktuelle Frage ist gleichquestions[number]
     const [number, changeNumber] = useState(0)
     const questions = ["Wie oft warst Du im letzten Monat aufgewühlt, weil etwas unerwartet passiert ist?",
-                    "Wie oft hattest Du im letzten Monat das Gefühl, nicht in der Lage zu sein, die wichtigen Dinge in Deinem Leben kontrollieren zu können?",
-                    "Wie oft hast DU dich im letzten Monat nervös und gestresst gefühlt?",
-                    "Wie oft warst Du im letzten Monat zuversichtlich, dass Du fähig bist, ihre persönlichen Probleme zu ubewältigen?",
-                    "Wie oft hast Du im letzten Monat das Gefühl, dass sich die Dinge zu Ihren Gunsten entwickeln?",
-                    "Wie oft hattest Du im letzten Monat den Eindruck, nicht all Deinen anstehenden Aufgaben gewachsen zu sein?",
-                    "Wie oft warst Du im letzten Monat in der Lage, ärgerliche Situationen in Deinem Leben zu beeinflussen?",
-                    "Wie oft hast Du im letzten Monat das Gefühl, alles im Griff zu haben?",
-                    "Wie oft hast Du dich im letzten Monat über Dinge gegeärgert, über die Du keine Kontrolle hattest?",
-                    "Wie oft hattest Du im letzten Monat das Gefühl, dass sich so viele Schwierigkeiten angehäufthaben, dass Du diese nicht überwinden konntest?",
-                  ]
+                        "Wie oft hattest Du im letzten Monat das Gefühl, nicht in der Lage zu sein, die wichtigen Dinge in deinem Leben kontrollieren zu können?",
+                        "Wie oft hast Du dich im letzten Monat nervös und gestresst gefühlt?",
+                        "Wie oft warst Du im letzten Monat zuversichtlich, dass Du fähig bist, deine persönlichen Probleme zu bewältigen?",
+                        "Wie oft hast Du im letzten Monat das Gefühl gehabt, dass sich die Dinge zu deinen Gunsten entwickeln?",
+                        "Wie oft hattest Du im letzten Monat den Eindruck, nicht all deinen anstehenden Aufgaben gewachsen zu sein?",
+                        "Wie oft warst Du im letzten Monat in der Lage, ärgerliche Situationen in deinem Leben zu beeinflussen?",
+                        "Wie oft hast Du im letzten Monat das Gefühl gehabt, alles im Griff zu haben?",
+                        "Wie oft hast Du dich im letzten Monat über Dinge geärgert, über die Du keine Kontrolle hattest?",
+                        "Wie oft hattest Du im letzten Monat das Gefühl, dass sich so viele Schwierigkeiten angehäuft haben, dass Du diese nicht überwinden konntest?",
+                      ]
 
       // Variablen für den dynamischen Button (von "Nächste Frage" --> Abschicken)
       const [question, changeQuestion] = useState(questions[number])
@@ -106,60 +107,95 @@ export const StressSkala = (props) =>{
     }
     return(
 
-        <View style={styles.pagewrap, styles.container}>
-            <Text>Lass uns ein Stress-Tagebuch führen</Text>
-            <View style={styles.trennlinie}/>
-            <Text style={{padding:20}}>{question}</Text>
+      <ImageBackground source={require('../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        
+      <Text style={{...styles.text, fontSize:20, marginBottom:50}}>Behalte dein Stress-Level im Blick!</Text>
+            
+            <View style={styles.background}>
+            <Text style={{...styles.text, marginBottom:20}}>{question}</Text>
             <Slider
                 style={{width: 250, height: 40}}
                 minimumValue={0}
                 maximumValue={4}
-                minimumTrackTintColor="green"
-                maximumTrackTintColor="grey"
+                minimumTrackTintColor='#89FFF1'
+                maximumTrackTintColor='#D476D5'
+                thumbTintColor='#fff'
                 step={1}
                 value={stressData}
                 onValueChange={changeStressData}
             />
-            <View style={{flexDirection:"row", width:280, justifyContent:"space-evenly", marginLeft:20}}>
-              <Text style={stressData===0?{fontSize:16}:{fontSize:10}}>Nie</Text>
-              <Text style={stressData===1?{fontSize:16}:{fontSize:10}}>Fast Nie</Text>
-              <Text style={stressData===2?{fontSize:16}:{fontSize:10}}>Manchmal</Text>
-              <Text style={stressData===3?{fontSize:16}:{fontSize:10}}>Ziemlich Oft</Text>
-              <Text style={stressData===4?{fontSize:16}:{fontSize:10}}>Sehr Oft</Text>
+            <View style={{flexDirection:"row", width:280, justifyContent:"space-around", marginLeft:20}}>
+              <Text style={stressData===0?styles.text:styles.text10}>Nie</Text>
+              <Text style={stressData===1?{...styles.text, marginLeft:15}:styles.text10}>Fast Nie</Text>
+              <Text style={stressData===2?{...styles.text, marginLeft:15}:styles.text10}>Manchmal</Text>
+              <Text style={stressData===3?styles.text:styles.text10}>Ziemlich Oft</Text>
+              <Text style={stressData===4?styles.text:styles.text10}>Sehr Oft</Text>
             </View>
-            <View style={styles.trennlinie}/>
-            <Button title={buttonValue} onPress={() =>{calculateStress()}} ></Button>
-            <TouchableOpacity onPress={()=>{skip()}}>
-              <Text>Überspringen</Text>
-            </TouchableOpacity>
 
-        </View>
+            <TouchableOpacity style={styles.button} onPress={() =>{calculateStress()}} >
+              <LinearGradient
+                  colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                  start={{ x: 0, y: 0.4 }}
+                  end={{ x: 0, y: 1 }}
+                  style={styles.gradient}>
+                    <Text style={styles.text}>{buttonValue}</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            
+            <TouchableOpacity style={{marginTop:20}} onPress={()=>{skip()}}>
+              <Text style={{...styles.text, fontSize:14, textDecorationLine:'underline'}}>Überspringen</Text>
+            </TouchableOpacity>
+            </View>
+
+        </ImageBackground>
     )
 
 }
 //Styles
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width: '100%',
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    pagewrap:{
-      width: '100%',
-      height: '100%'
-    },
-    radio:{
-      width: 200,
-      borderWidth: 0,
-      height:30
-    },
-    trennlinie:{
-      height:1,
-      width:"100%",
-      backgroundColor:"black",
-      marginBottom:10,
-      marginTop:10
-    }
+  imagebackground: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+  radio:{
+    width: 200,
+    borderWidth: 0,
+    height:30
+  },
+  background: {
+    backgroundColor: "#0F113A90",
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding:20,
+    width: '90%',
+  },
+  gradient: {
+    alignItems: 'center',
+    borderRadius: 15,
+    paddingBottom: 4,
+    paddingTop: 4,
+    paddingHorizontal: 20,
+  },
+  button: {
+    marginTop: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width:0, height:4},
+    shadowRadius: 4,
+    shadowOpacity: 0.4,
+  },
+  text: {
+    color: '#fff',
+    fontFamily: 'Poppins_400Regular',
+    fontSize:16,
+    textAlign:'center',
+  },
+  text10: {
+    color: '#fff',
+    fontSize: 10,
+    fontFamily: 'Poppins_400Regular',
+  },
   });

@@ -66,10 +66,10 @@ export const Registrieren =(props)=>{
         );
       }else if(!agb){
         Alert.alert(
-          'Bitte stimme unseren AGB zu',
+          'Bitte stimme unseren AGB zu!',
           '',
 
-          [{ text: 'zum Anmelden', onPress: () => props.changeInitPages('Anmelden') }, {text:"ok"}],
+          [{ text: 'Zum Anmelden', onPress: () => props.changeInitPages('Anmelden') }, {text:"OK"}],
           { cancelable: false }
         );
       }else{
@@ -91,32 +91,32 @@ export const Registrieren =(props)=>{
         contentContainerStyle={globalStyles.container}
         scrollEnabled={false}
       >
-      <View style={globalStyles.pagewrap, styles.registrierenContainer}>
-      <Text style={{fontSize:25, color: '#fff', marginBottom: 5}}>Registrierung</Text>
-        <Text style={styles.text}>Benutzername</Text>
+      <View style={styles.registrierenContainer}>
+        <Text style={{...styles.textM, fontSize:25, marginTop:50, marginBottom: 50}}>Registrierung</Text>
+        
+       <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Vorname</Text>
+        <TextInput 
+            style={styles.textinput}
+            onChangeText={text => changeName(text)}></TextInput>
+
+        <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Alter</Text>
+        <TextInput 
+            style={styles.textinput}
+            onChangeText={age => changeAge(age)} keyboardType={'numeric'}></TextInput>
+        
+        <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%', marginTop:50}}>Benutzername</Text>
         <TextInput 
             style={styles.textinput}
             onChangeText={text => changeEMail(text)} autoCapitalize = 'none'></TextInput>
 
 
-        <Text style={styles.text}>Passwort</Text>
+        <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Passwort</Text>
         <TextInput 
             autoCapitalize = 'none'
             style={styles.textinput}
             onChangeText={text => changePassword(text)}></TextInput>
 
-        <Text style={styles.text}>Vorname</Text>
-        <TextInput 
-            style={styles.textinput}
-            onChangeText={text => changeName(text)}></TextInput>
-
-
-        
-
-        <Text style={styles.text}>Alter</Text>
-        <TextInput 
-            style={styles.textinput}
-            onChangeText={age => changeAge(age)} keyboardType={'numeric'}></TextInput>
+    
         {/*<TouchableOpacity onPress={()=>{showDatepicker(true)}}>{dateChanged ?
           <Text>{birthday.getDate()}.{birthday.getMonth()+1}.{birthday.getFullYear()}</Text>:
           <Text>hier eingeben</Text>}
@@ -129,21 +129,21 @@ export const Registrieren =(props)=>{
           onConfirm={handleConfirm}
           onCancel={showDatepicker}
         />*/}
-        <View style={{flexDirection:"row", alignItems:"center"}}>
-          <CheckBox checked={agb} onPress={() => changeAgb(!agb)}/>
-          <Text style={{color:"white"}}>Ich habe die AGB natürlich gelesen.</Text>
+        <View style={{flexDirection:"row", alignItems:"center", justifyContent:'center'}}>
+          <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={agb} onPress={() => changeAgb(!agb)}/>
+          <Text style={{...styles.text, fontSize:14}}>Ich habe die AGB natürlich gelesen.</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={() =>abschicken()}>
             <LinearGradient
-            colors={['#80DEE4', '#89FFE3']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 2 }}
+            colors={['#D476D5', '#C77BD8', '#8F92E3']}
+            start={{ x: 0, y: 0.4 }}
+            end={{ x: 0, y: 1 }}
             style={styles.gradient}>
-              <Text style={{color: '#fff', fontSize: 25}}>Registrieren</Text>
+              <Text style={{...styles.text, fontSize:18}}>Registrieren</Text>
             </LinearGradient>
         </TouchableOpacity>
         <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
-              <Text style={{color: '#fff', fontSize: 12,textDecorationLine: "underline"}}>Zurück</Text>
+              <Text style={{...styles.text, fontSize: 14, textDecorationLine: "underline"}}>Zurück</Text>
         </TouchableOpacity>
         
       </View>
@@ -157,20 +157,17 @@ export const Registrieren =(props)=>{
       width: '100%',
       backgroundColor: '#0F113A',
       alignItems: 'center',
-      marginTop:60
     },
     textinput: {
-      height: '5%', 
-      borderColor: '#464982', 
+      paddingVertical:5,
+      paddingHorizontal:20, 
       backgroundColor: '#464982', 
-      borderWidth: 10, 
       width:'70%', 
-      borderRadius:200, 
-    },
-    text: {
-      color: '#fff',
-      fontSize: 12,
-      marginTop: 25
+      borderRadius:10,
+      color:'#fff',
+      fontSize:16,
+      fontFamily:'Poppins_400Regular',
+      marginBottom: 20, 
     },
     containertext1: {
       alignItems:'center',
@@ -189,27 +186,34 @@ export const Registrieren =(props)=>{
       alignItems:'center',
       marginTop: 15
     },
-    
     gradient: {
       alignItems: 'center',
-      borderRadius: 20,
+      borderRadius: 18,
       paddingBottom: 4,
       paddingTop: 4,
       paddingHorizontal: 20,
     },
     button: {
       alignItems: 'center',
-      borderRadius: 100,
-      marginTop: 10,
       justifyContent: 'center',
       shadowColor: '#000',
       shadowOffset: {width:0, height:4},
       shadowRadius: 4,
       shadowOpacity: 0.4,
+      marginVertical:10
     },
     radio:{
       width: 200,
       borderWidth: 0,
       height:30,
     },
+    text: {
+      color:'#fff',
+      fontSize:17,
+      fontFamily:'Poppins_400Regular'
+    }, 
+    textM: {
+      color:'#fff',
+      fontFamily:'Poppins_500Medium'
+    }
   })

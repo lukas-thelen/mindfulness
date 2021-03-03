@@ -193,8 +193,8 @@ export const Journal = (props) => {
                         <TouchableOpacity styles={styles.button} disabled={stressAktiv()?false:true} onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}>
                             <LinearGradient
                                 colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 2 }}
+                                start={{ x: 0, y: 0.4 }}
+                                end={{ x: 0, y: 1 }}
                                 style={stressAktiv()?styles.gradient:{...styles.gradient, opacity:0.4}}>
                                     <Text style={styles.text}>Zur Stress-Umfrage</Text>
                             </LinearGradient>

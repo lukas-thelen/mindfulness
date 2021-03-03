@@ -181,7 +181,7 @@ export const FreundeRoot =({navigation}) => {
         )
       }
     return (
-      <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+      <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
         
             <Modal
                   animationType="slide"
@@ -199,8 +199,8 @@ export const FreundeRoot =({navigation}) => {
                       <TouchableOpacity style={styles.button} disabled={selectedFriends.length===1&&true} onPress={()=>neuesPuzzle()}>
                         <LinearGradient
                             colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 2 }}
+                            start={{ x: 0, y: 0.4 }}
+                            end={{ x: 0, y: 1 }}
                             style={styles.gradient}>
                                 <Text style={{...styles.text, fontSize:17}}>Erstellen</Text>
                         </LinearGradient>

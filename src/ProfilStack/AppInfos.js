@@ -8,7 +8,7 @@ import { useContext, useEffect } from 'react';
 export const AppInfos = () => {
 
     return (
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
             <Text style={styles.text}>Ich bin deine AppInfos!</Text>
         </ImageBackground>
     )
@@ -21,5 +21,6 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         fontSize: 16,
+        fontFamily:'Poppins_400Regular'
     },
 });

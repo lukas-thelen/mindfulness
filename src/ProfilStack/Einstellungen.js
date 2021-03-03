@@ -161,7 +161,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
     }
 
     return (
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
 
                 <View style={{flex:0.6, paddingTop:40, alignItems:'center'}}>
                     <View style= {styles.reihe}>
@@ -179,7 +179,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                         <Text style={styles.text}>Anzahl: </Text>
                         <TextInput 
                             defaultValue={""+anzahl}
-                            style={{color: '#fff', paddingVertical:6, paddingHorizontal:20, borderColor:'#fff', borderWidth: 1, borderRadius:10, textAlign:'center', marginRight:5}}
+                            style={{fontFamily:'Poppins_400Regular', color: '#fff', paddingVertical:6, paddingHorizontal:20, borderColor:'#fff', borderWidth: 1, borderRadius:10, textAlign:'center', marginRight:5}}
                             keyboardType={'numeric'} onChangeText={number => {onChangeAnzahl(number)}}>
                         </TextInput>
                         {hinweis&&<Text style={{color:"red", fontWeight:"bold"}}>!</Text>}
@@ -197,8 +197,8 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                         <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
                             <LinearGradient
                                 colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 2 }}
+                                start={{ x: 0, y: 0.4 }}
+                                end={{ x: 0, y: 1 }}
                                 style={styles.gradient}>
                                     <Text style={styles.text}>Speichern</Text>
                             </LinearGradient>
@@ -223,7 +223,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                 <View style={{flex:0.1}}>
                 <   TouchableOpacity style={{alignItems:"center", flexDirection:'row'}} onPress={() => logout() }> 
                         <Ionicons name="log-out-outline" size={24} color="white" />
-                        <Text style={{color:'#fff', fontSize:18, textDecorationLine:'underline', marginLeft:5}}>Abmelden</Text>
+                        <Text style={{...styles.text, fontSize:18, textDecorationLine:'underline', marginLeft:5}}>Abmelden</Text>
                     </TouchableOpacity>
                 </View>
                 
@@ -266,10 +266,11 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         fontSize: 16,
+        fontFamily: 'Poppins_400Regular'
     },
     gradient: {
         alignItems: 'center',
-        borderRadius: 14,
+        borderRadius: 17,
         paddingVertical: 5,
         paddingHorizontal: 30,
     },

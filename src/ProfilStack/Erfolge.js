@@ -42,13 +42,11 @@ export const Erfolge = () => {
     const renderBenchmark = ({item}) => {
         const percent = ((userData.benchmarks[item.var]/item.goal)*100).toString() + "%"
         return(
-            <TouchableOpacity onPress={()=>changeModal(item.key)}style = {{flex:1, padding:10, margin:10, backgroundColor: "#0F113A90"}}>
-                <Text style = {item.reached?{color: "black"}:{color:"white"}}>{item.title}</Text>
-                <View style={{justifyContent:"flex-end", flex:1}}> 
-                    <Image style={item.reached?styles.image:{...styles.image,tintColor:"#00000080"}}source={item.picture}/>
-                    <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100, marginTop:15}}>
-                        <View style = {{maxWidth:"100%", minWidth: 3, width:percent, backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
-                    </View>
+            <TouchableOpacity style ={{justifyContent:'space-between', flex:1, padding:10, margin:10, backgroundColor: "#46498280", borderRadius:8}} onPress={()=>changeModal(item.key)}>
+                <Text style = {item.reached?{...styles.text, fontFamily:'Poppins_500Medium'}:{...styles.text, color:"#ffffff90"}}>{item.title}</Text>
+                <Image style={item.reached?styles.image:{...styles.image,tintColor:"#00000080"}}source={item.picture}/>
+                <View style = {{height:12, borderRadius:100, marginTop:15, backgroundColor:'#00000050'}}>
+                    <View style={{maxWidth:"100%", minWidth: 3, width:percent, backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
                 </View>
             </TouchableOpacity>
         );
@@ -60,8 +58,8 @@ export const Erfolge = () => {
         return null
     }
     return (
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-            <View>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+            <View style={{flex:1}}>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -69,31 +67,33 @@ export const Erfolge = () => {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <View style={{flex:0.3, justifyContent:"space-between"}}>
-                                <Text style={{color:"white", fontSize:22}}>{benchmarks[modal]&&benchmarks[modal].title}</Text>
-                                <Text style={{color:"white"}}>{benchmarks[modal]&&benchmarks[modal].description}</Text>
+                            <View style={{flex:0.5, justifyContent:"space-between"}}>
+                                <Text style={{...styles.text, alignSelf:'center', textAlign:'center', fontSize:22}}>{benchmarks[modal]&&benchmarks[modal].title}</Text>
+                                <Text style={{...styles.text, textAlign:'center', fontSize:16}}>{benchmarks[modal]&&benchmarks[modal].description}</Text>
                                 <Image style={userData.benchmarks.benchmarksReached.includes(modal)?styles.image:{...styles.image,tintColor:"#00000080"}} source={benchmarks[modal]&&benchmarks[modal].picture}/>
-                                <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100,width:200, alignSelf:"center", marginTop:15}}>
+                                <View style = {{height:12, backgroundColor:'#333', borderRadius:100,width:200, alignSelf:"center"}}>
                                     <View style = {{maxWidth:"100%", minWidth: 3, width:percentage(benchmarks[modal]), backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
                                 </View>
                             </View>
-                            <View style={{flex:0.7, justifyContent:"flex-end"}}>
-                                <TouchableOpacity title="zurück" onPress={()=>changeModal("")}>
-                                    <Text style={{color:"white"}}>Zurück</Text>
+                            <View style={{flex:0.5, justifyContent:"flex-end"}}>
+                                <TouchableOpacity  onPress={()=>changeModal("")}>
+                                    <Text style={{...styles.text, fontSize:15, textDecorationLine:'underline'}}>Zurück</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </View>
                 </Modal>
-                <FlatList
+                <View style={{flex:1}}>
+                    <FlatList
                         numColumns={2}
                         data={benchmarkArray()}
                         keyExtractor={(item, index)=>item.key}
                         renderItem={renderBenchmark}
                         style={{width:"100%"}}
                     ></FlatList>
+                    <View style={{height:60}} />
+                </View>
             </View>
-            <View style={{height:60}}/>
         </ImageBackground>
     )
 }
@@ -134,12 +134,20 @@ const styles = StyleSheet.create({
     },
     imagebackground: {
         flex: 1,
-        
+    },
+
+    text: {
+        fontFamily: 'Poppins_400Regular',
+        color:'#fff',
+        fontSize:14,
+        alignSelf:'center',
+        textAlign: 'center'
     },
     image:{
         alignSelf:"center",
         height:50,
         width:50,
         marginTop:10
+
     }
   });

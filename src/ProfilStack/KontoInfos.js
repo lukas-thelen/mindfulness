@@ -6,6 +6,7 @@ import * as Notifications from 'expo-notifications';
 import {AppContext} from '../context.js';
 import { useContext, useEffect, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 
 export const KontoInfos = () => {
     const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCurrentUser} = useContext(AppContext)
@@ -114,49 +115,51 @@ export const KontoInfos = () => {
 
 
     return (
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-            <View  style = {styles.container}>
-                <Text style={{color:'#fff', padding:30, fontSize: 35}}>Mein Konto!</Text>
-
-                <Text style={{color:'#fff'}}>E-Mail: {userData.data.eMail}</Text>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+            
+            <View style={{flex:0.4, alignItems:'center', justifyContent:'center', width:'100%'}}>
+                <View style = {styles.reihe}>
+                    <Text style={styles.text}>Username: </Text>
+                    <Text style={{...styles.text, width:'50%'}}>{userData.data.eMail}</Text>
+                </View>
 
                 <View style = {styles.reihe}>
-                <Text style={{color:'#fff'}}>Neue E-Mail</Text>
-                    <TextInput style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
-                                onChangeText={eMail => changeEMail(eMail)} value={eMail}></TextInput>
-                </View>
-                <View>
+                    <Text style={styles.text}>Neuer Username: </Text>
+                        <TextInput style={styles.textInput}
+                                    onChangeText={eMail => changeEMail(eMail)} value={eMail}></TextInput>
+                    </View>
+                    <View>
                         <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
                             <LinearGradient
                                 colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 2 }}
+                                start={{ x: 0, y: 0.4 }}
+                                end={{ x: 0, y: 1 }}
                                 style={styles.gradient}>
-                                    <Text style={styles.text}>Bestätigen</Text>
+                                    <Text style={{...styles.text, fontSize:14}}>Bestätigen</Text>
                             </LinearGradient>
                         </TouchableOpacity>
-                    </View>
-
+                </View>
+            </View>
                 {/*<Button title="Bestätigen" onPress={()=>eMailBestätigen()}></Button>*/}
 
-                <View style={styles.trennlinie}/>
+             
 
-
+            <View style={{flex:0.5, alignItems:'center', justifyContent:'flex-start', width:'100%'}}>
                 <View style = {styles.reihe}>
-                    <Text style={{color:'#fff'}}>Altes Passwort</Text>
-                    <TextInput style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+                    <Text style={styles.text}>Altes Passwort: </Text>
+                    <TextInput style={styles.textInput}
                                 onChangeText={passwort => changeAltesPasswort(passwort)} value={altesPasswort}></TextInput>
                 </View>
 
                 <View style = {styles.reihe}>
-                    <Text style={{color:'#fff'}}>Neues Passwort:</Text>
-                    <TextInput style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+                    <Text style={styles.text}>Neues Passwort: </Text>
+                    <TextInput style={styles.textInput}
                                 onChangeText={passwort => changeNeuesPasswort(passwort)} value={neuesPasswort}></TextInput>
                 </View>
 
                 <View style = {styles.reihe}>
-                    <Text style={{color:'#fff'}}>Neues Passwort bestätigen:</Text>
-                    <TextInput style={{ height: 20, borderColor: 'gray', borderWidth: 1, width:200, borderRadius:200, paddingLeft:10}}
+                    <Text style={styles.text}>Wiederholen: </Text>
+                    <TextInput style={styles.textInput}
                                 onChangeText={passwort => changeNeuesPasswort2(passwort)} value={neuesPasswort2}></TextInput>
                 </View>
 
@@ -164,21 +167,24 @@ export const KontoInfos = () => {
                         <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
                             <LinearGradient
                                 colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 2 }}
+                                start={{ x: 0, y: 0.4 }}
+                                end={{ x: 0, y: 1 }}
                                 style={styles.gradient}>
-                                    <Text style={styles.text}>Bestätigen</Text>
+                                    <Text style={{...styles.text, fontSize:14}}>Bestätigen</Text>
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
                 {/*<Button title="Bestätigen" onPress={()=>passwortBestätigen()}></Button>*/}
-
-                <View style={styles.trennlinie}/>
-
-                <TouchableOpacity onPress={()=>{deleteAccount()}}>
-                        <Text style={{color:'#fff'}} >Konto löschen</Text>
-                    </TouchableOpacity>
             </View>
+            
+            <View style={{flex:0.1, alignItems:'center', justifyContent:'center', width:'100%'}}>
+                <TouchableOpacity style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}} aonPress={()=>{deleteAccount()}}>
+                        <Ionicons name="trash-outline" size={18} color="white" />
+                        <Text style={{...styles.text, textDecorationLine:'underline', marginLeft:5}} >Konto löschen</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={{height:60}} />
+            
          </ImageBackground>
     )
 }
@@ -186,33 +192,18 @@ export const KontoInfos = () => {
 //Styles
 const styles = StyleSheet.create({
     reihe: {
-        //flex:1,
+        width:'100%',
+        paddingHorizontal: 20,
+        paddingVertical:5,
         flexDirection:"row",
-        alignItems: "flex-start", 
-        justifyContent: "center",
+        alignItems: "center", 
+        justifyContent: 'space-between',
     },
-
-    container: {
-        alignItems: "center"
-        ,
-
-    },
-
     trennlinie:{
         height:1,
         width:"100%",
-        backgroundColor:"black",
-        marginBottom:10,
-        marginTop:10
+        marginVertical:30
     },
-    background: {
-        backgroundColor: "#0F113A90",
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical:10,
-    },
-    
     imagebackground:{
         flex: 1,
         alignItems:'center'
@@ -223,7 +214,7 @@ const styles = StyleSheet.create({
     },
     gradient: {
         alignItems: 'center',
-        borderRadius: 14,
+        borderRadius: 16,
         paddingVertical: 5,
         paddingHorizontal: 30,
     },
@@ -236,5 +227,21 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.4,
         padding: 20,
     },
-
+    text: {
+        color:'#fff',
+        fontFamily: 'Poppins_400Regular',
+        fontSize: 16
+    },
+    textInput:{ 
+        borderColor: '#ffffff90', 
+        borderWidth: 1,
+        borderRadius:14,
+        color: '#fff',
+        textAlign: 'left',
+        paddingVertical:2, 
+        paddingHorizontal:18,
+        fontFamily:'Poppins_400Regular',
+        fontSize:16,
+        width: '50%',
+    },
   });

@@ -13,20 +13,20 @@ export const StartBildschirm = (props) =>{
     return(
       
       <ImageBackground source={require('../assets/ErsteSeite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
-        <View style={styles.container}>
-        <Text style={{fontSize:40, fontWeight:"bold", color: '#fff', marginBottom: 10}}>Upgrade</Text>
-        <Text style={{fontSize:25, fontWeight:"bold", color: '#fff',marginBottom: 60}}>your mind</Text>
+       
+        <Text style={{...styles.textM, fontSize:40, marginBottom: 2}}>Upgrade</Text>
+        <Text style={{...styles.textM, fontSize:25, marginBottom: 60}}>your mind</Text>
 
         
         <TouchableOpacity style={styles.containertext1} onPress={() =>props.changeInitPages('Anmelden')}>
-          <Text style={{color: '#fff', fontSize: 25, }}>Anmelden</Text>
+          <Text style={{...styles.text, fontSize: 20}}>Anmelden</Text>
            
           </TouchableOpacity>
           <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('Registrieren')}>
-                <Text style={{color: '#fff', fontSize: 17,textDecorationLine: "underline"}}>Registrieren</Text>
+                <Text style={{...styles.text, fontSize: 16,textDecorationLine: "underline"}}>Registrieren</Text>
           </TouchableOpacity>
           <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
-        </View>
+       
         </ImageBackground>
         
        
@@ -38,16 +38,6 @@ export const StartBildschirm = (props) =>{
 
 //Styles
 const styles = StyleSheet.create({
-    container:{
-      flex: 1,
-      width: '100%',
-      alignItems: 'center',
-      justifyContent: 'center' ,
-    },
-    pagewrap:{
-      width: '100%',
-      height: '100%',
-    },
     radio:{
       width: 200,
       borderWidth: 0,
@@ -62,8 +52,8 @@ const styles = StyleSheet.create({
     },
     containertext1: {
       alignItems:'center',
-      width: '55%',
-      height: '5%',
+      paddingHorizontal: 40,
+      paddingVertical: 5,
       borderRadius: 100,
       backgroundColor: '#464982',
       marginTop: 30,
@@ -75,7 +65,7 @@ const styles = StyleSheet.create({
     },
     containertext2: {
       alignItems:'center',
-      marginTop: 15,
+      marginTop: 20,
       
     },
     imagebackground: {
@@ -85,11 +75,19 @@ const styles = StyleSheet.create({
     },
     image: {
       position: 'absolute',
-      top: '72%',
-      left: '54%',
+      top: '75%',
+      left: '56%',
       width: 150,
       height: 150
      
     },
-  
+    text: {
+      color:'#fff',
+      fontSize:16,
+      fontFamily:'Poppins_400Regular'
+    }, 
+    textM: {
+      color:'#fff',
+      fontFamily:'Poppins_500Medium'
+    } 
   });
