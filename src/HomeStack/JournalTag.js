@@ -24,13 +24,17 @@ export const JournalTag = ({navigation, route}) => {
     const [willMeditate, changeWillMeditate]=useState(false)
     const [sonstiges, changeSonstiges]=useState("")
     const [editable, changeEditable] = useState(true)
+    const [gamingTimeStatus, changeGamingTimeStatus] = useState(null)
     const {userData, appData, changeUserData, CurrentUser, changeAppData} =useContext(AppContext)
     const userDataTemp = {...userData}
     const today = new Date()
-    const date = new Date(route.params.date)
-
     const yesterday = new Date()
     yesterday.setDate(yesterday.getDate()-1)
+
+    const date = new Date(route.params.date)
+    const dateBefore =new Date()
+    dateBefore.setDate(date.getDate()-1)
+    
     const stimmungsÜbersetzung={0:"sehr schlecht", 1:"schlecht", 2:"neutral", 3:"gut", 4:"sehr gut"}
     const stressÜbersetzung={0:"gar nicht", 1:"eher wenig", 2:"durchschnittlich", 3:"eher stark", 4:"sehr stark"}
     const cravingÜbersetzung={0:"nie", 1:"selten", 2:"manchmal", 3:"oft", 4:"immer"}
@@ -76,7 +80,25 @@ export const JournalTag = ({navigation, route}) => {
         changeAppData(appData)
         const jsonvalue=JSON.stringify(appData)
         await AsyncStorage.setItem('appData', jsonvalue)
+        navigation.goBack()
     }
+
+    useEffect(()=>{
+        if(userDataTemp.journal[dateBefore.toDateString()]&&userDataTemp.journal[dateBefore.toDateString()].heuteStunden){
+            if(heuteStunden===null||heuteStunden===0) changeGamingTimeStatus(null)
+            let plan = parseInt(userDataTemp.journal[dateBefore.toDateString()].morgenStunden)
+            let act = heuteStunden
+            if(act&&plan>act){
+                changeGamingTimeStatus("Super! Du hast heute "+(plan-act)+" Stunde(n) weniger gespielt als du vor hattest!")
+            }else if(plan<act){
+                changeGamingTimeStatus("Du hast heute "+(act-plan)+" Stunde(n) mehr gespielt als du vor hattest!")
+            }else if(plan===act){
+                changeGamingTimeStatus("Du hast heute genau so viel gespielt wie du vorhattest.")
+            }else{
+                changeGamingTimeStatus(null)
+            }
+        }
+    },[heuteStunden])
 
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
@@ -154,9 +176,10 @@ export const JournalTag = ({navigation, route}) => {
                 </View>
 
                 <View style={styles.background}>
-                <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie viele Stunden hast Du heute gespielt?</Text>
-                <Ionicons name="game-controller-outline" size={22} color="white" />
-                <TextInput editable={!editable? false:true} defaultValue={heuteStunden} keyboardType={'numeric'} onChangeText={changeHeuteStunden} style={styles.textInput}></TextInput>
+                    <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie viele Stunden hast Du heute gespielt?</Text>
+                    <Ionicons name="game-controller-outline" size={22} color="white" />
+                    <TextInput editable={!editable? false:true} defaultValue={heuteStunden} keyboardType={'numeric'} onChangeText={changeHeuteStunden} style={styles.textInput}></TextInput>
+                    {heuteStunden!=null&&<Text>{gamingTimeStatus}</Text>}  
                 </View>
 
                 <View style={styles.background}>

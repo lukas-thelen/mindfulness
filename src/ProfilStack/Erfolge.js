@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button , FlatList, TouchableOpacity, Modal, ImageBackground} from 'react-native';
+import { StyleSheet, Text, View, Button , FlatList, TouchableOpacity, Modal, ImageBackground, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -44,8 +44,11 @@ export const Erfolge = () => {
         return(
             <TouchableOpacity onPress={()=>changeModal(item.key)}style = {{flex:1, padding:10, margin:10, backgroundColor: "#0F113A90"}}>
                 <Text style = {item.reached?{color: "black"}:{color:"white"}}>{item.title}</Text>
-                <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100, marginTop:15}}>
-                    <View style = {{maxWidth:"100%", minWidth: 3, width:percent, backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
+                <View style={{justifyContent:"flex-end", flex:1}}> 
+                    <Image style={item.reached?styles.image:{...styles.image,tintColor:"#00000080"}}source={item.picture}/>
+                    <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100, marginTop:15}}>
+                        <View style = {{maxWidth:"100%", minWidth: 3, width:percent, backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
+                    </View>
                 </View>
             </TouchableOpacity>
         );
@@ -69,7 +72,8 @@ export const Erfolge = () => {
                             <View style={{flex:0.3, justifyContent:"space-between"}}>
                                 <Text style={{color:"white", fontSize:22}}>{benchmarks[modal]&&benchmarks[modal].title}</Text>
                                 <Text style={{color:"white"}}>{benchmarks[modal]&&benchmarks[modal].description}</Text>
-                                <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100,width:200, alignSelf:"center"}}>
+                                <Image style={userData.benchmarks.benchmarksReached.includes(modal)?styles.image:{...styles.image,tintColor:"#00000080"}} source={benchmarks[modal]&&benchmarks[modal].picture}/>
+                                <View style = {{height:12,borderWidth:1, borderColor:"black", borderRadius:100,width:200, alignSelf:"center", marginTop:15}}>
                                     <View style = {{maxWidth:"100%", minWidth: 3, width:percentage(benchmarks[modal]), backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
                                 </View>
                             </View>
@@ -132,4 +136,10 @@ const styles = StyleSheet.create({
         flex: 1,
         
     },
+    image:{
+        alignSelf:"center",
+        height:50,
+        width:50,
+        marginTop:10
+    }
   });

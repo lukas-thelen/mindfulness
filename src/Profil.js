@@ -24,6 +24,18 @@ export const ProfilRoot = ({navigation})=> {
       checkStreak()
     },[])
 
+    const getMinutes=(version)=>{
+      var minutes=0
+      var amount=0
+      for(i in userData.journal){
+          if(userData.journal[i].meditations){
+              amount+=parseInt(userData.journal[i].meditations)
+              minutes+=parseInt(userData.journal[i].meditationMinutes)  
+          }
+      }
+      return minutes
+  }
+
     const checkStreak=async()=>{
       const today=new Date()
       const yesterday=new Date()
@@ -68,7 +80,7 @@ export const ProfilRoot = ({navigation})=> {
           <TouchableOpacity style={styles.streak} onPress={()=>navigation.navigate("Statistiken")}>
               <Ionicons name="flame-outline" size={16} color="white" />
               <Text style={{color:'#fff', marginLeft:4}}>Streak {userData.benchmarks.streak}</Text>
-              <Text style={{color:'#fff', marginLeft:'auto'}}>Gesamtminuten </Text>
+              <Text style={{color:'#fff', marginLeft:'auto'}}>Gesamtminuten {getMinutes()}</Text>
             </TouchableOpacity> 
           </View>
 

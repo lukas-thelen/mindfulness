@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'
 
 import {kurse} from "../Kursdaten/Kursdatei.js"
+import { AppContext } from '../context.js';
 
 export const VersionsAuswahl =({navigation, route})=>{
+    const {userData}=useContext(AppContext)
     const [sprecher, changeSprecher] = useState("männlich")
     const kursIndex = route.params.kursIndex
     const uebungsIndex = route.params.uebungsIndex
@@ -27,6 +29,12 @@ export const VersionsAuswahl =({navigation, route})=>{
     useEffect(()=>{
         changeDauer(dauerArray()[Math.ceil(dauerArray().length/2)-1])
     },[sprecher])
+
+    useEffect(()=>{
+        if(userData.lastVoice){
+            changeSprecher(userData.lastVoice)
+        }
+    },[])
 
     const renderSprecher =({item})=>{
         return(

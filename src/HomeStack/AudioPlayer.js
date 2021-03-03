@@ -97,6 +97,7 @@ export const AudioPlayer =({navigation, route})=>{
     //Übung zu gehörten hinzufügen und AppData im Storage speichern
     const addGehoerteUebung=async()=> {
 
+        userDataTemp.lastVoice=kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].Sprecher
         userDataTemp.alleGehoertenUebungen.push(kurse[kurs].Uebungen[uebung].id)
         if (!gehoerteUebungenTemp.includes(kurse[kurs].Uebungen[uebung].id) || !gehoerteUebungenTemp[0]){
             //wenn Übung bisher noch nie gemacht wurde
