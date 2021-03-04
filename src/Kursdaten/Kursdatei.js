@@ -7,10 +7,10 @@ const KognitiveProzesseListe = [
     Stresswahrnehmung = {
         Name: "Stresswahrnehmung",
         Beschreibung: "Stress ist eines der üblichsten Trigger, wenn es um problematisches Gaming geht. Durch Stress kann sich eine Coping-Strategie entwickeln. Das bedeutet, dass Du bei Stressempfinden eher zum Gaming flüchtest. Außerdem teilen sich Stress und spezifische Suchtvorgänge bestimmte Hormone und stärken sich so gegenseitig.\n\n"+  
-        "Viele unserer Übungen in dieser App gehen genau das an. Sie sollen unter anderem Dein Stressempfinden vermindern oder zumindest erträglicher machen: Indem Du Dein wahrgenommenes Stresslevel reduzierst, wirst Du möglicherweise seltener zum Controller greifen.  "
+        "Viele unserer Übungen in dieser App gehen genau das an. Sie sollen unter anderem Dein Stressempfinden vermindern oder zumindest erträglicher machen: Indem Du Dein wahrgenommenes Stresslevel reduzierst, wirst Du möglicherweise seltener zum Controller greifen."
     },
     dispositionaleAchtsamkeit ={
-        Name:"dispositionale Achtsamkeit",
+        Name:"Dispositionale Achtsamkeit",
         Beschreibung: "Durch die Stärkung Deiner dispositionellen Achtsamkeit wird die Entwicklung einer Sucht erschwert. Dispositionelle Achtsamkeit greift durch non-reactivity den Trigger an: Siehst Du zum Beispiel eine Werbung zu Deiner bevorzugten Gaming-Plattform oder Deinem Lieblingsspiel, wirst Du bestimmt schon mal festgestellt haben, dass Dein Verlangen zu Spielen sich gerade erhöht hat. Die Werbung ist in diesem Fall der Trigger, der eine Reaktion, nämlich das Verlangen, auslöst. Deine durch dispositionelle Achtsamkeit gestärkte non-reactivity kann diese Reaktion schwächen: Dadurch wirst Du resistenter gegen Trigger und seltener rückfällig."  
     }
 ]
