@@ -15,7 +15,12 @@ export const UebungsInfo =({navigation, route})=>{
     const uebungsIndex = route.params.uebungsIndex
     const [activeSections, changeActiveSections] = useState([])
     const [activeSectionsGeneral, changeActiveSectionsGeneral] = useState([])
+    const [generalHeight, changeGeneralHeight] = useState(0)
+    const [effectsHeight, changeEffectsHeight] = useState(0)
+    const [moreGeneral, changeMoreGeneral]=useState(false)
+    const [moreEffect, changeMoreEffect]=useState(false)
     const [showGeneral, changeShowGeneral] = useState(true)
+    const blockHeight=300
 
     function generateKogProzList() {
         const KogProzListe = []
@@ -55,45 +60,99 @@ export const UebungsInfo =({navigation, route})=>{
               <TouchableOpacity style={showGeneral?{...styles.tab, backgroundColor:"#464982"}:{...styles.tab, backgroundColor:"#46498290"}} onPress={()=>changeShowGeneral(true)}><Text style={styles.text}>Allgemein</Text></TouchableOpacity>
               <TouchableOpacity style={!showGeneral?{...styles.tab, backgroundColor:"#464982"}:{...styles.tab, backgroundColor:"#46498290"}} onPress={()=>changeShowGeneral(false)}><Text style={styles.text}>Wirkung</Text></TouchableOpacity>
             </View>
-              {showGeneral?<LinearGradient
-                colors={['#464982', '#0F113A90']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0.1, y: 0.3}}
-                style={styles.container}>
-                <ScrollView>
-                  <View style={styles.inner}>
-                    <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
-                    <Text style={{...styles.text, textAlign:'left', marginBottom:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}</Text>
-                    <Accordion
-                        sections={generateGeneralList()}
-                        touchableComponent={TouchableOpacity}
-                        activeSections={activeSectionsGeneral}
-                        renderHeader={_renderHeader}
-                        renderContent={_renderContent}
-                        onChange={changeActiveSectionsGeneral}/>
-                  </View>
-              </ScrollView>
-              </LinearGradient>:
-              <LinearGradient
-              colors={['#464982', '#0F113A90']}
-              start={{ x: 1, y: 0 }}
-              end={{ x: 0.9, y: 0.3}}
-              style={styles.container}>
-                <ScrollView>
-                  <View style={styles.inner}>
-                    <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
-                    <Text style={{...styles.text, textAlign:'left', marginBottom:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>
-                    <Text style={{...styles.text, marginBottom:15}}>Angesprochene kognitive Prozesse:</Text>
-                    <Accordion
-                        sections={generateKogProzList()}
-                        touchableComponent={TouchableOpacity}
-                        activeSections={activeSections}
-                        renderHeader={_renderHeader}
-                        renderContent={_renderContent}
-                        onChange={changeActiveSections}/>
-                  </View>
-              </ScrollView>
-              </LinearGradient>}
+              {showGeneral?
+                <LinearGradient
+                  colors={['#464982', '#0F113A90']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0.1, y: 0.3}}
+                  style={styles.container}>
+                  <ScrollView>
+                    <View style={styles.inner}>
+                      <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
+
+                      {/* Nur der Text wird angezeigt, wenn der Text kurz genug ist */}
+                      {generalHeight<blockHeight?
+                        <Text style={{...styles.text, textAlign:'left', marginBottom:30}} onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;changeGeneralHeight(height)}}>
+                          {kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}
+                        </Text>
+                        :
+                        <View>
+
+                          {/* äußerer View beschneidet Text, wenn "mehr anzeigen" nicht aktiviert ist*/}
+                          {moreGeneral?
+                            <Text style={{...styles.text, textAlign:'left', marginBottom:10}}>{kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}</Text>:
+                            <View style={{maxHeight:blockHeight, overflow:"hidden", flex:1,marginBottom:10}}>
+                              <LinearGradient
+                                colors={['#ffffff00', '#ffffffb0']}
+                                start={{ x: 0.5, y: 0.96 }}
+                                end={{ x: 0.5, y: 0.99}}
+                                style={{flexShrink:1}}>
+                                <Text style={{...styles.text, textAlign:'left', marginBottom:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}</Text>
+                              </LinearGradient>
+                            </View>
+                          }
+                          <TouchableOpacity onPress={()=>{changeMoreGeneral(!moreGeneral)}}>
+                            <Text style={{...styles.text, marginBottom:10, textDecorationLine:"underline"}}>{moreGeneral?"weniger anzeigen":"mehr anzeigen"}</Text>
+                          </TouchableOpacity>
+                        </View>
+                      }
+                      <Accordion
+                          sections={generateGeneralList()}
+                          touchableComponent={TouchableOpacity}
+                          activeSections={activeSectionsGeneral}
+                          renderHeader={_renderHeader}
+                          renderContent={_renderContent}
+                          onChange={changeActiveSectionsGeneral}/>
+                    </View>
+                  </ScrollView>
+                </LinearGradient>
+              :
+                <LinearGradient
+                  colors={['#464982', '#0F113A90']}
+                  start={{ x: 1, y: 0 }}
+                  end={{ x: 0.9, y: 0.3}}
+                  style={styles.container}>
+                  <ScrollView>
+                    <View style={styles.inner}>
+                      <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
+                      {/* Nur der Text wird angezeigt, wenn der Text kurz genug ist */}
+                      {effectsHeight<blockHeight?
+                        <Text style={{...styles.text, textAlign:'left', marginBottom:30}} onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;changeEffectsHeight(height)}}>
+                          {kurse[kursIndex].Uebungen[uebungsIndex].Info}
+                        </Text>
+                        :
+                        <View>
+
+                          {/* äußerer View beschneidet Text, wenn "mehr anzeigen" nicht aktiviert ist*/}
+                          {moreEffect?
+                            <Text style={{...styles.text, textAlign:'left'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>:
+                            <View style={{maxHeight:blockHeight, overflow:"hidden", flex:1,marginBottom:10}}>
+                              <LinearGradient
+                                colors={['#ffffff00', '#ffffffb0']}
+                                start={{ x: 0.5, y: 0.96 }}
+                                end={{ x: 0.5, y: 0.99}}
+                                style={{flexShrink:1}}>
+                                <Text style={{...styles.text, textAlign:'left', marginBottom:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>
+                              </LinearGradient>
+                            </View>
+                          }
+                          <TouchableOpacity onPress={()=>{changeMoreEffect(!moreEffect)}}>
+                            <Text style={{...styles.text, marginBottom:10}}>{moreEffect?"weniger anzeigen":"mehr anzeigen"}</Text>
+                          </TouchableOpacity>
+                        </View>
+                      }
+                      <Text style={{...styles.text, marginBottom:15}}>Angesprochene kognitive Prozesse:</Text>
+                      <Accordion
+                          sections={generateKogProzList()}
+                          touchableComponent={TouchableOpacity}
+                          activeSections={activeSections}
+                          renderHeader={_renderHeader}
+                          renderContent={_renderContent}
+                          onChange={changeActiveSections}/>
+                    </View>
+                </ScrollView>
+                </LinearGradient>
+              }
           </View>
           <View style={{height:60}}/>
         </ImageBackground>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView,Keyboard, Image, TouchableOpacity} from 'react-native';
+import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView,Keyboard, Image, TouchableOpacity,StatusBar} from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -107,6 +107,7 @@ export const Tabnavigator = () =>{
   return(
     
     <View style = { {height: "100%", width: "100%"}}>
+      <StatusBar hidden={false} barStyle="light-content"/>
         <Modal
                   animationType="slide"
                   transparent={true}
