@@ -67,15 +67,17 @@ export const Erfolge = () => {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <View style={{flex:0.5, justifyContent:"space-between"}}>
+                            <View style={{flex:0.8, justifyContent:"space-between"}}>
                                 <Text style={{...styles.text, alignSelf:'center', textAlign:'center', fontSize:22}}>{benchmarks[modal]&&benchmarks[modal].title}</Text>
                                 <Text style={{...styles.text, textAlign:'center', fontSize:16}}>{benchmarks[modal]&&benchmarks[modal].description}</Text>
-                                <Image style={userData.benchmarks.benchmarksReached.includes(modal)?styles.image:{...styles.image,tintColor:"#00000080"}} source={benchmarks[modal]&&benchmarks[modal].picture}/>
+                                <View style ={{padding:20, margin:10, backgroundColor: "#464982b2", borderRadius:8}}>
+                                    <Image style={userData.benchmarks.benchmarksReached.includes(modal)?styles.imageBig:{...styles.imageBig,tintColor:"#00000080"}} source={benchmarks[modal]&&benchmarks[modal].picture}/>
+                                </View>
                                 <View style = {{height:12, backgroundColor:'#333', borderRadius:100,width:200, alignSelf:"center"}}>
                                     <View style = {{maxWidth:"100%", minWidth: 3, width:percentage(benchmarks[modal]), backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
                                 </View>
                             </View>
-                            <View style={{flex:0.5, justifyContent:"flex-end"}}>
+                            <View style={{flex:0.2, justifyContent:"flex-end"}}>
                                 <TouchableOpacity  onPress={()=>changeModal("")}>
                                     <Text style={{...styles.text, fontSize:15, textDecorationLine:'underline'}}>Zurück</Text>
                                 </TouchableOpacity>
@@ -148,6 +150,10 @@ const styles = StyleSheet.create({
         height:50,
         width:50,
         marginTop:10
-
+    },
+    imageBig:{
+        alignSelf:"center",
+        height:80,
+        width:80,
     }
   });
