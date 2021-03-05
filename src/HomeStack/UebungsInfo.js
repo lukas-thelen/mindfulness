@@ -56,7 +56,7 @@ export const UebungsInfo =({navigation, route})=>{
       return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
           <View style={{width:"90%", alignSelf:"center", flex:1}}>
-            <View style={{flexDirection:"row", flex:0.07}}> 
+            <View style={{flexDirection:"row", flex:0.07, marginTop:15}}> 
               <TouchableOpacity style={showGeneral?{...styles.tab, backgroundColor:"#464982"}:{...styles.tab, backgroundColor:"#46498290"}} onPress={()=>changeShowGeneral(true)}><Text style={styles.text}>Allgemein</Text></TouchableOpacity>
               <TouchableOpacity style={!showGeneral?{...styles.tab, backgroundColor:"#464982"}:{...styles.tab, backgroundColor:"#46498290"}} onPress={()=>changeShowGeneral(false)}><Text style={styles.text}>Wirkung</Text></TouchableOpacity>
             </View>
@@ -64,7 +64,7 @@ export const UebungsInfo =({navigation, route})=>{
                 <LinearGradient
                   colors={['#464982', '#0F113A90']}
                   start={{ x: 0, y: 0 }}
-                  end={{ x: 0.1, y: 0.3}}
+                  end={{ x: 0, y: 0.4}}
                   style={styles.container}>
                   <ScrollView>
                     <View style={styles.inner}>
@@ -87,12 +87,12 @@ export const UebungsInfo =({navigation, route})=>{
                                 start={{ x: 0.5, y: 0.96 }}
                                 end={{ x: 0.5, y: 0.99}}
                                 style={{flexShrink:1}}>
-                                <Text style={{...styles.text, textAlign:'left', marginBottom:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}</Text>
+                                <Text style={{...styles.text, textAlign:'left', marginBottom:20}}>{kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}</Text>
                               </LinearGradient>
                             </View>
                           }
                           <TouchableOpacity onPress={()=>{changeMoreGeneral(!moreGeneral)}}>
-                            <Text style={{...styles.text, marginBottom:10, textDecorationLine:"underline"}}>{moreGeneral?"weniger anzeigen":"mehr anzeigen"}</Text>
+                            <Text style={{...styles.text, marginBottom:20, textDecorationLine:"underline"}}>{moreGeneral?"weniger anzeigen":"mehr anzeigen"}</Text>
                           </TouchableOpacity>
                         </View>
                       }
@@ -109,8 +109,8 @@ export const UebungsInfo =({navigation, route})=>{
               :
                 <LinearGradient
                   colors={['#464982', '#0F113A90']}
-                  start={{ x: 1, y: 0 }}
-                  end={{ x: 0.9, y: 0.3}}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 0.4}}
                   style={styles.container}>
                   <ScrollView>
                     <View style={styles.inner}>
@@ -125,19 +125,19 @@ export const UebungsInfo =({navigation, route})=>{
 
                           {/* äußerer View beschneidet Text, wenn "mehr anzeigen" nicht aktiviert ist*/}
                           {moreEffect?
-                            <Text style={{...styles.text, textAlign:'left'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>:
+                            <Text style={{...styles.text, textAlign:'left', marginBottom:10}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>:
                             <View style={{maxHeight:blockHeight, overflow:"hidden", flex:1,marginBottom:10}}>
                               <LinearGradient
                                 colors={['#ffffff00', '#ffffffb0']}
                                 start={{ x: 0.5, y: 0.96 }}
                                 end={{ x: 0.5, y: 0.99}}
                                 style={{flexShrink:1}}>
-                                <Text style={{...styles.text, textAlign:'left', marginBottom:30}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>
+                                <Text style={{...styles.text, textAlign:'left', marginBottom:20}}>{kurse[kursIndex].Uebungen[uebungsIndex].Info}</Text>
                               </LinearGradient>
                             </View>
                           }
                           <TouchableOpacity onPress={()=>{changeMoreEffect(!moreEffect)}}>
-                            <Text style={{...styles.text, marginBottom:10}}>{moreEffect?"weniger anzeigen":"mehr anzeigen"}</Text>
+                            <Text style={{...styles.text, marginBottom:20, textDecorationLine:'underline'}}>{moreEffect?"weniger anzeigen":"mehr anzeigen"}</Text>
                           </TouchableOpacity>
                         </View>
                       }
