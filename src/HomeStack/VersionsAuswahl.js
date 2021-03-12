@@ -39,7 +39,7 @@ export const VersionsAuswahl =({navigation, route})=>{
     const renderSprecher =({item})=>{
         return(
             <TouchableOpacity style={item.Sprecher===sprecher ? styles.SelectedItem : styles.SprecherItem} onPress={()=>{changeSprecher(item.Sprecher)}}>
-                <Text>{item.Sprecher}</Text>
+                <Text style={{...styles.text, color:'#0F113A'}}>{item.Sprecher}</Text>
             </TouchableOpacity>    
         )
     }
@@ -65,22 +65,25 @@ export const VersionsAuswahl =({navigation, route})=>{
          return kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher[sprecherIndex].VersionenNachDauer.findIndex(item => item.Dauer === dauer)
     }
     return (
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-            <View >
-                
-                <TouchableOpacity 
-                    style={styles.info}
-                    onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:kursIndex, uebungsIndex:uebungsIndex })}}
-                ><Text>i</Text></TouchableOpacity>
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+            
+            <View style={{flexDirection:'row', alignItems:'center', marginVertical:20}}>
+                <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
+                <TouchableOpacity style={{marginLeft:10}} onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:kursIndex, uebungsIndex:uebungsIndex })}}>
+                    <Ionicons name="information-circle-outline" size={26} color="white" />
+                </TouchableOpacity>
             </View>
-            <Text style={{textAlignVertical: 'center', fontSize:25, marginBottom: '5%',color: '#fff'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
-            <Text style={{textAlignVertical: 'center', marginBottom: '5%', color: '#fff'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
+
+            <Text style={{...styles.text, marginBottom:40, alignSelf:'flex-start'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
+        
+            <View style={{height:"20%"}}>
             <FlatList
                 numColumns={2}
                 data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
                 keyExtractor={item=>item.Sprecher}
                 renderItem={renderSprecher}
             ></FlatList>
+            </View>
             {/*sprecher===""? <Text>...</Text>:
             <FlatList 
                 numColumns={3}
@@ -89,43 +92,43 @@ export const VersionsAuswahl =({navigation, route})=>{
                 renderItem={renderDauer}
                 ></FlatList> */}
             <View style = {{flexDirection: "row", justifyContent: "center"}}>
-
                 <View style= {{flex:1, justifyContent: "center", alignItems: "flex-end"}}>
-                {dauerArray().indexOf(dauer) > 0&&<TouchableOpacity style =  {styles.alternativeDuration} onPress = {()=> changeDauer(dauerArray()[dauerArray().indexOf(dauer)-1])}>
-                        <Text style =  {styles.alternativeDuration}>{dauerArray()[dauerArray().indexOf(dauer)-1]}</Text>
-                    </TouchableOpacity>}
+                    {dauerArray().indexOf(dauer) > 0&&<TouchableOpacity onPress = {()=> changeDauer(dauerArray()[dauerArray().indexOf(dauer)-1])}>
+                            <Text style =  {styles.alternativeDuration}>{dauerArray()[dauerArray().indexOf(dauer)-1]}</Text>
+                        </TouchableOpacity>}
                 </View>
+
                 <LinearGradient start={[0, 0.5]}
                     end={[1, 0.5]}
                     colors={['#89FFF1', '#8F92E3', '#D476D5']}
-                    style={{borderRadius: 40, width:80, height:80, alignSelf:"center", marginBottom: '10%'}}>
-                    <View style={styles.circleGradient}>
-                    <Text style= {{fontSize: 35, color: '#fff'}}>{dauer}</Text>
+                    style={styles.circleGradient}>
+                    <View style={styles.innerCircle}>
+                    <Text style= {{...styles.text, fontSize:30}}>{dauer}</Text>
                     </View>
                 </LinearGradient>
 
                 <View style= {{flex:1,justifyContent: "center"}}>
-                {dauerArray().indexOf(dauer) < dauerArray().length-1&&<TouchableOpacity  onPress = {() => changeDauer(dauerArray()[dauerArray().indexOf(dauer)+1])}>
-                        <Text style =  {styles.alternativeDuration}>{dauerArray()[dauerArray().indexOf(dauer)+1]}</Text>
-                    </TouchableOpacity>}
+                    {dauerArray().indexOf(dauer) < dauerArray().length-1&&<TouchableOpacity  onPress = {() => changeDauer(dauerArray()[dauerArray().indexOf(dauer)+1])}>
+                            <Text style =  {styles.alternativeDuration}>{dauerArray()[dauerArray().indexOf(dauer)+1]}</Text>
+                        </TouchableOpacity>}
                 </View>
             </View>
             {sprecher!=""&&dauerIndex()!=-1?
-                <TouchableOpacity style={{alignSelf:"center", marginBottom: '20%'}}onPress={()=>abspielen()}>
+                <TouchableOpacity style={styles.button} onPress={()=>abspielen()}>
                     <LinearGradient
                     colors={['#89FFF1', '#8F92E3', '#D476D5']}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 2 }}
                     style={styles.gradient}>
-                        <Text style={styles.text25}>Übung starten</Text>
+                        <Text style={{...styles.text, color:'#0F113A', fontSize:15}}>Übung starten</Text>
                     </LinearGradient>
                 </TouchableOpacity>:
                 <View style={{alignSelf:"center"}}>
                     <Ionicons name="play" size={50} color="lightgrey" /> 
                 </View>
-}
+            }
             <View style={{height:60}}/>
-            </ImageBackground>
+        </ImageBackground>
     )
 }
 
@@ -147,9 +150,8 @@ const styles = StyleSheet.create({
         width:130,
         margin:3,
         borderRadius:100,
-        borderWidth:3,
-        borderColor: '#8F92E3'
-        
+        borderWidth:2,
+        borderColor: '#80DEE4',
     },
     DauerItem:{
         backgroundColor: '#fff',
@@ -175,22 +177,15 @@ const styles = StyleSheet.create({
         borderColor:"#ffccdc",
         alignSelf:"center"
     },
-    info:{
-        borderWidth:1, 
-        borderRadius:100, 
-        width:25, 
-        height:25,
-        marginTop: '22%',
-        marginRight: '12%', 
-        alignItems:"center", 
-        justifyContent:"center", 
-        backgroundColor:"white",
-        marginLeft: '80%',
-        marginTop: '5%'
+    circleGradient:{
+        borderRadius: 40, 
+        width:80, 
+        height:80, 
+        marginBottom: 40
     },
-    circleGradient: {
+    innerCircle: {
         margin: 4,
-        backgroundColor: "#141744",
+        backgroundColor: "#0F113A",
         borderRadius: 100,
         flex:1,
         alignItems: "center",
@@ -199,20 +194,39 @@ const styles = StyleSheet.create({
     alternativeDuration: {
         color: "grey",
         margin: 5,
-        fontSize:25
+        fontSize:25,
+        fontFamily:'Poppins_400Regular'
     },
     imagebackground: {
         flex: 1,
-        resizeMode: 'cover',
-        justifyContent: 'center',
         alignItems: 'center',
-      },
+        paddingHorizontal:30,
+    },
     gradient: {
         alignItems: 'center',
-        borderRadius: 13,
-        paddingBottom: 4,
-        paddingTop: 4,
+        borderRadius: 14,
+        paddingVertical:4,
         paddingHorizontal: 20,
         marginBottom: 50
       },
+    text: {
+        fontFamily: 'Poppins_400Regular',
+        color:'#fff',
+        textAlign:'left',
+    },
+    textM: {
+        fontFamily: 'Poppins_500Medium',
+        color:'#fff',
+        textAlign:'center',
+        fontSize:22,
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
+        marginBottom:15
+    },
   });
