@@ -148,7 +148,7 @@ export const Puzzle = ({route, navigation}) => {
                                     <TouchableOpacity style={styles.plusminus} disabled={layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded()} onPress={()=>{changeLayedPieces(layedPieces+1)}}>
                                         <Text style={(layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded())?{...styles.text, fontSize:24, color:"#666666"}:{...styles.text, fontSize:24}}>+</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{marginHorizontal:20, marginVertical:10}} disabled={layedPieces<=1} onPress={()=>{changeLayedPieces(layedPieces-1)}}>
+                                    <TouchableOpacity style={styles.plusminus} disabled={layedPieces<=1} onPress={()=>{changeLayedPieces(layedPieces-1)}}>
                                         <Text style={layedPieces<=1?{...styles.text, fontSize:24, color:"#666666"}:{...styles.text, fontSize:24}}>-</Text>
                                     </TouchableOpacity>
                                 </View>
