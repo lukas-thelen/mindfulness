@@ -177,8 +177,8 @@ export const Statistiken = () => {
                 {showMonthly?
                 <LinearGradient
                 colors={['#464982', '#0F113A90']}
-                start={{ x: 1, y: 0 }}
-                end={{ x: 0.9, y: 0.5}}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 0.35}}
                 style={styles.chartBackground}>
                 <View style={{flex:1}}>
                     <View style={{flexShrink:1}}>
@@ -203,7 +203,7 @@ export const Statistiken = () => {
                 <LinearGradient
                 colors={['#464982', '#0F113A90']}
                 start={{ x: 0, y: 0 }}
-                end={{ x: 0.2, y: 0.5}}
+                end={{ x: 0, y: 0.35}}
                 style={styles.chartBackground}>
                 <View style={{flex:1}}>
                     <View style={{flexDirection:"row", flexShrink:1}}>

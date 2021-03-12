@@ -197,7 +197,7 @@ export const AudioPlayer =({navigation, route})=>{
     //Button, um nächste Übung zu starten
     const nextUebung=()=>{
         if (uebung+1<kurse[kurs].Uebungen.length){
-            return  <Button title="nächste Übung" onPress={()=>{
+            return  <TouchableOpacity style={styles.button} onPress={()=>{
                 changeModalVisible(false);
                 navigation.reset(navState)
                 if(kurse[kurs].Uebungen[uebung+1].Audio===true){
@@ -205,7 +205,15 @@ export const AudioPlayer =({navigation, route})=>{
                 }else{
                     navigation.navigate("Wähle die Dauer", {kursIndex:kurs, uebungsIndex:uebung+1})
                 }
-            }}></Button>
+            }}>
+                <LinearGradient
+                    colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                    start={{ x: 0, y: 0.4 }}
+                    end={{ x: 0, y: 1 }}
+                    style={styles.gradient}>
+                        <Text style={{...styles.modalText, fontSize:17}}>Nächste Übung</Text>
+                    </LinearGradient>
+            </TouchableOpacity>
         }else{
             if (kurs+1<kurse.length){
                 return <TouchableOpacity style={styles.button} onPress={()=>{
@@ -219,8 +227,8 @@ export const AudioPlayer =({navigation, route})=>{
                 }}>
                      <LinearGradient
                     colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 2 }}
+                    start={{ x: 0, y: 0.4 }}
+                    end={{ x: 0, y: 1 }}
                     style={styles.gradient}>
                         <Text style={{...styles.modalText, fontSize:17}}>Nächste Übung</Text>
                     </LinearGradient>

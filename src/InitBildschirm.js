@@ -20,14 +20,14 @@ export const StartBildschirm = (props) =>{
         
         <TouchableOpacity style={styles.containertext1} onPress={() =>props.changeInitPages('Anmelden')}>
           <Text style={{...styles.text, fontSize: 20}}>Anmelden</Text>
-           
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('Registrieren')}>
-                <Text style={{...styles.text, fontSize: 16,textDecorationLine: "underline"}}>Registrieren</Text>
-          </TouchableOpacity>
-          <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('Registrieren')}>
+            <Text style={{...styles.text, fontSize: 16,textDecorationLine: "underline"}}>Registrieren</Text>
+        </TouchableOpacity>
+        <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
        
-        </ImageBackground>
+      </ImageBackground>
         
        
       
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
       left: '56%',
       width: 150,
       height: 150
-     
     },
     text: {
       color:'#fff',
