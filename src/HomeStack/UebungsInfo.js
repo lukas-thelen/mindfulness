@@ -71,7 +71,7 @@ export const UebungsInfo =({navigation, route})=>{
                       <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
 
                       {/* Nur der Text wird angezeigt, wenn der Text kurz genug ist */}
-                      {generalHeight<blockHeight?
+                      {generalHeight<blockHeight+30?
                         <Text style={{...styles.text, textAlign:'left', marginBottom:30}} onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;changeGeneralHeight(height)}}>
                           {kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}
                         </Text>
@@ -116,7 +116,7 @@ export const UebungsInfo =({navigation, route})=>{
                     <View style={styles.inner}>
                       <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
                       {/* Nur der Text wird angezeigt, wenn der Text kurz genug ist */}
-                      {effectsHeight<blockHeight?
+                      {effectsHeight<blockHeight+30?
                         <Text style={{...styles.text, textAlign:'left', marginBottom:30}} onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;changeEffectsHeight(height)}}>
                           {kurse[kursIndex].Uebungen[uebungsIndex].Info}
                         </Text>
