@@ -13,7 +13,7 @@ export const InfoEcke=(props)=>{
     const navigation=props.navigation
     const {gehoerteUebungen, userData} = useContext(AppContext);
     const atemuebungen = uebungen.filter(item=>item.Kategorie==="Atemübung")
-    const mindfulness = uebungen.filter(item=>item.Kategorie==="Mindfulness")
+    const mindfulness = uebungen.filter(item=>item.Kategorie==="Meditationen")
     const koerperuebung = uebungen.filter(item=>item.Kategorie==="Körperübung")
     const [TextValue, onChangeText] = useState('');
 
@@ -93,7 +93,7 @@ export const InfoEcke=(props)=>{
             data: atemuebungen
         },
         {
-            title: "Mindfulness",
+            title: "Meditationen",
             data: mindfulness
         },
         {

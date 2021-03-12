@@ -178,7 +178,7 @@ export const KontoInfos = () => {
             </View>
             
             <View style={{flex:0.1, alignItems:'center', justifyContent:'center', width:'100%'}}>
-                <TouchableOpacity style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}} aonPress={()=>{deleteAccount()}}>
+                <TouchableOpacity style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}} onPress={()=>{deleteAccount()}}>
                         <Ionicons name="trash-outline" size={18} color="white" />
                         <Text style={{...styles.text, textDecorationLine:'underline', marginLeft:5}} >Konto löschen</Text>
                 </TouchableOpacity>

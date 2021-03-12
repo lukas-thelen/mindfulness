@@ -24,7 +24,7 @@ const KognitiveProzesseListe = [
                 id:"PPKurs_1_einführung",
                 Name:"Breathing Space",
                 Audio: true,
-                Kategorie:"Mindfulness",
+                Kategorie:"Meditationen",
                 Beschreibung:"Mit dieser Übung wollen wir dich der Meditation etwas näher bringen. Der Fokus liegt hier bei deiner Aufmerksamkeit und Konzentration.",
                 Info:"Das 3 Minuten Breathing Space bringt dich aus deinem eigentlich habitualisierten Verhalten bewusst in den jetzigen Moment. Diese Übung kann dann sehr hilfreich sein, wenn aufkommende negative Gedanken Dich in eine Abwärtsspirale zu ziehen drohen. Die Übung kann dir da gut helfen, weil Du durch sie, stressige Situation besser bewältigen kannst.\n"+  
                 "Außerdem kannst du durch gezielte Aufmerksamkeit auf negative Emotionen bewusst agieren, statt unbewusst zu reagieren. ",
@@ -114,7 +114,7 @@ const KognitiveProzesseListe = [
                 id:"PPKurs_2_1",
                 Name:"Geführte Meditation mit Klangschalen",
                 Audio: true,
-                Kategorie:"Mindfulness",
+                Kategorie:"Meditationen",
                 Beschreibung:"In der folgenden Übung wird dir eine geführte Meditationsform gezeigt. Diese wird durch Klangschalen unterstützt.",
                 Info:"Stress ist für die meisten Menschen ein allgegenwärtiger Begleiter, und in gewissen Mengen auch nicht gleich ungesund. Gewisse Bewältigungsstrategien (sogenannte „Coping-Mechanismen“), die wir alle bewusst oder unbewusst anwenden, um Stress zu vermeiden oder zu reduzieren, können sich aber negativ auf unsere Lebensqualität auswirken.\n"+ 
                 "Diese geführte Klangschalen-Meditation soll Dir deshalb dabei helfen, den Alltagsstress auf gesunde Weise für eine Weile beiseite zu schieben. Die harmonischen Klänge fördern nachweislich unser Wohlbefinden. Bei häufigerem Ausüben wirst du möglicherweise feststellen, dass es Dir leichter fällt, Deinen Alltagsstress zu bewältigen und den Einsatz von weniger konstruktiven Bewältigungsstrategien zu vermindern. ",
@@ -139,7 +139,7 @@ const KognitiveProzesseListe = [
                 id:"PPKurs_2_2",
                 Name:"Breathing Anchor",
                 Audio: true,
-                Kategorie:"Atemübung",
+                Kategorie:"Meditationen",
                 Beschreibung:"Hier wird eine Atemübung in Kombination mit einem Ankerpunkt genutzt. Es hilft dir dabei dich zu konzentrieren. ",
                 Info:"Der Breathing Anchor adressiert wie die meisten Atemübungen den Stress und seine Symptome: Die bewusste Aufmerksamkeitssteuerung hin zu der Stelle, an der Du den Atem am intensivsten wahrnimmst, hilft Dir, Deiner Atmung bewusster zu werden. Stress verursacht oft flachen Atem, welcher konstruktiv ist, weil er das Stress-Level noch weiter erhöht. Dass wir flach atmen, ist uns in dem Moment aber selten bewusst.\n"+  
                 "Die aufmerksame Grundhaltung zu Deinem Atem, die Du in dieser Übung trainierst, soll sich auch auf Deinen Alltag übertragen und Dir eine achtsame Grundhaltung gegenüber Deinen Gefühlen und Gedanken vermitteln. ",
@@ -162,9 +162,9 @@ const KognitiveProzesseListe = [
             },
             {
                 id:"PPKurs_2_3",
-                Name:"Geführte Atemübung",
+                Name:"Geführte Meditation mit Fokus Atem",
                 Audio: true,
-                Kategorie:"Atemübung",
+                Kategorie:"Meditationen",
                 Beschreibung:"Bei dieser Übung wirst du geleitet. Hier konzentrieren wir uns auf den Atem.",
                 Info:"Diese Mediation soll Dir helfen Deinen Stress-Level zu reduzieren. Allein durch das bewusste Beobachten des Atems wird sich Dein Empfinden verändern.\n"+  
                 "Menschen, die gestresst sind, atmen in der Regel schneller und flacher. Also: Weniger effektiv. Denn unter Stress bereitet sich der Körper auf eine bevorstehende bedrohliche Situation vor. In dem Du Deinem Atem Aufmerksamkeit schenkst, wirst Du automatisch bewusster und möglicherweise langsamer atmen. Dadurch wird Dein Atem durch erhöhte Sauerstoffzufuhr effizienter und Dein Körper entspannt sich. \n"+
@@ -194,9 +194,9 @@ const KognitiveProzesseListe = [
         Uebungen:[
             {
                 id:"PPKurs_3_1",
-                Name:"Geführte Atemübung (mittel)",
+                Name:"Geführte Meditation mit Fokus Atem (lang)",
                 Audio: true,
-                Kategorie:"Atemübung",
+                Kategorie:"Meditationen",
                 Beschreibung:"Bei dieser Übung wirst du geleitet. Hier konzentrieren wir uns auf intensiver auf den Atem.",
                 Info:"Diese Mediation soll Dir helfen Deinen Stress-Level zu reduzieren. Allein durch das bewusste Beobachten des Atems wird sich Dein Empfinden verändern.\n"+  
                 "Menschen, die gestresst sind, atmen in der Regel schneller und flacher. Also: Weniger effektiv. Denn unter Stress bereitet sich der Körper auf eine bevorstehende bedrohliche Situation vor. In dem Du Deinem Atem Aufmerksamkeit schenkst, wirst Du automatisch bewusster und möglicherweise langsamer atmen. Dadurch wird Dein Atem durch erhöhte Sauerstoffzufuhr effizienter und Dein Körper entspannt sich. \n"+
@@ -222,7 +222,7 @@ const KognitiveProzesseListe = [
                 id:"PKurs_3_2",
                 Name:"Geführte Meditation mit Klangschalen (mittel)",
                 Audio: true,
-                Kategorie:"Mindfulness",
+                Kategorie:"Meditationen",
                 Beschreibung:"Diese Übung ist eine intensivere Klangschalen Meditation.",
                 Info:"Stress ist für die meisten Menschen ein allgegenwärtiger Begleiter, und in gewissen Mengen auch nicht gleich ungesund. Gewisse Bewältigungsstrategien (sogenannte „Coping-Mechanismen“), die wir alle bewusst oder unbewusst anwenden, um Stress zu vermeiden oder zu reduzieren, können sich aber negativ auf unsere Lebensqualität auswirken.\n"+ 
                 "Diese geführte Klangschalen-Meditation soll Dir deshalb dabei helfen, den Alltagsstress auf gesunde Weise für eine Weile beiseite zu schieben. Die harmonischen Klänge fördern nachweislich unser Wohlbefinden. Bei häufigerem Ausüben wirst du möglicherweise feststellen, dass es Dir leichter fällt, Deinen Alltagsstress zu bewältigen und den Einsatz von weniger konstruktiven Bewältigungsstrategien zu vermindern. ",
@@ -273,7 +273,7 @@ const KognitiveProzesseListe = [
                 id:"PKurs_3_4",
                 Name:"Mindful Meditation",
                 Audio: false,
-                Kategorie:"Mindfulness",
+                Kategorie:"Meditationen",
                 Beschreibung:"Suche Dir einen ruhigen Ort. Setze (oder lege) Dich hin und mache es Dir gemütlich. Wenn der Gong erklingt, schließe die Augen und richte Deine Wirbelsäule auf.\n"+ 
                 "Achte auf die Stille um Dich herum und versuche Dich nicht zu bewegen. Wenn Gedanken aufkommen, dann versuche Deine Achtsamkeit wieder auf die Stille zu richten. Deine Gedanken sollten von Dir nicht beurteilt, nicht analysiert werden und du solltest versuchen nicht auf diese zu reagieren. Die Lücken zwischen den Gedanken werden mit der Zeit immer länger. Du kannst Dich auch auf Deine Atmung konzentrieren, wenn Gedanken aufkommen.\n"+
                 "Wenn wieder ein Gong erklingt, dann öffne langsam Deine Augen. ",
