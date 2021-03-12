@@ -20,6 +20,7 @@ export const AudioPlayer =({navigation, route})=>{
     const [modalVisible, changeModalVisible] = useState(false)
     const [isPlaying, changeIsPlaying] = useState(true)
     const [progress, changeProgress] = useState(0)
+    const [audioEnded, changeAudioEnded] =useState(false)
     const navigationState = useNavigationState(state => state)
     const navState ={...navigationState}
     navState.routes = navState.routes.filter(item=>item.name!="Text-Übung"&&item.name!="AudioPlayer"&&item.name!="Wähle eine Version"&&item.name!="Wähle die Dauer")
@@ -32,7 +33,7 @@ export const AudioPlayer =({navigation, route})=>{
     const dauer=route.params.dauerIndex
     const dauerInMinuten=kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dauer
 
-    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser, userData, changeUserData, changeNewBenchmark} = useContext(AppContext)
+    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser, userData, changeUserData, changeNewBenchmark, newBenchmark} = useContext(AppContext)
     var gehoerteUebungenTemp = [...gehoerteUebungen]
     const userDataTemp={...userData}
 
@@ -57,6 +58,16 @@ export const AudioPlayer =({navigation, route})=>{
         }
     },[])
 
+    useEffect(()=>{
+        console.log(audioEnded)
+        console.log(newBenchmark)
+        console.log(newBenchmark===[])
+        if(audioEnded&&newBenchmark.length===0){
+            console.log("halaisdfasdfhawef")
+            changeModalVisible(true)
+        }
+    },[newBenchmark] )
+
 
     // Zeit-Abhängige Benchmarks: Zeit setzen
     const kriegeZeit=(zeit) => {
@@ -72,7 +83,7 @@ export const AudioPlayer =({navigation, route})=>{
         if(playbackStatus.isLoaded&&playbackStatus.shouldPlay){
             if (playbackStatus.didJustFinish){
                 unloadSound()
-                changeModalVisible(true)
+                changeAudioEnded(true)
                 addGehoerteUebung()
             }else{
                 changeProgress(playbackStatus.positionMillis/playbackStatus.durationMillis)
@@ -188,6 +199,8 @@ export const AudioPlayer =({navigation, route})=>{
         if (currentlyReached.length > 0){
             userDataTemp.benchmarks.benchmarksReached=userDataTemp.benchmarks.benchmarksReached.concat(currentlyReached)
             changeNewBenchmark(currentlyReached)
+        }else{
+            changeModalVisible(true)
         }
 
         //Daten speichern
