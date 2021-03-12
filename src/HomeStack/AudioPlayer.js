@@ -10,6 +10,7 @@ import {AppContext} from "../context.js";
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import { checkBenchmarks } from '../benchmarks.js';
 import { LinearGradient } from 'expo-linear-gradient';
+import { uebungen } from '../Kursdaten/Uebungsliste.js';
 
 const soundObject = new Audio.Sound();
 
@@ -100,15 +101,19 @@ export const AudioPlayer =({navigation, route})=>{
 
         userDataTemp.lastVoice=kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].Sprecher
         userDataTemp.alleGehoertenUebungen.push(kurse[kurs].Uebungen[uebung].id)
-        if (!gehoerteUebungenTemp.includes(kurse[kurs].Uebungen[uebung].id) || !gehoerteUebungenTemp[0]){
+        if ((!gehoerteUebungenTemp.includes(kurse[kurs].Uebungen[uebung].id) || !gehoerteUebungenTemp[0])&&userDataTemp.verfuegbareUebungen.includes(kurse[kurs].Uebungen[uebung].id)){
             //wenn Übung bisher noch nie gemacht wurde
             gehoerteUebungenTemp.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungenTemp)
             userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
 
-            // Benchmark Anzahl verschiedener Übungen
-            userDataTemp.benchmarks.xMeditations = userDataTemp.gehoerteUebungen.length
         }
+        // Benchmark Anzahl verschiedener Übungen
+        var xMeditationsCount=0
+        for(var f in uebungen){
+            if(userDataTemp.alleGehoertenUebungen.includes(f.id)) xMeditationsCount+=1
+        }
+        userDataTemp.benchmarks.xMeditations = xMeditationsCount
 
         // Verfügbare Übung hinzufügen
         if (userDataTemp.verfuegbareUebungen[(userDataTemp.verfuegbareUebungen.length)-1] === kurse[kurs].Uebungen[uebung].id){
