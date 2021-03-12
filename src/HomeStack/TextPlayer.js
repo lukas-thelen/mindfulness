@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal, ImageBackground, Image, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
@@ -9,6 +9,7 @@ import {AppContext} from "../context.js";
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import {checkBenchmarks } from '../benchmarks.js';
 import { LinearGradient } from 'expo-linear-gradient';
+import { randomPerson } from '../../assets/Personen/randomPerson.js';
 
 
 
@@ -211,7 +212,8 @@ export const TextPlayer =({navigation, route})=>{
     }
 
     return(
-        <View style={{alignItems:"center", justifyContent:"center", flex:1}}>
+        <ImageBackground source={require('../../assets/Profil.png')} imageStyle={{resizeMode:'stretch'}} style={{alignItems:"center", flex:1}}>
+            <StatusBar hidden={true}></StatusBar>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -229,23 +231,35 @@ export const TextPlayer =({navigation, route})=>{
                 </View>
                 </View>
             </Modal>
-            {dauer>0? <View style={{alignItems:"center", justifyContent:"center"}}>
-                {isPlaying ?
-                    <TouchableOpacity onPress={()=>{clearInterval(interval); changeIsPlaying(false)}}>
-                        <Ionicons name="pause" size={50} color="black" /> 
-                    </TouchableOpacity>:
-                    <TouchableOpacity onPress={()=>{interval = setInterval(()=>{changeCounter(x => {if(x>0){ return x-1}else{return 0}})} , 1000); changeIsPlaying(true)}}>
-                        <Ionicons name="play" size={50} color="black" /> 
-                    </TouchableOpacity>}
-                <Progress.Bar progress={(dauer-(counter/60))/dauer} width={200} />
-                
+            <TouchableOpacity onPress={()=>{navigation.goBack()}} style={{alignSelf:"flex-start", marginBottom:70, margin:10}}>
+              <Ionicons name="close-outline" color="white" size={50}></Ionicons>
+            </TouchableOpacity>
+            <Text style={styles.title}>{kurse[kurs].Uebungen[uebung].Name}</Text>
+            <Image source={randomPerson} style={styles.image}/> 
+            <Text style={styles.time}>{Math.floor(counter/60)}:{counter%60<10&&0}{counter%60}</Text>
+            {dauer>0? 
+                <View style={{alignItems:"center", justifyContent:"center"}}>
+                    <Progress.Bar progress={(dauer-(counter/60))/dauer} width={200} height={12} color="#80DEE4" borderColor="#00000000" unfilledColor="#0F113A" style={{marginBottom:15}}/>  
+                    {isPlaying ?
+                        <TouchableOpacity onPress={()=>{clearInterval(interval); changeIsPlaying(false)}}>
+                            <Ionicons name="pause" size={50} color="white" /> 
+                        </TouchableOpacity>:
+                        <TouchableOpacity onPress={()=>{interval = setInterval(()=>{changeCounter(x => {if(x>0){ return x-1}else{return 0}})} , 1000); changeIsPlaying(true)}}>
+                            <Ionicons name="play" size={50} color="white" /> 
+                        </TouchableOpacity>
+                    }                
                 </View>:
-                <Button title="Übung abschließen" onPress={()=>{handleFinish()}}/>
-            }
-            <Text>{counter}</Text>
-
-            
-        </View>
+                <TouchableOpacity style={{alignSelf:"center"}}onPress={()=>{handleFinish()}}>
+                    <LinearGradient
+                    colors={['#89FFF1', '#8F92E3', '#D476D5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 2 }}
+                    style={styles.gradient}>
+                        <Text style={styles.text25}>Übung abschließen</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
+            }            
+        </ImageBackground>
     );
 
 }
@@ -293,5 +307,20 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.4,
         marginBottom: 20
     },
+    time:{
+        fontSize:40,
+        color:"white",
+        marginBottom:12
+    },
+    image: {
+        marginBottom: 5,
+        marginTop:45,
+        width: 200,
+        height: 200,
+      },
+    title:{
+        color:"white",
+        fontSize:30,
+    }
   });
 

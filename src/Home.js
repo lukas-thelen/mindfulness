@@ -42,25 +42,32 @@ const HomeRoot = ({navigation})=>{
 
   //Button, um da weiterzumachen, wo man aufgehört hat
   const InstantStart =() =>{
-    if (gehoerteUebungen.includes(userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1])){
-      return null
-    }
-      for ( var z = 0; z< uebungen.length; z++){
-        if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]){
-
-          return (
-          <TouchableOpacity onPress={()=>{
-              if(uebungen[z].Audio){
-                navigation.navigate("Wähle eine Version", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
-              }else{
-                navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[z].KursIndex, uebungsIndex:uebungen[z].UebungsIndex})
-              }
-          }}>
-            <Ionicons name="play" size={50} color="#8F92E3" style={styles.playButton} /> 
-          </TouchableOpacity>
-        )
+    var foundPrio = null
+    var found = null
+    for ( var z = 0; z< uebungen.length; z++){
+      if (uebungen[z].id === userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1]
+        &&!gehoerteUebungen.includes(userData.verfuegbareUebungen[(userData.verfuegbareUebungen.length)-1])){
+        foundPrio=z
+      }
+      if(!gehoerteUebungen.includes(uebungen[z].id)&&found===null){
+        found=z
       }
     }
+    if(found===null&&foundPrio===null){
+      found=Math.round(Math.random()*uebungen.length)
+    }
+    if (foundPrio!=null) found=foundPrio
+    return (
+      <TouchableOpacity onPress={()=>{
+          if(uebungen[found].Audio){
+            navigation.navigate("Wähle eine Version", {kursIndex:uebungen[found].KursIndex, uebungsIndex:uebungen[found].UebungsIndex})
+          }else{
+            navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[found].KursIndex, uebungsIndex:uebungen[found].UebungsIndex})
+          }
+      }}>
+        <Ionicons name="play" size={50} color="#8F92E3" style={styles.playButton} /> 
+      </TouchableOpacity>
+    )
   }
 
   return(
@@ -220,6 +227,7 @@ export const HomeScreen = ()=> {
           <HomeStack.Screen name="Text-Übung" component={TextPlayer}
           options={{
             title: 'Text-Übung',
+            headerShown:false,
             headerStyle: {
               backgroundColor: '#80DEE4',
             },
