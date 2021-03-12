@@ -9,6 +9,7 @@ import { CheckBox } from 'react-native-elements'
 import {AppContext} from './context.js';
 import { globalStyles } from './globalStyles.js';
 import { LinearGradient } from 'expo-linear-gradient';
+import { ImageBackground } from 'react-native';
 
 
 export const Registrieren =(props)=>{
@@ -85,69 +86,72 @@ export const Registrieren =(props)=>{
     };
     
     return(
-      <KeyboardAwareScrollView 
-        style={{ backgroundColor: '#4c69a5'}}
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={globalStyles.container}
-        scrollEnabled={false}
-      >
-      <View style={styles.registrierenContainer}>
-        <Text style={{...styles.textM, fontSize:25, marginTop:50, marginBottom: 50}}>Registrierung</Text>
-        
-       <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Vorname</Text>
-        <TextInput 
-            style={styles.textinput}
-            onChangeText={text => changeName(text)}></TextInput>
+      <ImageBackground source={require('../assets/Registrieren.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        <KeyboardAwareScrollView 
+          style={{width:'100%'}}
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          contentContainerStyle={globalStyles.container}
+          scrollEnabled={false}
+        >
+        <View style={styles.registrierenContainer}>
+          <Text style={{...styles.textM, fontSize:25, marginTop:50, marginBottom: 50}}>Registrierung</Text>
+          
+        <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Vorname</Text>
+          <TextInput 
+              style={styles.textinput}
+              onChangeText={text => changeName(text)}></TextInput>
 
-        <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Alter</Text>
-        <TextInput 
-            style={styles.textinput}
-            onChangeText={age => changeAge(age)} keyboardType={'numeric'}></TextInput>
-        
-        <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%', marginTop:50}}>Benutzername</Text>
-        <TextInput 
-            style={styles.textinput}
-            onChangeText={text => changeEMail(text)} autoCapitalize = 'none'></TextInput>
+          <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Alter</Text>
+          <TextInput 
+              style={styles.textinput}
+              onChangeText={age => changeAge(age)} keyboardType={'numeric'}></TextInput>
+          
+          <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%', marginTop:50}}>Benutzername</Text>
+          <TextInput 
+              style={styles.textinput}
+              onChangeText={text => changeEMail(text)} autoCapitalize = 'none'></TextInput>
 
 
-        <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Passwort</Text>
-        <TextInput 
-            autoCapitalize = 'none'
-            style={styles.textinput}
-            onChangeText={text => changePassword(text)}></TextInput>
+          <Text style={{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Passwort</Text>
+          <TextInput 
+              autoCapitalize = 'none'
+              style={styles.textinput}
+              onChangeText={text => changePassword(text)}></TextInput>
 
-    
-        {/*<TouchableOpacity onPress={()=>{showDatepicker(true)}}>{dateChanged ?
-          <Text>{birthday.getDate()}.{birthday.getMonth()+1}.{birthday.getFullYear()}</Text>:
-          <Text>hier eingeben</Text>}
-        </TouchableOpacity>
-        <DateTimePickerModal
-          value={birthday}
-          isVisible={datepicker}
-          display="spinner"
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={showDatepicker}
-        />*/}
-        <View style={{flexDirection:"row", alignItems:"center", justifyContent:'center'}}>
-          <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={agb} onPress={() => changeAgb(!agb)}/>
-          <Text style={{...styles.text, fontSize:14}}>Ich habe die AGB natürlich gelesen.</Text>
+      
+          {/*<TouchableOpacity onPress={()=>{showDatepicker(true)}}>{dateChanged ?
+            <Text>{birthday.getDate()}.{birthday.getMonth()+1}.{birthday.getFullYear()}</Text>:
+            <Text>hier eingeben</Text>}
+          </TouchableOpacity>
+          <DateTimePickerModal
+            value={birthday}
+            isVisible={datepicker}
+            display="spinner"
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={showDatepicker}
+          />*/}
+          
+          <View style={{flexDirection:"row", alignItems:"center", justifyContent:'center'}}>
+            <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={agb} onPress={() => changeAgb(!agb)}/>
+            <Text style={{...styles.text, fontSize:14, textDecorationLine:'underline'}}>Ich bin einverstanden mit den AGB</Text>
+          </View>
+          <TouchableOpacity style={styles.button} onPress={() =>abschicken()}>
+              <LinearGradient
+              colors={['#D476D5', '#C77BD8', '#8F92E3']}
+              start={{ x: 0, y: 0.4 }}
+              end={{ x: 0, y: 1 }}
+              style={styles.gradient}>
+                <Text style={{...styles.text, fontSize:18}}>Registrieren</Text>
+              </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity  onPress={() =>props.changeInitPages('StartBildschirm')}>
+                <Text style={{...styles.text, fontSize: 14, textDecorationLine: "underline", marginTop:15}}>Zurück</Text>
+          </TouchableOpacity>
+          
         </View>
-        <TouchableOpacity style={styles.button} onPress={() =>abschicken()}>
-            <LinearGradient
-            colors={['#D476D5', '#C77BD8', '#8F92E3']}
-            start={{ x: 0, y: 0.4 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.gradient}>
-              <Text style={{...styles.text, fontSize:18}}>Registrieren</Text>
-            </LinearGradient>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
-              <Text style={{...styles.text, fontSize: 14, textDecorationLine: "underline"}}>Zurück</Text>
-        </TouchableOpacity>
-        
-      </View>
-      </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView>
+      </ImageBackground>
     )
   }
 
@@ -155,7 +159,6 @@ export const Registrieren =(props)=>{
     registrierenContainer:{
       flex: 1,
       width: '100%',
-      backgroundColor: '#0F113A',
       alignItems: 'center',
     },
     textinput: {
@@ -168,23 +171,6 @@ export const Registrieren =(props)=>{
       fontSize:16,
       fontFamily:'Poppins_400Regular',
       marginBottom: 20, 
-    },
-    containertext1: {
-      alignItems:'center',
-      width: '40%',
-      height: '4%',
-      borderRadius: 100,
-      backgroundColor: '#80DEE4',
-      marginTop: 60,
-      shadowColor: 'black',
-      shadowOpacity: 0.8,
-      elevation: 10,
-      shadowRadius: 8,
-      shadowOffset : { width: 10, height: 5}
-    },
-    containertext2: {
-      alignItems:'center',
-      marginTop: 15
     },
     gradient: {
       alignItems: 'center',
@@ -215,5 +201,11 @@ export const Registrieren =(props)=>{
     textM: {
       color:'#fff',
       fontFamily:'Poppins_500Medium'
-    }
+    },
+    imagebackground: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width:'100%'
+    },
   })

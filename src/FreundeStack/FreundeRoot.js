@@ -152,7 +152,7 @@ export const FreundeRoot =({navigation}) => {
 
     const renderPuzzle=({item})=>{
         return (
-            <TouchableOpacity style={styles.puzzle}onPress={()=>{navigation.navigate("Puzzle",{id:item.id}) }}>
+            <TouchableOpacity style={styles.puzzle} onPress={()=>{navigation.navigate("Puzzle",{id:item.id}) }}>
                 <MaterialCommunityIcons name="puzzle-outline" size={22} color="#fff" />
                 <Text style={{...styles.textM, marginLeft:5, flex:1}}>{puzzleText(item.friends)}</Text>
                 {item.pieces===12&&<Ionicons name="trophy-outline" size={22} color="#fff" style={{marginRight:15}}/>}
@@ -271,6 +271,7 @@ export const FreundeRoot =({navigation}) => {
         justifyContent:"center", 
         paddingLeft:20,
         borderRadius:10,
+        marginBottom:10
     },
     selectedFriend:{
         height:45, 
@@ -280,6 +281,7 @@ export const FreundeRoot =({navigation}) => {
         justifyContent:"center", 
         paddingLeft:20,
         borderRadius:10,
+        marginBottom:10
     },
     puzzle:{
       height:50, 
@@ -290,6 +292,7 @@ export const FreundeRoot =({navigation}) => {
       paddingLeft:20,
       flexDirection:"row",
       borderRadius:10,
+      marginBottom:10
     },
     puzzleNeu:{
       height:50, 

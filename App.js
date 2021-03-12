@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView,Keyboard, Image, TouchableOpacity} from 'react-native';
+import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView,Keyboard, Image, TouchableOpacity,StatusBar} from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -107,6 +107,7 @@ export const Tabnavigator = () =>{
   return(
     
     <View style = { {height: "100%", width: "100%"}}>
+      <StatusBar hidden={false} barStyle="light-content"/>
         <Modal
                   animationType="slide"
                   transparent={true}
@@ -116,13 +117,15 @@ export const Tabnavigator = () =>{
                 <View style={styles.modalView}>
                     <Text style={{...styles.text, textAlign:'center', color:'#D476D5'}}>Neuer Erfolg!</Text>
                     <Text style={{...styles.text, fontSize:28, textAlign:'center'}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].title}</Text>
-                    <Image style={{alignSelf:"center"}}source={benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].picture}/>
+                    <View style ={{padding:15, backgroundColor: "#464982b2", borderRadius:8}}>
+                      <Image style={{alignSelf:"center"}}source={benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].picture}/>
+                    </View>
                     <Text style={{...styles.text, textAlign:'center'}}>{benchmarks[newBenchmark[0]]&&benchmarks[newBenchmark[0]].description}</Text>
                     <TouchableOpacity styles={styles.button} onPress={()=>{newBenchmarkTemp.shift();changeNewBenchmark(newBenchmarkTemp);console.log("hallo")}}>
                     <LinearGradient
                             colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 2 }}
+                            start={{ x: 0, y: 0.4 }}
+                            end={{ x: 0, y: 1 }}
                             style={styles.gradient}>
                                 <Text style={{...styles.text, fontSize:17}}>YAY!</Text>
                         </LinearGradient>

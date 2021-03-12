@@ -8,6 +8,7 @@ import {AppContext} from './context.js';
 import { useContext } from 'react';
 import { globalStyles } from './globalStyles.js';
 import { LinearGradient } from 'expo-linear-gradient';
+import { ImageBackground } from 'react-native';
 
 export const Anmelden = (props) => {
   const appData = useContext(AppContext).appData
@@ -81,9 +82,9 @@ export const Anmelden = (props) => {
     
       
     return(
-
-        <View style={styles.container}>
-          <Text style= {{...styles.textM, marginBottom: 100, fontSize: 30}}>Anmeldung</Text>
+        <ImageBackground source={require('../assets/Anmelden.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+        
+          <Text style= {{...styles.textM, marginVertical: 50, fontSize: 30}}>Anmeldung</Text>
           
           <Text style= {{...styles.text, alignSelf:'flex-start', marginLeft:'18%'}}>Benutzername</Text>
           <TextInput 
@@ -109,19 +110,13 @@ export const Anmelden = (props) => {
           <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('StartBildschirm')}>
                 <Text style={{...styles.text, fontSize:14, textDecorationLine: "underline"}}>Zurück</Text>
           </TouchableOpacity>
-      </View>
+    
+      </ImageBackground>
     )
 }
 
 //Styles
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width: '100%',
-      backgroundColor: '#0F113A',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     textinput: {
       paddingVertical:5,
       paddingHorizontal:20, 
@@ -166,5 +161,10 @@ const styles = StyleSheet.create({
     textM: {
       color:'#fff',
       fontFamily:'Poppins_500Medium'
-    } 
+    },
+    imagebackground: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   });

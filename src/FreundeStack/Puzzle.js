@@ -183,7 +183,7 @@ export const Puzzle = ({route, navigation}) => {
                         ></FlatList>
                     </View>
                     <Text style={{...styles.text, fontSize: 13, marginVertical:10}}>Verfügbare Puzzleteile: {userData.friends.pieces}</Text>
-                    <TouchableOpacity  disabled={maxNeeded()===0||userData.friends.pieces===0} style={{...styles.button, marginTop:20}} onPress={()=>einsetzen()}>
+                    <TouchableOpacity  disabled={maxNeeded()===0||userData.friends.pieces===0} style={{...styles.button, marginVertical:20}} onPress={()=>einsetzen()}>
                         <LinearGradient
                             colors={['#89FFF1', '#80DEE4', '#8F92E3', '#D476D5']}
                             start={{ x: 0, y: 0 }}
@@ -192,8 +192,8 @@ export const Puzzle = ({route, navigation}) => {
                                 <Text style={{...styles.text, color:'#0F113A', fontSize:18}}>Teil einsetzen</Text>
                         </LinearGradient>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{alignItems:'center', marginTop:15}} onPress={()=>löschen()}>
-                        <Text style={{...styles.text, textDecorationLine:'underline'}}>Puzzle löschen</Text>
+                    <TouchableOpacity style={{alignItems:'center', marginTop:20}} onPress={()=>löschen()}>
+                        <Text style={{...styles.text, textDecorationLine:'underline', fontSize:13}}>Puzzle löschen</Text>
                     </TouchableOpacity>
                 </View>
             </View>}

@@ -86,6 +86,7 @@ export const MeineFreunde =() => {
       justifyContent:"center", 
       paddingLeft:20,
       borderRadius:10,
+      marginBottom:10
     },
     imagebackground: {
       flex: 1,
