@@ -142,14 +142,14 @@ export const Puzzle = ({route, navigation}) => {
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={{...styles.text, fontSize:16, textAlign:'center'}}>Wie viele Teile möchstest du einsetzen?</Text>
-                            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center", marginTop:30}}>
-                                <Text style={{...styles.text, fontSize:16, marginHorizontal:20}}>{layedPieces}</Text>
+                            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", marginTop:30, width:120}}>
+                                <Text style={{...styles.text, fontSize:20, marginHorizontal:20}}>{layedPieces}</Text>
                                 <View style={{flexDirection:"column", alignItems:'center'}}>
-                                    <TouchableOpacity style={{marginHorizontal:20, marginVertical:10}} disabled={layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded()} onPress={()=>{changeLayedPieces(layedPieces+1)}}>
-                                        <Text style={{...styles.text, fontSize:16}}>+</Text>
+                                    <TouchableOpacity style={styles.plusminus} disabled={layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded()} onPress={()=>{changeLayedPieces(layedPieces+1)}}>
+                                        <Text style={(layedPieces>=userData.friends.pieces||layedPieces>=maxNeeded())?{...styles.text, fontSize:24, color:"#666666"}:{...styles.text, fontSize:24}}>+</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={{marginHorizontal:20, marginVertical:10}} disabled={layedPieces<=1} onPress={()=>{changeLayedPieces(layedPieces-1)}}>
-                                        <Text style={{...styles.text, fontSize:16}}>-</Text>
+                                        <Text style={layedPieces<=1?{...styles.text, fontSize:24, color:"#666666"}:{...styles.text, fontSize:24}}>-</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -265,4 +265,8 @@ const styles = StyleSheet.create({
         padding:15,
         width:'90%'
      },
+     plusminus:{
+        marginHorizontal:20, 
+        marginVertical:10,
+     }
   });

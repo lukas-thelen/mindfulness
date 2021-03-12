@@ -180,6 +180,7 @@ export const HomeScreen = ()=> {
           }}/>
           <HomeStack.Screen name="AudioPlayer" component={AudioPlayer} options={{
             title: 'Übung',
+            headerShown:false,
             headerStyle: {
               backgroundColor: '#0F113A',
             },

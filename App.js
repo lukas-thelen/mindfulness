@@ -140,6 +140,7 @@ export const Tabnavigator = () =>{
             tabBarOptions={{
               activeTintColor: '#D476D5',
               inactiveTintColor: '#fff',
+              keyboardHidesTabBar:true,
               style:{
                 height:60,
                 borderTopLeftRadius:15,
