@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ImageBackground,Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'
 
-import {kurse} from "../Kursdaten/Kursdatei.js"
+import {kurse, sprecherBilder} from "../Kursdaten/Kursdatei.js"
 import { AppContext } from '../context.js';
 
 export const VersionsAuswahl =({navigation, route})=>{
     const {userData}=useContext(AppContext)
-    const [sprecher, changeSprecher] = useState("männlich")
+    const [sprecher, changeSprecher] = useState(Object.keys(sprecherBilder)[0])
     const kursIndex = route.params.kursIndex
     const uebungsIndex = route.params.uebungsIndex
     const sprecherIndex = kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher.findIndex(item => item.Sprecher === sprecher)
@@ -38,8 +38,9 @@ export const VersionsAuswahl =({navigation, route})=>{
 
     const renderSprecher =({item})=>{
         return(
-            <TouchableOpacity style={item.Sprecher===sprecher ? styles.SelectedItem : styles.SprecherItem} onPress={()=>{changeSprecher(item.Sprecher)}}>
-                <Text style={{...styles.text, color:'#0F113A'}}>{item.Sprecher}</Text>
+            <TouchableOpacity style={styles.SelectedItem} onPress={()=>{changeSprecher(item.Sprecher)}}>
+                <Image source={sprecherBilder[item.Sprecher]} style={item.Sprecher===sprecher ?{width:160, height:160}:{width:140, height:140, opacity:0.4}}></Image>
+                <Text style={{...styles.text, color:'white'}}>{item.Sprecher}</Text>
             </TouchableOpacity>    
         )
     }
@@ -74,15 +75,15 @@ export const VersionsAuswahl =({navigation, route})=>{
                 </TouchableOpacity>
             </View>
 
-            <Text style={{...styles.text, marginBottom:40, alignSelf:'flex-start'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
+            <Text style={{...styles.text, marginBottom:20, alignSelf:'flex-start'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
         
-            <View style={{height:"20%"}}>
-            <FlatList
-                numColumns={2}
-                data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
-                keyExtractor={item=>item.Sprecher}
-                renderItem={renderSprecher}
-            ></FlatList>
+            <View style={{height:"30%"}}>
+                <FlatList
+                    numColumns={2}
+                    data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
+                    keyExtractor={item=>item.Sprecher}
+                    renderItem={renderSprecher}
+                ></FlatList>
             </View>
             {/*sprecher===""? <Text>...</Text>:
             <FlatList 
@@ -125,6 +126,7 @@ export const VersionsAuswahl =({navigation, route})=>{
                 </TouchableOpacity>:
                 <View style={{alignSelf:"center"}}>
                     <Ionicons name="play" size={50} color="lightgrey" /> 
+                    
                 </View>
             }
             <View style={{height:60}}/>
@@ -134,24 +136,14 @@ export const VersionsAuswahl =({navigation, route})=>{
 
 const styles = StyleSheet.create({
     SprecherItem: {
-        backgroundColor: '#8F92E370',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height:50,
-        width:130,
-        margin:3,
-        borderRadius:100,
+        justifyContent:"center",
+        alignItems:"center",
+        opacity:0.4
     },
     SelectedItem: {
-        backgroundColor: '#8F92E3',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height:50,
-        width:130,
-        margin:3,
-        borderRadius:100,
-        borderWidth:2,
-        borderColor: '#80DEE4',
+        justifyContent:"center",
+        alignItems:"center",
+        opacity:1
     },
     DauerItem:{
         backgroundColor: '#fff',

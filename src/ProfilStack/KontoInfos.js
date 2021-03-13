@@ -115,37 +115,45 @@ export const KontoInfos = () => {
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
             <ScrollView 
-          style={{width:'100%'}}
-          contentContainerStyle={{alignItems:'center', justifyContent:'center'}}
-        >
-            <View style={{flex:0.4, alignItems:'center', justifyContent:'center', width:'100%', height:250}}>
-                <View style = {styles.reihe}>
-                    <Text style={styles.text}>Username: </Text>
-                    <Text style={{...styles.text, width:'50%'}}>{userData.data.eMail}</Text>
-                </View>
-
-                <View style = {styles.reihe}>
-                    <Text style={styles.text}>Neuer Username: </Text>
-                        <TextInput style={styles.textInput}
-                                    onChangeText={eMail => changeEMail(eMail)} value={eMail}></TextInput>
+                style={{width:'100%'}}
+                contentContainerStyle={{alignItems:'center', justifyContent:'center'}}
+            >
+                {/*<View style={{flex:0.4, alignItems:'center', justifyContent:'center', width:'100%', height:250}}>
+                    <View style = {styles.reihe}>
+                        <Text style={styles.text}>Username: </Text>
+                        <Text style={{...styles.text, width:'50%'}}>{userData.data.eMail}</Text>
                     </View>
-                    <View>
-                        <TouchableOpacity style={styles.button} onPress={()=>eMailBestätigen()}>
-                            <LinearGradient
-                                colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                                start={{ x: 0, y: 0.4 }}
-                                end={{ x: 0, y: 1 }}
-                                style={styles.gradient}>
-                                    <Text style={{...styles.text, fontSize:14}}>Bestätigen</Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
-                </View>
-            </View>
-                {/*<Button title="Bestätigen" onPress={()=>eMailBestätigen()}></Button>*/}
 
-             
+                    <View style = {styles.reihe}>
+                        <Text style={styles.text}>Neuer Username: </Text>
+                            <TextInput style={styles.textInput}
+                                        onChangeText={eMail => changeEMail(eMail)} value={eMail}></TextInput>
+                        </View>
+                        <View>
+                            <TouchableOpacity style={styles.button} onPress={()=>eMailBestätigen()}>
+                                <LinearGradient
+                                    colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                                    start={{ x: 0, y: 0.4 }}
+                                    end={{ x: 0, y: 1 }}
+                                    style={styles.gradient}>
+                                        <Text style={{...styles.text, fontSize:14}}>Bestätigen</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                    </View>
+                </View>*/}
+                {/*<Button title="Bestätigen" onPress={()=>eMailBestätigen()}></Button>*/}
+            <View style = {{...styles.reihe, justifyContent:"flex-start", marginTop:20}}>
+                <Text style={{...styles.text, flex:1}}>Nutzerkennung: </Text>
+                <Text style={{...styles.text, flex:1}}>{userData.data.eMail}</Text>
+            </View>
+            <View style = {{...styles.reihe, justifyContent:"flex-start"}}>
+                <Text style={{...styles.text, flex:1}}>Name: </Text>
+                <Text style={{...styles.text, flex:1}}>{userData.data.name}</Text>
+            </View>
+            
 
             <View style={{flex:0.5, alignItems:'center', justifyContent:'flex-start', width:'100%', height:250}}>
+                <Text style={{...styles.text, fontSize:25}}>Passwort ändern</Text>
                 <View style = {styles.reihe}>
                     <Text style={styles.text}>Altes Passwort: </Text>
                     <TextInput style={styles.textInput}
