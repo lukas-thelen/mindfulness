@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Alert, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Alert, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 
@@ -9,7 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
 export const KontoInfos = () => {
-    const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCurrentUser} = useContext(AppContext)
+    const {appData, userData, changeAppData, changeUserData, changeLoggedIn, changeCurrentUser} = useContext(AppContext)
     const [eMail, changeEMail] = useState("")
     const [altesPasswort, changeAltesPasswort] = useState("")
     const [neuesPasswort, changeNeuesPasswort] = useState("")
@@ -46,9 +46,7 @@ export const KontoInfos = () => {
 
     // Ändert die Email-Adresse des Nutzers
     const eMailBestätigen = async () => {
-        console.log(appDataTemp)
         delete appDataTemp[userData.data.eMail]
-        console.log(appDataTemp)
         userData.data.eMail=eMail
         changeUserData(userData)
         appDataTemp[userData.data.eMail]=userData
@@ -116,8 +114,11 @@ export const KontoInfos = () => {
 
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
-            
-            <View style={{flex:0.4, alignItems:'center', justifyContent:'center', width:'100%'}}>
+            <ScrollView 
+          style={{width:'100%'}}
+          contentContainerStyle={{alignItems:'center', justifyContent:'center'}}
+        >
+            <View style={{flex:0.4, alignItems:'center', justifyContent:'center', width:'100%', height:250}}>
                 <View style = {styles.reihe}>
                     <Text style={styles.text}>Username: </Text>
                     <Text style={{...styles.text, width:'50%'}}>{userData.data.eMail}</Text>
@@ -129,7 +130,7 @@ export const KontoInfos = () => {
                                     onChangeText={eMail => changeEMail(eMail)} value={eMail}></TextInput>
                     </View>
                     <View>
-                        <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
+                        <TouchableOpacity style={styles.button} onPress={()=>eMailBestätigen()}>
                             <LinearGradient
                                 colors={['#D476D5', '#C77BD8', '#8F92E3']}
                                 start={{ x: 0, y: 0.4 }}
@@ -144,7 +145,7 @@ export const KontoInfos = () => {
 
              
 
-            <View style={{flex:0.5, alignItems:'center', justifyContent:'flex-start', width:'100%'}}>
+            <View style={{flex:0.5, alignItems:'center', justifyContent:'flex-start', width:'100%', height:250}}>
                 <View style = {styles.reihe}>
                     <Text style={styles.text}>Altes Passwort: </Text>
                     <TextInput style={styles.textInput}
@@ -184,7 +185,7 @@ export const KontoInfos = () => {
                 </TouchableOpacity>
             </View>
             <View style={{height:60}} />
-            
+            </ScrollView>
          </ImageBackground>
     )
 }

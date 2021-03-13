@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal, ImageBackground, StatusBar, Image } from 'react-native';
 import { Audio } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,6 +10,7 @@ import {AppContext} from "../context.js";
 import {kurse} from "../Kursdaten/Kursdatei.js"
 import { checkBenchmarks } from '../benchmarks.js';
 import { LinearGradient } from 'expo-linear-gradient';
+import { randomPerson } from '../../assets/Personen/randomPerson.js';
 import { uebungen } from '../Kursdaten/Uebungsliste.js';
 
 const soundObject = new Audio.Sound();
@@ -20,6 +21,8 @@ export const AudioPlayer =({navigation, route})=>{
     const [modalVisible, changeModalVisible] = useState(false)
     const [isPlaying, changeIsPlaying] = useState(true)
     const [progress, changeProgress] = useState(0)
+    const [time, changeTime] = useState(0)
+    const [maxTime, changeMaxTime] = useState(0)
     const [audioEnded, changeAudioEnded] =useState(false)
     const navigationState = useNavigationState(state => state)
     const navState ={...navigationState}
@@ -87,6 +90,10 @@ export const AudioPlayer =({navigation, route})=>{
                 addGehoerteUebung()
             }else{
                 changeProgress(playbackStatus.positionMillis/playbackStatus.durationMillis)
+                changeTime(Math.round(playbackStatus.positionMillis/1000))
+                if(maxTime===0){
+                    changeMaxTime(Math.round(playbackStatus.durationMillis/1000))
+                }
             }
         }
         
@@ -187,7 +194,6 @@ export const AudioPlayer =({navigation, route})=>{
         const yesterday = new Date()
         yesterday.setDate(yesterday.getDate()-1)
         if(userDataTemp.journal[yesterday.toDateString()]&&userDataTemp.journal[yesterday.toDateString()].meditations&&firstAtDay){
-            console.log("steak +1")
             userDataTemp.benchmarks.streak+=1
         }else if (firstAtDay){
             userDataTemp.benchmarks.streak=1
@@ -258,7 +264,8 @@ export const AudioPlayer =({navigation, route})=>{
     }
 
     return(
-        <View style={{alignItems:"center", justifyContent:"center", flex:1, width:'100%', height:'100%' }}>
+        <ImageBackground source={require('../../assets/Profil.png')} imageStyle={{resizeMode:'stretch'}} style={{alignItems:"center", flex:1}}>
+            <StatusBar hidden={true}></StatusBar>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -276,15 +283,27 @@ export const AudioPlayer =({navigation, route})=>{
                 </View>
                 </View>
             </Modal>
-            {isPlaying ?
+            <TouchableOpacity onPress={()=>{navigation.goBack()}} style={{alignSelf:"flex-start", marginBottom:70, margin:10}}>
+              <Ionicons name="close-outline" color="white" size={50}></Ionicons>
+            </TouchableOpacity>
+            <Text style={styles.title}>{kurse[kurs].Uebungen[uebung].Name}</Text>
+            <Image source={randomPerson} style={styles.image}/>
+            <Progress.Bar progress={progress} width={250} height={12} color="#80DEE4" borderColor="#00000000" unfilledColor="#0F113A" style={{marginBottom:5}} />
+            <View style={{width:275, justifyContent:"space-between", flexDirection:"row"}}>
+                <Text style={{color:"white"}}>{Math.floor(time/60)}:{time%60<10&&0}{time%60}</Text>
+                {isPlaying ?
                 <TouchableOpacity onPress={async () => {await soundObject.pauseAsync(); changeIsPlaying(false)}}>
-                    <Ionicons name="pause" size={50} color="black" /> 
+                    <Ionicons name="pause" size={50} color="white" /> 
                 </TouchableOpacity>:
                 <TouchableOpacity onPress={async() => {await soundObject.playAsync(); changeIsPlaying(true)}}>
-                    <Ionicons name="play" size={50} color="black" /> 
+                    <Ionicons name="play" size={50} color="white" /> 
                 </TouchableOpacity>}
-                <Progress.Bar progress={progress} width={200} />
-        </View>
+                <Text style={{color:"white"}}>{Math.floor(maxTime/60)}:{maxTime%60<10&&0}{maxTime%60}</Text>
+            </View>
+            
+            
+                
+        </ImageBackground>
     );
 
 }
@@ -333,5 +352,15 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.4,
         marginBottom: 20
      },
+     image: {
+        marginBottom: 25,
+        marginTop:45,
+        width: 200,
+        height: 200,
+      },
+    title:{
+        color:"white",
+        fontSize:30,
+    }
   });
 

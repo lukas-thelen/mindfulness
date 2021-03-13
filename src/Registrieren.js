@@ -86,12 +86,9 @@ export const Registrieren =(props)=>{
     };
     
     return(
-      <ImageBackground source={require('../assets/Registrieren.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+      <ImageBackground source={require('../assets/Registrieren.png')} style={styles.imagebackground} imageStyle={{resizeMode:'cover'}}>
         <KeyboardAwareScrollView 
           style={{width:'100%'}}
-          resetScrollToCoords={{ x: 0, y: 0 }}
-          contentContainerStyle={globalStyles.container}
-          scrollEnabled={false}
         >
         <View style={styles.registrierenContainer}>
           <Text style={{...styles.textM, fontSize:25, marginTop:50, marginBottom: 50}}>Registrierung</Text>
