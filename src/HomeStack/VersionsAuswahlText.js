@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import Slider from '@react-native-community/slider';
 
 import {kurse} from "../Kursdaten/Kursdatei.js"
+import { ScrollView } from 'react-native-gesture-handler';
 
 export const VersionsAuswahlText =({navigation, route})=>{
     const kursIndex = route.params.kursIndex
@@ -21,18 +22,18 @@ export const VersionsAuswahlText =({navigation, route})=>{
     
     return (
         
-        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground}>
-            <View >
+        <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+            <View style={{flexDirection:'row', alignItems:'center', marginVertical:10}}>
+            <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
                 <TouchableOpacity 
-                    style={styles.info}
-                    onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:kursIndex, uebungsIndex:uebungsIndex })}}
-                ><Text>i</Text></TouchableOpacity>
+                    onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:kursIndex, uebungsIndex:uebungsIndex })}}>
+                    <Ionicons name="information-circle-outline" size={26} color="white" />
+                </TouchableOpacity>
                 
             </View>
-            <Text style={{marginBottom:'5%', fontSize:30, color: '#fff', textAlignVertical: 'center'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
-            <Text style={{marginBottom:'5%', color: '#fff', textAlignVertical: 'center'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
-            
-
+            <ScrollView style={{marginBottom:10}}>
+                <Text style={styles.text}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
+            </ScrollView>
             <View style = {{width: 250, alignSelf: "center"}}>
                 <Slider
                     style={{width: 250, height: 40}}
@@ -40,38 +41,39 @@ export const VersionsAuswahlText =({navigation, route})=>{
                     maximumValue={20}
                     minimumTrackTintColor="#89FFF1"
                     maximumTrackTintColor="#80DEE470"
+                    thumbTintColor='#fff'
                     step={1}
                     value={dauer}
                     onValueChange={changeDauer}
                 />
 
                 <View style = {{flexDirection: "row"}}>
-                <Text style = {{flex: 1, color: '#fff'}}>freie Zeit</Text>
-                <Text style = {{flex: 1, textAlign: "center", color: '#fff'}}>10</Text>
-                <Text style = {{flex: 1, textAlign: "right", color: '#fff'}}>20</Text>
+                    <Text style = {{...styles.text, flex: 1}}>freie Zeit</Text>
+                    <Text style = {{...styles.text, flex: 1, textAlign: "center"}}>10</Text>
+                    <Text style = {{...styles.text, flex: 1, textAlign: "right"}}>20</Text>
                 </View>
             </View>
 
             <LinearGradient start={[0, 0.5]}
-                    end={[1, 0.5]}
-                    colors={['#89FFF1', '#8F92E3', '#D476D5']}
-                    style={{borderRadius: 40, width:80, height:80, alignSelf:"center", marginTop: '10%', marginBottom: '5%'}}>
-                    <View style={styles.circleGradient}>
-                    <Text style= {{fontSize: 30, color: '#fff'}}>{dauer=== 0? "frei": dauer}</Text>
+                end={[1, 0.5]}
+                colors={['#89FFF1', '#8F92E3', '#D476D5']}
+                style={styles.circleGradient}>
+                    <View style={styles.innerCircle}>
+                        <Text style= {styles.text}>{dauer=== 0? "frei": dauer}</Text>
                     </View>
-                </LinearGradient>
+            </LinearGradient>
 
-                <TouchableOpacity style={{alignSelf:"center"}}onPress={()=>abspielen()}>
-                    <LinearGradient
-                    colors={['#89FFF1', '#8F92E3', '#D476D5']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 2 }}
-                    style={styles.gradient}>
-                        <Text style={styles.text25}>Übung starten</Text>
-                    </LinearGradient>
-                </TouchableOpacity>   
+            <TouchableOpacity style={styles.button} onPress={()=>abspielen()}>
+                <LinearGradient
+                colors={['#89FFF1', '#8F92E3', '#D476D5']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 2 }}
+                style={styles.gradient}>
+                    <Text style={{...styles.text, color:'#0F113A', fontSize:15}}>Übung starten</Text>
+                </LinearGradient>
+            </TouchableOpacity>   
             <View style={{height:60}}/>
-            </ImageBackground>
+        </ImageBackground>
     )
 }
 
@@ -134,12 +136,18 @@ const styles = StyleSheet.create({
         marginTop: '10%'
     },
     circleGradient: {
-        margin: 4,
-        backgroundColor: "#141744",
+        borderRadius: 30, 
+        width:60, 
+        height:60,
+        marginVertical:20
+    },
+    innerCircle: {
+        backgroundColor: "#0F113A",
         borderRadius: 100,
-        flex:1,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        flex:1,
+        margin:4
       },
     alternativeDuration: {
         color: "grey",
@@ -148,16 +156,34 @@ const styles = StyleSheet.create({
     },
     gradient: {
         alignItems: 'center',
-        borderRadius: 13,
-        paddingBottom: 4,
-        paddingTop: 4,
+        borderRadius: 14,
+        paddingVertical:4,
         paddingHorizontal: 20,
-        marginBottom: 50
       },
     imagebackground: {
         flex: 1,
-        resizeMode: 'cover',
-        justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal:25,
+      },
+    text: {
+        fontFamily: 'Poppins_400Regular',
+        color:'#fff',
+        textAlignVertical:'center',
+    },
+    textM: {
+        fontFamily: 'Poppins_500Medium',
+        color:'#fff',
+        textAlignVertical:'center',
+        fontSize:22,
+        marginRight:10
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
+        marginBottom:15
       },
   });

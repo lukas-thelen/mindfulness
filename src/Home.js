@@ -217,9 +217,9 @@ export const HomeScreen = ()=> {
           options={{
             title: 'Wähle die Dauer',
             headerStyle: {
-              backgroundColor: '#80DEE4',
+              backgroundColor: '#0F113A',
             },
-            headerTintColor: '#0F113A',
+            headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
               fontFamily: 'Poppins_500Medium'
@@ -230,9 +230,9 @@ export const HomeScreen = ()=> {
             title: 'Text-Übung',
             headerShown:false,
             headerStyle: {
-              backgroundColor: '#80DEE4',
+              backgroundColor: '#0F113A',
             },
-            headerTintColor: '#0F113A',
+            headerTintColor: '#D476D5',
             headerTitleStyle: {
               fontSize: 25,
               fontFamily: 'Poppins_500Medium'
