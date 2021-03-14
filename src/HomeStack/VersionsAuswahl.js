@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ImageBackground,Image } from 'react-native';
+import { Ionicons, Fontisto } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'
 
-import {kurse} from "../Kursdaten/Kursdatei.js"
+import {kurse, sprecherBilder} from "../Kursdaten/Kursdatei.js"
 import { AppContext } from '../context.js';
 
 export const VersionsAuswahl =({navigation, route})=>{
     const {userData}=useContext(AppContext)
-    const [sprecher, changeSprecher] = useState("männlich")
+    const [sprecher, changeSprecher] = useState(Object.keys(sprecherBilder)[0])
     const kursIndex = route.params.kursIndex
     const uebungsIndex = route.params.uebungsIndex
     const sprecherIndex = kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher.findIndex(item => item.Sprecher === sprecher)
@@ -38,8 +38,9 @@ export const VersionsAuswahl =({navigation, route})=>{
 
     const renderSprecher =({item})=>{
         return(
-            <TouchableOpacity style={item.Sprecher===sprecher ? styles.SelectedItem : styles.SprecherItem} onPress={()=>{changeSprecher(item.Sprecher)}}>
-                <Text style={{...styles.text, color:'#0F113A'}}>{item.Sprecher}</Text>
+            <TouchableOpacity style={styles.SelectedItem} onPress={()=>{changeSprecher(item.Sprecher)}}>
+                <Image source={sprecherBilder[item.Sprecher]} style={item.Sprecher===sprecher ?{width:160, height:160}:{width:140, height:140, opacity:0.4}}></Image>
+                <Text style={{...styles.text, color:'white'}}>{item.Sprecher}</Text>
             </TouchableOpacity>    
         )
     }
@@ -74,15 +75,16 @@ export const VersionsAuswahl =({navigation, route})=>{
                 </TouchableOpacity>
             </View>
 
-            <Text style={{...styles.text, marginBottom:40, alignSelf:'flex-start'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
-        
-            <View style={{height:"20%"}}>
-            <FlatList
-                numColumns={2}
-                data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
-                keyExtractor={item=>item.Sprecher}
-                renderItem={renderSprecher}
-            ></FlatList>
+            <Text style={{...styles.text, marginBottom:10, alignSelf:'flex-start'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
+            <View style={{backgroundColor:"white", width:"110%", height:2, marginBottom:10}}/>
+            <Text style={{...styles.text, alignSelf:"flex-start", fontSize:18}}> Sprecher auswählen:</Text>
+            <View style={{height:190}}>
+                <FlatList
+                    numColumns={2}
+                    data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
+                    keyExtractor={item=>item.Sprecher}
+                    renderItem={renderSprecher}
+                ></FlatList>
             </View>
             {/*sprecher===""? <Text>...</Text>:
             <FlatList 
@@ -92,7 +94,7 @@ export const VersionsAuswahl =({navigation, route})=>{
                 renderItem={renderDauer}
                 ></FlatList> */}
             <View style = {{flexDirection: "row", justifyContent: "center"}}>
-                <View style= {{flex:1, justifyContent: "center", alignItems: "flex-end"}}>
+                <View style= {{flex:1, justifyContent: "center", alignItems:"flex-end", marginRight:10}}>
                     {dauerArray().indexOf(dauer) > 0&&<TouchableOpacity onPress = {()=> changeDauer(dauerArray()[dauerArray().indexOf(dauer)-1])}>
                             <Text style =  {styles.alternativeDuration}>{dauerArray()[dauerArray().indexOf(dauer)-1]}</Text>
                         </TouchableOpacity>}
@@ -107,13 +109,14 @@ export const VersionsAuswahl =({navigation, route})=>{
                     </View>
                 </LinearGradient>
 
-                <View style= {{flex:1,justifyContent: "center"}}>
+                <View style= {{flex:1, justifyContent: "center", alignItems:"flex-start", marginLeft:10}}>
                     {dauerArray().indexOf(dauer) < dauerArray().length-1&&<TouchableOpacity  onPress = {() => changeDauer(dauerArray()[dauerArray().indexOf(dauer)+1])}>
                             <Text style =  {styles.alternativeDuration}>{dauerArray()[dauerArray().indexOf(dauer)+1]}</Text>
                         </TouchableOpacity>}
                 </View>
             </View>
-            {sprecher!=""&&dauerIndex()!=-1?
+            <Fontisto name="stopwatch" color="white" size={40} style={{marginTop:-30, marginLeft:60, marginBottom:-20}}/>
+            <View style={{flex:1,  justifyContent:"center"}}>
                 <TouchableOpacity style={styles.button} onPress={()=>abspielen()}>
                     <LinearGradient
                     colors={['#89FFF1', '#8F92E3', '#D476D5']}
@@ -122,11 +125,9 @@ export const VersionsAuswahl =({navigation, route})=>{
                     style={styles.gradient}>
                         <Text style={{...styles.text, color:'#0F113A', fontSize:15}}>Übung starten</Text>
                     </LinearGradient>
-                </TouchableOpacity>:
-                <View style={{alignSelf:"center"}}>
-                    <Ionicons name="play" size={50} color="lightgrey" /> 
-                </View>
-            }
+                </TouchableOpacity>
+            </View>
+            
             <View style={{height:60}}/>
         </ImageBackground>
     )
@@ -134,24 +135,14 @@ export const VersionsAuswahl =({navigation, route})=>{
 
 const styles = StyleSheet.create({
     SprecherItem: {
-        backgroundColor: '#8F92E370',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height:50,
-        width:130,
-        margin:3,
-        borderRadius:100,
+        justifyContent:"center",
+        alignItems:"center",
+        opacity:0.4
     },
     SelectedItem: {
-        backgroundColor: '#8F92E3',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height:50,
-        width:130,
-        margin:3,
-        borderRadius:100,
-        borderWidth:2,
-        borderColor: '#80DEE4',
+        justifyContent:"center",
+        alignItems:"center",
+        opacity:1
     },
     DauerItem:{
         backgroundColor: '#fff',
@@ -180,8 +171,7 @@ const styles = StyleSheet.create({
     circleGradient:{
         borderRadius: 40, 
         width:80, 
-        height:80, 
-        marginBottom: 40
+        height:80,
     },
     innerCircle: {
         margin: 4,
@@ -207,7 +197,6 @@ const styles = StyleSheet.create({
         borderRadius: 14,
         paddingVertical:4,
         paddingHorizontal: 20,
-        marginBottom: 50
       },
     text: {
         fontFamily: 'Poppins_400Regular',
@@ -227,6 +216,5 @@ const styles = StyleSheet.create({
         shadowOffset: {width:0, height:4},
         shadowRadius: 4,
         shadowOpacity: 0.4,
-        marginBottom:15
     },
   });

@@ -36,17 +36,17 @@ const KognitiveProzesseListe = [
                 "Der dritte Schritt weitet die Aufmerksamkeit wieder auf den gesamten Körper aus. Gewöhnlich erlaubt dieser Schritt eine angemessene Antwort auf die negativen Gedankenmuster, statt in ihnen stecken zu bleiben. ",
                 VersionenNachSprecher:[
                     {
-                        Sprecher:"männlich",
+                        Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"EinführungM3.mp3", Dateipfad: require("../../assets/Kurs1/3MinutenLukas.mp3")}
+                            {Dauer:3, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/3minuteLukas.mp3"}
                             // Audiodateien in den Assets-Ordner packen und hier den Dateipfad via "require" spezifizieren. Require akzeptiert nur 
                             // static Strings also daher bitte einfach nur den Namen der Audiodatei anpassen
                         ]
                     },
                     {
-                        Sprecher:"weiblich",
+                        Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"EinführungF3.mp3", Dateipfad: require("../../assets/Kurs1/3MinutenLisa.mp3")}
+                            {Dauer:3, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/3minuteLisa.mp3"}
                         ]
                     },
                     //mehr Sprecher
@@ -66,16 +66,17 @@ const KognitiveProzesseListe = [
                 Effekt:"Als oftmals im meditativen Kontext angewendete Achtsamkeitstechnik lassen sich der Grounding Exercice vor allem die Positivität und das Lösen von negativen Gedanken/Gefühlen als Wirkungsweisen zuschreiben. Wer sich oft gestresst, überfordert oder von negativen Emotionen wie Angst und Wut überrollt fühlt, findet mit Grounding Exercises eine gute Antwort darauf. ",
                 VersionenNachSprecher:[
                     {
-                        Sprecher:"männlich",
+                        Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"Übung1M3.mp3", Dateipfad: require("../../assets/Kurs1/Übung1M3.mp3")},
-                            {Dauer:5, Dateiname:"Übung1M5.mp3", Dateipfad: require("../../assets/Kurs1/Übung1M5.mp3")}
+                            {Dauer:4, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/GroundingExKurzLukas.mp3"},
+                            {Dauer:6, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/GroundingExLangLukas.mp3"}
                         ]
                     },
                     {
-                        Sprecher:"weiblich",
+                        Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"Übung1F3.mp3", Dateipfad: require("../../assets/Kurs1/Übung1F3.mp3")}
+                            {Dauer:4, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/GroundingExKurzLisa.mp3"},
+                            {Dauer:6, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/GroundingExLangLisa.mp3"}
                         ]
                     },
                     //mehr Sprecher
@@ -100,20 +101,6 @@ const KognitiveProzesseListe = [
                 "Dabei wird nicht wie bei der unbewussten und automatisierten Atmung in die Brust, sondern bewusst in den Bauch geatmet. Die Hand auf dem Bauch dient zur Selbstkontrolle, um sicher zu stellen, dass man auch wirklich bis in den Bauch atmet. ",
                 Herkunft:"Bauchatmen ist wie die meisten Atemübungen an den yogischen oder buddhistischen Vorläufern der Atemmediation angelehnt, durch wissenschaftliche Untersuchungen aber längst in verschiedensten medizinischen und therapeutischen Kontexten anerkannt und angewandt. ",
                 Effekt:"In Stresssituationen neigen wir dazu, unregelmäßiger, schneller und damit weniger effektiv zu atmen, was zu einer Verschlimmerung der Stresssymptome führen kann. Abdominal Breathing versucht, genau diesen Prozess umzukehren und durch das kontrollierte Atmen in den Bauch für Entspannung zu sorgen. ",
-                VersionenNachSprecher:[
-                    {
-                        Sprecher:"männlich",
-                        VersionenNachDauer:[
-                            {Dauer:7, Dateiname:"Übung2M7.mp3", Dateipfad: require("../../assets/Kurs1/Übung2M7.mp3")}
-                        ]
-                    },
-                    {
-                        Sprecher:"weiblich",
-                        VersionenNachDauer:[
-                            {Dauer:8, Dateiname:"Übung2F8.mp3", Dateipfad: require("../../assets/Kurs1/Übung2F8.mp3")}
-                        ]
-                    }
-                ]
             },
             //mehr Übungen
         ]
@@ -125,7 +112,7 @@ const KognitiveProzesseListe = [
         Uebungen:[
             {
                 id:"PPKurs_2_1",
-                Name:"Geführte Meditation mit Klangschalen",
+                Name:"Geführte Meditation mit Klangschalen (kurz)",
                 Audio: true,
                 Kategorie:"Meditationen",
                 Beschreibung:"In der folgenden Übung wird dir eine geführte Meditationsform gezeigt. Diese wird durch Klangschalen unterstützt.",
@@ -139,16 +126,17 @@ const KognitiveProzesseListe = [
                 Effekt:"Der größte Bestandteil der Wirkung von Klangschalenmeditation ist die empfundene Entspannung. Ähnlich wie Musik unterschiedliche emotionale Veränderungen und Zustände begünstigen oder gar auslösen kann, so kann man durch die Klänge der Meditation tiefe Entspannung empfinden. Neulinge und Interessierte finden in der Klangschalenmeditation außerdem einen guten Einstieg in das Thema Meditation. ",
                 VersionenNachSprecher:[
                     {
-                        Sprecher:"männlich",
+                        Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"K2Übung1M3.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M3.mp3")},
-                            {Dauer:8, Dateiname:"K2Übung1M8.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M8.mp3")}
+                            {Dauer:4, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleKurzLukas.mp3"},
+                            {Dauer:7, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleMittelLukas.mp3"}
                         ]
                     },
                     {
-                        Sprecher:"weiblich",
+                        Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:2, Dateiname:"K2ÜbungF2.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1F2.mp3")}
+                            {Dauer:4, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleKurzLisa.mp3"},
+                            {Dauer:7, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleMittelLisa.mp3"}
                         ]
                     }
                 ]
@@ -171,16 +159,15 @@ const KognitiveProzesseListe = [
                 "Weiterhin sind Bekämpfung von Stresssymptomen und die damit einhergehende Verbesserung des allgemeinen Wohlbefindens unbestrittene positive Effekte von Atemübungen, insbesondere dem Breathing Anchor. ",
                 VersionenNachSprecher:[
                     {
-                        Sprecher:"männlich",
+                        Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"K2Übung1M3.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M3.mp3")},
-                            {Dauer:8, Dateiname:"K2Übung1M8.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M8.mp3")}
+                            {Dauer:8, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/BreathingAnchorLukas.mp3"}
                         ]
                     },
                     {
-                        Sprecher:"weiblich",
+                        Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:2, Dateiname:"K2ÜbungF2.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1F2.mp3")}
+                            {Dauer:8, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/BreathingAnchorLisa.mp3"}
                         ]
                     }
                 ]
@@ -202,15 +189,15 @@ const KognitiveProzesseListe = [
                 Effekt:"Verbesserung der Konzentrationsfähigkeit wird neben dem Abbau von Stresssymptomen und einer erhöhten Sauerstoffversorgung des Körpers und des Gehirns zu den wichtigsten Wirkungsweisen von Atemmeditationen gezählt.",
                 VersionenNachSprecher:[
                     {
-                        Sprecher:"männlich",
+                        Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:2, Dateiname:"K2Übung2M2.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung2M2.mp3")}
+                            {Dauer:3, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/AtemKurzLukas.mp3"}
                         ]
                     },
                     {
-                        Sprecher:"weiblich",
+                        Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"K2ÜbungF3.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung2F3.mp3")}
+                            {Dauer:3, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/AtemKurzLisa.mp3"}
                         ]
                     }
                 ]
@@ -239,23 +226,22 @@ const KognitiveProzesseListe = [
                 Effekt:"Verbesserung der Konzentrationsfähigkeit wird neben dem Abbau von Stresssymptomen und einer erhöhten Sauerstoffversorgung des Körpers und des Gehirns zu den wichtigsten Wirkungsweisen von Atemmeditationen gezählt.",
                 VersionenNachSprecher:[
                     {
-                        Sprecher:"männlich",
+                        Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"K2Übung1M3.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M3.mp3")},
-                            {Dauer:8, Dateiname:"K2Übung1M8.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M8.mp3")}
+                            {Dauer:6, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/AtemLangLukas.mp3"}
                         ]
                     },
                     {
-                        Sprecher:"weiblich",
+                        Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:2, Dateiname:"K2ÜbungF2.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1F2.mp3")}
+                            {Dauer:6, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/AtemLangLisa.mp3"}
                         ]
                     }
                 ]
             },
             {
                 id:"PKurs_3_2",
-                Name:"Geführte Meditation mit Klangschalen (mittel)",
+                Name:"Geführte Meditation mit Klangschalen (lang)",
                 Audio: true,
                 Kategorie:"Meditationen",
                 Beschreibung:"Diese Übung ist eine intensivere Klangschalen Meditation.",
@@ -269,16 +255,15 @@ const KognitiveProzesseListe = [
                 Effekt:"Der größte Bestandteil der Wirkung von Klangschalenmeditation ist die empfundene Entspannung. Ähnlich wie Musik unterschiedliche emotionale Veränderungen und Zustände begünstigen oder gar auslösen kann, so kann man durch die Klänge der Meditation tiefe Entspannung empfinden. Neulinge und Interessierte finden in der Klangschalenmeditation außerdem einen guten Einstieg in das Thema Meditation. ",
                 VersionenNachSprecher:[
                     {
-                        Sprecher:"männlich",
+                        Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"K2Übung1M3.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M3.mp3")},
-                            {Dauer:8, Dateiname:"K2Übung1M8.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M8.mp3")}
+                            {Dauer:15, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleLangLukas.mp3"}
                         ]
                     },
                     {
-                        Sprecher:"weiblich",
+                        Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:2, Dateiname:"K2ÜbungF2.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1F2.mp3")}
+                            {Dauer:15, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleLangLisa.mp3"}
                         ]
                     }
                 ]
@@ -301,16 +286,15 @@ const KognitiveProzesseListe = [
                 "Oft wird der Body Scan als reine Entspannungsübung verstanden. Auch wenn Entspannung ein positiver Nebeneffekt der Übung ist, ist diese nicht das eigentliche Ziel. Der Body Scan lehrt den Ausführenden, stiller und achtsamer Beobachter zu werden, denn gerade das urteilslose Wahrnehmen aller Empfindungen bringt die Einsicht mit sich, dass Schmerzen, Sorgen und negative Gedanken vorüber gehen.",
                 VersionenNachSprecher:[
                     {
-                        Sprecher:"männlich",
+                        Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"K2Übung1M3.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M3.mp3")},
-                            {Dauer:8, Dateiname:"K2Übung1M8.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1M8.mp3")}
+                            {Dauer:23, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/BodyScanLukas.mp3"}
                         ]
                     },
                     {
-                        Sprecher:"weiblich",
+                        Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:2, Dateiname:"K2ÜbungF2.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung1F2.mp3")}
+                            {Dauer:23, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/BodyScanLisa.mp3"}
                         ]
                     }
                 ]
@@ -330,22 +314,13 @@ const KognitiveProzesseListe = [
                 Herkunft:"Mindful Meditation ist eine der ältesten Meditationsformen und wohl am ehesten als im Schneidersitz verharrende, in sich gekehrt meditierende Person bekannt.\n\n"+
                 "Allgemein aus dem Buddhismus oder dem Yoga bekannt, ist Mindfulness oder Achtsamkeit aber längst keine rein religiöse Eigenschaft mehr. Mehr noch ist es eine trainierbare Fähigkeit, die durch Jon Kabat-Zinn und sein MBSR-Programm Bekanntheit im wissenschaftlichen Kontext erlangte. ",
                 Effekt:"Die Wirkungsweisen der Mindful Meditation gehen weit über reine Entspannung hinaus: Studien konnten belegen, dass durch das regelmäßige Ausführen von Achtsamkeitsmeditationen die Eigenwahrnehmung, Emotionskontrolle und –verarbeitung, so wie Konfliktlösungsfähigkeiten entscheidend gesteigert und verbessert werden können. ",
-                VersionenNachSprecher:[
-                    {
-                        Sprecher:"männlich",
-                        VersionenNachDauer:[
-                            {Dauer:2, Dateiname:"K2Übung2M2.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung2M2.mp3")}
-                        ]
-                    },
-                    {
-                        Sprecher:"weiblich",
-                        VersionenNachDauer:[
-                            {Dauer:3, Dateiname:"K2ÜbungF3.mp3", Dateipfad: require("../../assets/Kurs2/K2Übung2F3.mp3")}
-                        ]
-                    }
-                ]
             }
         ] 
     },
     //mehr Kurse
 ]
+
+export const sprecherBilder={
+    Lukas:require("mindfulness/assets/Sprecher/Lukas.png"),
+    Lisa:require("mindfulness/assets/Sprecher/Lisa.png"),
+}

@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal, ImageBackground, Image, StatusBar } from 'react-native';
+import { Audio } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
@@ -10,15 +11,19 @@ import {kurse} from "../Kursdaten/Kursdatei.js"
 import {checkBenchmarks } from '../benchmarks.js';
 import { LinearGradient } from 'expo-linear-gradient';
 import { randomPerson } from '../../assets/Personen/randomPerson.js';
+import { uebungen } from '../Kursdaten/Uebungsliste.js';
 
+const soundObject = new Audio.Sound();
 
 
 //AudioPlayer- Component
 export const TextPlayer =({navigation, route})=>{
+    var inverval
     const [modalVisible, changeModalVisible] = useState(false)
     const [isPlaying, changeIsPlaying] = useState(true)
     const [counter, changeCounter] = useState(route.params.dauer*60)
     const navigationState = useNavigationState(state => state)
+    const [finished, changeFinished] = useState(false)
     const navState ={...navigationState}
     navState.routes = navState.routes.filter(item=>item.name!="Text-Übung"&&item.name!="AudioPlayer"&&item.name!="Wähle eine Version"&&item.name!="Wähle die Dauer")
     navState.index = navState.index-(navigationState.routes.length-navState.routes.length)
@@ -28,16 +33,24 @@ export const TextPlayer =({navigation, route})=>{
     const uebung=route.params.uebungsIndex
     const dauer=route.params.dauer
     const dauerInMinuten=route.params.dauer
-    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser, userData, changeUserData, changeNewBenchmark} = useContext(AppContext)
+    const {gehoerteUebungen, changeGehoerteUebungen, appData, changeAppData, currentUser, userData, changeUserData, changeNewBenchmark, newBenchmark} = useContext(AppContext)
     var gehoerteUebungenTemp = [...gehoerteUebungen]
     const userDataTemp={...userData}
-    var inverval
+    
 
     
     const today=new Date()
+
+    useEffect(()=>{
+        if(finished&&newBenchmark.length===0){
+            console.log("halaisdfasdfhawef")
+            changeModalVisible(true)
+        }
+    },[newBenchmark] )
     
 
     useEffect(()=>{
+        play()
         if(dauer>0){
             interval = setInterval(()=>{changeCounter(x => {if(x>0){return x-1}else{return 0}})} , 1000);
         }else{
@@ -50,14 +63,33 @@ export const TextPlayer =({navigation, route})=>{
     },[])
 
     useEffect(()=>{
+        return()=>{      
+            unloadSound()
+        }
+    },[])
+
+    async function play() {
+        try { 
+            await soundObject.loadAsync(require("mindfulness/assets/gong.wav"))
+            await soundObject.playFromPositionAsync(0)
+        } catch(e) {
+            console.log(e)
+        }
+    }
+    const unloadSound=async()=>{
+        await soundObject.unloadAsync()
+    }
+
+    useEffect(()=>{
         if(dauer>0&&counter===0){
             handleFinish()
         }
     },[counter])
 
-    const handleFinish=()=>{
+    const handleFinish=async()=>{
         clearInterval(interval);
-        changeModalVisible(true);
+        await soundObject.playFromPositionAsync(0)
+        changeFinished(true)
         addGehoerteUebung()
     }
 
@@ -73,21 +105,25 @@ export const TextPlayer =({navigation, route})=>{
     const addGehoerteUebung=async()=> {
 
         userDataTemp.alleGehoertenUebungen.push(kurse[kurs].Uebungen[uebung].id)
-        if (!gehoerteUebungenTemp.includes(kurse[kurs].Uebungen[uebung].id) || !gehoerteUebungenTemp[0]){
+        if ((!gehoerteUebungenTemp.includes(kurse[kurs].Uebungen[uebung].id) || !gehoerteUebungenTemp[0])&&userDataTemp.verfuegbareUebungen.includes(kurse[kurs].Uebungen[uebung].id)){
             //wenn Übung bisher noch nie gemacht wurde
             gehoerteUebungenTemp.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungenTemp)
             userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
-
-            // Benchmark Anzahl verschiedener Übungen
-            userDataTemp.benchmarks.xMeditations = userDataTemp.gehoerteUebungen.length
         }
+        // Benchmark Anzahl verschiedener Übungen
+        var xMeditationsCount=0
+        for(var f in uebungen){
+            if(userDataTemp.alleGehoertenUebungen.includes(f.id)) xMeditationsCount+=1
+        }
+        userDataTemp.benchmarks.xMeditations = xMeditationsCount
 
         // Verfügbare Übung hinzufügen
         if (userDataTemp.verfuegbareUebungen[(userDataTemp.verfuegbareUebungen.length)-1] === kurse[kurs].Uebungen[uebung].id){
             if (uebung+1<kurse[kurs].Uebungen.length){
                 userDataTemp.verfuegbareUebungen.push( kurse[kurs].Uebungen[uebung+1].id)
             }else{
+                console.log("Tesesetgkdfjgbshbfgs")
                 if (kurs+1<kurse.length){
                     userDataTemp.verfuegbareUebungen.push( kurse[kurs+1].Uebungen[0].id)
                 }
@@ -161,6 +197,8 @@ export const TextPlayer =({navigation, route})=>{
         if (currentlyReached.length > 0){
             userDataTemp.benchmarks.benchmarksReached=userDataTemp.benchmarks.benchmarksReached.concat(currentlyReached)
             changeNewBenchmark(currentlyReached)
+        }else{
+            changeModalVisible(true);
         }
 
         //Daten speichern

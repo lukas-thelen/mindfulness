@@ -24,7 +24,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { VersionsAuswahlText } from './HomeStack/VersionsAuswahlText.js';
 import { TextPlayer } from './HomeStack/TextPlayer.js';
 import { Feather } from '@expo/vector-icons';
-import {randomPerson} from '../assets/Personen/randomPerson.js'
+import {randomPerson} from '../assets/Personen/randomPerson.js';
+
 
 
 
@@ -155,8 +156,8 @@ export const HomeScreen = ()=> {
               fontFamily: 'Poppins_500Medium'
             },
           }}/>
-          <HomeStack.Screen name="Wähle eine Übung!" component={UebungsAuswahl} options={{
-            title: 'Kurs',
+          <HomeStack.Screen name="Wähle eine Übung!" component={UebungsAuswahl} options={({route})=>({
+            title: kurse[kurse.findIndex(item => item.id === route.params.kurs)].Name,
             headerStyle: {
               backgroundColor: '#80DEE4',
             },
@@ -165,10 +166,10 @@ export const HomeScreen = ()=> {
               fontSize: 25,
               fontFamily: 'Poppins_500Medium'
             },
-          }}/>
+          })}/>
           <HomeStack.Screen name="Wähle eine Version" component={VersionsAuswahl}
           options={{
-            title: 'Wähle eine Version',
+            title: 'Übung starten',
             headerStyle: {
               backgroundColor: '#0F113A',
             },
@@ -191,7 +192,7 @@ export const HomeScreen = ()=> {
             },
           }}/>
           <HomeStack.Screen name="individueller Tag" component={JournalTag} options={{
-            title: 'Journal',
+            title: 'Tagesrückblick',
             headerStyle: {
               backgroundColor: '#0F113A',
             },

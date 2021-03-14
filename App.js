@@ -16,6 +16,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Appeinfuehrung } from './src/Einfuehrung.js';
 
 
 
@@ -32,6 +33,7 @@ export const Tabnavigator = () =>{
   const {newBenchmark, changeNewBenchmark, userData, changeAppData,changeUserData, appData,currentUser, changeForceUpdate, forceUpdate} = useContext(AppContext)
   const newBenchmarkTemp =[...newBenchmark]
   const userDataTemp = cloneDeep(userData)
+  const [einfuehrungVisible, changeEinfuehrungVisible]=useState(false)
 
 
   useEffect(()=>{
@@ -42,6 +44,7 @@ export const Tabnavigator = () =>{
       handleUrl(queryParams)
     })
     waitForLink()
+    if(!userData.introSeen) changeEinfuehrungVisible(true)
   },[])
 
   const waitForLink= async()=>{
@@ -64,6 +67,7 @@ export const Tabnavigator = () =>{
       console.log("New Puzzle created by "+ queryParams.name)
       var friends = JSON.parse(queryParams.friends)
       var friendsNames = JSON.parse(queryParams.friendsNames)
+      var motif = JSON.parse(queryParams.motif)
       var includesMe = false
       for (var k=0; k<friends.length;k++){
         if(!(userDataTemp.friends.friends[friends[k]]||friends[k]===currentUser)){
@@ -74,7 +78,7 @@ export const Tabnavigator = () =>{
         }
       }
       if(!userDataTemp.friends.puzzles[queryParams.id]&&includesMe){
-        userDataTemp.friends.puzzles[queryParams.id] = {id:queryParams.id, pieces:0, friends:friends, log:{}}
+        userDataTemp.friends.puzzles[queryParams.id] = {id:queryParams.id, pieces:0, friends:friends, log:{}, motif:motif}
       }
     }
     if(queryParams.type === "puzzlePieces"){
@@ -132,6 +136,9 @@ export const Tabnavigator = () =>{
                     </TouchableOpacity>
                 </View>
                 </View>
+          </Modal>
+          <Modal visible={einfuehrungVisible} transparent={true}>
+            <Appeinfuehrung changeEinfuehrungVisible={changeEinfuehrungVisible}/>
           </Modal>
         
         <NavigationContainer>

@@ -38,7 +38,7 @@ export const JournalTag = ({navigation, route}) => {
     const stimmungsÜbersetzung={0:"sehr schlecht", 1:"schlecht", 2:"neutral", 3:"gut", 4:"sehr gut"}
     const stressÜbersetzung={0:"gar nicht", 1:"eher wenig", 2:"durchschnittlich", 3:"eher stark", 4:"sehr stark"}
     const cravingÜbersetzung={0:"nie", 1:"selten", 2:"manchmal", 3:"oft", 4:"immer"}
-    const pflichtenÜbersetzung={0:"nein", 1:"eher nein", 2:"jaein", 3:"eher ja", 4:"ja"}
+    const pflichtenÜbersetzung={0:"nein", 1:"eher nein", 2:"durchschnittlich", 3:"eher ja", 4:"ja"}
 
 
     useEffect(()=>{
@@ -181,7 +181,7 @@ export const JournalTag = ({navigation, route}) => {
                     <Text style={!editable?{...styles.text, color:"#ffffff70"}:styles.text}>Wie viele Stunden hast Du heute gespielt?</Text>
                     <Ionicons name="game-controller-outline" size={22} color="white" />
                     <TextInput editable={!editable? false:true} defaultValue={heuteStunden} keyboardType={'numeric'} onChangeText={changeHeuteStunden} style={styles.textInput}></TextInput>
-                    {heuteStunden!=null&&<Text>{gamingTimeStatus}</Text>}  
+                    {gamingTimeStatus!=null&&<Text style={{...styles.text,fontSize:12 ,marginTop:5, marginBottom:-5}}>{gamingTimeStatus}</Text>}  
                 </View>
 
                 <View style={styles.background}>

@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal, ImageBackground, StatusBar, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Modal, ImageBackground, StatusBar, Image, Pressable } from 'react-native';
 import { Audio } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
@@ -105,7 +105,7 @@ export const AudioPlayer =({navigation, route})=>{
     //abspielen der Datei
     async function play(time) {
         try { 
-            await soundObject.loadAsync(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateipfad)
+            await soundObject.loadAsync({uri:encodeURI(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateipfad)})
             await soundObject.setOnPlaybackStatusUpdate(endOfAudio)
             await soundObject.playFromPositionAsync(time)
             }
@@ -124,7 +124,6 @@ export const AudioPlayer =({navigation, route})=>{
             gehoerteUebungenTemp.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungenTemp)
             userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
-
         }
         // Benchmark Anzahl verschiedener Übungen
         var xMeditationsCount=0
@@ -287,7 +286,9 @@ export const AudioPlayer =({navigation, route})=>{
               <Ionicons name="close-outline" color="white" size={50}></Ionicons>
             </TouchableOpacity>
             <Text style={styles.title}>{kurse[kurs].Uebungen[uebung].Name}</Text>
-            <Image source={randomPerson} style={styles.image}/>
+            <Pressable delayLongPress={3000} onLongPress={async()=>{soundObject.setPositionAsync(maxTime*1000-1000)}}>
+                <Image source={randomPerson} style={styles.image}/>
+            </Pressable>
             <Progress.Bar progress={progress} width={250} height={12} color="#80DEE4" borderColor="#00000000" unfilledColor="#0F113A" style={{marginBottom:5}} />
             <View style={{width:275, justifyContent:"space-between", flexDirection:"row"}}>
                 <Text style={{color:"white"}}>{Math.floor(time/60)}:{time%60<10&&0}{time%60}</Text>
@@ -361,6 +362,7 @@ const styles = StyleSheet.create({
     title:{
         color:"white",
         fontSize:30,
+        textAlign:"center",
     }
   });
 
