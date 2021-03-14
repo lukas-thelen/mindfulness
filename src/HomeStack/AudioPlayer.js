@@ -361,8 +361,9 @@ const styles = StyleSheet.create({
       },
     title:{
         color:"white",
-        fontSize:30,
+        fontSize:26,
         textAlign:"center",
+        fontFamily:'Poppins_500Medium'
     }
   });
 
