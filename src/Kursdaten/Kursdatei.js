@@ -38,7 +38,7 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateipfad: require("../../assets/Übungen/3minuteLukas.mp3")}
+                            {Dauer:3, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/3minuteLukas.mp3"}
                             // Audiodateien in den Assets-Ordner packen und hier den Dateipfad via "require" spezifizieren. Require akzeptiert nur 
                             // static Strings also daher bitte einfach nur den Namen der Audiodatei anpassen
                         ]
@@ -46,7 +46,7 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateipfad: require("../../assets/Übungen/3minuteLisa.mp3")}
+                            {Dauer:3, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/3minuteLisa.mp3"}
                         ]
                     },
                     //mehr Sprecher
@@ -68,15 +68,15 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:4, Dateipfad: require("../../assets/Übungen/GroundingExKurzLukas.mp3")},
-                            {Dauer:6, Dateipfad: require("../../assets/Übungen/GroundingExLangLukas.mp3")}
+                            {Dauer:4, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/GroundingExKurzLukas.mp3"},
+                            {Dauer:6, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/GroundingExLangLukas.mp3"}
                         ]
                     },
                     {
                         Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:4, Dateipfad: require("../../assets/Übungen/GroundingExKurzLisa.mp3")},
-                            {Dauer:6, Dateipfad: require("../../assets/Übungen/GroundingExLangLisa.mp3")}
+                            {Dauer:4, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/GroundingExKurzLisa.mp3"},
+                            {Dauer:6, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/GroundingExLangLisa.mp3"}
                         ]
                     },
                     //mehr Sprecher
@@ -128,15 +128,15 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:4, Dateipfad: require("../../assets/Übungen/KlangschaleKurzLukas.mp3")},
-                            {Dauer:7, Dateipfad: require("../../assets/Übungen/KlangschaleMittelLukas.mp3")}
+                            {Dauer:4, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleKurzLukas.mp3"},
+                            {Dauer:7, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleMittelLukas.mp3"}
                         ]
                     },
                     {
                         Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:4, Dateipfad: require("../../assets/Übungen/KlangschaleKurzLisa.mp3")},
-                            {Dauer:7, Dateipfad: require("../../assets/Übungen/KlangschaleMittelLisa.mp3")}
+                            {Dauer:4, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleKurzLisa.mp3"},
+                            {Dauer:7, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleMittelLisa.mp3"}
                         ]
                     }
                 ]
@@ -161,13 +161,13 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:8, Dateipfad: require("../../assets/Übungen/BreathingAnchorLukas.mp3")}
+                            {Dauer:8, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/BreathingAnchorLukas.mp3"}
                         ]
                     },
                     {
                         Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:8, Dateipfad: require("../../assets/Übungen/BreathingAnchorLisa.mp3")}
+                            {Dauer:8, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/BreathingAnchorLisa.mp3"}
                         ]
                     }
                 ]
@@ -191,13 +191,13 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateipfad: require("../../assets/Übungen/AtemKurzLukas.mp3")}
+                            {Dauer:3, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/AtemKurzLukas.mp3"}
                         ]
                     },
                     {
                         Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:3, Dateipfad: require("../../assets/Übungen/AtemKurzLisa.mp3")}
+                            {Dauer:3, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/AtemKurzLisa.mp3"}
                         ]
                     }
                 ]
@@ -228,13 +228,13 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:6, Dateipfad: require("../../assets/Übungen/AtemLangLukas.mp3")}
+                            {Dauer:6, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/AtemLangLukas.mp3"}
                         ]
                     },
                     {
                         Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:6, Dateipfad: require("../../assets/Übungen/AtemLangLisa.mp3")}
+                            {Dauer:6, Dateipfad:"https://www-stud.uni-due.de/~smluthel/Übungen/AtemLangLisa.mp3"}
                         ]
                     }
                 ]
@@ -257,13 +257,13 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:15, Dateipfad: require("../../assets/Übungen/KlangschaleLangLukas.mp3")}
+                            {Dauer:15, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleLangLukas.mp3"}
                         ]
                     },
                     {
                         Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:15, Dateipfad: require("../../assets/Übungen/KlangschaleLangLisa.mp3")}
+                            {Dauer:15, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/KlangschaleLangLisa.mp3"}
                         ]
                     }
                 ]
@@ -288,13 +288,13 @@ const KognitiveProzesseListe = [
                     {
                         Sprecher:"Lukas",
                         VersionenNachDauer:[
-                            {Dauer:23, Dateipfad: require("../../assets/Übungen/BodyScanLukas.mp3")}
+                            {Dauer:23, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/BodyScanLukas.mp3"}
                         ]
                     },
                     {
                         Sprecher:"Lisa",
                         VersionenNachDauer:[
-                            {Dauer:23, Dateipfad: require("../../assets/Übungen/BodyScanLisa.mp3")}
+                            {Dauer:23, Dateipfad: "https://www-stud.uni-due.de/~smluthel/Übungen/BodyScanLisa.mp3"}
                         ]
                     }
                 ]

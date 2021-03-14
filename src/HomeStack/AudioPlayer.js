@@ -105,7 +105,7 @@ export const AudioPlayer =({navigation, route})=>{
     //abspielen der Datei
     async function play(time) {
         try { 
-            await soundObject.loadAsync(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateipfad)
+            await soundObject.loadAsync({uri:encodeURI(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateipfad)})
             await soundObject.setOnPlaybackStatusUpdate(endOfAudio)
             await soundObject.playFromPositionAsync(time)
             }
@@ -124,7 +124,6 @@ export const AudioPlayer =({navigation, route})=>{
             gehoerteUebungenTemp.push(kurse[kurs].Uebungen[uebung].id)
             changeGehoerteUebungen(gehoerteUebungenTemp)
             userDataTemp.gehoerteUebungen=gehoerteUebungenTemp
-
         }
         // Benchmark Anzahl verschiedener Übungen
         var xMeditationsCount=0
@@ -363,6 +362,7 @@ const styles = StyleSheet.create({
     title:{
         color:"white",
         fontSize:30,
+        textAlign:"center",
     }
   });
 
