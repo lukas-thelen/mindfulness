@@ -105,10 +105,10 @@ export const Statistiken = () => {
                 pflichtenArray.push({y:userData.journal[dayString].pflichten,x:6-pflichtenArray.length })
                 heuteStundenArray.push({y:userData.journal[dayString].heuteStunden,x:6-heuteStundenArray.length })
             } else {
-                dailyStressArray.push({y:0,x:6-dailyStressArray.length })
-                cravingArray.push({y:0,x:6-cravingArray.length })
-                stimmungArray.push({y:0,x:6-stimmungArray.length })
-                pflichtenArray.push({y:0,x:6-pflichtenArray.length })
+                dailyStressArray.push({y:2,x:6-dailyStressArray.length })
+                cravingArray.push({y:2,x:6-cravingArray.length })
+                stimmungArray.push({y:2,x:6-stimmungArray.length })
+                pflichtenArray.push({y:2,x:6-pflichtenArray.length })
                 heuteStundenArray.push({y:0,x:6-heuteStundenArray.length })
             }
 

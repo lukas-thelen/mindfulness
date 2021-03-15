@@ -85,12 +85,9 @@ export const JournalTag = ({navigation, route}) => {
 
     useEffect(()=>{
         if(userDataTemp.journal[dateBefore.toDateString()]&&userDataTemp.journal[dateBefore.toDateString()].morgenStunden){
-            if(heuteStunden===null||heuteStunden===0) changeGamingTimeStatus(null)
             let plan = parseInt(userDataTemp.journal[dateBefore.toDateString()].morgenStunden)
             let act = parseInt(heuteStunden)
-            console.log(plan)
-            console.log(act)
-            if(act&&plan>act){
+            if(plan>act){
                 changeGamingTimeStatus("Super! Du hast heute "+(plan-act)+" Stunde(n) weniger gespielt als du vor hattest!")
             }else if(plan<act){
                 changeGamingTimeStatus("Du hast heute "+(act-plan)+" Stunde(n) mehr gespielt als du vor hattest!")
