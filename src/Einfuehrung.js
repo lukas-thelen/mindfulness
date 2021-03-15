@@ -13,7 +13,7 @@ export const Appeinfuehrung =(props) => {
         {bild: require("mindfulness/assets/Intro/Screenshot_01.jpg"), text:"Wir zeigen dir kurz die wichtigsten Funktionen der App. \n Das ist deine Startseite! Von hier aus kommst du über den Play-Button oder die Kurse schnell zu den Übungen."},
         {bild: require("mindfulness/assets/Intro/Screenshot_02.jpg"), text:"Für jede Übung kannst du dir den Sprecher aussuchen. Manchmal stehen dir zusätzlich unterschiedlich lange Übungen zur Verfügung."},
         {bild: require("mindfulness/assets/Intro/Screenshot_03.jpg"), text:"Swipe auf der Startseite nach Recht, um zu deinem Tagebuch-Bereich zu kommen."},
-        {bild: require("mindfulness/assets/Intro/Screenshot_04.jpg"), text:"Hier hast du die Möglichkeit, am Ende das Tages dein Befinden zu dokumentieren."},
+        {bild: require("mindfulness/assets/Intro/Screenshot_04.jpg"), text:"Hier hast du die Möglichkeit, am Ende des Tages dein Befinden zu dokumentieren."},
         {bild: require("mindfulness/assets/Intro/Screenshot_05.jpg"), text:"Wenn du nach links swipest, kommst du zur Auflistung aller Übungen. Aber achtung: Übungen, die deinem Level nicht entsprechen, sind mit ! markiert. "},
         {bild: require("mindfulness/assets/Intro/Screenshot_07.jpg"), text:"In der Tabbar unten findest du den Bereich \"Freunde\", in dem du Zusammen mit deinen Freinden Puzzles lösen kannst."},
         {bild: require("mindfulness/assets/Intro/Screenshot_08.jpg"), text:"Teile dazu einfach die Links mit deinen Freunden und schon profitiert ihr auch vom Forschritt der Anderen."},
