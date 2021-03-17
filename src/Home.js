@@ -59,7 +59,7 @@ const HomeRoot = ({navigation})=>{
     }
     if (foundPrio!=null) found=foundPrio
     return (
-      <TouchableOpacity onPress={()=>{
+      <TouchableOpacity style={{overflow:"visible"}}onPress={()=>{
           if(uebungen[found].Audio){
             navigation.navigate("Wähle eine Version", {kursIndex:uebungen[found].KursIndex, uebungsIndex:uebungen[found].UebungsIndex})
           }else{
