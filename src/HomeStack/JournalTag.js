@@ -80,7 +80,6 @@ export const JournalTag = ({navigation, route}) => {
         changeAppData(appData)
         const jsonvalue=JSON.stringify(appData)
         await AsyncStorage.setItem('appData', jsonvalue)
-        navigation.goBack()
     }
 
     useEffect(()=>{
@@ -198,7 +197,7 @@ export const JournalTag = ({navigation, route}) => {
                 </View>
                 
                 <View style={styles.trennlinie}/>
-                <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
+                <TouchableOpacity style={styles.button} onPress={()=>{storeData();navigation.goBack()}}>
                 <LinearGradient
                     colors={['#89FFF1', '#80DEE4', '#8F92E3', '#D476D5']}
                     start={{ x: 0, y: 0 }}
