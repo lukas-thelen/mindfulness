@@ -153,7 +153,8 @@ export const Tabnavigator = () =>{
                 borderTopLeftRadius:15,
                 borderTopRightRadius:15,
                 backgroundColor: '#0F113A',
-                position:"absolute"
+                position:"absolute",
+                borderTopWidth:0
               },
               showLabel:false,
             }}

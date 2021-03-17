@@ -10,6 +10,9 @@ import { AppContext } from '../context.js';
 export const VersionsAuswahl =({navigation, route})=>{
     const {userData}=useContext(AppContext)
     const [sprecher, changeSprecher] = useState(Object.keys(sprecherBilder)[0])
+    const [heightMiddle, changeHeightMiddle] = useState(0)
+    const [margin, changeMargin] = useState(21)
+    const [faktor, changeFaktor] = useState(1.02)
     const kursIndex = route.params.kursIndex
     const uebungsIndex = route.params.uebungsIndex
     const sprecherIndex = kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher.findIndex(item => item.Sprecher === sprecher)
@@ -39,7 +42,7 @@ export const VersionsAuswahl =({navigation, route})=>{
     const renderSprecher =({item})=>{
         return(
             <TouchableOpacity style={styles.SelectedItem} onPress={()=>{changeSprecher(item.Sprecher)}}>
-                <Image source={sprecherBilder[item.Sprecher]} style={item.Sprecher===sprecher ?{width:160, height:160}:{width:140, height:140, opacity:0.4}}></Image>
+                <Image source={sprecherBilder[item.Sprecher]} style={item.Sprecher===sprecher ?{width:faktor*140, height:faktor*140,}:{width:faktor*140, height:faktor*140, opacity:0.4}}></Image>
                 <Text style={{...styles.text, color:'white'}}>{item.Sprecher}</Text>
             </TouchableOpacity>    
         )
@@ -68,23 +71,27 @@ export const VersionsAuswahl =({navigation, route})=>{
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
             
-            <View style={{flexDirection:'row', alignItems:'center', marginVertical:20}}>
+            <View style={{flexDirection:'row', alignItems:'center', marginVertical:margin}}>
                 <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
                 <TouchableOpacity style={{marginLeft:10}} onPress={()=>{navigation.navigate("Übungsinfo", {kursIndex:kursIndex, uebungsIndex:uebungsIndex })}}>
                     <Ionicons name="information-circle-outline" size={26} color="white" />
                 </TouchableOpacity>
             </View>
 
-            <Text style={{...styles.text, marginBottom:10, alignSelf:'flex-start'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
-            <View style={{backgroundColor:"white", width:"110%", height:2, marginBottom:10}}/>
-            <Text style={{...styles.text, alignSelf:"flex-start", fontSize:18}}> Sprecher auswählen:</Text>
-            <View style={{height:190}}>
-                <FlatList
-                    numColumns={2}
-                    data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
-                    keyExtractor={item=>item.Sprecher}
-                    renderItem={renderSprecher}
-                ></FlatList>
+            <Text style={{...styles.text, alignSelf:'flex-start'}}>{kurse[kursIndex].Uebungen[uebungsIndex].Beschreibung}</Text> 
+            <View style={{backgroundColor:"white", width:"110%", height:2, marginVertical:margin}}/>
+            <View style={{flex:1.2}} onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout; changeHeightMiddle(height); console.log("outer",height)}}>
+                <View onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;console.log("inner",height, margin, faktor);if(height>heightMiddle){changeMargin(x=>x-2.5);changeFaktor(x=>x-0.04)}}}>
+                    <Text style={{...styles.text, alignSelf:"flex-start", fontSize:18}}> Sprecher auswählen:</Text>
+                    <View style={{height:faktor*190}}>
+                        <FlatList
+                            numColumns={2}
+                            data={kurse[kursIndex].Uebungen[uebungsIndex].VersionenNachSprecher}
+                            keyExtractor={item=>item.Sprecher}
+                            renderItem={renderSprecher}
+                        ></FlatList>
+                    </View>
+                </View>
             </View>
             {/*sprecher===""? <Text>...</Text>:
             <FlatList 
@@ -93,6 +100,7 @@ export const VersionsAuswahl =({navigation, route})=>{
                 keyExtractor={item=>item.Dauer.toString()}
                 renderItem={renderDauer}
                 ></FlatList> */}
+            <View style={{flex:1, alignItems:"center"}}>   
             <View style = {{flexDirection: "row", justifyContent: "center"}}>
                 <View style= {{flex:1, justifyContent: "center", alignItems:"flex-end", marginRight:10}}>
                     {dauerArray().indexOf(dauer) > 0&&<TouchableOpacity onPress = {()=> changeDauer(dauerArray()[dauerArray().indexOf(dauer)-1])}>
@@ -115,7 +123,7 @@ export const VersionsAuswahl =({navigation, route})=>{
                         </TouchableOpacity>}
                 </View>
             </View>
-            <Fontisto name="stopwatch" color="white" size={40} style={{marginTop:-30, marginLeft:60, marginBottom:-20}}/>
+            <Fontisto name="stopwatch" color="white" size={40} style={{marginTop:-30, marginLeft:60, marginBottom:-10}}/>
             <View style={{flex:1,  justifyContent:"center"}}>
                 <TouchableOpacity style={styles.button} onPress={()=>abspielen()}>
                     <LinearGradient
@@ -127,6 +135,7 @@ export const VersionsAuswahl =({navigation, route})=>{
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
+            </View> 
             
             <View style={{height:60}}/>
         </ImageBackground>

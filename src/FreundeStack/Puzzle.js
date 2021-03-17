@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Modal, Share, Image, ImageBackground, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, Modal, Share, Image, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -57,6 +57,18 @@ export const Puzzle = ({route, navigation}) => {
         }
         
     }
+
+    const löschenAlert = async() => {
+        Alert.alert(
+            'Achtung.',
+            'Willst du dieses Puzzle wirklich löschen?',
+    
+            // Wenn "Löschen" betätigt wird, werden die AccountDaten gelöscht
+            [{ text: 'Löschen', onPress: () => löschen() } , { text: 'Abbrechen' }],
+            { cancelable: true }
+          );
+    }
+
     const löschen=async()=>{
         delete userDataTemp.friends.puzzles[route.params.id]
         changeUserData(userDataTemp)
@@ -193,7 +205,7 @@ export const Puzzle = ({route, navigation}) => {
                                 <Text style={{...styles.text, color:'#0F113A', fontSize:18}}>Teil einsetzen</Text>
                         </LinearGradient>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{alignItems:'center', marginTop:20}} onPress={()=>löschen()}>
+                    <TouchableOpacity style={{alignItems:'center', marginTop:20}} onPress={()=>löschenAlert()}>
                         <Text style={{...styles.text, textDecorationLine:'underline', fontSize:13}}>Puzzle löschen</Text>
                     </TouchableOpacity>
                 </View>
