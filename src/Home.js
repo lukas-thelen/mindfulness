@@ -85,7 +85,7 @@ const HomeRoot = ({navigation})=>{
             <Text style={styles.text}>Hallo {username}!</Text> 
             <Text style={styles.text}>Schön, dass du wieder da bist!</Text>
           </View>
-          <View style={{flex:0.1, alignItems:'center', justifyContent:'center', flexDirection:'row', marginVertical:5}}>
+          <View style={{flex:0.1, alignItems:'center', justifyContent:'center', flexDirection:'row', marginTop:5, overflow:"visible"}}>
             <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Nächste</Text>
             <InstantStart />
             <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Übung</Text>
