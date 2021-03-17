@@ -18,7 +18,7 @@ const initTime = new Date()
 initTime.setHours(18)
 initTime.setMinutes(0)
 
-const [notifications, changeNotifications] = useState(true);
+const [notifications, changeNotifications] = useState(false);
 const [timepicker, showTimepicker] = useState(false);
 const [times, changeTimes] = useState([initTime]);
 const [indexTime, changeIndexTime] = useState(0)
@@ -136,9 +136,9 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
         }
         return(
             <View style= {styles.reihe}>
-                <Text style={styles.text}>{index+1}. Uhrzeit:  </Text>
-                <TouchableOpacity onPress={()=>{showTimepicker(true); changeIndexTime(index)}}>
-                    <Text style={styles.text}>{item!=null ? item.getHours().toString()+":"+minutes+" Uhr":"(hier eingeben)"}</Text>
+                <Text style={notifications?styles.text:styles.textDisabled}>{index+1}. Uhrzeit:  </Text>
+                <TouchableOpacity disabled={!notifications}onPress={()=>{showTimepicker(true); changeIndexTime(index)}}>
+                    <Text style={notifications?styles.text:styles.textDisabled}>{item!=null ? item.getHours().toString()+":"+minutes+" Uhr":"(hier eingeben)"}</Text>
                 </TouchableOpacity>
                 {Platform.OS === 'ios'?
                     <DateTimePickerModal
@@ -175,7 +175,7 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                         />
                     </View>
 
-                    {notifications&& <View style= {styles.reihe}>
+                    {/*notifications&& <View style= {styles.reihe}>
                         <Text style={styles.text}>Anzahl: </Text>
                         <TextInput 
                             defaultValue={""+anzahl}
@@ -183,15 +183,26 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                             keyboardType={'numeric'} onChangeText={number => {onChangeAnzahl(number)}}>
                         </TextInput>
                         {hinweis&&<Text style={{color:"red", fontWeight:"bold"}}>!</Text>}
-                    </View>}
+                    </View>*/}
 
-                    {notifications&& <View style={{height:'50%'}}>
+                    <View style={styles.reihe}>
+                        <Text style={notifications?styles.text:styles.textDisabled}>Anzahl:   </Text>
+                        <TouchableOpacity disabled={anzahl===1||!notifications} onPress={()=>{changeAnzahl(x=>{onChangeAnzahl(x-1); return x-1})}}>
+                            <Ionicons name="chevron-back-circle-outline" size={20} color={anzahl===1||!notifications?"#ffffff55":"white"}/>
+                        </TouchableOpacity>
+                        <Text style={notifications?styles.text:styles.textDisabled}>  {anzahl}  </Text>
+                        <TouchableOpacity disabled={anzahl===5||!notifications} onPress={()=>{changeAnzahl(x=>{onChangeAnzahl(x+1); return x+1})}}>
+                            <Ionicons name="chevron-forward-circle-outline" size={20} color={anzahl===5||!notifications?"#ffffff55":"white"}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{flexShrink:1}}>
                         <FlatList
                             data={times}
                             keyExtractor={(item, index)=>index.toString()}
                             renderItem={renderUhrzeit}
                         ></FlatList>
-                    </View>}
+                    </View>
 
                     <View style={{marginTop:10}}>
                         <TouchableOpacity style={styles.button} onPress={()=>storeData()}>
@@ -281,5 +292,11 @@ const styles = StyleSheet.create({
         shadowOffset: {width:0, height:4},
         shadowRadius: 4,
         shadowOpacity: 0.4,
+        marginBottom:15,
     },
+    textDisabled:{
+        color: '#ffffff55',
+        fontSize: 16,
+        fontFamily: 'Poppins_400Regular'
+    }
   });
