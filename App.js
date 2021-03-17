@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView,Keyboard, Image, TouchableOpacity,StatusBar} from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { DarkTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Linking from 'expo-linking';
@@ -141,7 +141,7 @@ export const Tabnavigator = () =>{
             <Appeinfuehrung changeEinfuehrungVisible={changeEinfuehrungVisible}/>
           </Modal>
         
-        <NavigationContainer>
+        <NavigationContainer theme={DarkTheme}>
           <Tab.Navigator 
             initialRouteName="Home"
             tabBarOptions={{
