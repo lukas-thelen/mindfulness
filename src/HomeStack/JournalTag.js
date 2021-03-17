@@ -193,7 +193,7 @@ export const JournalTag = ({navigation, route}) => {
                 </View>
                 
                 <View style={styles.background}>
-                <Text style={styles.text}>Möchtest du noch was loswerden?</Text>
+                <Text style={styles.text}>Möchtest Du noch was loswerden?</Text>
                 <TextInput blurOnSubmit={true} multiline={true}defaultValue={sonstiges} onChangeText={changeSonstiges} style={styles.textBox}></TextInput>
                 </View>
                 

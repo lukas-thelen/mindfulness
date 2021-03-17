@@ -9,10 +9,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 export const AppInfos = () => {
 
     const infoUeberUns = "Wir sind eine Gruppe von Studierenden, die sich als Ziel gesetzt haben, ihr in den letzten Jahren erlerntes Wissen in der Psychologie und der Informationstechnologie effizient und professionell, im Rahmen eines Praxisprojekts, anzuwenden.\n\n"+
-                        "Unser Ziel ist die Entwicklung einer App, durch die Gamer*innen ihre Achtsamkeit in gewohnter Umgebung trainieren und verbessern können. Wir wollen dir zeigen, wie du mit simplen Methoden deine Achtsamkeit trainierst und diese dazu nutzt, um aufmerksamer durch dein Leben zu gehen.​"
+                        "Unser Ziel ist die Entwicklung einer App, durch die Gamer*innen ihre Achtsamkeit in gewohnter Umgebung trainieren und verbessern können. Wir wollen dir zeigen, wie Du mit simplen Methoden deine Achtsamkeit trainierst und diese dazu nutzt, um aufmerksamer durch dein Leben zu gehen.​"
 
     const unsereMission = "Unser Ziel ist es deine Achtsamkeit zu verbessern.\n"+
-                            "Hierzu nutzen wir verschiedene Achtsamkeitstechniken und Methoden, die wir speziell für Gamer*innen angepasst haben. Dafür haben wir unsere App „Upgrade your mind“ entwickelt. Diese soll eine simple und ansprechende Lernumgebung speziell für Gamer*innen schaffen, in der du mit Entspannung und Konzentration kognitive Eigenschaften trainieren kannst. Diese werden dich nachhaltig und weiterführend im aktuellen Moment und deiner Zukunft unterstützen.\n"+
+                            "Hierzu nutzen wir verschiedene Achtsamkeitstechniken und Methoden, die wir speziell für Gamer*innen angepasst haben. Dafür haben wir unsere App „Upgrade your mind“ entwickelt. Diese soll eine simple und ansprechende Lernumgebung speziell für Gamer*innen schaffen, in der Du mit Entspannung und Konzentration kognitive Eigenschaften trainieren kannst. Diese werden dich nachhaltig und weiterführend im aktuellen Moment und deiner Zukunft unterstützen.\n"+
                             "Lass uns dein Partner beim Erreichen deiner Ziele sein.​"
 
     return (

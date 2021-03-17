@@ -83,7 +83,7 @@ const HomeRoot = ({navigation})=>{
           <View style={{flexGrow: 0.25}}></View>
           <View style={{flex:0.15, alignItems:'center', justifyContent:'flex-end'}}>
             <Text style={styles.text}>Hallo {username}!</Text> 
-            <Text style={styles.text}>Schön, dass du wieder da bist!</Text>
+            <Text style={styles.text}>Schön, dass Du wieder da bist!</Text>
           </View>
           <View style={{flex:0.1, alignItems:'center', justifyContent:'center', flexDirection:'row', marginTop:5}}>
             <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Nächste</Text>
@@ -281,8 +281,7 @@ const styles = StyleSheet.create({
     gradient: {
       alignItems: 'center',
       borderRadius: 20,
-      paddingBottom: 4,
-      paddingTop: 4,
+      paddingVertical:4,
       paddingHorizontal: 20,
     },
     button: {

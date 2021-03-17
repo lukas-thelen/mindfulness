@@ -11,7 +11,7 @@ export const benchmarks = {
     },
 
     Ü5: {
-        title: "Mühsam ernähert sich das Eichhörnchen!",
+        title: "Mühsam ernährt sich das Eichhörnchen!",
         goal: 5,
         description: "Führe mindestens 5 Übungen durch!",
         var: "meditations",
@@ -99,21 +99,21 @@ export const benchmarks = {
     S7: {
         title: "Was ist schon eine Woche?",
         goal: 7,
-        description: "Erreiche ein Tägliche Streak von 7 Tagen",
+        description: "Erreiche einen täglichen Streak von 7 Tagen",
         var: "streak",
         picture: require("mindfulness/assets/Erfolge/S7.png"),
     },
     S30: {
         title: "Was ist schon ein Monat?",
         goal: 30,
-        description: "Erreiche ein Tägliche Streak von 30 Tagen",
+        description: "Erreiche einen täglichen Streak von 30 Tagen",
         var: "streak",
         picture: require("mindfulness/assets/Erfolge/S30.png"),
     },
     S365: {
         title: "Was ist schon ein Jahr?",
         goal: 365,
-        description: "Erreiche ein Tägliche Streak von 365 Tagen",
+        description: "Erreiche einen täglichen Streak von 365 Tagen",
         var: "streak",
         picture: require("mindfulness/assets/Erfolge/S365.png"),
     },
@@ -121,7 +121,7 @@ export const benchmarks = {
     V10Uhr: {
         title: "Der frühe Vogel",
         goal: 30,
-        description: "Übe mindestens 30 Minuten vor 10 Uhr!",
+        description: "Übe mindestens 30 Minuten vor 10 Uhr morgens!",
         var: "meditationsEarly",
         picture: require("mindfulness/assets/Erfolge/V10Uhr.png"),
     },
@@ -142,7 +142,7 @@ export const benchmarks = {
     E5: {
         title: "Entdecker:in",
         goal: 5,
-        description: "Beende 5 verschiedene Übungen ein mal!",
+        description: "Beende 5 verschiedene Übungen ein Mal!",
         var: "xMeditations",
         picture: require("mindfulness/assets/Erfolge/E5.png"),
     },
@@ -161,9 +161,9 @@ export const benchmarks = {
         picture: require("mindfulness/assets/Erfolge/xErfolge.png"),
     },
     R3:{
-        title: "Übung mach den Meister!",
+        title: "Übung macht den Meister!",
         goal: 3,
-        description: "Wiederhole die selbe Übung 3 mal!",
+        description: "Wiederhole die selbe Übung 3 Mal!",
         var: "maxRepeats",
         picture: require("mindfulness/assets/Erfolge/R3.png"),
     },
