@@ -52,7 +52,7 @@ export const Journal = (props) => {
         },
         background: {
             backgroundColor: "#0F113Ab2",
-            flex:0.6,
+            flex:0.7,
             borderRadius: 10,
             alignItems: 'center',
             width: '90%',
@@ -169,14 +169,14 @@ export const Journal = (props) => {
                     <InstantStart/>
                 </View>
                 <View style={{flex:1, justifyContent:"flex-end", alignItems:"center", width:"100%"}}>
-                <View style={styles.background} onLayout={(event)=>{var{height}=event.nativeEvent.layout;changeXHeight(height)}}>
-                    <FlatList 
-                        style={{marginVertical:10, width:'95%'}}
-                        data={wochentage}
-                        keyExtractor={(item, index)=>index.toString()}
-                        renderItem={renderTag}>
-                    </FlatList>
-                </View>
+                    <View style={styles.background} onLayout={(event)=>{var{height}=event.nativeEvent.layout;changeXHeight(height)}}>
+                        <FlatList 
+                            style={{marginVertical:10, width:'95%'}}
+                            data={wochentage}
+                            keyExtractor={(item, index)=>index.toString()}
+                            renderItem={renderTag}>
+                        </FlatList>
+                    </View>
 
                 <View style={{flex:0.2, alignContent:'center', width:'100%', paddingHorizontal:10}}>
                     <View style={styles.reihe}>

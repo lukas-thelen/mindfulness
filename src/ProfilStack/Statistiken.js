@@ -204,7 +204,6 @@ export const Statistiken = ({navigation}) => {
                 end={{ x: 0, y: 0.35}}
                 style={styles.chartBackground}>
                 <View style={{flex:1}}>
-                    <View style={{flexShrink:1}}>
                         <Chart
                                 style={{ height:220}}
                                 xDomain={{ min: 6, max: 11 }}
@@ -215,7 +214,7 @@ export const Statistiken = ({navigation}) => {
                                 <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12], label:{color: '#fff', fontFamily:'Poppins_400Regular'}}}}/>
                                 <Line data={getHistoryStress()} smoothing="none" theme={{ stroke: { color: colors[3], width: 4 } }} />
                         </Chart>
-                    </View>
+                    <ScrollView>
                     <View style={{flexDirection:"row", alignItems:"center", marginTop:20, marginLeft:10}}>
                             <View style={{marginLeft:5, marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[3]}}/>
                             <Text style={styles.text}>Stress</Text>
@@ -237,6 +236,7 @@ export const Statistiken = ({navigation}) => {
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
+                    </ScrollView>
                 </View>
                 </LinearGradient>
                 :

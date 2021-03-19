@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Alert, ScrollView, SectionList, ImageBackground, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Alert, ScrollView, SectionList, ImageBackground, TextInput, KeyboardAvoidingView} from 'react-native';
 
 
 import {AppContext} from "../context.js"; 
@@ -164,7 +164,7 @@ export const InfoEcke=(props)=>{
                     </View>
                 </View>
                 
-                <View style={{height:60}}/>
+                <KeyboardAvoidingView style={{height:60}} behavior="height"/>
             
         </ImageBackground>
 

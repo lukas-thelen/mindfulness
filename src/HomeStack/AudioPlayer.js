@@ -12,12 +12,14 @@ import { checkBenchmarks } from '../benchmarks.js';
 import { LinearGradient } from 'expo-linear-gradient';
 import { randomPerson } from '../../assets/Personen/randomPerson.js';
 import { uebungen } from '../Kursdaten/Uebungsliste.js';
+import { useKeepAwake } from 'expo-keep-awake';
 
 const soundObject = new Audio.Sound();
 
 
 //AudioPlayer- Component
 export const AudioPlayer =({navigation, route})=>{
+    useKeepAwake()
     const [modalVisible, changeModalVisible] = useState(false)
     const [isPlaying, changeIsPlaying] = useState(true)
     const [progress, changeProgress] = useState(0)

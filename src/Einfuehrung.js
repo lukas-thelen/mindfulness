@@ -12,7 +12,7 @@ export const Appeinfuehrung =(props) => {
     const introSteps =[
         {bild: require("mindfulness/assets/Intro/Screenshot_01.jpg"), text:"Wir zeigen dir kurz die wichtigsten Funktionen der App. \n Das ist deine Startseite! Von hier aus kommst du über den Play-Button oder die Kurse schnell zu den Übungen."},
         {bild: require("mindfulness/assets/Intro/Screenshot_02.jpg"), text:"Für jede Übung kannst du dir den Sprecher aussuchen. Manchmal stehen dir zusätzlich unterschiedlich lange Übungen zur Verfügung."},
-        {bild: require("mindfulness/assets/Intro/Screenshot_03.jpg"), text:"Swipe auf der Startseite nach Recht, um zu deinem Tagebuch-Bereich zu kommen."},
+        {bild: require("mindfulness/assets/Intro/Screenshot_03.jpg"), text:"Swipe auf der Startseite nach rechts, um zu deinem Tagebuch-Bereich zu kommen."},
         {bild: require("mindfulness/assets/Intro/Screenshot_04.jpg"), text:"Hier hast du die Möglichkeit, am Ende des Tages dein Befinden zu dokumentieren."},
         {bild: require("mindfulness/assets/Intro/Screenshot_05.jpg"), text:"Wenn du nach links swipest, kommst du zur Auflistung aller Übungen. Aber achtung: Übungen, die deinem Level nicht entsprechen, sind mit ! markiert. "},
         {bild: require("mindfulness/assets/Intro/Screenshot_07.jpg"), text:"In der Tabbar unten findest du den Bereich \"Freunde\", in dem du Zusammen mit deinen Freinden Puzzles lösen kannst."},
@@ -47,13 +47,16 @@ export const Appeinfuehrung =(props) => {
                     <Text style={styles.text}>{introSteps[counter].text}</Text>
                 </View>
                 <View style={{flexDirection:"row"}}>
-                    <TouchableOpacity style={{marginBottom:10, flex:1}} onPress={()=>{changeCounter(x=>x-1)}}>
+                {counter!=0&&<TouchableOpacity style={{backgroundColor:"#D476D5",marginBottom:10, flex:1, marginHorizontal:5, borderRadius:15}} onPress={()=>{changeCounter(x=>x-1)}}>
                         <Text style={styles.text}>{counter===0?" ":"zurück"}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{marginBottom:10, flex:1}} onPress={()=>{weiter()}}>
+                    </TouchableOpacity>}
+                    <TouchableOpacity style={{backgroundColor:"#D476D5",marginBottom:10, flex:1, marginHorizontal:5, borderRadius:15}} onPress={()=>{weiter()}}>
                         <Text style={styles.text}>{counter===introSteps.length-1?"fertig":"weiter"}</Text>
                     </TouchableOpacity>
                 </View> 
+                    <TouchableOpacity style={{marginBottom:20}} onPress={()=>{handleFinish()}}>
+                        <Text style={{...styles.text, textDecorationLine:"underline"}}>überspringen</Text>
+                    </TouchableOpacity>
                 <Progress.Bar progress={counter/(introSteps.length-1)} width={300}height={3} color="white" borderColor="#00000000" unfilledColor="#0F113A" style={{marginBottom:5}} />
             </View>
         </View>
