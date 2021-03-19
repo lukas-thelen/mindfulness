@@ -14,16 +14,22 @@ export const StartBildschirm = (props) =>{
       
       <ImageBackground source={require('../assets/ErsteSeite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
        
-        <Text style={{...styles.textM, fontSize:40, marginBottom: 2}}>Upgrade</Text>
-        <Text style={{...styles.textM, fontSize:25, marginBottom: 60}}>your mind</Text>
+        <Text style={{...styles.textM, fontSize:50, marginBottom: 2}}>Upgrade</Text>
+        <Text style={{...styles.textM, fontSize:30, marginBottom: 60}}>your mind</Text>
 
         
-        <TouchableOpacity style={styles.containertext1} onPress={() =>props.changeInitPages('Anmelden')}>
-          <Text style={{...styles.text, fontSize: 20}}>Anmelden</Text>
+        <TouchableOpacity style={styles.button} onPress={() =>props.changeInitPages('Anmelden')}>
+          <LinearGradient
+              colors={['#D476D5', '#C77BD8', '#8F92E3']}
+              start={{ x: 0, y: 0.4 }}
+              end={{ x: 0, y: 1 }}
+              style={styles.gradient}>
+                <Text style={{...styles.text, fontSize:20}}>Anmelden</Text>
+            </LinearGradient>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('Registrieren')}>
-            <Text style={{...styles.text, fontSize: 16,textDecorationLine: "underline"}}>Registrieren</Text>
+            <Text style={{...styles.text, textDecorationLine: "underline"}}>Registrieren</Text>
         </TouchableOpacity>
         <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
        
@@ -88,5 +94,19 @@ const styles = StyleSheet.create({
     textM: {
       color:'#fff',
       fontFamily:'Poppins_500Medium'
-    } 
+    },
+    gradient: {
+      alignItems: 'center',
+      borderRadius: 18,
+      paddingVertical:4,
+      paddingHorizontal: 25,
+    },
+    button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {width:0, height:4},
+      shadowRadius: 4,
+      shadowOpacity: 0.4,
+    },
   });

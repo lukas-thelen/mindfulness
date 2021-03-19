@@ -35,7 +35,7 @@ export const KontoInfos = () => {
     const deleteAccount = async() => {
         Alert.alert(
             'Achtung.',
-            'Willst du deinen Account wirklich löschen?',
+            'Willst Du deinen Account wirklich löschen?',
     
             // Wenn "Löschen" betätigt wird, werden die AccountDaten gelöscht
             [{ text: 'Löschen', onPress: () => afterConfirm() } , { text: 'Abbrechen' }],

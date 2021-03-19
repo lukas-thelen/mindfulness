@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   button: {
-    marginTop: 30,
+    marginTop: 40,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',

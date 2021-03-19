@@ -35,7 +35,7 @@ export const Init =(props)=>{
             appData[userData.eMail].alleGehoertenUebungen=[]
             appData[userData.eMail].journal ={}
             appData[userData.eMail].introSeen =false
-            appData[userData.eMail].friends={friends:{mindfulnessBot:{name:"mindfulness Bot"}}, puzzles:{}, pieces:0}
+            appData[userData.eMail].friends={friends:{mindfulnessBot:{name:"Mindfulness Bot"}}, puzzles:{}, pieces:0}
             appData[userData.eMail].benchmarks ={
               meditations: 0,
               meditationMinutes:0,

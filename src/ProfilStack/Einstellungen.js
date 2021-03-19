@@ -61,8 +61,8 @@ const {appData, userData, changeAppData, changeUserData, changeLoggedIn,changeCu
                     }
                     Notifications.scheduleNotificationAsync({
                         content: {
-                          title: 'Ugrade Your Mind!',
-                          body: "Hattest du heute schon die Zeit runterzukommen? Starte jetzt eine neue Übung.",
+                          title: 'Upgrade Your Mind!',
+                          body: "Hattest Du heute schon die Zeit runterzukommen? Starte jetzt eine neue Übung.",
                         },
                         trigger: {
                             hour: times[t].getHours(), 

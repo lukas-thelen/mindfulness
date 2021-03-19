@@ -80,6 +80,7 @@ export const ProfilRoot = ({navigation})=> {
           <View style={{flex:0.2, alignItems:'center', width:'90%'}}>
           <View style={styles.streak} >
               <Ionicons name="flame-outline" size={16} color="white" />
+
               <Text style={{...styles.text, marginLeft:4}}>Streak {userData.benchmarks.streak}</Text>
               <Text style={{...styles.text, marginLeft:'auto'}}>Gesamtminuten {getMinutes()}</Text>
             </View> 

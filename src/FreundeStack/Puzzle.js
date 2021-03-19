@@ -60,8 +60,8 @@ export const Puzzle = ({route, navigation}) => {
 
     const löschenAlert = async() => {
         Alert.alert(
-            'Achtung.',
-            'Willst du dieses Puzzle wirklich löschen?',
+            'Achtung!',
+            'Willst Du dieses Puzzle wirklich löschen?',
     
             // Wenn "Löschen" betätigt wird, werden die AccountDaten gelöscht
             [{ text: 'Löschen', onPress: () => löschen() } , { text: 'Abbrechen' }],
@@ -154,7 +154,7 @@ export const Puzzle = ({route, navigation}) => {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={{...styles.text, fontSize:16, textAlign:'center'}}>Wie viele Teile möchstest du einsetzen?</Text>
+                            <Text style={{...styles.text, fontSize:16, textAlign:'center'}}>Wie viele Teile möchstest Du einsetzen?</Text>
                             <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", marginTop:30, width:120}}>
                                 <Text style={{...styles.text, fontSize:20, marginHorizontal:20}}>{layedPieces}</Text>
                                 <View style={{flexDirection:"column", alignItems:'center'}}>
@@ -169,8 +169,8 @@ export const Puzzle = ({route, navigation}) => {
                             <TouchableOpacity style={{...styles.button, marginTop:30}} onPress={()=>{layPieces()}}>
                                 <LinearGradient
                                     colors={['#D476D5', '#C77BD8', '#8F92E3']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 1, y: 2 }}
+                                    start={{ x: 0, y: 0.4 }}
+                                    end={{ x: 0, y: 1 }}
                                     style={styles.gradient}>
                                         <Text style={{...styles.text, fontSize:16}}>Einsetzen</Text>
                                 </LinearGradient>

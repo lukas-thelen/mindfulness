@@ -296,7 +296,7 @@ export const TextPlayer =({navigation, route})=>{
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 2 }}
                     style={styles.gradient}>
-                        <Text style={styles.text25}>Übung abschließen</Text>
+                        <Text style={{...styles.modalText, color:'#0F113A', fontSize:15}}>Übung abschließen</Text>
                     </LinearGradient>
                 </TouchableOpacity>
             }            
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     },
     gradient: {
         alignItems: 'center',
-        borderRadius: 16,
+        borderRadius: 14,
         paddingVertical: 4,
         paddingHorizontal: 20,
       },
@@ -363,7 +363,8 @@ const styles = StyleSheet.create({
       },
     title:{
         color:"white",
-        fontSize:30,
+        fontSize:26,
+        fontFamily:'Poppins_500Medium'
     }
   });
 

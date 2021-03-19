@@ -117,7 +117,7 @@ export const Journal = (props) => {
             navigation.navigate("Wähle die Dauer", {kursIndex:uebungen[found].KursIndex, uebungsIndex:uebungen[found].UebungsIndex})
             }
         }}>
-        <Ionicons name="play" size={50} color="#8F92E3" style={styles.playButton} /> 
+        <Ionicons name="play" size={50} color="#464982" style={styles.playButton} /> 
         </TouchableOpacity>
     )
     }

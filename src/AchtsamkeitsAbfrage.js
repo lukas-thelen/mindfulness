@@ -23,8 +23,8 @@ export const AchtsamkeitsAbfrage =(props)=>{
     const abschicken =()=>{
       if (mindfulnessLevelData === ""){
         Alert.alert(
-          'Bitte wähl dein Level aus',
-          'Falls du dir nicht sicher bist, nimm Anfänger:in',
+          'Bitte wähle dein Level aus',
+          'Falls Du dir nicht sicher bist, wähle Anfänger:in',
           [{ text: 'OK'}],
           { cancelable: false }
         );
@@ -40,8 +40,8 @@ export const AchtsamkeitsAbfrage =(props)=>{
 
     
     return(
-      <ImageBackground source={require('../assets/ErsteSeite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
-          <Text style= {{...styles.text, marginBottom:20}}>Wie gut kennst du dich mit Achtsamkeitstechniken aus?</Text>
+      <ImageBackground source={require('../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
+          <Text style= {{...styles.text, marginBottom:20}}>Wie gut kennst Du dich mit Achtsamkeitstechniken aus?</Text>
           <RadioButtonRN
             activeColor={'#89FFF1'}
             textStyle={{fontFamily:'Poppins_400Regular', fontSize:16, color:'#fff', marginLeft:5}}
