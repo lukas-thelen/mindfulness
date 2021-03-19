@@ -11,6 +11,7 @@ import { Erfolge } from './ProfilStack/Erfolge';
 import { KontoInfos } from './ProfilStack/KontoInfos';
 import { AppInfos } from './ProfilStack/AppInfos';
 import { Ionicons } from '@expo/vector-icons';
+import { StressSkalaMonthly } from './ProfilStack/StressSkalaMonthly';
 
 const ProfilStack = createStackNavigator();
 
@@ -77,11 +78,12 @@ export const ProfilRoot = ({navigation})=> {
 
 
           <View style={{flex:0.2, alignItems:'center', width:'90%'}}>
-          <TouchableOpacity style={styles.streak} onPress={()=>navigation.navigate("Statistiken")}>
+          <View style={styles.streak} >
               <Ionicons name="flame-outline" size={16} color="white" />
-              <Text style={{...styles.text, marginLeft:4}}>Streak: {userData.benchmarks.streak}</Text>
-              <Text style={{...styles.text, marginLeft:'auto'}}>Gesamtminuten: {getMinutes()}</Text>
-            </TouchableOpacity> 
+
+              <Text style={{...styles.text, marginLeft:4}}>Streak {userData.benchmarks.streak}</Text>
+              <Text style={{...styles.text, marginLeft:'auto'}}>Gesamtminuten {getMinutes()}</Text>
+            </View> 
           </View>
 
           <View style={{flex:0.65, width: '90%'}}>
@@ -118,6 +120,17 @@ export const ProfilScreen =() => {
           }}/>
           <ProfilStack.Screen name="Einstellungen" component={Einstellungen} options={{
             title: 'Einstellungen',
+            headerStyle: {
+              backgroundColor: '#0F113A',
+            },
+            headerTintColor: '#D476D5',
+            headerTitleStyle: {
+              fontSize: 25,
+              fontFamily: 'Poppins_500Medium'
+            },
+          }}/>
+          <ProfilStack.Screen name="Stress-Umfrage" component={StressSkalaMonthly} options={{
+            title: 'Stress-Umfrage',
             headerStyle: {
               backgroundColor: '#0F113A',
             },

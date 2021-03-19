@@ -19,7 +19,6 @@ export const Appeinfuehrung =(props) => {
         {bild: require("mindfulness/assets/Intro/Screenshot_08.jpg"), text:"Teile dazu einfach die Links mit deinen Freunden und schon profitierst Du auch von ihrem Forschritt."},
         {bild: require("mindfulness/assets/Intro/Screenshot_09.jpg"), text:"Deckt gemeinsam neue Motive auf."},
         {bild: require("mindfulness/assets/Intro/Screenshot_10.jpg"), text:"Außerdem kommst Du über die Tabbar zu deinem Profilbereich, in dem Du deine Erfolge und Statistiken einsehen kannst."},
-
     ]
     
     const handleFinish =async()=>{
@@ -47,13 +46,17 @@ export const Appeinfuehrung =(props) => {
                     <Text style={styles.text}>{introSteps[counter].text}</Text>
                 </View>
                 <View style={{flexDirection:"row"}}>
-                    <TouchableOpacity style={{marginBottom:10, flex:1}} onPress={()=>{changeCounter(x=>x-1)}}>
+
+                {counter!=0&&<TouchableOpacity style={{backgroundColor:"#D476D5",marginBottom:10, flex:1, marginHorizontal:5, borderRadius:15}} onPress={()=>{changeCounter(x=>x-1)}}>
                         <Text style={styles.text}>{counter===0?" ":"Zurück"}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{marginBottom:10, flex:1}} onPress={()=>{weiter()}}>
+                    </TouchableOpacity>}
+                    <TouchableOpacity style={{backgroundColor:"#D476D5",marginBottom:10, flex:1, marginHorizontal:5, borderRadius:15}} onPress={()=>{weiter()}}>
                         <Text style={styles.text}>{counter===introSteps.length-1?"Fertig":"Weiter"}</Text>
                     </TouchableOpacity>
                 </View> 
+                    <TouchableOpacity style={{marginBottom:20}} onPress={()=>{handleFinish()}}>
+                        <Text style={{...styles.text, textDecorationLine:"underline"}}>überspringen</Text>
+                    </TouchableOpacity>
                 <Progress.Bar progress={counter/(introSteps.length-1)} width={300}height={3} color="white" borderColor="#00000000" unfilledColor="#0F113A" style={{marginBottom:5}} />
             </View>
         </View>

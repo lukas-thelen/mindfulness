@@ -76,6 +76,7 @@ export const Erfolge = () => {
                                 <View style = {{height:12, backgroundColor:'#333', borderRadius:100,width:200, alignSelf:"center"}}>
                                     <View style = {{maxWidth:"100%", minWidth: 3, width:percentage(benchmarks[modal]), backgroundColor: "#89FFE3", height: "100%", borderRadius:100}}></View>
                                 </View>
+                                <Text style={styles.text}>{benchmarks[modal]&&Math.min(userData.benchmarks[benchmarks[modal].var],benchmarks[modal]&&benchmarks[modal].goal)} / {benchmarks[modal]&&benchmarks[modal].goal}</Text>
                             </View>
                             <View style={{flex:0.2, justifyContent:"flex-end"}}>
                                 <TouchableOpacity  onPress={()=>changeModal("")}>

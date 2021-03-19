@@ -12,7 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 
-export const Statistiken = () => {
+export const Statistiken = ({navigation}) => {
     const [dailyStress, changeDailyStress] =useState(false)
     const [craving, changeCraving] =useState(false)
     const [pflichten, changePflichten] =useState(false)
@@ -158,6 +158,29 @@ export const Statistiken = () => {
         return array
     }
 
+    const stressAktiv=()=>{
+        const today=new Date()
+        var lastMonth = new Date()
+        lastMonth.setMonth(lastMonth.getMonth()-1)
+        var lastMonthString = lastMonth.toDateString()
+        lastMonthString=lastMonthString[4]+lastMonthString[5]+lastMonthString[6]+lastMonthString[11]+lastMonthString[12]+lastMonthString[13]+lastMonthString[14]
+        var dateString = today.toDateString()
+        dateString=dateString[4]+dateString[5]+dateString[6]+dateString[11]+dateString[12]+dateString[13]+dateString[14]
+        if(!userData.progress.stressData[dateString]){
+            if(userData.progress.stressData[lastMonthString]){
+                var lastDate=new Date(userData.progress.stressData[lastMonthString].date)
+                lastDate.setDate(lastDate.getDate()+14)
+                console.log(lastDate)
+                if(lastDate<today){
+                    return true
+                }
+                return false
+            }
+            return true
+        }
+        return false
+    }
+
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
         
@@ -181,7 +204,6 @@ export const Statistiken = () => {
                 end={{ x: 0, y: 0.35}}
                 style={styles.chartBackground}>
                 <View style={{flex:1}}>
-                    <View style={{flexShrink:1}}>
                         <Chart
                                 style={{ height:220}}
                                 xDomain={{ min: 6, max: 11 }}
@@ -192,11 +214,29 @@ export const Statistiken = () => {
                                 <HorizontalAxis tickCount={6} theme={{labels:{formatter:x=>monatsÜbersetzer[(1+x+new Date().getMonth())%12], label:{color: '#fff', fontFamily:'Poppins_400Regular'}}}}/>
                                 <Line data={getHistoryStress()} smoothing="none" theme={{ stroke: { color: colors[3], width: 4 } }} />
                         </Chart>
-                    </View>
+                    <ScrollView>
                     <View style={{flexDirection:"row", alignItems:"center", marginTop:20, marginLeft:10}}>
                             <View style={{marginLeft:5, marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[3]}}/>
                             <Text style={styles.text}>Stress</Text>
                     </View>
+                    <View style={{backgroundColor:"white", borderRadius:15, height:1, marginTop:10}}/>
+                    <View style={{alignItems:'center', padding:10}}>
+                        {stressAktiv()?<Text style={styles.text}>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
+                        <Text style={styles.text}>Du hast deine Stress-Umfrage für diesen Monat durchgeführt!</Text>}
+                    </View>
+                    
+                    <View style={styles.button}>
+                        <TouchableOpacity styles={styles.button} disabled={stressAktiv()?false:true} onPress={()=>{navigation.navigate("Stress-Umfrage",{monthly:true})}}>
+                            <LinearGradient
+                                colors={['#D476D5', '#C77BD8', '#8F92E3']}
+                                start={{ x: 0, y: 0.4 }}
+                                end={{ x: 0, y: 1 }}
+                                style={stressAktiv()?styles.gradient:{...styles.gradient, opacity:0.4}}>
+                                    <Text style={styles.text}>Zur Stress-Umfrage</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                    </ScrollView>
                 </View>
                 </LinearGradient>
                 :
@@ -328,5 +368,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         width: '90%',
         flexDirection: 'row',
+    },
+    gradient: {
+        alignItems: 'center',
+        borderRadius: 15,
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+      },
+      button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width:0, height:4},
+        shadowRadius: 4,
+        shadowOpacity: 0.4,
     },
   });

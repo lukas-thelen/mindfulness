@@ -114,6 +114,7 @@ const KognitiveProzesseListe = [
                 id:"PPKurs_2_1",
                 Name:"Geführte Meditation mit Klangschalen (kurz)",
                 Audio: true,
+                Referenz: true,
                 Kategorie:"Meditationen",
                 Beschreibung:"In der folgenden Übung wird dir eine geführte Meditationsform gezeigt. Diese wird durch Klangschalen unterstützt.",
                 Info:"Stress ist für die meisten Menschen ein allgegenwärtiger Begleiter und in gewissen Mengen auch nicht gleich ungesund. Gewisse Bewältigungsstrategien (sogenannte „Coping-Mechanismen“), die wir alle bewusst oder unbewusst anwenden, um Stress zu vermeiden oder zu reduzieren, können sich aber negativ auf unsere Lebensqualität auswirken.\n"+ 
@@ -243,6 +244,7 @@ const KognitiveProzesseListe = [
                 id:"PKurs_3_2",
                 Name:"Geführte Meditation mit Klangschalen (lang)",
                 Audio: true,
+                Referenz: true,
                 Kategorie:"Meditationen",
                 Beschreibung:"Diese Übung ist eine intensivere Klangschalen Meditation.",
                 Info:"Stress ist für die meisten Menschen ein allgegenwärtiger Begleiter und in gewissen Mengen auch nicht gleich ungesund. Gewisse Bewältigungsstrategien (sogenannte „Coping-Mechanismen“), die wir alle bewusst oder unbewusst anwenden, um Stress zu vermeiden oder zu reduzieren, können sich aber negativ auf unsere Lebensqualität auswirken.\n"+ 

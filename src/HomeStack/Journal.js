@@ -52,7 +52,7 @@ export const Journal = (props) => {
         },
         background: {
             backgroundColor: "#0F113Ab2",
-            flex:0.6,
+            flex:0.7,
             borderRadius: 10,
             alignItems: 'center',
             width: '90%',
@@ -168,17 +168,17 @@ export const Journal = (props) => {
                 <View style={{alignItems:"center", justifyContent:"center" ,flex:0.15}}>
                     <InstantStart/>
                 </View>
-                
-                <View style={styles.background} onLayout={(event)=>{var{height}=event.nativeEvent.layout;changeXHeight(height)}}>
-                    <FlatList 
-                        style={{marginVertical:10, width:'95%'}}
-                        data={wochentage}
-                        keyExtractor={(item, index)=>index.toString()}
-                        renderItem={renderTag}>
-                    </FlatList>
-                </View>
+                <View style={{flex:1, justifyContent:"flex-end", alignItems:"center", width:"100%"}}>
+                    <View style={styles.background} onLayout={(event)=>{var{height}=event.nativeEvent.layout;changeXHeight(height)}}>
+                        <FlatList 
+                            style={{marginVertical:10, width:'95%'}}
+                            data={wochentage}
+                            keyExtractor={(item, index)=>index.toString()}
+                            renderItem={renderTag}>
+                        </FlatList>
+                    </View>
 
-                <View style={{flex:0.25, alignContent:'center', width:'100%', paddingHorizontal:10}}>
+                <View style={{flex:0.2, alignContent:'center', width:'100%', paddingHorizontal:10}}>
                     <View style={styles.reihe}>
                         <TouchableOpacity style={styles.buttonRand} onPress={()=>{changeWeekchange(weekchange-1)}}>
                             <Text style={styles.text}>Woche davor</Text>
@@ -191,7 +191,7 @@ export const Journal = (props) => {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{alignItems:'center', padding:10}}>
+                    {/*<View style={{alignItems:'center', padding:10}}>
                         {stressAktiv()?<Text style={styles.text}>Behalte deinen Stress im Blick! Fülle jetzt die Umfrage für diesen Monat aus!</Text>:
                         <Text style={styles.text}>Du hast deine Stress-Umfrage für diesen Monat durchgeführt!</Text>}
                     </View>
@@ -206,7 +206,8 @@ export const Journal = (props) => {
                                     <Text style={styles.text}>Zur Stress-Umfrage</Text>
                             </LinearGradient>
                         </TouchableOpacity>
-                    </View>
+                    </View>*/}
+                </View>
                 </View>
             
             <View style={{height:60}}/>

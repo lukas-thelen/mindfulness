@@ -59,7 +59,7 @@ const HomeRoot = ({navigation})=>{
     }
     if (foundPrio!=null) found=foundPrio
     return (
-      <TouchableOpacity onPress={()=>{
+      <TouchableOpacity style={{overflow:"visible"}}onPress={()=>{
           if(uebungen[found].Audio){
             navigation.navigate("Wähle eine Version", {kursIndex:uebungen[found].KursIndex, uebungsIndex:uebungen[found].UebungsIndex})
           }else{
@@ -80,18 +80,18 @@ const HomeRoot = ({navigation})=>{
       <View key="2" >
         <ImageBackground source={require('../assets/Startseite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
           
-          <View style={{flexGrow: 0.25}}></View>
-          <View style={{flex:0.15, alignItems:'center', justifyContent:'flex-end'}}>
+          <View style={{flexGrow: 1, flexShrink:5}}></View>
+          <View style={{alignItems:'center', justifyContent:'flex-end'}}>
             <Text style={styles.text}>Hallo {username}!</Text> 
             <Text style={styles.text}>Schön, dass Du wieder da bist!</Text>
           </View>
-          <View style={{flex:0.1, alignItems:'center', justifyContent:'center', flexDirection:'row', marginTop:5}}>
+          <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', marginBottom:-10, overflow:"visible"}}>
             <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Nächste</Text>
             <InstantStart />
             <Text style={{color:'#464982', fontSize:20, fontFamily: 'Poppins_400Regular'}}>Übung</Text>
           </View>
 
-          <View style={{flexShrink:0.75, alignItems:'center', justifyContent:'flex-start'}}>
+          <View style={{flexShrink:0.75, flexGrow:0.5, alignItems:'center', justifyContent:'flex-start'}}>
           <View style={{flexDirection:'row', alignItems:'center'}}>
             <Feather name="chevrons-left" size={30} color="#5467A9" />
             <Image source={randomPerson} style={styles.image}/>

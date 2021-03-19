@@ -2,7 +2,7 @@ import React, { useState, Component } from 'react';
 import { useEffect } from 'react';
 import { render } from 'react-dom';
 import { ImageBackground } from 'react-native';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -72,15 +72,23 @@ export const UebungsInfo =({navigation, route})=>{
 
                       {/* Nur der Text wird angezeigt, wenn der Text kurz genug ist */}
                       {generalHeight<blockHeight+30?
-                        <Text style={{...styles.text, textAlign:'left', marginBottom:30}} onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;changeGeneralHeight(height)}}>
-                          {kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}
-                        </Text>
+                        <View onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;changeGeneralHeight(height)}}>
+                          <Text style={{...styles.text, textAlign:'left', marginBottom:30}} >
+                            {kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}
+                          </Text>
+                          {kurse[kursIndex].Uebungen[uebungsIndex].Referenz&&<View><Text style={{...styles.text, textAlign:'left'}}>Audioaufnahmen von:</Text>
+                                <Text style={{...styles.text, textAlign:'left', marginBottom:20, textDecorationLine:"underline"}} onPress={()=>{Linking.openURL("https://www.youtube.com/watch?v=gqCtSL8WcpA")}}>Stephan Faulhaber</Text></View>}
+                                </View>
                         :
                         <View>
 
                           {/* äußerer View beschneidet Text, wenn "mehr anzeigen" nicht aktiviert ist*/}
                           {moreGeneral?
-                            <Text style={{...styles.text, textAlign:'left', marginBottom:10}}>{kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}</Text>:
+                            <View>
+                            <Text style={{...styles.text, textAlign:'left', marginBottom:10}}>{kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}</Text>
+                            {kurse[kursIndex].Uebungen[uebungsIndex].Referenz&&<View><Text style={{...styles.text, textAlign:'left'}}>Audioaufnahmen von:</Text>
+                                <Text style={{...styles.text, textAlign:'left', marginBottom:20, textDecorationLine:"underline"}} onPress={()=>{Linking.openURL("https://www.youtube.com/watch?v=gqCtSL8WcpA")}}>Stephan Faulhaber</Text></View>}
+                                </View>:
                             <View style={{maxHeight:blockHeight, overflow:"hidden", flex:1,marginBottom:10}}>
                               <LinearGradient
                                 colors={['#ffffff00', '#ffffffb0']}
@@ -88,6 +96,8 @@ export const UebungsInfo =({navigation, route})=>{
                                 end={{ x: 0.5, y: 0.99}}
                                 style={{flexShrink:1}}>
                                 <Text style={{...styles.text, textAlign:'left', marginBottom:20}}>{kurse[kursIndex].Uebungen[uebungsIndex].Allgemeines}</Text>
+                                {kurse[kursIndex].Uebungen[uebungsIndex].Referenz&&<View><Text style={{...styles.text, textAlign:'left'}}>Audioaufnahmen von:</Text>
+                                <Text style={{...styles.text, textAlign:'left', marginBottom:20, textDecorationLine:"underline"}} onPress={()=>{Linking.openURL("https://www.youtube.com/watch?v=gqCtSL8WcpA")}}>Stephan Faulhaber</Text></View>}
                               </LinearGradient>
                             </View>
                           }
@@ -117,9 +127,9 @@ export const UebungsInfo =({navigation, route})=>{
                       <Text style={styles.textM}>{kurse[kursIndex].Uebungen[uebungsIndex].Name}</Text>
                       {/* Nur der Text wird angezeigt, wenn der Text kurz genug ist */}
                       {effectsHeight<blockHeight+30?
-                        <Text style={{...styles.text, textAlign:'left', marginBottom:30}} onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;changeEffectsHeight(height)}}>
-                          {kurse[kursIndex].Uebungen[uebungsIndex].Info}
-                        </Text>
+                          <Text style={{...styles.text, textAlign:'left', marginBottom:30}} onLayout={(event) => {var {x, y, width, height} = event.nativeEvent.layout;changeEffectsHeight(height)}}>
+                            {kurse[kursIndex].Uebungen[uebungsIndex].Info}
+                          </Text>
                         :
                         <View>
 

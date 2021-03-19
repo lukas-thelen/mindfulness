@@ -12,12 +12,14 @@ import {checkBenchmarks } from '../benchmarks.js';
 import { LinearGradient } from 'expo-linear-gradient';
 import { randomPerson } from '../../assets/Personen/randomPerson.js';
 import { uebungen } from '../Kursdaten/Uebungsliste.js';
+import { useKeepAwake } from 'expo-keep-awake';
 
 const soundObject = new Audio.Sound();
 
 
 //AudioPlayer- Component
 export const TextPlayer =({navigation, route})=>{
+    useKeepAwake()
     var inverval
     const [modalVisible, changeModalVisible] = useState(false)
     const [isPlaying, changeIsPlaying] = useState(true)
@@ -269,9 +271,10 @@ export const TextPlayer =({navigation, route})=>{
                 </View>
                 </View>
             </Modal>
-            <TouchableOpacity onPress={()=>{navigation.goBack()}} style={{alignSelf:"flex-start", marginBottom:70, margin:10}}>
+            <TouchableOpacity onPress={()=>{navigation.goBack()}} style={{alignSelf:"flex-start", margin:10}}>
               <Ionicons name="close-outline" color="white" size={50}></Ionicons>
             </TouchableOpacity>
+            <View style={{justifyContent:"center", alignItems:"center", flex:1}}>
             <Text style={styles.title}>{kurse[kurs].Uebungen[uebung].Name}</Text>
             <Image source={randomPerson} style={styles.image}/> 
             <Text style={styles.time}>{Math.floor(counter/60)}:{counter%60<10&&0}{counter%60}</Text>
@@ -297,6 +300,8 @@ export const TextPlayer =({navigation, route})=>{
                     </LinearGradient>
                 </TouchableOpacity>
             }            
+            </View>
+            <View style={{height:60}}/>
         </ImageBackground>
     );
 
