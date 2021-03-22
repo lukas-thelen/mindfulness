@@ -14,10 +14,8 @@ export const StartBildschirm = (props) =>{
       
       <ImageBackground source={require('../assets/ErsteSeite.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
        
-        <Text style={{...styles.textM, fontSize:50, marginBottom: 2}}>Upgrade</Text>
-        <Text style={{...styles.textM, fontSize:30, marginBottom: 60}}>your mind</Text>
+        <Image source={require("mindfulness/assets/Logo01.png")} style={{width:"90%", resizeMode:"contain", aspectRatio:1, tintColor:"white"}}></Image>
 
-        
         <TouchableOpacity style={styles.button} onPress={() =>props.changeInitPages('Anmelden')}>
           <LinearGradient
               colors={['#D476D5', '#C77BD8', '#8F92E3']}
@@ -27,10 +25,12 @@ export const StartBildschirm = (props) =>{
                 <Text style={{...styles.text, fontSize:20}}>Anmelden</Text>
             </LinearGradient>
         </TouchableOpacity>
+        
 
         <TouchableOpacity style={styles.containertext2} onPress={() =>props.changeInitPages('Registrieren')}>
             <Text style={{...styles.text, textDecorationLine: "underline"}}>Registrieren</Text>
         </TouchableOpacity>
+
         <Image source={require('../assets/Mädchen(1).png')} style={styles.image}/>
        
       </ImageBackground>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
       marginTop: 30,
       shadowColor: 'black',
       shadowOpacity: 0.8,
-      elevation: 10,
+      elevation: 10, 
       shadowRadius: 8,
       shadowOffset : { width: 10, height: 5}
     },

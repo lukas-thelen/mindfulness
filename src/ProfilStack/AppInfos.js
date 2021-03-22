@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ImageBackground} from 'react-native';
+import { StyleSheet, Text, View, Button, ImageBackground, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AppContext} from '../context.js';
@@ -18,6 +18,7 @@ export const AppInfos = () => {
     return (
         <ImageBackground source={require('../../assets/Profil.png')} style={styles.imagebackground} imageStyle={{resizeMode:'stretch'}}>
             <ScrollView style={{width:'100%'}} contentContainerStyle={{alignItems:'center'}}>
+            <Image source={require("mindfulness/assets/Logo01.png")} style={{width:"90%", resizeMode:"contain", aspectRatio:1, tintColor:"white"}}></Image>
                 <View style={styles.background}>
                     <Text style={styles.textM}> Wer sind wir?</Text>
                     <Text style={styles.text}>{infoUeberUns}</Text>
