@@ -107,6 +107,9 @@ export const AudioPlayer =({navigation, route})=>{
     //abspielen der Datei
     async function play(time) {
         try { 
+            await Audio.setAudioModeAsync({
+                playsInSilentModeIOS:true
+            })
             await soundObject.loadAsync({uri:encodeURI(kurse[kurs].Uebungen[uebung].VersionenNachSprecher[sprecher].VersionenNachDauer[dauer].Dateipfad)})
             await soundObject.setOnPlaybackStatusUpdate(endOfAudio)
             await soundObject.playFromPositionAsync(time)
