@@ -68,7 +68,6 @@ export const FreundeRoot =({navigation}) => {
     }
     
     const neuesPuzzle=async()=>{
-        changeModalVisible(false)
         const id =getRandomString(8)
         const motif = getMotif()
         userDataTemp.friends.puzzles[id]={id:id, pieces:0, friends:selectedFriends, log:{}, motif:motif}
@@ -94,13 +93,9 @@ export const FreundeRoot =({navigation}) => {
                 message,
           });
           if (result.action === Share.sharedAction) {
-            if (result.activityType) {
-              // shared with activity type of result.activityType
-            } else {
-              // shared
-            }
+            changeModalVisible(false)
           } else if (result.action === Share.dismissedAction) {
-            // dismissed
+            changeModalVisible(false)
           }
         } catch (error) {
           alert(error.message);

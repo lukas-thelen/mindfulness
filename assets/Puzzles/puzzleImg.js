@@ -14,7 +14,7 @@ export const images={
             require("../../assets/Puzzles/Waage/10.png"),
             require("../../assets/Puzzles/Waage/11.png")
         ],
-    Controller:
+    Contr:
         [
             require("../../assets/Puzzles/Controller/0.png"),
             require("../../assets/Puzzles/Controller/1.png"),

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, View, Modal,Alert,ActivityIndicator , SafeAreaView,Keyboard, Image, TouchableOpacity,StatusBar} from 'react-native';
+import { Button, StyleSheet, Text, View, Modal,ActivityIndicator , SafeAreaView,Keyboard, Image, TouchableOpacity,StatusBar,Alert} from 'react-native';
 import { DarkTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,6 +49,7 @@ export const Tabnavigator = () =>{
 
   const waitForLink= async()=>{
     const myUrl = await Linking.getInitialURL()
+    console.log(myUrl)
     let { path, queryParams } = Linking.parse(myUrl)
     handleUrl(queryParams)
   }
@@ -67,7 +68,7 @@ export const Tabnavigator = () =>{
       console.log("New Puzzle created by "+ queryParams.name)
       var friends = JSON.parse(queryParams.friends)
       var friendsNames = JSON.parse(queryParams.friendsNames)
-      var motif = JSON.parse(queryParams.motif)
+      var motif = queryParams.motif
       var includesMe = false
       for (var k=0; k<friends.length;k++){
         if(!(userDataTemp.friends.friends[friends[k]]||friends[k]===currentUser)){

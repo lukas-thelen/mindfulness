@@ -96,7 +96,6 @@ export const Puzzle = ({route, navigation}) => {
         const logId = getRandomString(8)
         const logData = {id:logId, puzzleId:route.params.id, pieces:layedPieces, user:currentUser}
         var message = Linking.makeUrl("", {type: "puzzlePieces", id:logId, puzzleId:route.params.id, pieces:layedPieces, user:currentUser})
-        console.log(message)
         var re = /(.*)(\?.*)/;
         message = message.replace(re, "Hier sind neue Teile für unser Puzzle: "+redirectURL+"$2");
         userDataTemp.friends.puzzles[route.params.id].log[logId]=logData
@@ -105,7 +104,6 @@ export const Puzzle = ({route, navigation}) => {
         changeAppData(appData)
         const jsonValue = JSON.stringify(appData)
         await AsyncStorage.setItem('appData', jsonValue)
-        changeModalVisible(false)
         changeLayedPieces(1)
         onShare(message)
         
@@ -126,13 +124,9 @@ export const Puzzle = ({route, navigation}) => {
               message,
         });
         if (result.action === Share.sharedAction) {
-          if (result.activityType) {
-            // shared with activity type of result.activityType
-          } else {
-            // shared
-          }
+            changeModalVisible(false)
         } else if (result.action === Share.dismissedAction) {
-          // dismissed
+            changeModalVisible(false)
         }
       } catch (error) {
         alert(error.message);
