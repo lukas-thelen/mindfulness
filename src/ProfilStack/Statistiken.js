@@ -298,7 +298,7 @@ export const Statistiken = ({navigation}) => {
                         <View style={{flexDirection:"row", alignItems:"center"}}>
                             <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={craving} onPress={() => changeCraving(!craving)}/>
                             <View style={{marginRight:10, height:10, width:10, borderRadius:100, backgroundColor:colors[4]}}/>
-                            <Text style={styles.text}>Craving</Text>
+                            <Text style={styles.text}>Gedanken an Gaming</Text>
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
                             <CheckBox uncheckedColor={'#ccc'} checkedColor={'#89FFF1'} checked={pflichten} onPress={() => changePflichten(!pflichten)}/>

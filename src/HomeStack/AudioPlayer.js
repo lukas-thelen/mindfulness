@@ -269,7 +269,6 @@ export const AudioPlayer =({navigation, route})=>{
 
     return(
         <ImageBackground source={require('../../assets/Profil.png')} imageStyle={{resizeMode:'stretch'}} style={{alignItems:"center", flex:1}}>
-            <StatusBar hidden={true}></StatusBar>
             <Modal
                 animationType="slide"
                 transparent={true}
